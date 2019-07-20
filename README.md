@@ -11,9 +11,9 @@ tomato-work 的命名来源于《番茄工作法》，由于与本项目非常�
 
 
 ## 在线预览
-项目已做了缓存处理，首次打开会稍微慢点。
 [Follow me](https://tomato-work.xiejiahe.com)
 
+为防止大量测试数据，本站不提供测试账号，首次登录请使用github。
 
 
 
@@ -68,6 +68,8 @@ yarn start or npm start
 # build for production with minification
 yarn build or npm run build
 ```
+
+
 
 
 

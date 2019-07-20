@@ -31,10 +31,12 @@ const getPublicUrl = appPackageJson =>
 // single-page apps that may serve index.html for nested URLs like /todos/42.
 // We can't use a relative path in HTML because we don't want to load something
 // like /todos/42/static/js/bundle.7289d.js. We have to know the root.
+
+const _publicUrl = process.env.NODE_EV === 'development' ? '/' : 'https://xiejiahe.gitee.io/tomato-work/';
 function getServedPath(appPackageJson) {
   const publicUrl = getPublicUrl(appPackageJson);
   const servedUrl =
-    envPublicUrl || (publicUrl ? url.parse(publicUrl).pathname : '/');
+    envPublicUrl || (publicUrl ? url.parse(publicUrl).pathname : _publicUrl);
   return ensureSlash(servedUrl, true);
 }
 
@@ -69,7 +71,7 @@ const resolveModule = (resolveFn, filePath) => {
 module.exports = {
   dotenv: resolveApp('.env'),
   appPath: resolveApp('.'),
-  appBuild: resolveApp('../server/app/public'),
+  appBuild: resolveApp('../tomato-work-gh'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
   appIndexJs: resolveModule(resolveApp, 'src/index'),

@@ -66,7 +66,6 @@
   <meta name="renderer" content="webkit">
   <link rel="icon" href="%PUBLIC_URL%/favicon.ico?0413" />
   <meta name="theme-color" content="#000000" />
-  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
   <meta name="author" content="https://github.com/xjh22222228">
 </head>
 <body>
@@ -75,10 +74,10 @@
 </div>
 <script>
 var axiosCancelTokenStore = [];
-var _isProduction = '%NODE_ENV%' === 'production';
+var _isDevelopment = '%NODE_ENV%' === 'development';
 var _hmt = _hmt || [];
 (function() {
-  if (!_isProduction) return;
+  if (_isDevelopment) return;
   var hm = document.createElement('script');
   hm.src = 'https://hm.baidu.com/hm.js?cd241f0887f9e49d66903f9ae8c391ea';
   var s = document.getElementsByTagName('script')[0]; 

@@ -46,12 +46,19 @@ export function logout() {
   serviceLogout()
   .finally(() => {
     const localStorageWhiteList = [LOCAL_STORAGE.LOGIN_NAME];
-    for (let i = 0; i < window.localStorage.length; i++) {
+    const localStorageLen = window.localStorage.length;
+    const allLocalStorageKey: string[] = [];
+
+    for (let i = 0; i < localStorageLen; i++) {
       const key = window.localStorage.key(i) as string;
-      if (localStorageWhiteList.indexOf(key) === -1) {
-        window.localStorage.removeItem(key);
-      }
+      allLocalStorageKey.push(key);
     }
+
+    allLocalStorageKey.forEach(keyName => {
+      if (localStorageWhiteList.indexOf(keyName) === -1) {
+        window.localStorage.removeItem(keyName);
+      }
+    });
     window.sessionStorage.clear();
     window.location.reload();
   });

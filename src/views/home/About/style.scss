@@ -1,0 +1,27 @@
+.about {
+  padding: 10px;
+  background: #fff;
+
+  h2 {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e6e6e6;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+
+  .block-item {
+
+    &:not(:nth-last-child(1)) {
+      margin-bottom: 15px;
+    }
+  }
+
+  .suupport {
+
+    .pay-img {
+      width: 500px;
+    }
+  }
+}

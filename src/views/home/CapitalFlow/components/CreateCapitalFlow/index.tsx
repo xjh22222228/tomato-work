@@ -1,0 +1,161 @@
+import React, { useCallback, useReducer, useEffect } from 'react';
+import { 
+  Modal,
+  Form,
+  Input,
+  DatePicker,
+  message,
+  Select
+} from 'antd';
+import moment from 'moment';
+import { serviceCreateCapitalFlow, serviceUpdateReminder } from '@/services';
+import { isLtTodayTimestamp } from '@/utils';
+
+const { TextArea } = Input;
+const { Option } = Select;
+const dateFormat = 'YYYY-MM-DD HH:mm:ss';
+const defaultDate = moment(new Date(), dateFormat);
+
+type Props = {
+  visible: boolean;
+  onCancel: () => void;
+  onSuccess: (res?: any) => void;
+  rowData?: { [propName: string]: any; };
+  nameList: any[];
+};
+
+interface State {
+  confirmLoading: boolean;
+  dateMode: 'time' | 'date' | 'month' | 'year' | 'decade';
+  date: moment.Moment;
+  remarks: string;
+  typeId: string;
+  price: string | number;
+}
+
+const initialState: State = {
+  confirmLoading: false,
+  dateMode: 'time',
+  date: defaultDate,
+  remarks: '',
+  typeId: '',
+  price: ''
+};
+
+function reducer(state: State, action: any) {
+  switch (action.type) {
+    case 'setState':
+      return { ...state, ...action.state };
+    default:
+      return state;
+  }
+}
+
+const CreateReminder: React.FC<Props> = function ({
+  visible, onCancel, onSuccess, rowData, nameList
+}) {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const setState = useCallback((state) => {
+    dispatch({ type: 'setState', state })
+  }, []);
+
+  const initParams = useCallback(() => {
+    if (!rowData) {
+      setState({ dateMode: 'time', date: defaultDate, remarks: '' });
+    } else {
+      setState({ date: moment(rowData.date, dateFormat), remarks: rowData.content });
+    }
+  }, [setState, rowData]);
+
+  const handleSubmit = useCallback((e: React.MouseEvent | React.FormEvent) => {
+    e.preventDefault();
+    const params = {
+      date: state.date.valueOf(),
+      remarks: state.remarks.trim(),
+      typeId: state.typeId,
+      price: Number(state.price)
+    };
+
+    try {
+      if (!params.price || isNaN(params.price)) {
+        throw new Error('金额必须为数字');
+      }
+      if (!params.typeId) {
+        throw new Error('请选择名称');
+      }
+    } catch (err) {
+      message.warn(err.message);
+      return;
+    }
+
+    setState({ confirmLoading: true });
+
+    (!rowData ? serviceCreateCapitalFlow(params) : serviceUpdateReminder(rowData.id, params))
+    .then(res => {
+      if (res.data.success) {
+        onSuccess(res);
+      }
+    })
+    .finally(() => {
+      setState({ confirmLoading: false });
+    });
+
+  }, [state, setState, onSuccess, rowData]);
+
+  useEffect(() => {
+    initParams();
+  }, [visible, initParams]);
+
+  return (
+    <Modal
+      title="新增"
+      visible={visible}
+      onOk={handleSubmit}
+      onCancel={onCancel}
+      confirmLoading={state.confirmLoading}
+    >
+      <Form onSubmit={handleSubmit} layout="inline">
+        <Form.Item label="时间">
+          <DatePicker
+            mode={state.dateMode}
+            showTime
+            allowClear={false}
+            value={state.date}
+            onPanelChange={(value, dateMode) => setState({ dateMode }) }
+            onChange={date => setState({ date }) }
+            disabledDate={isLtTodayTimestamp}
+          />
+        </Form.Item>
+        <Form.Item label="名称">
+          <Select 
+            onChange={(value: string) => setState({ typeId: value })} 
+            value={state.typeId}
+          >
+          {
+            nameList.map((item: any) => (
+              <Option value={item.id} key={item.id}>{ item.optionName }</Option>
+            ))
+          }
+          </Select>
+        </Form.Item>
+        <Form.Item label="金额">
+          <Input 
+            value={state.price} 
+            onChange={e => setState({ price: e.target.value })} 
+          />
+        </Form.Item>
+        <Form.Item label="备注">
+          <TextArea 
+            rows={3} 
+            value={state.remarks} 
+            onChange={e => setState({ remarks: e.target.value })} 
+            maxLength={250} 
+          />
+        </Form.Item>
+      </Form>
+    </Modal>
+  )
+};
+
+export default React.memo(CreateReminder);

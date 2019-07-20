@@ -1,0 +1,30 @@
+.inner-message {
+  position: relative;
+  height: 100%;
+  font-size: 12px;
+
+  .ant-table {
+    font-size: 12px;
+  }
+
+  .unread-dot {
+    display: block;
+    color: #f50;
+    transform: scale(.9);
+  }
+
+  .unread-row {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .action-group {
+    position: absolute;
+    bottom: 18px;
+    left: 20px;
+
+    .ant-btn {
+      margin-right: 15px;
+    }
+  }
+}

@@ -1,0 +1,26 @@
+.today-task {
+
+  .ant-tag {
+    margin-bottom: 10px;
+  }
+
+  .task-component {
+    &:not(:nth-last-child(1)) {
+      margin-bottom: 15px;
+    }
+  }
+
+  .wrapper {
+    flex: 1;
+    overflow: hidden;
+    overflow-y: auto;
+
+    .ant-row-flex {
+      height: 100%;
+
+      .ant-col:not(:nth-last-child(1)) {
+        border-right: 1px dashed #dcd5d5;
+      }
+    }
+  }
+}

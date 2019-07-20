@@ -1,0 +1,21 @@
+// 面板查询
+
+.query-panel {
+  padding: 15px 10px;
+  margin-bottom: 15px;
+  background: #fff;
+  white-space: nowrap;
+  overflow-x: auto;
+
+  .ant-select {
+    width: 120px;
+  }
+
+  & > [class*="ant-"] {
+    margin-right: 20px;
+  }
+
+  .ant-btn {
+    margin-right: 10px;
+  }
+}

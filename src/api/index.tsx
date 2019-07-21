@@ -29,7 +29,9 @@ const API = {
   // 站内消息
   innerMessage: '/innerMessage',
   // 活动清单
-  todoList: '/todoList'
+  todoList: '/todoList',
+  // 获取首页面板数据
+  getPanelData: '/panel'
 };
 
 export default API;

@@ -9,7 +9,6 @@ import {
 } from 'antd';
 import moment from 'moment';
 import { serviceCreateCapitalFlow, serviceUpdateReminder } from '@/services';
-import { isLtTodayTimestamp } from '@/utils';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -124,7 +123,6 @@ const CreateReminder: React.FC<Props> = function ({
             value={state.date}
             onPanelChange={(value, dateMode) => setState({ dateMode }) }
             onChange={date => setState({ date }) }
-            disabledDate={isLtTodayTimestamp}
           />
         </Form.Item>
         <Form.Item label="名称">

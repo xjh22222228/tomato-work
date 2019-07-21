@@ -21,7 +21,7 @@ const HomeIndex: React.FC<Props> = function ({ system, dispatch: propDispatch })
 
   return (
     <div className="home-index overflow-y_auto">
-      {/* <PenelGroup /> */}
+      <PenelGroup />
       <SystemInfo systemInfo={system.info} />
       <MoneyAccessChart />
     </div>

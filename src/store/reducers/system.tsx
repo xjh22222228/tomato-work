@@ -45,6 +45,7 @@ function system(state = initialState, action: any): SystemState {
       if (_.isEmpty(action.data)) {
         return state;
       }
+      action.data.arch = action.data.arch.slice(1);
       return Object.assign({}, state, { info: action.data });
     default:
       return state;

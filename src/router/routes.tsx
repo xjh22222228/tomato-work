@@ -26,12 +26,15 @@ const routesMap: Array<IRouteProps> = [
     meta: {
       requiresAuth: false,      // 当前页面是否需要登录状态
       title: HOME.LOGIN.name,   // 网页标题
-      isLoginToHome: true       // 是否登录后跳转到首页
+      isLoginToHome: true       // 如果当前登录状态跳转到后台首页
     }
   },
   {
     path: HOME.HOME.path,
     component: MainEntry,
+    meta: {
+      requiresAuth: true,
+    },
     childrenRoutes: [
       {
         path: HOME.HOME_INDEX.path,

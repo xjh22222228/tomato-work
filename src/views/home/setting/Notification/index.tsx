@@ -3,10 +3,10 @@ import React, {
   useEffect
 } from 'react';
 import './style.scss';
-import { Switch } from 'antd';
+import { Switch, Divider } from 'antd';
 import { serviceGetUserConfig, serviceUpdateUserConfig } from '@/services';
 
-const Notification: React.FC = function (): JSX.Element {
+const Notification: React.FC = function () {
   const [userConfig, setUserConfig] = useState({
     isMatterNotify: true,
     isTaskNotify: true
@@ -39,7 +39,7 @@ const Notification: React.FC = function (): JSX.Element {
 
   return (
     <div className="notification">
-      <h1 style={{ margin: '10px 0 20px 0 '}}>消息通知</h1>
+      <Divider orientation="left">消息通知</Divider>
       <div className="list">
         <div className="left">
           <h4 className="title">待办任务</h4>

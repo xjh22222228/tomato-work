@@ -18,7 +18,7 @@ const { Header } = Layout;
 const popoverList = [
   { name: SETTING.BASE.name, path: SETTING.BASE.path },
   { name: SETTING.NOTIFICATION.name, path: SETTING.NOTIFICATION.path },
-  { name: SETTING.CHANGE_PASSWORD.name, path: SETTING.CHANGE_PASSWORD.path }
+  { name: SETTING.ACCOUNT.name, path: SETTING.ACCOUNT.path }
 ];
 
 interface HeaderProps extends HomeMainState, RouteComponentProps {

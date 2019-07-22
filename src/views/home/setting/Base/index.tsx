@@ -1,6 +1,6 @@
 import React from 'react';
 import './style.scss';
-import { Card } from 'antd';
+import { Card, Divider } from 'antd';
 import { connect } from 'react-redux';
 import { StoreState } from '@/store';
 import { UserInfoProps } from '@/store/reducers/user';
@@ -27,7 +27,7 @@ const Base: React.FC<Props & RouteComponentProps> = function ({ userInfo }) {
 
   return (
     <div className="setting-base">
-      <h1 style={{ margin: '10px 0 20px 0 '}}>个人中心</h1>
+      <Divider orientation="left">个人中心</Divider>
       <Card
         style={{ width: 350 }}
         cover={

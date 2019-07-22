@@ -153,7 +153,7 @@ const routesMap: Array<IRouteProps> = [
 const Base = lazy(() => import('@/views/home/setting/Base'));
 const InnerMessage = lazy(() => import('@/views/home/setting/InnerMessage'));
 const Notification = lazy(() => import('@/views/home/setting/Notification'));
-const ChangePassword = lazy(() => import('@/views/home/setting/ChangePassword'));
+const Account = lazy(() => import('@/views/home/setting/Account'));
 
 export const settingRoutes: Array<IRouteProps> = [
   {
@@ -181,11 +181,11 @@ export const settingRoutes: Array<IRouteProps> = [
     }
   },
   {
-    path: SETTING.CHANGE_PASSWORD.path,
-    component: ChangePassword,
+    path: SETTING.ACCOUNT.path,
+    component: Account,
     meta: {
       requiresAuth: true,
-      title: SETTING.CHANGE_PASSWORD.name
+      title: SETTING.ACCOUNT.name
     }
   },
 ];

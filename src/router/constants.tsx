@@ -7,7 +7,7 @@ export const SETTING = {
 
   NOTIFICATION: { name: '消息通知', path: '/home/setting/notification' },
   
-  CHANGE_PASSWORD: { name: '修改密码', path: '/home/setting/changePassword' },
+  ACCOUNT: { name: '账号设置', path: '/home/setting/account' },
 };
 
 export const HOME = {

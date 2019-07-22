@@ -77,7 +77,7 @@ export const SETTING_SIDER_MENU_LIST = [
     name: SETTING.NOTIFICATION.name
   },
   {
-    path: SETTING.CHANGE_PASSWORD.path,
-    name: SETTING.CHANGE_PASSWORD.name
+    path: SETTING.ACCOUNT.path,
+    name: SETTING.ACCOUNT.name
   },
 ];

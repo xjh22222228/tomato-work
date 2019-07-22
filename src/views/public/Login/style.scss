@@ -5,6 +5,20 @@
   background-size: 100%;
   flex-direction: column;
 
+  .svg-wrapper {
+    z-index: 10001;
+    fill: #20a0ff;
+    color: #fff;
+    position: fixed;
+    top: -6px;
+    border: 0;
+    right: -6px;
+
+    .octo-arm {
+      transform-origin: 130px 106px;
+    }
+  }
+
   .wrap {
     flex: 1;
     margin-bottom: 150px;

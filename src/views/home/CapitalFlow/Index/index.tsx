@@ -100,7 +100,9 @@ const Reminder: React.FC = function() {
         res.data.data.rows = res.data.data.rows.map((el: any, idx: number) => {
           el.order = idx + 1;
           el.date = moment(el.date).format('YYYY-MM-DD HH:mm:ss');
-          expandedRowKeys.push(el.id);
+          if (el.remarks !== '') {
+            expandedRowKeys.push(el.id);
+          }
           return el;
         });
 
@@ -149,6 +151,18 @@ const Reminder: React.FC = function() {
     setState({ modalVisible: false });
     tableRef.current.getTableData();
   }, [setState]);
+
+  // 点击展开图标时触发
+  const handleOnExpand = useCallback((expanded: any, record: any) => {
+    const expandedRowKeys = [...state.expandedRowKeys];
+    if (!expanded) {
+      const idx = expandedRowKeys.indexOf(record.id);
+      expandedRowKeys.splice(idx, 1);
+    } else {
+      expandedRowKeys.push(record.id);
+    }
+    setState({ expandedRowKeys });
+  }, [setState, state.expandedRowKeys]);
 
   useEffect(() => {
     initParams();
@@ -212,6 +226,7 @@ const Reminder: React.FC = function() {
         columns={tableColumns} 
         expandedRowRender={(record: any) => record.remarks}
         expandedRowKeys={state.expandedRowKeys}
+        onExpand={handleOnExpand}
       />
       <CreateCapitalFlow 
         visible={state.modalVisible} 

@@ -8,7 +8,7 @@ import {
   Select
 } from 'antd';
 import moment from 'moment';
-import { serviceCreateCapitalFlow, serviceUpdateReminder } from '@/services';
+import { serviceCreateCapitalFlow, serviceUpdateCapitalFlow } from '@/services';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -34,7 +34,7 @@ interface State {
 
 const initialState: State = {
   confirmLoading: false,
-  dateMode: 'time',
+  dateMode: 'date',
   date: defaultDate,
   remarks: '',
   typeId: '',
@@ -51,7 +51,11 @@ function reducer(state: State, action: any) {
 }
 
 const CreateReminder: React.FC<Props> = function ({
-  visible, onCancel, onSuccess, rowData, nameList
+  visible,
+  onCancel,
+  onSuccess,
+  rowData,
+  nameList
 }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -60,10 +64,22 @@ const CreateReminder: React.FC<Props> = function ({
   }, []);
 
   const initParams = useCallback(() => {
+    const params = {
+      dateMode: 'date',
+      date: defaultDate,
+      remarks: '',
+      typeId: '',
+      price: ''
+    };
+
     if (!rowData) {
-      setState({ dateMode: 'time', date: defaultDate, remarks: '' });
+      setState(params);
     } else {
-      setState({ date: moment(rowData.date, dateFormat), remarks: rowData.content });
+      params.date = moment(rowData.date, dateFormat);
+      params.remarks = rowData.remarks;
+      params.typeId = rowData.typeId;
+      params.price = rowData.price;
+      setState(params);
     }
   }, [setState, rowData]);
 
@@ -90,7 +106,7 @@ const CreateReminder: React.FC<Props> = function ({
 
     setState({ confirmLoading: true });
 
-    (!rowData ? serviceCreateCapitalFlow(params) : serviceUpdateReminder(rowData.id, params))
+    (!rowData ? serviceCreateCapitalFlow(params) : serviceUpdateCapitalFlow(rowData.id, params))
     .then(res => {
       if (res.data.success) {
         onSuccess(res);

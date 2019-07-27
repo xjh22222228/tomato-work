@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef, useReducer } from 'react';
-import { DatePicker, Button, Select, Tag } from 'antd';
+import { connect } from 'react-redux';
+import { DatePicker, Button, Select, Tag, Modal } from 'antd';
 import moment from 'moment';
 import { getCurMonthFirstDay, getCurMonthLastDay, modalConfirmDelete } from '@/utils';
 import CreateReminder from './components/CreateReminder';
@@ -21,6 +22,8 @@ interface State {
   currentRow: { [propName: string]: any } | null
 }
 
+type Props = ReturnType<typeof mapStateToProps>;
+
 const initialState: State = {
   date: [],
   queryType: '',
@@ -37,7 +40,7 @@ function reducer(state: State, action: any) {
   }
 }
 
-const Reminder: React.FC = function() {
+const Reminder: React.FC<Props> = function({ userInfo }) {
   const [state, dispatch] = useReducer(reducer, initialState);
   const tableRef = useRef<any>(null);
   const [tableColumns] = useState([
@@ -121,7 +124,19 @@ const Reminder: React.FC = function() {
 
   useEffect(() => {
     initParams();
-  }, [initParams]);
+
+    if (!userInfo.email) {
+      Modal.warning({
+        title: '未检测到您的邮箱',
+        content: (
+          <>
+            请将您的GitHub邮箱设为公开，否则影响本功能的使用，
+            <a href="https://github.com/settings/profile" target="_blank">前往设置</a>
+          </>
+        ),
+      });
+    }
+  }, [initParams, userInfo.email]);
 
   return (
     <div className="reminder">
@@ -161,4 +176,8 @@ const Reminder: React.FC = function() {
   )
 }
 
-export default Reminder;
+const mapStateToProps = (store: any) => ({
+  userInfo: store.user.userInfo
+});
+
+export default connect(mapStateToProps)(Reminder);

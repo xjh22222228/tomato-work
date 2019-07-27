@@ -52,12 +52,12 @@ const Reminder: React.FC = function() {
   const tableRef = useRef<any>(null);
   const [tableColumns] = useState([
     { title: '序号', dataIndex: 'order', width: 70 },
+    { title: '类型', dataIndex: 'type', width: 100,
+      render: (type: any) => (<Tag color={TypeColors[type]}>{ TypeNames[type] }</Tag>)
+    },
     { title: '名称', dataIndex: 'name', width: 100 },
     { title: '参与时间', dataIndex: 'date', width: 220 },
     { title: '金额', dataIndex: 'price' },
-    { title: '类型', dataIndex: 'type', width: 100,
-      render: (row: any) => (<Tag color={TypeColors[row]}>{ TypeNames[row] }</Tag>)
-    },
     { title: '操作', width: 180,
       render: (row: any) => (
         <>
@@ -99,7 +99,7 @@ const Reminder: React.FC = function() {
         
         res.data.data.rows = res.data.data.rows.map((el: any, idx: number) => {
           el.order = idx + 1;
-          el.date = moment(el.date).format('YYYY-MM-DD HH:mm:ss');
+          el.date = moment(el.date).format('YYYY-MM-DD HH:mm');
           if (el.remarks !== '') {
             expandedRowKeys.push(el.id);
           }
@@ -123,7 +123,7 @@ const Reminder: React.FC = function() {
         const data = res.data.data.map((item: any) => {
           item.optionName = `${TypeNames[item.type]} - ${item.name}`;
           return item;
-        })
+        }).sort((a: any, b: any) => a.type - b.type);
         setState({ nameList: data });
       }
     });

@@ -35,11 +35,11 @@ const TodoList = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const tableRef = useRef<any>(null);
   const [tableColumns] = useState([
-    { title: '创建时间', dataIndex: 'createdAt', width: 170 },
-    { title: '活动内容', dataIndex: 'content', className: 'word-break_break-all' },
     { title: '状态', dataIndex: 'status', width: 90, render: (status: number) => (
       <Tag color={STATUS[status].color}>{ STATUS[status].text }</Tag>
-    ) },
+    )},
+    { title: '创建时间', dataIndex: 'createdAt', width: 170 },
+    { title: '活动内容', dataIndex: 'content', className: 'word-break_break-all' },
     { title: '操作', width: 250,
       render: (row: any) => (
         <>

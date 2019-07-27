@@ -5,7 +5,6 @@ import { withRouter, RouteComponentProps, Link } from 'react-router-dom';
 import { HomeMainState } from '@/views/home/MainEntry';
 import { connect } from 'react-redux';
 import { StoreState } from '@/store';
-import { UserInfoProps } from '@/store/reducers/user';
 import { logout } from '@/store/actions/user';
 import Avatar from '@/components/Avatar';
 import { SETTING } from '@/router/constants';
@@ -21,9 +20,7 @@ const popoverList = [
   { name: SETTING.ACCOUNT.name, path: SETTING.ACCOUNT.path }
 ];
 
-interface HeaderProps extends HomeMainState, RouteComponentProps {
-  userInfo: UserInfoProps;
-}
+type Props = ReturnType<typeof mapStateToProps> & HomeMainState & RouteComponentProps;
 
 const PopoverContent = (
   <div className="popover-content">
@@ -39,7 +36,7 @@ const PopoverContent = (
   </div>
 );
 
-const HomeHeader: React.FC<HeaderProps> = function ({
+const HomeHeader: React.FC<Props> = function ({
   collapsed,
   setCollapsed,
   userInfo
@@ -136,7 +133,7 @@ const HomeHeader: React.FC<HeaderProps> = function ({
   )
 };
 
-const mapStateToProps = ({ user }: StoreState): { userInfo: UserInfoProps } => {
+const mapStateToProps = ({ user }: StoreState) => {
   return { userInfo: user.userInfo }
 };
 

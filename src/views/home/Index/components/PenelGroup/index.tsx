@@ -8,7 +8,7 @@ import { HOME } from '@/router/constants';
 const PanelGroup = () => {
   const isInit = useRef<any>(false);
   const [state, setState] = useState([
-    { title: '今日支出', total: 0, iconType: 'property-safety', suffix: '$', path: HOME.CAPITAL_FLOW.path },
+    { title: '今日支出', total: 0, iconType: 'property-safety', suffix: '￥', path: HOME.CAPITAL_FLOW.path },
     { title: '今日待办', total: 0, iconType: 'schedule', path: HOME.TODAY_TASK.path },
     { title: '活动清单', total: 0, iconType: 'file-text', path: HOME.TODO_LIST.path },
     { title: '提醒事项', total: 0, iconType: 'alert', path: HOME.REMINDER.path },

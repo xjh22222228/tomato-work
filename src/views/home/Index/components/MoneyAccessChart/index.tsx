@@ -27,7 +27,8 @@ const MoneyAccessChart = () => {
         let price = 0;
         const data = res.data.data.map((item: any) => {
           item.date = item.date.slice(5);
-          price += Number(item.price);
+          item.price = Number(item.price);
+          price += item.price;
           return item;
         });
 

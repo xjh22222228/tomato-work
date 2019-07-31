@@ -16,12 +16,12 @@ export interface HomeMainState {
 
 const storageCollapsed = window.localStorage.getItem(LOCAL_STORAGE.SIDEBAR_COLLAPSED);
 
-const HomeMain: React.FC<{}> = function (props) {
-  const [collapsed, setCollapsed] = useState(storageCollapsed ? !Number(storageCollapsed) : false);
+const HomeMain: React.FC = function (props) {
+  const [collapsed, setCollapsed] = useState(!!storageCollapsed);
 
   const handleToggleCollapsed = useCallback(() => {
     setCollapsed(collapsed => !collapsed);
-    window.localStorage.setItem(LOCAL_STORAGE.SIDEBAR_COLLAPSED, String(+collapsed));
+    window.localStorage.setItem(LOCAL_STORAGE.SIDEBAR_COLLAPSED, Number(collapsed) + '');
   }, [collapsed]);
   
   return (

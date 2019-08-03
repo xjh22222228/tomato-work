@@ -52,14 +52,11 @@ export function exitFullscreen() {
     const doc = document as any;
     if (doc.exitFullscreen) {  
       doc.exitFullscreen();  
-    }  
-    else if (doc.mozCancelFullScreen) {  
+    } else if (doc.mozCancelFullScreen) {  
       doc.mozCancelFullScreen();  
-    }  
-    else if (doc.webkitCancelFullScreen) {  
+    } else if (doc.webkitCancelFullScreen) {  
       doc.webkitCancelFullScreen();  
-    }
-    else if (doc.msExitFullscreen) {
+    } else if (doc.msExitFullscreen) {
       doc.msExitFullscreen();
     }
   } catch (_) {

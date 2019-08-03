@@ -8,7 +8,7 @@ export function serviceCreateTodoList(data: object) {
 
 // 查询
 export function serviceGetTodoList(params?: object) {
-  return http.get(api.todoList, { params, headers: { isLoading: true } });
+  return http.get(api.todoList, { params });
 }
 
 // 删除

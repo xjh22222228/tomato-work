@@ -1,6 +1,6 @@
 import React, { useReducer, useCallback, useEffect, useRef, useState } from 'react';
 import { DatePicker, Button, Tag } from 'antd';
-import { getCurMonthFirstDay, getCurMonthLastDay, modalConfirmDelete } from '@/utils';
+import { getThisYearFirstDay, getCurMonthLastDay, modalConfirmDelete } from '@/utils';
 import moment from 'moment';
 import Table from '@/components/Table';
 import CreateTodo from '../components/CreateTodo';
@@ -78,7 +78,7 @@ const TodoList = () => {
   }, [state.date]);
 
   const initParams = useCallback(() => {
-    const startDate = moment(getCurMonthFirstDay(dateFormat), dateFormat);
+    const startDate = moment(getThisYearFirstDay(), dateFormat);
     const endDate = moment(getCurMonthLastDay(dateFormat), dateFormat);
     setState({ date: [startDate, endDate] });
     setTimeout(() => {

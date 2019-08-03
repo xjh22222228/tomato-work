@@ -92,7 +92,6 @@ const CreateTodo: React.FC<Props> = function ({
             value={state.content} 
             onChange={e => setState({ content: e.target.value })} 
             maxLength={250} 
-            placeholder="Todo List"
           />
         </Form.Item>
       </Form>

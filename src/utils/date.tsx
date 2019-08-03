@@ -74,3 +74,12 @@ export function isToday(date: any) {
     return false;
   }
 }
+
+// 获取今年第一天
+export function getThisYearFirstDay() {
+  const now = new Date();
+  now.setMonth(0, 1);
+  now.setHours(0, 0, 0, 0);
+
+  return moment(now.getTime());
+}

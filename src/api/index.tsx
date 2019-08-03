@@ -17,7 +17,7 @@ const API = {
   // 提醒事项
   reminder: '/reminder',
   // 今日待办
-  task: '/task',
+  todayTask: '/task',
   // 资金流动类型
   capitalFlowType: '/capitalFlowType',
   // 资金流动

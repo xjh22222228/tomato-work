@@ -20,6 +20,7 @@ import md5 from 'blueimp-md5';
 import _ from 'lodash';
 import api from '@/api';
 import config from '@/config';
+import { randomCode } from '@/utils';
 
 
 type ThunkDispatchProps = ThunkDispatch<{}, {}, AnyAction>;
@@ -34,6 +35,7 @@ const PopoverContent = (
   </div>
 );
 
+let captcha = randomCode();
 const LOGIN_NAME = window.localStorage.getItem(LOCAL_STORAGE.LOGIN_NAME) || '';
 
 const Login: React.FC<LoginProps> = function ({
@@ -50,25 +52,6 @@ const Login: React.FC<LoginProps> = function ({
     return url || HOME.HOME_INDEX.path;
   });
 
-  useEffect(() => {
-    const query = qs.parse(location.search);
-    const { token, state } = query;
-
-    if (Number(state) === 0) {
-      message.error('登录失败，请重新登录');
-      return;
-    }
-
-    if (token) {
-      dispatch(loginByToken(token as string))
-      .then((res) => {
-        if (!_.isEmpty(res.userInfo)) {
-          history.replace(redirectUrl);
-        }
-      });
-    }
-  }, [history, location.search, dispatch, redirectUrl]);
-
   const handleSubmit = () => {
     const _loginName = loginName.value.trim();
     const _password = password.value.trim();
@@ -81,8 +64,8 @@ const Login: React.FC<LoginProps> = function ({
       if (!_password) {
         throw new Error('密码不能为空');
       }
-      if (!_code) {
-        throw new Error('验证码不能为空');
+      if (_code !== captcha) {
+        throw new Error('验证码错误');
       }
 
       setLoading(true);
@@ -103,14 +86,35 @@ const Login: React.FC<LoginProps> = function ({
     }
   };
 
-  const refreshCaptcha = useCallback(e => {
-    e.target.src = api.getCaptcha + '?_=' +  Date.now();
+  const reloadCaptcha = useCallback(e => {
+    captcha = randomCode();
+    const url = api.getCaptcha + captcha;
+    e.target.src = url;
   }, []);
   
   const githubHandler = () => {
     setLoading(true);
     githubAuthz();
   };
+
+  useEffect(() => {
+    const query = qs.parse(location.search);
+    const { token, state } = query;
+
+    if (Number(state) === 0) {
+      message.error('登录失败，请重新登录');
+      return;
+    }
+
+    if (token) {
+      dispatch(loginByToken(token as string))
+      .then((res) => {
+        if (!_.isEmpty(res.userInfo)) {
+          history.replace(redirectUrl);
+        }
+      });
+    }
+  }, [history, location.search, dispatch, redirectUrl]);
 
   return (
     <section className="login-page">
@@ -149,7 +153,13 @@ const Login: React.FC<LoginProps> = function ({
               maxLength={4} 
               autoComplete="off" 
               onPressEnter={handleSubmit} 
-              suffix={<img src={api.getCaptcha} className="captcha" onClick={refreshCaptcha} />}
+              suffix={
+                <img 
+                  src={`${api.getCaptcha}${captcha}`} 
+                  className="captcha" 
+                  onClick={reloadCaptcha}
+                />
+              }
             />
           </Input.Group>
           <Button 

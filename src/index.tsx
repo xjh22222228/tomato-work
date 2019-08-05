@@ -4,7 +4,7 @@ import './assets/styles/global.scss';
 import Routes from './router';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
-import { LocaleProvider } from 'antd';
+import { ConfigProvider } from 'antd';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
@@ -14,9 +14,9 @@ moment.locale('zh-cn');
 
 ReactDOM.render(
   <Provider store={store}>
-    <LocaleProvider locale={zh_CN}>
+    <ConfigProvider locale={zh_CN}>
       <Routes />
-    </LocaleProvider>
+    </ConfigProvider>
   </Provider>,
 document.getElementById('tomato-work') as HTMLDivElement);
 

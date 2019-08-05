@@ -1,6 +1,8 @@
 import { Modal, message } from 'antd';
 
 
+const CODE = 'qwertyuipasdfghjklxcvbnm13456789';
+
 /**
  * 计算百分比
  * @example
@@ -62,4 +64,16 @@ export function exitFullscreen() {
   } catch (_) {
     message.warn('您所使用的浏览器不支持退出全屏, 请按ESC');
   }
+}
+
+// 随机字符串
+export function randomCode(num = 4) {
+  let data = '';
+  
+  for (let i = 0; i < num; i++) {
+    const random = Math.floor(Math.random() * CODE.length);
+    data += CODE[random];
+  }
+
+  return data;
 }

@@ -52,7 +52,7 @@ const Memorandum: FC<RouteComponentProps> = ({ history }) => {
           // 小段落显示，只截取前100字符串
           item.markdown = item.markdown.slice(0, 100);
           item.contentHTML = md.render(item.markdown);
-          item.createdAt = moment(item.createdAt).format('YYYY/M/D hh:mm');
+          item.createdAt = moment(item.createdAt).format('YYYY/M/D HH:mm');
           item.title = item.title || defaultTitle;
           return item;
         });

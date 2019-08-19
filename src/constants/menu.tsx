@@ -55,12 +55,7 @@ export const HOME_SIDER_MENU_LIST = [
     path: SETTING.BASE.path,
     type: 'user',
     name: SETTING.BASE.name
-  },
-  {
-    path: HOME.ABOUT.path,
-    type: 'question-circle',
-    name: HOME.ABOUT.name
-  },
+  }
 ];
 
 export const SETTING_SIDER_MENU_LIST = [

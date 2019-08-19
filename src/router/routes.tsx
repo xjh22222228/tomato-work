@@ -7,7 +7,6 @@ import NoMatch from '@/views/exception/NoMatch';
 import MainEntry from '@/views/home/MainEntry';
 import Reminder from '@/views/home/Reminder';
 import SettingIndex from '@/views/home/setting/Index';
-import About from '@/views/home/About';
 import HomeIndex from '@/views/home/Index';
 import TodayTask from '@/views/home/TodayTask';
 import Memorandum from '@/views/home/Memorandum/index';
@@ -67,15 +66,6 @@ const routesMap: Array<IRouteProps> = [
         component: TodayTask,
         meta: {
           title: HOME.TODAY_TASK.name,
-          requiresAuth: true,
-        }
-      },
-      {
-        path: HOME.ABOUT.path,
-        component: About,
-        exact: true,
-        meta: {
-          title: HOME.ABOUT.name,
           requiresAuth: true,
         }
       },

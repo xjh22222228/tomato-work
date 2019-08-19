@@ -23,8 +23,6 @@ export const HOME = {
 
   TODAY_TASK: { name: '今日待办', path: '/home/todayTask' },
 
-  ABOUT: { name: '关于本站', path: '/home/about' },
-
   MEMORANDUM: { name: '备忘录列表', path: '/home/memorandum' },
   MEMORANDUM_CREATE: { name: '备忘录创建', path: [
     '/home/memorandum/create', '/home/memorandum/update/:id'

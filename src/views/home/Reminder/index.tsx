@@ -44,7 +44,6 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
   const [state, dispatch] = useReducer(reducer, initialState);
   const tableRef = useRef<any>(null);
   const [tableColumns] = useState([
-    { title: '序号', dataIndex: 'order', width: 70 },
     { title: '状态', dataIndex: 'type', width: 100,
       render: (row: any) => (
         <Tag color={STATUS_TYPE[row].color}>{ STATUS_TYPE[row].text }</Tag>

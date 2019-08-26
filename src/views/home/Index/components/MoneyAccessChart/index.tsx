@@ -40,7 +40,7 @@ const MoneyAccessChart = () => {
 
   return (
     <div className="money-access">
-      <h2 className="title">最近一周资金流动</h2>
+      <h2 className="title">过去7天资金流动</h2>
       {
         (totalPrice > 0)
         ?

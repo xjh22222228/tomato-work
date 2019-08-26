@@ -19,13 +19,13 @@ const Account: React.FC<Props & RouteComponentProps> = function ({ userInfo }) {
   const [sckey, setSckey] = useState('');
   const passwordValue = password.value.trim();
 
-  function handleUpdateUser() {
+  const handleUpdateUser = useCallback(() => {
     if (passwordValue.length < 6) {
       message.warn('密码至少6位');
       return;
     }
     serviceUpdateUser({ password: md5(passwordValue) });
-  }
+  }, [passwordValue]);
 
   const handleSckey = useCallback(() => {
     if (!sckey) {
@@ -62,7 +62,7 @@ const Account: React.FC<Props & RouteComponentProps> = function ({ userInfo }) {
       <Divider orientation="left">Server酱配置</Divider>
       <Form layout="vertical" style={{ width: '300px' }}>
         <Form.Item label="SCKEY">
-          <Input.Password 
+          <Input 
             maxLength={100} 
             value={sckey} 
             onChange={e => setSckey(e.target.value)} 

@@ -51,7 +51,6 @@ const Reminder: React.FC = function() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const tableRef = useRef<any>(null);
   const [tableColumns] = useState([
-    { title: '序号', dataIndex: 'order', width: 70 },
     { title: '类型', dataIndex: 'type', width: 100,
       render: (type: any) => (<Tag color={TypeColors[type]}>{ TypeNames[type] }</Tag>)
     },
@@ -224,7 +223,7 @@ const Reminder: React.FC = function() {
         ref={tableRef}
         getTableData={getCapitalFlow}
         columns={tableColumns} 
-        expandedRowRender={(record: any) => record.remarks}
+        expandedRowRender={(data: any) => <p className="white-space_pre">{ data.remarks }</p>}
         expandedRowKeys={state.expandedRowKeys}
         onExpand={handleOnExpand}
       />

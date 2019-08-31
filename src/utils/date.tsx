@@ -4,11 +4,7 @@ type ns = number | string;
 
 // 获取当前月份总天数
 export function getCurMonthTotalDay(): number {
-  const curDate = new Date();
-  const curMonth = curDate.getMonth();
-  curDate.setMonth(curMonth + 1);
-  curDate.setDate(0)
-  return curDate.getDate();
+  return moment().daysInMonth();
 }
 
 // 获取当前月份的第一天日期

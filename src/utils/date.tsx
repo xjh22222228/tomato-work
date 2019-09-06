@@ -2,6 +2,8 @@ import moment from 'moment';
 
 type ns = number | string;
 
+export const ONE_DAY_TIMESTAMP = 60 * 60 * 24 * 1000 - 1;
+
 // 获取当前月份总天数
 export function getCurMonthTotalDay(): number {
   return moment().daysInMonth();
@@ -13,6 +15,7 @@ export function getCurMonthFirstDay(format: string): string;
 export function getCurMonthFirstDay(format: string = 'timestamp'): ns {
   const cur = new Date();
   cur.setDate(1);
+  cur.setHours(0, 0, 0);
   return format === 'timestamp' ? cur.getTime() : moment(cur).format(format);
 }
 
@@ -22,6 +25,7 @@ export function getCurMonthLastDay(format: string): string;
 export function getCurMonthLastDay(format: string = 'timestamp'): ns {
   const cur = new Date();
   cur.setDate(getCurMonthTotalDay());
+  cur.setHours(23, 59, 59);
   return format === 'timestamp' ? cur.getTime() : moment(cur).format(format);
 }
 

@@ -2,7 +2,12 @@ import React, { useState, useEffect, useCallback, useRef, useReducer } from 'rea
 import { connect } from 'react-redux';
 import { DatePicker, Button, Select, Tag, Modal } from 'antd';
 import moment from 'moment';
-import { getCurMonthFirstDay, getCurMonthLastDay, modalConfirmDelete } from '@/utils';
+import {
+  getCurMonthFirstDay,
+  getCurMonthLastDay,
+  modalConfirmDelete,
+  ONE_DAY_TIMESTAMP
+} from '@/utils';
 import CreateReminder from './components/CreateReminder';
 import { serviceGetReminder, serviceDeleteReminder } from '@/services';
 import Table from '@/components/Table';
@@ -19,7 +24,7 @@ interface State {
   date: moment.Moment[];
   queryType: string;
   modalVisible: boolean;
-  currentRow: { [propName: string]: any } | null
+  currentRow: { [propName: string]: any } | null;
 }
 
 type Props = ReturnType<typeof mapStateToProps>;
@@ -77,13 +82,11 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
 
   // 获取事项数据
   const getReminder = useCallback((params: any = {}) => {
+    params.startDate = state.date[0].valueOf();
+    params.endDate = state.date[1].valueOf() + ONE_DAY_TIMESTAMP;
 
     if (state.queryType !== '') {
       params.type = state.queryType;
-    }
-    if (state.date.length === 2) {
-      params.startDate = state.date[0].valueOf();
-      params.endDate = state.date[1].valueOf();
     }
 
     return serviceGetReminder(params).then(res => {

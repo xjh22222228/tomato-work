@@ -2,7 +2,12 @@ import React, { useState, useEffect, useCallback, useRef, useReducer } from 'rea
 import './style.scss';
 import { DatePicker, Button, Select, Tag, Statistic } from 'antd';
 import moment from 'moment';
-import { getCurMonthFirstDay, getCurMonthLastDay, modalConfirmDelete } from '@/utils';
+import {
+  getCurMonthFirstDay,
+  getCurMonthLastDay,
+  modalConfirmDelete,
+  ONE_DAY_TIMESTAMP
+} from '@/utils';
 import {
   serviceGetCapitalFlow,
   serviceDeleteCapitalFlow,
@@ -23,7 +28,7 @@ interface State {
   modalVisible: boolean;
   currentRow: null | { [propName: string]: any };
   nameList: any[];
-  price: { consumption: number; income: number; }
+  price: { consumption: number; income: number; };
   expandedRowKeys: string[];
 }
 
@@ -85,11 +90,8 @@ const Reminder: React.FC = function() {
   const getCapitalFlow = useCallback((params: any = {}) => {
     params.typeNameId = state.name;
     params.type = state.type;
-    
-    if (state.date.length === 2) {
-      params.startDate = state.date[0].valueOf();
-      params.endDate = state.date[1].valueOf();
-    }
+    params.startDate = state.date[0].valueOf();
+    params.endDate = state.date[1].valueOf() + ONE_DAY_TIMESTAMP;
 
     return serviceGetCapitalFlow(params).then(res => {
       if (res.data.success) {

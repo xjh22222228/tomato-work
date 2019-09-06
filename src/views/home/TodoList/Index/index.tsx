@@ -1,6 +1,11 @@
 import React, { useReducer, useCallback, useEffect, useRef, useState } from 'react';
 import { DatePicker, Button, Tag } from 'antd';
-import { getThisYearFirstDay, getCurMonthLastDay, modalConfirmDelete } from '@/utils';
+import {
+  getThisYearFirstDay,
+  getCurMonthLastDay,
+  modalConfirmDelete,
+  ONE_DAY_TIMESTAMP
+} from '@/utils';
 import moment from 'moment';
 import Table from '@/components/Table';
 import CreateTodo from '../components/CreateTodo';
@@ -66,7 +71,7 @@ const TodoList = () => {
 
   const getTodoList = useCallback((params?: any) => {
     params.startDate = state.date[0].valueOf();
-    params.endDate = state.date[1].valueOf();
+    params.endDate = state.date[1].valueOf() + ONE_DAY_TIMESTAMP;
     
     return serviceGetTodoList(params).then(res => {
       res.data.data.rows.map((item: any) => {

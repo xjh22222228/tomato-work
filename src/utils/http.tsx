@@ -81,7 +81,7 @@ httpInstance.interceptors.request.use(function (config) {
   if (method === 'post' || method === 'put') {
     // 处理FormData传输方式
     if (config.data instanceof FormData) {
-      for (const key in data) {
+      for (let key in data) {
         config.data.append(key, data[key])
       }
     } else {

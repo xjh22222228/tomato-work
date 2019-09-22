@@ -8,20 +8,21 @@ import { StoreState } from '@/store';
 import { LOCAL_STORAGE } from '@/constants';
 
 const { Content } = Layout;
+const { SIDEBAR_COLLAPSED } = LOCAL_STORAGE;
 
 export interface HomeMainState {
   collapsed?: boolean;
   setCollapsed?: () => void;
 }
 
-const storageCollapsed = window.localStorage.getItem(LOCAL_STORAGE.SIDEBAR_COLLAPSED);
+const storageCollapsed = Number(window.localStorage.getItem(SIDEBAR_COLLAPSED) || true);
 
 const HomeMain: React.FC = function (props) {
-  const [collapsed, setCollapsed] = useState(!!storageCollapsed);
+  const [collapsed, setCollapsed] = useState(!storageCollapsed);
 
   const handleToggleCollapsed = useCallback(() => {
-    setCollapsed(collapsed => !collapsed);
-    window.localStorage.setItem(LOCAL_STORAGE.SIDEBAR_COLLAPSED, Number(collapsed) + '');
+    setCollapsed(!collapsed);
+    window.localStorage.setItem(SIDEBAR_COLLAPSED, Number(collapsed) + '');
   }, [collapsed]);
   
   return (

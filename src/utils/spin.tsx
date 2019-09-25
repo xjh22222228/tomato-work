@@ -13,7 +13,7 @@ function start() {
     spinEl.className = 'spin-loading';
     spinEl.innerHTML = spinHTML;
     containerEl.appendChild(spinEl);
-  } catch (_) {}
+  } catch {}
 }
 
 function done() {
@@ -21,7 +21,7 @@ function done() {
     const spin = document.querySelector('.spin-loading') as any;
     if (!spin) return;
     spin.parentNode.removeChild(spin);
-  } catch (_) {}
+  } catch {}
 }
 
 export const spin = { start, done };

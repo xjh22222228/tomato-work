@@ -10,7 +10,7 @@ const config = {
     if (lang && hljs.getLanguage(lang)) {
       try {
         return hljs.highlight(lang, str).value;
-      } catch (__) {}
+      } catch {}
     }
 
     return ''; // use external default escaping

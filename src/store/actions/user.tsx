@@ -82,6 +82,6 @@ export function validateLocalStatus() {
     if (!_.isPlainObject(userInfo)) {
       userInfo = {};
     }
-  } catch (e) {}
+  } catch {}
   return setUser(userInfo);
 }

@@ -43,7 +43,7 @@ export function fullscreen() {
     } else if (docElm.msRequestFullscreen) {
       docElm.msRequestFullscreen();
     }
-  } catch (_) {
+  } catch {
     message.warn('您所使用的浏览器不支持全屏');
   }
 }
@@ -61,7 +61,7 @@ export function exitFullscreen() {
     } else if (doc.msExitFullscreen) {
       doc.msExitFullscreen();
     }
-  } catch (_) {
+  } catch {
     message.warn('您所使用的浏览器不支持退出全屏, 请按ESC');
   }
 }

@@ -70,7 +70,7 @@ export function isToday(date: any) {
     if (getTodayStartTimestamp() < parse && getTodayEndTimestamp() > parse) {
       return true;
     }
-  } catch (err) {
+  } catch {
     return false;
   }
 }

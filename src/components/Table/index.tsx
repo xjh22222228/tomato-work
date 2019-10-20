@@ -73,7 +73,11 @@ const TableFC: FC<Props & TableProps<unknown>> = ({
     .then(res => {
       if (res.data.success) {
         setState({
-          pagination: { ...state.pagination, total: res.data.data.count },
+          pagination: {
+            ...state.pagination,
+            total: res.data.data.count,
+            pageSize
+          },
           tableDataSource: res.data.data.rows
         });
       }

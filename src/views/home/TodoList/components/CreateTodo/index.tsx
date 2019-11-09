@@ -43,11 +43,7 @@ const CreateTodo: React.FC<Props> = function ({
 
   // 初始化
   const init = useCallback(() => {
-    if (rowData) {
-      setState({ content: rowData.content });
-    } else {
-      setState({ content: '' });
-    }
+    setState({ content: rowData ? rowData.content : '' });
   }, [rowData, setState]);
 
   // 提交表单

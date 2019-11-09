@@ -64,23 +64,19 @@ const CreateReminder: React.FC<Props> = function ({
   }, []);
 
   const initParams = useCallback(() => {
-    const params = {
-      dateMode: 'date',
-      date: defaultDate,
+    const params: any = {
       remarks: '',
       typeId: '',
       price: ''
     };
 
-    if (!rowData) {
-      setState(params);
-    } else {
+    if (rowData) {
       params.date = moment(rowData.date, dateFormat);
       params.remarks = rowData.remarks;
       params.typeId = rowData.typeId;
       params.price = rowData.price;
-      setState(params);
     }
+    setState(params);
   }, [setState, rowData]);
 
   const handleSubmit = useCallback((e: React.MouseEvent | React.FormEvent) => {
@@ -106,7 +102,11 @@ const CreateReminder: React.FC<Props> = function ({
 
     setState({ confirmLoading: true });
 
-    (!rowData ? serviceCreateCapitalFlow(params) : serviceUpdateCapitalFlow(rowData.id, params))
+    (
+      !rowData 
+        ? serviceCreateCapitalFlow(params) 
+        : serviceUpdateCapitalFlow(rowData.id, params)
+    )
     .then(res => {
       if (res.data.success) {
         onSuccess(res);

@@ -11,7 +11,7 @@ import { serviceCreateReminder, serviceUpdateReminder } from '@/services';
 import { isLtTodayTimestamp } from '@/utils';
 
 const { TextArea } = Input;
-const dateFormat = 'YYYY-MM-DD hh:mm:ss';
+const dateFormat = 'YYYY-MM-DD HH:mm:ss';
 const defaultDate = moment(new Date(), dateFormat);
 
 type Props = {
@@ -30,7 +30,7 @@ interface State {
 
 const initialState: State = {
   confirmLoading: false,
-  dateMode: 'time',
+  dateMode: 'date',
   date: defaultDate,
   content: ''
 };
@@ -53,9 +53,12 @@ const CreateReminder: React.FC<Props> = function ({ visible, onCancel, onSuccess
 
   const initParams = useCallback(() => {
     if (!rowData) {
-      setState({ dateMode: 'time', date: defaultDate, content: '' });
+      setState({ content: '' });
     } else {
-      setState({ date: moment(rowData.date, dateFormat), content: rowData.content });
+      setState({
+        date: moment(rowData.date, dateFormat),
+        content: rowData.content
+      });
     }
   }, [setState, rowData]);
 
@@ -77,7 +80,11 @@ const CreateReminder: React.FC<Props> = function ({ visible, onCancel, onSuccess
 
     setState({ confirmLoading: true });
 
-    (!rowData ? serviceCreateReminder(params) : serviceUpdateReminder(rowData.id, params))
+    (
+      !rowData 
+        ? serviceCreateReminder(params) 
+        : serviceUpdateReminder(rowData.id, params)
+    )
     .then(res => {
       if (res.data.success) {
         onSuccess(res);

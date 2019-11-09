@@ -13,7 +13,6 @@ tomato-work 的命名来源于《番茄工作法》，由于与本项目非常�
 ## 在线预览
 [Follow me](https://tomato-work.xiejiahe.com)
 
-为防止大量测试数据，本站不提供测试账号，首次登录请使用github。
 
 
 
@@ -27,7 +26,7 @@ tomato-work 的命名来源于《番茄工作法》，由于与本项目非常�
 "react-router-dom": "^5.0.0",
 "redux-thunk": "^2.3.0",
 "typescript": "^3.4.3",
-"antd": "^3.24.2",
+"antd": "^3.25.0",
 "axios": "^0.19.0",
 "blueimp-md5": "^2.10.0",
 "moment": "^2.24.0",
@@ -51,10 +50,9 @@ tomato-work 的命名来源于《番茄工作法》，由于与本项目非常�
 - [x] 我的备忘 - 支持Markdown & WYSIWYG
 - [x] 站内消息
 - [x] 邮件推送 - (github邮箱必须设为公开)
-- [ ] 微信登录
 - [x] 微信推送 - 感谢Server酱 (需要在个人中心设置sckey)
 - [ ] 单词备忘
-
+- [ ] 微信登录
 
 
 ## Build Setup
@@ -74,20 +72,15 @@ yarn build or npm run build
 
 
 ## 支持开源
-如果项目对您有所帮助, 请不要吝啬请作者喝杯咖啡哦~
 
 <img src="https://raw.githubusercontent.com/xjh22222228/statics/master/images/2018/32.png" width="500">
 
-本项目会长期维护，对于想学习的朋友，不要忘了给个Star！
 
 ---
 
 ## License
 [MIT](https://opensource.org/licenses/MIT)
 
-只要注明原作者许可声明，您可以自由地复制、分享、和修改。
-
-Copyright (c) 2019-present, [xiejiahe](https://github.com/xjh22222228)
 
 
 

@@ -39,10 +39,10 @@ const initialState: State = {
   isLoading: false,
   pagination: {
     pageNo: 1,
-    pageSize: 20,
+    pageSize: 50,
     showSizeChanger: true,
     total: 0,
-    pageSizeOptions: ['20', '30', '40', '50'],
+    pageSizeOptions: ['30', '50', '70', '100', '200']
   }
 };
 
@@ -83,11 +83,6 @@ const TableFC: FC<Props & TableProps<unknown>> = ({
       }
     })
     .finally(() => {
-      // 滚动条置顶
-      const tableBodyEl = document.querySelector('.ant-table-body');
-      if (tableBodyEl) {
-        tableBodyEl.scrollTop = 0;
-      }
       setState({ isLoading: false });
     });
   }, [setState, state.pagination, getTableData, tableRef]);
@@ -105,7 +100,7 @@ const TableFC: FC<Props & TableProps<unknown>> = ({
 
   useEffect(() => {
     tableRef.current.pageNo = 1;
-    tableRef.current.pageSize = 20;
+    tableRef.current.pageSize = 50;
   }, [tableRef]);
 
   useEffect(() => {

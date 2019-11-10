@@ -66,7 +66,7 @@ const Memorandum: FC<RouteComponentProps> = ({ history }) => {
     {
       (list.length > 0)
       ?
-      <Row gutter={16} type="flex">
+      <Row gutter={16} type="flex" align="bottom">
       {
         list.map((item: any) => (
           <Col span={8} key={item.id}>

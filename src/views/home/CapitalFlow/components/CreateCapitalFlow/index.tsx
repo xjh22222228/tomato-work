@@ -161,7 +161,7 @@ const CreateReminder: React.FC<Props> = function ({
         </Form.Item>
         <Form.Item label="备注">
           <TextArea 
-            rows={3} 
+            rows={5} 
             value={state.remarks} 
             onChange={e => setState({ remarks: e.target.value })} 
             maxLength={250} 

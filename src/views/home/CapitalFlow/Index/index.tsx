@@ -60,7 +60,7 @@ const Reminder: React.FC = function() {
       render: (type: any) => (<Tag color={TypeColors[type]}>{ TypeNames[type] }</Tag>)
     },
     { title: '名称', dataIndex: 'name', width: 100 },
-    { title: '创建时间', dataIndex: 'date', width: 220 },
+    { title: '参与时间', dataIndex: 'date', width: 220 },
     { title: '金额', dataIndex: 'price' },
     { title: '操作', width: 180,
       render: (row: any) => (

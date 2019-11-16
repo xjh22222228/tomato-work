@@ -2,7 +2,7 @@ import { lazy } from 'react';
 import { IRouteProps } from '@/router/types';
 import { HOME, SETTING } from './constants';
 
-import Login from '@/views/public/Login';
+import Login from '@/views/Login';
 import NoMatch from '@/views/exception/NoMatch';
 import MainEntry from '@/views/home/MainEntry';
 import Reminder from '@/views/home/Reminder';

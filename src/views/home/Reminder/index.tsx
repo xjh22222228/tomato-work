@@ -33,7 +33,7 @@ const initialState: State = {
   date: [],
   queryType: '',
   modalVisible: false,
-  currentRow: {}
+  currentRow: null
 };
 
 function reducer(state: State, action: any) {

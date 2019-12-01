@@ -10,6 +10,7 @@
   display: -webkit-box;
   overflow: hidden;
   -webkit-line-clamp: $line;
+  /* autoprefixer: off */
   -webkit-box-orient: vertical;
 }
 

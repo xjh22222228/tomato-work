@@ -10,13 +10,13 @@ tomato-work 的命名来源于《番茄工作法》，由于与本项目非常�
 ![](https://github.com/xjh22222228/statics/blob/master/images/gif/1.gif)
 
 
-## 在线预览
+## Online preview
 [Follow me](https://tomato-work.xiejiahe.com)
 
 
 
 
-## 开发技术
+## Tech
 核心技术 React纯hooks/TypeScript/Redux/Antd...
 ``` json
 "react": "^16.8.6",
@@ -26,7 +26,7 @@ tomato-work 的命名来源于《番茄工作法》，由于与本项目非常�
 "react-router-dom": "^5.0.0",
 "redux-thunk": "^2.3.0",
 "typescript": "^3.4.3",
-"antd": "^3.25.2",
+"antd": "^3.25.3",
 "axios": "^0.19.0",
 "blueimp-md5": "^2.10.0",
 "moment": "^2.24.0",
@@ -72,7 +72,7 @@ yarn build or npm run build
 
 
 
-## 支持开源
+## Support open source
 
 <img src="https://raw.githubusercontent.com/xjh22222228/statics/master/images/2018/32.png" width="500">
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
-import PrivateRoute from '@/components/PrivateRoute';
+import PrivateRoute from '@/components/private-route';
 import CONFIG from '@/config';
 import routesMap from './routes';
 import { DispatchProp, connect } from 'react-redux';

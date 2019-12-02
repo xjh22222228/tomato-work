@@ -31,7 +31,7 @@ const Type = () => {
   const [columns] = useState([
     { title: '序号', dataIndex: 'index' },
     { title: '名称', dataIndex: 'name' },
-    { title: '类型', render: (rowData: any) => (
+    { title: '类别', render: (rowData: any) => (
       <Tag color={rowData.color}>{ rowData.typeName }</Tag>
     ) },
     { title: '创建时间', dataIndex: 'createdAt' },

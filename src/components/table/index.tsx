@@ -126,6 +126,7 @@ const TableFC: FC<Props & TableProps<unknown>> = ({
       loading={state.isLoading}
       dataSource={state.tableDataSource} 
       scroll={{ y: state.tableHeight + 'px' }}
+      showHeader={state.tableDataSource.length}
       pagination={{
         ...state.pagination,
         onChange: handlePageChange,

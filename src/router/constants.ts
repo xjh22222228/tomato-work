@@ -30,7 +30,7 @@ export const HOME = {
   MEMORANDUM_DETAIL: { name: '*', path: '/home/memorandum/detail/:id' },
 
   CAPITAL_FLOW: { name: '资金流动', path: '/home/capitalFlow' },
-  CAPITAL_FLOW_TYPE: { name: '创建类型', path: '/home/capitalFlow/type' },
+  CAPITAL_FLOW_TYPE: { name: '创建类别', path: '/home/capitalFlow/type' },
 
   TODO_LIST: { name: '活动清单', path: '/home/todoList' },
 

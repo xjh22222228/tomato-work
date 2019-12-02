@@ -37,6 +37,7 @@
   // 暂无数据居中对齐
   .ant-table-placeholder {
     min-height: calc(100vh - 255px);
+    border-bottom-color: transparent;
     @include flex-center;
   }
 }

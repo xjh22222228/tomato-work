@@ -79,7 +79,7 @@ const CreateTask: React.FC<Props> = function ({ visible, rowData, onCancel, onSu
 
   return (
     <Modal
-      title="新增类型"
+      title="新增类别"
       visible={visible}
       onOk={handleSubmit}
       onCancel={() => onCancel()}

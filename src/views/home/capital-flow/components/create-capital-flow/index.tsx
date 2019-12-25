@@ -141,7 +141,7 @@ const CreateReminder: React.FC<Props> = function ({
             onChange={date => setState({ date }) }
           />
         </Form.Item>
-        <Form.Item label="名称">
+        <Form.Item label="类别">
           <Select 
             onChange={(value: string) => setState({ typeId: value })} 
             value={state.typeId}

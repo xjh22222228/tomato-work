@@ -1,7 +1,9 @@
-import React, { useState, useEffect, useCallback, useRef, useReducer, Fragment } from 'react';
+import React, { useState, useEffect, useCallback, useRef, useReducer } from 'react';
 import './style.scss';
-import { DatePicker, Button, Select, Tag, Statistic, Input } from 'antd';
 import moment from 'moment';
+import Table from '@/components/table';
+import CreateCapitalFlow from '../components/create-capital-flow';
+import { DatePicker, Button, Select, Tag, Statistic, Input } from 'antd';
 import {
   getCurMonthFirstDay,
   getCurMonthLastDay,
@@ -13,9 +15,7 @@ import {
   serviceDeleteCapitalFlow,
   serviceGetCapitalFlowType
 } from '@/services';
-import Table from '@/components/table';
 import { OPTION_TYPES, TypeNames, TypeColors } from '../enum';
-import CreateCapitalFlow from '../components/create-capital-flow';
 
 const { Search } = Input;
 const { RangePicker } = DatePicker;
@@ -30,7 +30,7 @@ interface State {
   modalVisible: boolean;
   currentRow: null | { [propName: string]: any };
   nameList: any[];
-  price: { consumption: number; income: number; };
+  price: { consumption: number; income: number; available: number; };
   expandedRowKeys: string[];
 }
 
@@ -42,7 +42,7 @@ const initialState: State = {
   modalVisible: false,
   currentRow: null,
   nameList: [],
-  price: { consumption: 0, income: 0 },
+  price: { consumption: 0, income: 0, available: 0 },
   expandedRowKeys: []
 };
 
@@ -115,7 +115,11 @@ const Reminder: React.FC = function() {
         });
 
         setState({
-          price: { income: data.income, consumption: data.consumption },
+          price: {
+            income: data.income,
+            consumption: data.consumption,
+            available: data.available
+          },
           expandedRowKeys
         });
       }
@@ -194,7 +198,7 @@ const Reminder: React.FC = function() {
         </Select>
         {
           !state.name && (
-            <Fragment>
+            <>
               <span>查询类型：</span>
               <Select 
                 onChange={(value: string) => setState({ type: value })} 
@@ -206,7 +210,7 @@ const Reminder: React.FC = function() {
                 ))
               }
               </Select>
-            </Fragment>
+            </>
           )
         }
         <span>日期：</span>
@@ -240,7 +244,7 @@ const Reminder: React.FC = function() {
           </div>
           <div className="item-price">
             <em>实际收入：￥</em>
-            <Statistic value={state.price.income - state.price.consumption} precision={2} />
+            <Statistic value={state.price.available} precision={2} />
           </div>
         </div>
       </div>

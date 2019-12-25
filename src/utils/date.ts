@@ -49,13 +49,13 @@ export function getTodayEndTimestamp() {
 }
 
 // 根据日期获取开始时间戳
-export function getStartTimestampByDate(date?: any) {
-  return new Date(date).setHours(0, 0, 0, 0) || getTodayStartTimestamp();
+export function getStartTimestampByDate(date: any = Date.now()) {
+  return new Date(date).setHours(0, 0, 0, 0);
 }
 
 // 根据日期获取结束时间戳
-export function getEndTimestampByDate(date?: any) {
-  return new Date(date).setHours(23, 59, 59) || getTodayEndTimestamp();
+export function getEndTimestampByDate(date: any = Date.now()) {
+  return new Date(date).setHours(23, 59, 59);
 }
 
 // 获取今天日期开始时间戳和结束时间戳

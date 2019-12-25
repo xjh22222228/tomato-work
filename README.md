@@ -1,19 +1,20 @@
 ## tomato-work
-tomato-work  **个人事务管理系统**, 为自己精心打造的一个系统，并开源分享。
-
-本项目搭配服务端, 具体查看 => [tomato-work-server](https://github.com/xjh22222228/tomato-work-server)
+**个人事务管理系统**, 为自己精心打造的一个系统并开源分享。
 
 tomato-work 的命名来源于《番茄工作法》，由于与本项目非常的贴近，所以因此而来。
 
-一张图快速了解什么是 **Tomato Work**
 
-![](https://github.com/xjh22222228/statics/blob/master/images/gif/1.gif)
+WEB：[tomato-work](https://github.com/xjh22222228/tomato-work)
+
+小程序：[tomato-work-weapp](https://github.com/xjh22222228/tomato-work-weapp)
+
+服务端：[tomato-work-server](https://github.com/xjh22222228/tomato-work-server)
 
 
 ## Online preview
 [Follow me](https://tomato-work.xiejiahe.com)
 
-
+![](https://github.com/xjh22222228/statics/blob/master/images/gif/1.gif)
 
 
 ## Tech
@@ -26,7 +27,7 @@ tomato-work 的命名来源于《番茄工作法》，由于与本项目非常�
 "react-router-dom": "^5.0.0",
 "redux-thunk": "^2.3.0",
 "typescript": "^3.4.3",
-"antd": "^3.25.3",
+"antd": "^3.26.4",
 "axios": "^0.19.0",
 "blueimp-md5": "^2.10.0",
 "moment": "^2.24.0",
@@ -35,9 +36,7 @@ tomato-work 的命名来源于《番茄工作法》，由于与本项目非常�
 "query-string": "^6.4.2",
 "webpack": "4.28.3",
 "bizcharts": "^3.5.4",
-"tui-editor": "^1.4.4-alpha.1",
-"markdown-it": "^9.0.1"
-"highlight.js": "^9.15.8"
+"tui-editor": "^1.4.4-alpha.1"
 ```
 
 ## Todo list

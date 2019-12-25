@@ -1,14 +1,13 @@
 import React, { FC, useState, useEffect, useCallback } from 'react';
 import './style.scss';
+import moment from 'moment';
+import NoData from '@/components/no-data/index';
 import { RouteComponentProps } from 'react-router-dom';
 import { Card, Col, Row, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import { serviceGetMemorandum, serviceDeleteMemorandum } from '@/services';
-import moment from 'moment';
 import { defaultTitle } from '../constants';
-import md from '@/utils/markdown';
 import { modalConfirmDelete } from '@/utils';
-import NoData from '@/components/no-data/index';
 
 
 const Memorandum: FC<RouteComponentProps> = ({ history }) => {
@@ -49,9 +48,6 @@ const Memorandum: FC<RouteComponentProps> = ({ history }) => {
     .then(res => {
       if (res.data.success) {
         const data = res.data.data.map((item: any) => {
-          // 小段落显示，只截取前100字符串
-          item.markdown = item.markdown.slice(0, 100);
-          item.contentHTML = md.render(item.markdown);
           item.createdAt = moment(item.createdAt).format('YYYY/M/D HH:mm');
           item.title = item.title || defaultTitle;
           return item;
@@ -75,7 +71,7 @@ const Memorandum: FC<RouteComponentProps> = ({ history }) => {
                 { item.createdAt }
                 <div 
                   className="content" 
-                  dangerouslySetInnerHTML={{ __html: item.contentHTML }}
+                  dangerouslySetInnerHTML={{ __html: item.html }}
                 >
                 </div>
                 <div className="button-group">

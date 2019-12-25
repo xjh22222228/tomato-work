@@ -1,6 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
 import './style.scss';
-import md from '@/utils/markdown';
 import { Icon } from 'antd';
 import { match, Link, RouteComponentProps } from 'react-router-dom';
 import { serviceGetMemorandumById } from '@/services';
@@ -23,11 +22,10 @@ const Detail: FC<Props & RouteComponentProps> = ({ computedMatch, history }) => 
     serviceGetMemorandumById(id)
     .then(res => {
       if (res.data.success) {
-        const html = md.render(res.data.data.markdown);
         const title = res.data.data.title || defaultTitle;
         document.title = title;
         setTitle(title);
-        setContent(html);
+        setContent(res.data.data.html);
       }
     });
   }, [id]);

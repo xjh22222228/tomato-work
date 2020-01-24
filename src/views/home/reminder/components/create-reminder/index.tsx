@@ -1,4 +1,5 @@
 import React, { useCallback, useReducer, useEffect } from 'react';
+import moment from 'moment';
 import { 
   Modal,
   Form,
@@ -6,7 +7,6 @@ import {
   DatePicker,
   message
 } from 'antd';
-import moment from 'moment';
 import { serviceCreateReminder, serviceUpdateReminder } from '@/services';
 import { isLtTodayTimestamp } from '@/utils';
 
@@ -70,9 +70,7 @@ const CreateReminder: React.FC<Props> = function ({ visible, onCancel, onSuccess
     };
 
     try {
-      if (!params.content) {
-        throw new Error('内容不能为空');
-      }
+      if (!params.content) throw new Error('内容不能为空');
     } catch (err) {
       message.warn(err.message);
       return;
@@ -115,7 +113,7 @@ const CreateReminder: React.FC<Props> = function ({ visible, onCancel, onSuccess
             showTime
             allowClear={false}
             value={state.date}
-            onPanelChange={(value, dateMode) => setState({ dateMode }) }
+            onPanelChange={(value, dateMode) => setState({ dateMode })}
             onChange={date => setState({ date }) }
             disabledDate={isLtTodayTimestamp}
           />

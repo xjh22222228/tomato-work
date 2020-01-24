@@ -41,9 +41,7 @@ const MoneyAccessChart = () => {
   return (
     <div className="money-access">
       <h2 className="title">过去7天资金流动</h2>
-      {
-        (totalPrice > 0)
-        ?
+      {(totalPrice > 0) ? (
         <Chart height={400} data={data} scale={cols} forceFit>
           <Legend />
           <Axis
@@ -55,21 +53,19 @@ const MoneyAccessChart = () => {
             type="line"
             position="date*price"
             size={2}
-            color={'name'}
-            shape={'smooth'}
+            color="name"
+            shape="smooth"
           />
           <Geom
             type="point"
             position="date*price"
             size={4}
-            shape={'circle'}
-            color={'name'}
+            shape="circle"
+            color="name"
             style={{ stroke: '#fff', lineWidth: 1 }}
           />
         </Chart>
-        :
-        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-      }
+      ) : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
     </div>
   )
 };

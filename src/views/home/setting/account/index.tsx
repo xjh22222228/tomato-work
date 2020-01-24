@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import {
-  Form, Input, Button, message, Divider
-} from 'antd';
+import md5 from 'blueimp-md5';
 import { connect } from 'react-redux';
 import { StoreState } from '@/store';
 import { UserInfoProps } from '@/store/reducers/user';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { useFormInput } from '@/hooks';
 import { serviceUpdateUser, serviceGetUserConfig, serviceUpdateUserConfig } from '@/services';
-import md5 from 'blueimp-md5';
+import {
+  Form, Input, Button, message, Divider
+} from 'antd';
 
 type Props = {
   userInfo: UserInfoProps;

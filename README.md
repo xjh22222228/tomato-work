@@ -27,7 +27,7 @@ WEB：[tomato-work](https://github.com/xjh22222228/tomato-work)
 "react-router-dom": "^5.1.2",
 "redux-thunk": "^2.3.0",
 "typescript": "^3.7.2",
-"antd": "^3.26.5",
+"antd": "^3.26.7",
 "axios": "^0.19.0",
 "blueimp-md5": "^2.12.0",
 "moment": "^2.24.0",

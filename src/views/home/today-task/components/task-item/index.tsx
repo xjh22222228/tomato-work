@@ -1,13 +1,13 @@
 import React, { useCallback } from 'react';
 import './style.scss';
+import moment from 'moment';
+import { modalConfirmDelete } from '@/utils';
+import { serviceDeleteTask, serviceUpdateTask } from '@/services';
 import {
   Card,
   Button,
   Rate
 } from 'antd';
-import { modalConfirmDelete } from '@/utils';
-import moment from 'moment';
-import { serviceDeleteTask, serviceUpdateTask } from '@/services';
 
 interface Props {
   data: {
@@ -48,11 +48,11 @@ const TaskItem: React.FC<Props> = ({ data, reloadData }) => {
       hoverable 
       className="task-component"
     >
-      <p className="content">{ data.content }</p>
+      <p className="content">{data.content}</p>
       <div className="level">
         <span>重要级别：</span>
         <Rate value={data.count} disabled></Rate>
-        <p>创建时间: { moment(data.createdAt).format('HH:mm:ss') }</p>
+        <p>创建时间: {moment(data.createdAt).format('HH:mm:ss')}</p>
       </div>
       <div className="button-wrapper">
         <Button 
@@ -62,9 +62,7 @@ const TaskItem: React.FC<Props> = ({ data, reloadData }) => {
         >
           删除
         </Button>
-        {
-          (data.type === 1)
-          &&
+        {(data.type === 1) && (
           <Button 
             type="primary" 
             size="small"
@@ -72,10 +70,8 @@ const TaskItem: React.FC<Props> = ({ data, reloadData }) => {
           >
             开始
           </Button>
-        }
-        {
-          ([2, 3].includes(data.type))
-          &&
+        )}
+        {([2, 3].includes(data.type)) && (
           <Button 
             type="primary" 
             size="small"
@@ -83,10 +79,8 @@ const TaskItem: React.FC<Props> = ({ data, reloadData }) => {
           >
             回退
           </Button>
-        }
-        {
-          (data.type === 2)
-          &&
+        )}
+        {(data.type === 2) && (
           <Button 
             type="primary" 
             size="small"
@@ -94,7 +88,7 @@ const TaskItem: React.FC<Props> = ({ data, reloadData }) => {
           >
             完成
           </Button>
-        }
+        )}
       </div>
     </Card>
   )

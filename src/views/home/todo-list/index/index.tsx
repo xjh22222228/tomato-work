@@ -1,4 +1,9 @@
 import React, { useReducer, useCallback, useEffect, useRef, useState } from 'react';
+import moment from 'moment';
+import Table from '@/components/table';
+import CreateTodo from '../components/create-todo';
+import { serviceGetTodoList, serviceDeleteTodoList, serviceUpdateTodoList } from '@/services';
+import { STATUS } from '../constants';
 import { DatePicker, Button, Tag } from 'antd';
 import {
   getThisYearFirstDay,
@@ -6,11 +11,6 @@ import {
   modalConfirmDelete,
   ONE_DAY_TIMESTAMP
 } from '@/utils';
-import moment from 'moment';
-import Table from '@/components/table';
-import CreateTodo from '../components/create-todo';
-import { serviceGetTodoList, serviceDeleteTodoList, serviceUpdateTodoList } from '@/services';
-import { STATUS } from '../constants';
 
 const { RangePicker } = DatePicker;
 const dateFormat = 'YYYY-MM-DD';
@@ -41,7 +41,7 @@ const TodoList = () => {
   const tableRef = useRef<any>(null);
   const [tableColumns] = useState([
     { title: '状态', dataIndex: 'status', width: 90, render: (status: number) => (
-      <Tag color={STATUS[status].color}>{ STATUS[status].text }</Tag>
+      <Tag color={STATUS[status].color}>{STATUS[status].text}</Tag>
     )},
     { title: '创建时间', dataIndex: 'createdAt', width: 170 },
     { title: '活动内容', dataIndex: 'content', className: 'word-break_break-all' },

@@ -1,11 +1,11 @@
 import React from 'react';
+import CONFIG from '@/config';
+import qs from 'query-string';
 import { Switch, Route, Redirect, withRouter, RouteComponentProps } from 'react-router-dom';
 import { IRouteProps } from '@/router/types';
-import CONFIG from '@/config';
 import { connect } from 'react-redux';
 import { StoreState } from '@/store/index';
 import { HOME } from '@/router/constants';
-import qs from 'query-string';
 
 type Props = IRouteProps & ReturnType<typeof mapStateToProps> & RouteComponentProps;
 
@@ -56,28 +56,22 @@ const PrivateRoute: React.FC<Props> = function ({
   return (
     <Route render={props => {
       return (
-        auth
-          ?
+        auth ? (
           <Component {...props} {...rest}>
-          {
-            Array.isArray(childrenRoutes)
-              ? (
-                <Switch>
-                {
-                  childrenRoutes.map((route, idx: number) => {
-                    return <PrivateRouteComponent {...route} key={idx} />;
-                  })
-                }
-                </Switch>
-              )
-              : null
-          }
+            {Array.isArray(childrenRoutes) ? (
+              <Switch>
+                {childrenRoutes.map((route, idx: number) => (
+                  <PrivateRouteComponent {...route} key={idx} />
+                ))}
+              </Switch>
+            ) : null}
           </Component>
-          :
+        ) : (
           <Redirect to={{
             pathname: '/',
             search: `?redirectUrl=${props.location.pathname}`
           }} />
+        )
       )
     }} />
   )

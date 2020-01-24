@@ -6,7 +6,7 @@ function handleError() {
   return true;
 }
 
-const Avatar: React.FC<AvatarProps> = (props): JSX.Element => {
+const Avatar: React.FC<AvatarProps> = props => {
   return (
     <AvatarComponent {...props} onError={handleError} />
   )

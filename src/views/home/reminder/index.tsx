@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useCallback, useRef, useReducer } from 'react';
+import Table from '@/components/table';
+import moment from 'moment';
+import CreateReminder from './components/create-reminder';
 import { connect } from 'react-redux';
 import { DatePicker, Button, Select, Tag, Modal } from 'antd';
-import moment from 'moment';
+import { serviceGetReminder, serviceDeleteReminder } from '@/services';
 import {
   getCurMonthFirstDay,
   getCurMonthLastDay,
   modalConfirmDelete,
   ONE_DAY_TIMESTAMP
 } from '@/utils';
-import CreateReminder from './components/create-reminder';
-import { serviceGetReminder, serviceDeleteReminder } from '@/services';
-import Table from '@/components/table';
 
 const { RangePicker } = DatePicker;
 const Option = Select.Option;
@@ -51,7 +51,7 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
   const [tableColumns] = useState([
     { title: '状态', dataIndex: 'type', width: 100,
       render: (row: any) => (
-        <Tag color={STATUS_TYPE[row].color}>{ STATUS_TYPE[row].text }</Tag>
+        <Tag color={STATUS_TYPE[row].color}>{STATUS_TYPE[row].text}</Tag>
       )
     },
     { title: '提醒时间', dataIndex: 'date', width: 220 },
@@ -159,7 +159,7 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
           value={state.date} 
           onChange={(date: any) => setState({ date })} 
         />
-        <Button type="primary" onClick={() => tableRef.current.getTableData() }>查询</Button>
+        <Button type="primary" onClick={() => tableRef.current.getTableData()}>查询</Button>
         <Button onClick={() => setState({ modalVisible: true, currentRow: null })}>新增</Button>
         <Button onClick={initParams}>重置</Button>
       </div>

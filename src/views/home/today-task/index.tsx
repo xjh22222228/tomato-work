@@ -1,12 +1,13 @@
 import React, { useReducer, useCallback, useEffect } from 'react';
 import './style.scss';
-import { DatePicker, Button, Tag, Row, Col } from 'antd';
+import NoData from '@/components/no-data/index';
 import TaskItem from './components/task-item';
 import CreateTask from './components/create-task';
-import { getStartTimestampByDate, getEndTimestampByDate } from '@/utils';
 import moment from 'moment';
+import { DatePicker, Button, Tag, Row, Col } from 'antd';
+import { getStartTimestampByDate, getEndTimestampByDate } from '@/utils';
 import { serviceGetTask } from '@/services';
-import NoData from '@/components/no-data/index';
+
 
 const dateFormat = 'YYYY-MM-DD';
 const datePickerValue = moment(new Date(getStartTimestampByDate()), dateFormat);
@@ -92,37 +93,30 @@ const TodayTask = () => {
         <Button onClick={initParams}>重置</Button>
       </div>
       <div className="wrapper">
-      {
-        (
+        {(
           state.data.wait.length > 0 ||
           state.data.process.length > 0 ||
           state.data.finished.length > 0 ||
           state.data.unfinished.length > 0
-        )
-        ?
-        <Row gutter={24} type="flex">
-        {
-          Object.keys(state.data).map((key: string) => (
-            <Col span={6} key={key}>
-              <div className="text-align_center">
-                <Tag color={TASK_TYPE[key].color}>{ TASK_TYPE[key].text }</Tag>
-              </div>
-              {
-                state.data[key].map((item: any) => (
+        ) ? (
+          <Row gutter={24} type="flex">
+            {Object.keys(state.data).map((key: string) => (
+              <Col span={6} key={key}>
+                <div className="text-align_center">
+                  <Tag color={TASK_TYPE[key].color}>{TASK_TYPE[key].text}</Tag>
+                </div>
+                {state.data[key].map((item: any) => (
                   <TaskItem key={item.id} data={item} reloadData={getTask} />
-                ))
-              }
-            </Col>
-          ))
-        }
-        </Row>
-        :
-        <NoData
-          message="还没有待办事项，是否马上创建？"
-          onClick={() => setState({ showCreateTaskModal: true })}
-        />
-      }
-        
+                ))}
+              </Col>
+            ))}
+          </Row>
+        ) : (
+          <NoData
+            message="还没有待办事项，是否马上创建？"
+            onClick={() => setState({ showCreateTaskModal: true })}
+          />
+        )}
       </div>
       <CreateTask
         visible={state.showCreateTaskModal}

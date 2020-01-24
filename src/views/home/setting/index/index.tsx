@@ -1,9 +1,9 @@
 import React, { Suspense, useEffect, useState } from 'react';
 import './style.scss';
-import { Layout, Menu } from 'antd';
-import { Switch, Link, RouteComponentProps } from 'react-router-dom';
 import PrivateRoute from '@/components/private-route/index';
 import SuspenseFallback from '@/components/suspense-fallback/index';
+import { Layout, Menu } from 'antd';
+import { Switch, Link, RouteComponentProps } from 'react-router-dom';
 import { SETTING_SIDER_MENU_LIST } from '@/constants';
 import { settingRoutes } from '@/router/routes';
 
@@ -29,23 +29,19 @@ const SettingIndex: React.FC<RouteComponentProps> = function ({ location }) {
           selectedKeys={[selectedKeys]}
           style={{ height: '100%' }}
         >
-        {
-          SETTING_SIDER_MENU_LIST.map(menu => (
+          {SETTING_SIDER_MENU_LIST.map(menu => (
             <Menu.Item key={menu.path}>
-              <Link to={menu.path}>{ menu.name }</Link>
+              <Link to={menu.path}>{menu.name}</Link>
             </Menu.Item>
-          ))
-        }
+          ))}
         </Menu>
       </Sider>
       <Content style={{ padding: '0 50px 0 30px' }}>
         <Suspense fallback={SuspenseFallback()}>
           <Switch>
-          {
-            settingRoutes.map((route, idx) => (
+            {settingRoutes.map((route, idx) => (
               <PrivateRoute {...route} key={idx} />
-            ))
-          }
+            ))}
           </Switch>
         </Suspense>
       </Content>

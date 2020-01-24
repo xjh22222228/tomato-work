@@ -99,11 +99,9 @@ const CreateTask: React.FC<Props> = function ({ visible, rowData, onCancel, onSu
             value={state.type} 
             onChange={(value: any) => setState({ type: value })}
           >
-          {
-            TYPES.map(item => (
-              <Option value={item.value} key={item.value}>{ item.name }</Option>
-            ))
-          }
+          {TYPES.map(item => (
+            <Option value={item.value} key={item.value}>{item.name}</Option>
+          ))}
           </Select>
         </Form.Item>
       </Form>

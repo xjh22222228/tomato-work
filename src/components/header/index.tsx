@@ -1,16 +1,16 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import './style.scss';
+import Avatar from '@/components/avatar';
+import moment from 'moment';
+import config from '@/config';
 import { Layout, Icon, Badge, Popover } from 'antd';
 import { withRouter, RouteComponentProps, Link } from 'react-router-dom';
 import { HomeMainState } from '@/views/home/main-entry/index';
 import { connect } from 'react-redux';
 import { StoreState } from '@/store';
 import { logout } from '@/store/actions/user';
-import Avatar from '@/components/avatar';
 import { SETTING } from '@/router/constants';
 import { serviceGetInnerMessage } from '@/services';
-import moment from 'moment';
-import config from '@/config';
 import { fullscreen, exitFullscreen } from '@/utils';
 
 const { Header } = Layout;
@@ -24,11 +24,9 @@ type Props = ReturnType<typeof mapStateToProps> & HomeMainState & RouteComponent
 
 const PopoverContent = (
   <div className="popover-content">
-  {
-    popoverList.map(el => (
-      <Link to={el.path} key={el.name} className="ls">{ el.name }</Link>
-    ))
-  }
+  {popoverList.map(el => (
+    <Link to={el.path} key={el.name} className="ls">{el.name}</Link>
+  ))}
     <div className="ls sign-out" onClick={() => logout()}>
       <Icon type="poweroff" style={{ fontSize: '14px', marginRight: '5px' }} />
       退出
@@ -73,8 +71,8 @@ const HomeHeader: React.FC<Props> = function ({
       {
         messageList.map((item: any) => (
           <div className="item-block ls" key={item.id}>
-            <div className="content">{ item.content }</div>
-            <div className="date">{ item.createdAt }</div>
+            <div className="content">{item.content}</div>
+            <div className="date">{item.createdAt}</div>
           </div>
         ))
       }
@@ -93,7 +91,7 @@ const HomeHeader: React.FC<Props> = function ({
     <Header>
       <div className="left">
         <Icon 
-          type={ collapsed ? 'menu-unfold' : 'menu-fold' } 
+          type={collapsed ? 'menu-unfold' : 'menu-fold'} 
           style={{ cursor: 'pointer', fontSize: '20px' }} 
           onClick={setCollapsed}
         />
@@ -107,7 +105,7 @@ const HomeHeader: React.FC<Props> = function ({
           </li>
         </Popover>
         <li onClick={handleFullscreen}>
-          <Icon type={isFullscreen ? 'fullscreen-exit' : 'fullscreen' } />
+          <Icon type={isFullscreen ? 'fullscreen-exit' : 'fullscreen'} />
         </li>
         <li>
           <a href={config.github.bug} target="_blank">
@@ -125,7 +123,7 @@ const HomeHeader: React.FC<Props> = function ({
         >
         <li>
           <Avatar src={userInfo.avatarUrl} />
-          <span className="username">{ userInfo.username }</span>
+          <span className="username">{userInfo.username}</span>
         </li>
         </Popover>
       </ul>

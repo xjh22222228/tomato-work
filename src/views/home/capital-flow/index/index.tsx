@@ -190,29 +190,23 @@ const Reminder: React.FC = function() {
           value={state.name}
         >
           <Option value="">全部</Option>
-        {
-          state.nameList.map((item: any) => (
-            <Option value={item.id} key={item.id}>{ item.name }</Option>
-          ))
-        }
+        {state.nameList.map((item: any) => (
+          <Option value={item.id} key={item.id}>{item.name}</Option>
+        ))}
         </Select>
-        {
-          !state.name && (
-            <>
-              <span>查询类型：</span>
-              <Select 
-                onChange={(value: string) => setState({ type: value })} 
-                value={state.type}
-              >
-              {
-                OPTION_TYPES.map(item => (
-                  <Option value={item.value} key={item.value}>{ item.name }</Option>
-                ))
-              }
-              </Select>
-            </>
-          )
-        }
+        {!state.name && (
+          <>
+            <span>查询类型：</span>
+            <Select 
+              onChange={(value: string) => setState({ type: value })} 
+              value={state.type}
+            >
+            {OPTION_TYPES.map(item => (
+              <Option value={item.value} key={item.value}>{item.name}</Option>
+            ))}
+            </Select>
+          </>
+        )}
         <span>日期：</span>
         <RangePicker
           format={dateFormat} 
@@ -252,7 +246,7 @@ const Reminder: React.FC = function() {
         ref={tableRef}
         getTableData={getCapitalFlow}
         columns={tableColumns} 
-        expandedRowRender={(data: any) => <p className="white-space_pre">{ data.remarks }</p>}
+        expandedRowRender={(data: any) => <p className="white-space_pre">{data.remarks}</p>}
         expandedRowKeys={state.expandedRowKeys}
         onExpand={handleOnExpand}
       />

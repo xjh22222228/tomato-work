@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import './style.scss';
+import Editor from 'tui-editor';
 import { Input, Button, message } from 'antd';
 import { RouteComponentProps, match } from 'react-router-dom';
-import Editor from 'tui-editor';
 import { HOME } from '@/router/constants';
+import { defaultTitle } from '../constants';
 import {
   serviceCreateMemorandum,
   serviceGetMemorandumById,
   serviceUpdateMemorandum
 } from '@/services';
-import { defaultTitle } from '../constants';
 
 // https://ui.toast.com/tui-editor/
 

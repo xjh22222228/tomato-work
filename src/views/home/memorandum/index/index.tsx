@@ -59,37 +59,33 @@ const Memorandum: FC<RouteComponentProps> = ({ history }) => {
 
   return (
     <div className="memorandum">
-    {
-      (list.length > 0)
-      ?
-      <Row gutter={16} type="flex" align="bottom">
-      {
-        list.map((item: any) => (
-          <Col span={8} key={item.id}>
-            <Link to={`/home/memorandum/detail/${item.id}`}>
-              <Card title={item.title} hoverable>
-                { item.createdAt }
-                <div 
-                  className="content" 
-                  dangerouslySetInnerHTML={{ __html: item.html }}
-                >
-                </div>
-                <div className="button-group">
-                  <Button size="small" onClick={handleButton.bind(null, 0, item)}>删除</Button>
-                  <Button size="small" onClick={handleButton.bind(null, 1, item)}>编辑</Button>
-                </div>
-              </Card>
-            </Link>
-          </Col>
-        ))
-      }
-      </Row>
-      :
-      <NoData
-        message="还没有备忘录，是否马上创建？"
-        onClick={handleButton.bind(null, 2, null)}
-      />
-    }
+      {(list.length > 0) ? (
+        <Row gutter={16} type="flex" align="bottom">
+          {list.map((item: any) => (
+            <Col span={8} key={item.id}>
+              <Link to={`/home/memorandum/detail/${item.id}`}>
+                <Card title={item.title} hoverable>
+                  {item.createdAt}
+                  <div 
+                    className="content" 
+                    dangerouslySetInnerHTML={{ __html: item.html }}
+                  >
+                  </div>
+                  <div className="button-group">
+                    <Button size="small" onClick={handleButton.bind(null, 0, item)}>删除</Button>
+                    <Button size="small" onClick={handleButton.bind(null, 1, item)}>编辑</Button>
+                  </div>
+                </Card>
+              </Link>
+            </Col>
+          ))}
+        </Row>
+      ) : (
+        <NoData
+          message="还没有备忘录，是否马上创建？"
+          onClick={handleButton.bind(null, 2, null)}
+        />
+      )}
     </div>
   )
 };

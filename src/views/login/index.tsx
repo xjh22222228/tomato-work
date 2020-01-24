@@ -4,8 +4,13 @@ import React, {
   useCallback
 } from 'react';
 import './style.scss';
-import { Button, Input, Icon, message, Popover } from 'antd';
 import Footer from '@/components/footer';
+import qs from 'query-string';
+import md5 from 'blueimp-md5';
+import _ from 'lodash';
+import api from '@/api';
+import config from '@/config';
+import { Button, Input, Icon, message, Popover } from 'antd';
 import { useFormInput } from '@/hooks';
 import { RouteComponentProps } from 'react-router-dom';
 import { DispatchProp, connect } from 'react-redux';
@@ -15,11 +20,6 @@ import { githubAuthz, loginByToken, setUser } from '@/store/actions';
 import { serviceLogin } from '@/services';
 import { HOME } from '@/router/constants';
 import { LOCAL_STORAGE } from '@/constants';
-import qs from 'query-string';
-import md5 from 'blueimp-md5';
-import _ from 'lodash';
-import api from '@/api';
-import config from '@/config';
 import { randomCode } from '@/utils';
 
 
@@ -58,15 +58,9 @@ const Login: React.FC<LoginProps> = function ({
     const _code = code.value.trim();
 
     try {
-      if (!_loginName) {
-        throw new Error('用户名不能为空');
-      }
-      if (!_password) {
-        throw new Error('密码不能为空');
-      }
-      if (_code !== captcha) {
-        throw new Error('验证码错误');
-      }
+      if (!_loginName) throw new Error('用户名不能为空');
+      if (!_password) throw new Error('密码不能为空');
+      if (_code !== captcha) throw new Error('验证码错误');
 
       setLoading(true);
       serviceLogin({ loginName: _loginName, password: md5(_password), code: _code })
@@ -126,7 +120,7 @@ const Login: React.FC<LoginProps> = function ({
         <div>
           <div className="logo-wrap">
             <img src={require('@/assets/img/common/logo.png')} className="logo" />
-            <em>{ config.title }</em>
+            <em>{config.title}</em>
           </div>
           <Input.Group>
             <Input
@@ -170,7 +164,7 @@ const Login: React.FC<LoginProps> = function ({
             block 
             onClick={handleSubmit}
           >
-            { loading ? '登 录 中...' : '登 录' }
+            {loading ? '登 录 中...' : '登 录'}
           </Button>
           <div className="other-login">
             <span className="txt">其他登录方式</span>

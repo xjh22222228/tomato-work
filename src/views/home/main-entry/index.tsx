@@ -1,8 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import './style.scss';
-import { Layout } from 'antd';
 import Sidebar from '@/components/sidebar';
 import Header from '@/components/header';
+import { Layout } from 'antd';
 import { connect } from 'react-redux';
 import { StoreState } from '@/store';
 import { LOCAL_STORAGE } from '@/constants';
@@ -32,7 +32,7 @@ const HomeMain: React.FC = function (props) {
         <Layout className="home-layout">
           <Header {...{ collapsed, setCollapsed: handleToggleCollapsed }}  />
           <Content id="container">
-            { React.Children.map(props.children, child => child) }
+            {React.Children.map(props.children, child => child)}
           </Content>
         </Layout>
       </Layout>

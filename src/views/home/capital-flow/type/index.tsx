@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useReducer, useCallback } from 'react';
 import './style.scss';
+import moment from 'moment';
+import CreateType from '../components/create-type/index';
 import { Table, Button, Tag, message } from 'antd';
 import {
   serviceGetCapitalFlowType,
   serviceDeleteCapitalFlowType
 } from '@/services';
 import { TypeNames, TypeColors } from '../enum';
-import moment from 'moment';
-import CreateType from '../components/create-type/index';
 
 const initialState = {
   modalVisible: false,
@@ -32,7 +32,7 @@ const Type = () => {
     { title: '序号', dataIndex: 'index' },
     { title: '名称', dataIndex: 'name' },
     { title: '类别', render: (rowData: any) => (
-      <Tag color={rowData.color}>{ rowData.typeName }</Tag>
+      <Tag color={rowData.color}>{rowData.typeName}</Tag>
     ) },
     { title: '创建时间', dataIndex: 'createdAt' },
     { title: '操作', render: (rowData: any) => (

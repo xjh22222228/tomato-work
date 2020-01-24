@@ -1,10 +1,10 @@
 import React, { useReducer, useCallback, useEffect, useMemo } from 'react';
 import './style.scss';
-import { Row, Col, Card, Progress } from 'antd';
-import CONFIG from '@/config';
-import { totalPercentage } from '@/utils';
 import bytes from 'bytes';
 import moment from 'moment';
+import CONFIG from '@/config';
+import { Row, Col, Card, Progress } from 'antd';
+import { totalPercentage } from '@/utils';
 import { serviceGetInnerMessage } from '@/services';
 
 interface Props {
@@ -26,12 +26,8 @@ const initialState: State = {
 };
 
 const statusColor = (percentage: number) => {
-  if (percentage < 40) {
-    return '#52c41a';
-  }
-  if (percentage < 80) {
-    return '#ffa500';
-  }
+  if (percentage < 40) return '#52c41a';
+  if (percentage < 80) return '#ffa500';
   return '#f50';
 };
 let timer: any;
@@ -92,23 +88,23 @@ const System: React.FC<Props> = ({ systemInfo }) => {
         >
           <p className="item-text">
             <em>系统类型：</em>
-            { systemInfo.platform }{ systemInfo.arch }
+            {systemInfo.platform}{systemInfo.arch}
           </p>
           <p className="item-text">
             <em>Node版本：</em>
-            { systemInfo.nodeVersion }
+            {systemInfo.nodeVersion}
           </p>
           <p className="item-text">
             <em>MySQL版本：</em>
-            { systemInfo.mysqlVersion }
+            {systemInfo.mysqlVersion}
           </p>
           <p className="item-text">
             <em>当前环境：</em>
-            { CONFIG.isProduction ? '生产环境' : '开发环境' }
+            {CONFIG.isProduction ? '生产环境' : '开发环境'}
           </p>
           <p className="item-text">
             <em>系统时间：</em>
-            { state.curSystemTime }
+            {state.curSystemTime}
           </p>
         </Card>
       </Col>
@@ -118,13 +114,11 @@ const System: React.FC<Props> = ({ systemInfo }) => {
           hoverable 
           loading={state.loading}
         >
-        {
-          state.messageList.map((msg: any) => (
-            <p className="item-text" key={msg.id}>
-              <em>{ msg.content }</em>
-            </p>
-          ))
-        }
+        {state.messageList.map((msg: any) => (
+          <p className="item-text" key={msg.id}>
+            <em>{msg.content}</em>
+          </p>
+        ))}
         </Card>
       </Col>
       <Col xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -139,7 +133,7 @@ const System: React.FC<Props> = ({ systemInfo }) => {
             strokeColor={statusColor(memPercentage)} 
             format={percent => percent + '%'}
           />
-          <div className="surplus">剩余{ bytes(systemInfo.freemem) }</div>
+          <div className="surplus">剩余{bytes(systemInfo.freemem)}</div>
         </Card>
       </Col>
     </Row>

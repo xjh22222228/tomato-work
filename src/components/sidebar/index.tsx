@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import './style.scss';
+import config from '@/config';
 import { Layout, Menu, Icon } from 'antd';
 import { withRouter, RouteComponentProps, Link } from 'react-router-dom';
 import { HomeMainState } from '@/views/home/main-entry/index';
 import { HOME_SIDER_MENU_LIST } from '@/constants';
-import config from '@/config';
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
@@ -64,39 +64,36 @@ const Sidebar: React.FC<Props> = function ({ location, collapsed }) {
         mode="inline"
         theme="dark" 
       >
-      {
-        HOME_SIDER_MENU_LIST.map(menu => {
-          if (Array.isArray(menu.children)) {
-            return (
-              <SubMenu
-                key={menu.name}
-                title={
-                  <>
-                    <Icon type={menu.type} />
-                    <span>{ menu.name }</span>
-                  </>
-                }
-              >
-              {
-                menu.children.map(subItem => (
+        {HOME_SIDER_MENU_LIST.map(menu => {
+            if (Array.isArray(menu.children)) {
+              return (
+                <SubMenu
+                  key={menu.name}
+                  title={
+                    <>
+                      <Icon type={menu.type} />
+                      <span>{menu.name}</span>
+                    </>
+                  }
+                >
+                {menu.children.map(subItem => (
                   <Menu.Item key={subItem.path}>
-                    <Link to={subItem.path}>{ subItem.name }</Link>
+                    <Link to={subItem.path}>{subItem.name}</Link>
                   </Menu.Item>
-                ))
-              }
-              </SubMenu>
+                ))}
+                </SubMenu>
+              )
+            }
+
+            return (
+              <Menu.Item key={menu.path}>
+                <Link to={menu.path}>
+                  <Icon type={menu.type} />
+                  <span>{menu.name}</span>
+                </Link>
+              </Menu.Item>
             )
-          }
-          return (
-            <Menu.Item key={menu.path}>
-              <Link to={menu.path}>
-                <Icon type={menu.type} />
-                <span>{ menu.name }</span>
-              </Link>
-            </Menu.Item>
-          )
-        })
-      }
+          })}
       </Menu>
     </Sider>
   )

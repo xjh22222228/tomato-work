@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
+import './style.scss';
 import { Row, Col, Icon, Statistic } from 'antd';
 import { Link } from 'react-router-dom';
-import './style.scss';
 import { serviceGetPanelData } from '@/services';
 import { HOME } from '@/router/constants';
 
@@ -34,18 +34,16 @@ const PanelGroup = () => {
 
   return (
     <Row gutter={{ xs: 8, sm: 16, md: 24}} className="panel-group">
-    {
-      state.map(item => (
-        <Col xl={6} lg={12} md={12} sm={24} xs={24} key={item.title}>
-          <Link to={item.path} className="block-item">
-            <Icon type={item.iconType} theme="filled" />
-            <div className="data">
-              <Statistic title={item.title} value={item.total} suffix={item.suffix} />
-            </div>
-          </Link>
-        </Col>
-      ))
-    }
+    {state.map(item => (
+      <Col xl={6} lg={12} md={12} sm={24} xs={24} key={item.title}>
+        <Link to={item.path} className="block-item">
+          <Icon type={item.iconType} theme="filled" />
+          <div className="data">
+            <Statistic title={item.title} value={item.total} suffix={item.suffix} />
+          </div>
+        </Link>
+      </Col>
+    ))}
     </Row>
   )
 };

@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
+import PenelGroup from './components/penel-group';
+import SystemInfo from './components/system-info';
+import MoneyAccessChart from './components/money-access-chart';
 import { DispatchProp, connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import { getSystemInfo } from '@/store/actions';
 import { StoreState } from '@/store';
-import PenelGroup from './components/penel-group';
-import SystemInfo from './components/system-info';
-import MoneyAccessChart from './components/money-access-chart';
 
 const mapStateToProps = ({ system }: StoreState) => ({ system });
 

@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './style.scss';
-import { Button } from 'antd';
-import Table from '@/components/table';
-import { serviceGetInnerMessage, serviceUpdateInnerMessageHasRead } from '@/services';
 import moment from 'moment';
-import MessageType from './enum';
+import Table from '@/components/table';
+import { Button } from 'antd';
+import { serviceGetInnerMessage, serviceUpdateInnerMessageHasRead } from '@/services';
+
 
 const InnerMessage = () => {
   const tableRef = useRef<any>(null);
@@ -16,7 +16,7 @@ const InnerMessage = () => {
       )},
     { title: '标题内容', dataIndex: 'content' },
     { title: '提交时间', dataIndex: 'createdAt', width: 150 },
-    { title: '类型', dataIndex: 'typeName', width: 130 }
+    { title: '类型', dataIndex: 'title', width: 130 }
   ]);
 
   const getInnerMessage = useCallback((params?: object) => {
@@ -25,7 +25,6 @@ const InnerMessage = () => {
       if (res.data.success) {
         res.data.data.rows.forEach((item: any) => {
           item.createdAt = moment(item.createdAt).format('YYYY-MM-DD HH:mm');
-          item.typeName = MessageType[item.type];
         })
       }
       return res;

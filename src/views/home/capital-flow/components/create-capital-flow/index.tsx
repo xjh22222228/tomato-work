@@ -1,4 +1,5 @@
 import React, { useCallback, useReducer, useEffect } from 'react';
+import moment from 'moment';
 import { 
   Modal,
   Form,
@@ -7,7 +8,6 @@ import {
   message,
   Select
 } from 'antd';
-import moment from 'moment';
 import { serviceCreateCapitalFlow, serviceUpdateCapitalFlow } from '@/services';
 
 const { TextArea } = Input;
@@ -89,12 +89,8 @@ const CreateReminder: React.FC<Props> = function ({
     };
 
     try {
-      if (!params.price || isNaN(params.price)) {
-        throw new Error('金额必须为数字');
-      }
-      if (!params.typeId) {
-        throw new Error('请选择名称');
-      }
+      if (!params.price || isNaN(params.price)) throw new Error('金额必须为数字');
+      if (!params.typeId) throw new Error('请选择名称');
     } catch (err) {
       message.warn(err.message);
       return;
@@ -146,11 +142,9 @@ const CreateReminder: React.FC<Props> = function ({
             onChange={(value: string) => setState({ typeId: value })} 
             value={state.typeId}
           >
-          {
-            nameList.map((item: any) => (
-              <Option value={item.id} key={item.id}>{ item.optionName }</Option>
-            ))
-          }
+          {nameList.map((item: any) => (
+            <Option value={item.id} key={item.id}>{item.optionName}</Option>
+          ))}
           </Select>
         </Form.Item>
         <Form.Item label="金额">

@@ -68,7 +68,7 @@ const Reminder: React.FC = function() {
     },
     { title: '备注信息',
       render: (rowData: any) => (
-        <p className="white-space_pre">{rowData.remarks}</p>
+        <p className="white-space_pre-wrap">{rowData.remarks}</p>
       )
     },
     { title: '操作', width: 180, align: 'right',
@@ -113,8 +113,8 @@ const Reminder: React.FC = function() {
         res.data.data.rows = res.data.data.rows.map((el: any, idx: number) => {
           el.order = idx + 1;
           el.date = moment(el.date).format('YYYY-MM-DD HH:mm');
-          el.__price__ = TYPES[el.type].symbol + el.price;
-          el.__color__ = TYPES[el.type].color;
+          el.__price__ = TYPES[el.type - 1].symbol + el.price;
+          el.__color__ = TYPES[el.type - 1].color;
           
           return el;
         });

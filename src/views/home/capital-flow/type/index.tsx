@@ -29,9 +29,8 @@ function reducer(state: any, action: any) {
 const Type = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [columns] = useState([
-    { title: '序号', dataIndex: 'index' },
-    { title: '名称', dataIndex: 'name' },
-    { title: '类别', render: (rowData: any) => (
+    { title: '账务类型', dataIndex: 'name' },
+    { title: '收支类别', render: (rowData: any) => (
       <Tag color={rowData.color}>{rowData.typeName}</Tag>
     ) },
     { title: '创建时间', dataIndex: 'createdAt' },
@@ -53,7 +52,6 @@ const Type = () => {
     .then(res => {
       if (res.data.success) {
         const handleData = res.data.data.map((item: any, idx: number) => {
-          item.index = idx + 1;
           item.typeName = TypeNames[item.type];
           item.color = TypeColors[item.type];
           item.createdAt = moment(item.createdAt).format('YYYY-MM-DD hh:mm');

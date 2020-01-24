@@ -10,8 +10,8 @@ export enum TypeColors {
 };
 
 export const TYPES = [
-  { name: '收入', value: 1 },
-  { name: '支出', value: 2 },
+  { name: '收入', value: 1, symbol: '+', color: '#666' },
+  { name: '支出', value: 2, symbol: '-', color: '#f50' }
 ];
 
 export const OPTION_TYPES = [

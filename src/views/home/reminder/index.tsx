@@ -56,7 +56,7 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
     },
     { title: '提醒时间', dataIndex: 'date', width: 220 },
     { title: '提醒内容', dataIndex: 'content', className: 'word-break_break-all white-space_pre' },
-    { title: '操作', dataIndex: '', width: 180,
+    { title: '操作', width: 180, align: 'right',
       render: (row: any) => (
         <>
           <Button onClick={handleButton.bind(null, 0, row)}>编辑</Button>

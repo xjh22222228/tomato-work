@@ -15,7 +15,7 @@ import {
   serviceDeleteCapitalFlow,
   serviceGetCapitalFlowType
 } from '@/services';
-import { OPTION_TYPES, TypeNames, TypeColors } from '../enum';
+import { OPTION_TYPES, TypeNames, TYPES } from '../enum';
 
 const { Search } = Input;
 const { RangePicker } = DatePicker;
@@ -31,7 +31,6 @@ interface State {
   currentRow: null | { [propName: string]: any };
   nameList: any[];
   price: { consumption: number; income: number; available: number; };
-  expandedRowKeys: string[];
 }
 
 const initialState: State = {
@@ -43,7 +42,6 @@ const initialState: State = {
   currentRow: null,
   nameList: [],
   price: { consumption: 0, income: 0, available: 0 },
-  expandedRowKeys: []
 };
 
 function reducer(state: State, action: any) {
@@ -59,17 +57,25 @@ const Reminder: React.FC = function() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const tableRef = useRef<any>(null);
   const [tableColumns] = useState([
-    { title: '类型', dataIndex: 'type', width: 100,
-      render: (type: any) => (<Tag color={TypeColors[type]}>{ TypeNames[type] }</Tag>)
+    { title: '入账时间', dataIndex: 'date', width: 180 },
+    { title: '账务类型', width: 120,
+      render: (rowData: any) => rowData.name
     },
-    { title: '名称', dataIndex: 'name', width: 100 },
-    { title: '参与时间', dataIndex: 'date', width: 220 },
-    { title: '金额', dataIndex: 'price' },
-    { title: '操作', width: 180,
+    { title: '收支金额（元）', width: 130,
+      render: (rowData: any) => (
+        <span style={{ color: rowData.__color__ }}>{rowData.__price__}</span>
+      )
+    },
+    { title: '备注信息',
+      render: (rowData: any) => (
+        <p className="white-space_pre">{rowData.remarks}</p>
+      )
+    },
+    { title: '操作', width: 180, align: 'right',
       render: (row: any) => (
         <>
-          <Button onClick={handleActionButton.bind(null, 0, row)}>编辑</Button>
-          <Button onClick={handleActionButton.bind(null, 1, row)}>删除</Button>
+          <Button onClick={handleActionButton.bind(null, 0, row)} size="small">编辑</Button>
+          <Button onClick={handleActionButton.bind(null, 1, row)} size="small">删除</Button>
         </>
       )
     }
@@ -103,14 +109,13 @@ const Reminder: React.FC = function() {
     return serviceGetCapitalFlow(params).then(res => {
       if (res.data.success) {
         const data = res.data.data;
-        const expandedRowKeys: string[] = [];
         
         res.data.data.rows = res.data.data.rows.map((el: any, idx: number) => {
           el.order = idx + 1;
           el.date = moment(el.date).format('YYYY-MM-DD HH:mm');
-          if (el.remarks !== '') {
-            expandedRowKeys.push(el.id);
-          }
+          el.__price__ = TYPES[el.type].symbol + el.price;
+          el.__color__ = TYPES[el.type].color;
+          
           return el;
         });
 
@@ -119,8 +124,7 @@ const Reminder: React.FC = function() {
             income: data.income,
             consumption: data.consumption,
             available: data.available
-          },
-          expandedRowKeys
+          }
         });
       }
       return res;
@@ -164,18 +168,6 @@ const Reminder: React.FC = function() {
     tableRef.current.getTableData();
   }, [setState]);
 
-  // 点击展开图标时触发
-  const handleOnExpand = useCallback((expanded: any, record: any) => {
-    const expandedRowKeys = [...state.expandedRowKeys];
-    if (!expanded) {
-      const idx = expandedRowKeys.indexOf(record.id);
-      expandedRowKeys.splice(idx, 1);
-    } else {
-      expandedRowKeys.push(record.id);
-    }
-    setState({ expandedRowKeys });
-  }, [setState, state.expandedRowKeys]);
-
   useEffect(() => {
     initParams();
     getCapitalFlowType();
@@ -184,7 +176,7 @@ const Reminder: React.FC = function() {
   return (
     <div className="capital-flow">
       <div className="query-panel">
-        <span>查询名称：</span>
+        <span>账务类型：</span>
         <Select 
           onChange={(value: string) => setState({ name: value })} 
           value={state.name}
@@ -196,7 +188,7 @@ const Reminder: React.FC = function() {
         </Select>
         {!state.name && (
           <>
-            <span>查询类型：</span>
+            <span>收支类别：</span>
             <Select 
               onChange={(value: string) => setState({ type: value })} 
               value={state.type}
@@ -246,9 +238,6 @@ const Reminder: React.FC = function() {
         ref={tableRef}
         getTableData={getCapitalFlow}
         columns={tableColumns} 
-        expandedRowRender={(data: any) => <p className="white-space_pre">{data.remarks}</p>}
-        expandedRowKeys={state.expandedRowKeys}
-        onExpand={handleOnExpand}
       />
       <CreateCapitalFlow 
         visible={state.modalVisible} 

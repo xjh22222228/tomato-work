@@ -47,16 +47,10 @@ const Sidebar: React.FC<Props> = function ({ location, collapsed }) {
       trigger={null}
       collapsible
       collapsed={collapsed} 
-      width={210} 
+      width={190} 
       className="sidebar"
     >
-      <div className="sider-menu-logo">
-        <img 
-          src={require('@/assets/img/common/logo.png')} 
-          alt="logo" 
-        />
-        <h1>{ config.title }</h1>
-      </div>
+      <div className="sider-menu-logo">{config.title}</div>
       <Menu 
         selectedKeys={[selectedKeys]}
         openKeys={openKeys}

@@ -6,4 +6,6 @@ ghpages.publish('dist', function(err) {
   }
 
   console.log('build gh-pages finished!')
+
+  process.exit(0);
 });

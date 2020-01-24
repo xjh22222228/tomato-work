@@ -13,24 +13,13 @@ $bg-color: #304156;
   }
 
   .sider-menu-logo {
-    padding-left: 20px;
     overflow: hidden;
     height: 64px;
     line-height: 64px;
     background: #2b2f3a;
-
-    img {
-      display: inline-block;
-      width: 45px;
-      border-radius: 50%;
-    }
-
-    h1 {
-      display: inline;
-      color: #fff;
-      margin-left: 12px;
-      font-weight: 600;
-      vertical-align: middle;
-    }
+    color: #fff;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
   }
 }

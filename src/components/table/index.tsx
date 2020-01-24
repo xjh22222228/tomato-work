@@ -129,6 +129,7 @@ const TableFC: FC<Props & TableProps<unknown>> = ({
       showHeader={state.tableDataSource.length}
       pagination={{
         ...state.pagination,
+        size: 'small',
         onChange: handlePageChange,
         onShowSizeChange: handlePageChange
       }}

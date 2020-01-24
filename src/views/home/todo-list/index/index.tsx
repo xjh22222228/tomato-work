@@ -45,7 +45,7 @@ const TodoList = () => {
     )},
     { title: '创建时间', dataIndex: 'createdAt', width: 170 },
     { title: '活动内容', dataIndex: 'content', className: 'word-break_break-all' },
-    { title: '操作', width: 250,
+    { title: '操作', width: 250, align: 'right',
       render: (row: any) => (
         <>
           <Button onClick={handleActionButton.bind(null, 0, row)}>编辑</Button>

@@ -127,7 +127,7 @@ const CreateReminder: React.FC<Props> = function ({
       confirmLoading={state.confirmLoading}
     >
       <Form onSubmit={handleSubmit} layout="inline">
-        <Form.Item label="时间">
+        <Form.Item label="入账时间">
           <DatePicker
             mode={state.dateMode}
             showTime
@@ -137,7 +137,7 @@ const CreateReminder: React.FC<Props> = function ({
             onChange={date => setState({ date }) }
           />
         </Form.Item>
-        <Form.Item label="类别">
+        <Form.Item label="财务类型">
           <Select 
             onChange={(value: string) => setState({ typeId: value })} 
             value={state.typeId}
@@ -147,13 +147,13 @@ const CreateReminder: React.FC<Props> = function ({
           ))}
           </Select>
         </Form.Item>
-        <Form.Item label="金额">
+        <Form.Item label="收支金额">
           <Input 
             value={state.price} 
             onChange={e => setState({ price: e.target.value })} 
           />
         </Form.Item>
-        <Form.Item label="备注">
+        <Form.Item label="备注信息">
           <TextArea 
             rows={5} 
             value={state.remarks} 

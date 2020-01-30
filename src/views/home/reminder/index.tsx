@@ -75,9 +75,6 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
     const startDate = moment(getCurMonthFirstDay(dateFormat), dateFormat);
     const endDate = moment(getCurMonthLastDay(dateFormat), dateFormat);
     setState({ queryType: '', date: [startDate, endDate] });
-    setTimeout(() => {
-      tableRef.current.getTableData();
-    }, 100);
   }, [setState]);
 
   // 获取事项数据
@@ -139,6 +136,11 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
       });
     }
   }, [initParams, userInfo.email]);
+
+  useEffect(() => {
+    if (state.date.length <= 0) return;
+    tableRef.current && tableRef.current.getTableData && tableRef.current.getTableData();
+  }, [state.date]);
 
   return (
     <div className="reminder">

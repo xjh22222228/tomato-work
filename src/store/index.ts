@@ -3,10 +3,9 @@
  * @since 1.0.0
  * @author xiejiahe <mb06@qq.com>
  */
-
-import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './reducers';
+import { createStore, applyMiddleware } from 'redux';
 import { UserState } from './reducers/user';
 import { SystemState } from './reducers/system';
 

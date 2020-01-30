@@ -17,4 +17,4 @@ module.exports = {
     // const mapStateToProps = ...
     'no-use-before-define': 0
   }
-} 
+}

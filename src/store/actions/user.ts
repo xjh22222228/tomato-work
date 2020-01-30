@@ -3,14 +3,13 @@
  * @since 1.0.0
  * @author xiejiahe <mb06@qq.com>
  */
-
-import { USER } from '../constants';
 import config from '@/config';
+import _ from 'lodash';
+import moment from 'moment';
+import { USER } from '../constants';
 import { LOCAL_STORAGE } from '@/constants';
 import { serviceLoginByToken, serviceLogout } from '@/services';
-import _ from 'lodash';
 import { Dispatch } from 'redux';
-import moment from 'moment';
 
 const { LOGIN } = USER;
 

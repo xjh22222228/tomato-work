@@ -86,9 +86,6 @@ const TodoList = () => {
     const startDate = moment(getThisYearFirstDay(), dateFormat);
     const endDate = moment(getCurMonthLastDay(dateFormat), dateFormat);
     setState({ date: [startDate, endDate] });
-    setTimeout(() => {
-      tableRef.current.getTableData();
-    }, 100);
   }, [setState]);
 
   const handleOnSuccess = useCallback(() => {
@@ -130,6 +127,11 @@ const TodoList = () => {
   useEffect(() => {
     initParams();
   }, [initParams]);
+
+  useEffect(() => {
+    if (state.date.length <= 0) return;
+    tableRef.current && tableRef.current.getTableData && tableRef.current.getTableData();
+  }, [state.date]);
 
   return (
     <div className="today-task">

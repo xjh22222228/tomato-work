@@ -3,7 +3,7 @@ import './style.scss';
 import moment from 'moment';
 import Table from '@/components/table';
 import CreateCapitalFlow from '../components/create-capital-flow';
-import { DatePicker, Button, Select, Tag, Statistic, Input } from 'antd';
+import { DatePicker, Button, Select, Statistic, Input } from 'antd';
 import {
   getCurMonthFirstDay,
   getCurMonthLastDay,
@@ -90,9 +90,6 @@ const Reminder: React.FC = function() {
     const startDate = moment(getCurMonthFirstDay(dateFormat), dateFormat);
     const endDate = moment(getCurMonthLastDay(dateFormat), dateFormat);
     setState({ searchKeyword: '', name: '', date: [startDate, endDate] });
-    setTimeout(() => {
-      tableRef.current.getTableData();
-    }, 100);
   }, [setState]);
 
   // 获取数据
@@ -162,6 +159,20 @@ const Reminder: React.FC = function() {
     }
   }, [setState]);
 
+  // 时间过滤
+  const onFilterDate = useCallback(type => {
+    const date: moment.Moment[] = [
+      moment(moment().format(dateFormat), dateFormat),
+      moment(moment().format(dateFormat), dateFormat)
+    ];
+
+    if (type === 2) {
+      date[0] = date[1] = moment(moment().subtract(1, 'days').format(dateFormat), dateFormat);
+    }
+
+    setState({ date });
+  }, [setState]);
+
   // modal成功新增回调函数
   const handleModalOnSuccess = useCallback(() => {
     setState({ modalVisible: false });
@@ -172,6 +183,11 @@ const Reminder: React.FC = function() {
     initParams();
     getCapitalFlowType();
   }, [initParams, getCapitalFlowType]);
+
+  useEffect(() => {
+    if (state.date.length <= 0) return;
+    tableRef.current && tableRef.current.getTableData && tableRef.current.getTableData();
+  }, [state.date]);
 
   return (
     <div className="capital-flow">
@@ -204,8 +220,11 @@ const Reminder: React.FC = function() {
           format={dateFormat} 
           allowClear 
           value={state.date} 
+          style={{ width: '280px' }}
           onChange={(date: any) => setState({ date })} 
         />
+        <Button onClick={onFilterDate.bind(null, 1)}>今天</Button>
+        <Button onClick={onFilterDate.bind(null, 2)}>昨天</Button>
         <div>
           <Search
             value={state.searchKeyword}

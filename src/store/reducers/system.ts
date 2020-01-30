@@ -3,9 +3,8 @@
  * @since 1.0.0
  * @author xiejiahe <mb06@qq.com>
  */
-
-import { SYSTEM } from '../constants';
 import _ from 'lodash';
+import { SYSTEM } from '../constants';
 
 const { INFO } = SYSTEM;
 

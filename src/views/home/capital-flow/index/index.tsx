@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef, useReducer } from 'react';
+import React, { useState, useEffect, useCallback, useRef, useReducer, useMemo } from 'react';
 import './style.scss';
 import moment from 'moment';
 import Table from '@/components/table';
@@ -31,6 +31,7 @@ interface State {
   currentRow: null | { [propName: string]: any };
   nameList: any[];
   price: { consumption: number; income: number; available: number; };
+  sortedInfo: any;
 }
 
 const initialState: State = {
@@ -42,6 +43,7 @@ const initialState: State = {
   currentRow: null,
   nameList: [],
   price: { consumption: 0, income: 0, available: 0 },
+  sortedInfo: null
 };
 
 function reducer(state: State, action: any) {
@@ -56,40 +58,21 @@ function reducer(state: State, action: any) {
 const Reminder: React.FC = function() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const tableRef = useRef<any>(null);
-  const [tableColumns] = useState([
-    { title: '入账时间', dataIndex: 'date', width: 180 },
-    { title: '账务类型', width: 120,
-      render: (rowData: any) => rowData.name
-    },
-    { title: '收支金额（元）', width: 130,
-      render: (rowData: any) => (
-        <span style={{ color: rowData.__color__ }}>{rowData.__price__}</span>
-      )
-    },
-    { title: '备注信息',
-      render: (rowData: any) => (
-        <p className="white-space_pre-wrap">{rowData.remarks}</p>
-      )
-    },
-    { title: '操作', width: 180, align: 'right',
-      render: (row: any) => (
-        <>
-          <Button onClick={handleActionButton.bind(null, 0, row)} size="small">编辑</Button>
-          <Button onClick={handleActionButton.bind(null, 1, row)} size="small">删除</Button>
-        </>
-      )
-    }
-  ]);
 
   const setState = useCallback(state => {
-    dispatch({ type: 'setState', state })
+    dispatch({ type: 'setState', state });
   }, []);
 
   // 初始化参数
   const initParams = useCallback(() => {
     const startDate = moment(getCurMonthFirstDay(dateFormat), dateFormat);
     const endDate = moment(getCurMonthLastDay(dateFormat), dateFormat);
-    setState({ searchKeyword: '', name: '', date: [startDate, endDate] });
+    setState({
+      searchKeyword: '',
+      name: '',
+      date: [startDate, endDate],
+      sortedInfo: null
+    });
   }, [setState]);
 
   // 获取数据
@@ -102,6 +85,10 @@ const Reminder: React.FC = function() {
       startDate: state.date[0].valueOf(),
       endDate: state.date[1].valueOf() + ONE_DAY_TIMESTAMP
     };
+
+    if (state.sortedInfo && state.sortedInfo.order) {
+      params.sort = `${state.sortedInfo.columnKey}-${state.sortedInfo.order.replace('end', '')}`;
+    }
 
     return serviceGetCapitalFlow(params).then(res => {
       if (res.data.success) {
@@ -126,7 +113,7 @@ const Reminder: React.FC = function() {
       }
       return res;
     });
-  }, [state.date, state.searchKeyword, state.name, state.type, setState]);
+  }, [state.date, state.searchKeyword, state.name, state.type, state.sortedInfo, setState]);
 
   // 获取所有类型
   const getCapitalFlowType = useCallback(() => {
@@ -173,6 +160,15 @@ const Reminder: React.FC = function() {
     setState({ date });
   }, [setState]);
 
+  const onTableChange = useCallback((pagination, filters, sorter) => {
+    setState({
+      sortedInfo: {
+        columnKey: sorter.columnKey,
+        order: sorter.order
+      }
+    });
+  }, [setState]);
+
   // modal成功新增回调函数
   const handleModalOnSuccess = useCallback(() => {
     setState({ modalVisible: false });
@@ -187,7 +183,34 @@ const Reminder: React.FC = function() {
   useEffect(() => {
     if (state.date.length <= 0) return;
     tableRef.current && tableRef.current.getTableData && tableRef.current.getTableData();
-  }, [state.date]);
+  }, [state.date, state.sortedInfo]);
+
+  const tableColumns = useMemo(() => [
+    { title: '入账时间', dataIndex: 'date', width: 180, sorter: true,
+      sortOrder: state.sortedInfo && state.sortedInfo.columnKey === 'date' && state.sortedInfo.order
+    },
+    { title: '账务类型', dataIndex: 'name', width: 120
+    },
+    { title: '收支金额（元）', width: 140, sorter: true, dataIndex: 'price',
+      sortOrder: state.sortedInfo && state.sortedInfo.columnKey === 'price' && state.sortedInfo.order,
+      render: (text: any, rowData: any) => (
+        <span style={{ color: rowData.__color__ }}>{rowData.__price__}</span>
+      )
+    },
+    { title: '备注信息',
+      render: (rowData: any) => (
+        <p className="white-space_pre-wrap">{rowData.remarks}</p>
+      )
+    },
+    { title: '操作', width: 180, align: 'right',
+      render: (row: any) => (
+        <>
+          <Button onClick={handleActionButton.bind(null, 0, row)} size="small">编辑</Button>
+          <Button onClick={handleActionButton.bind(null, 1, row)} size="small">删除</Button>
+        </>
+      )
+    }
+  ], [state.sortedInfo, handleActionButton]);
 
   return (
     <div className="capital-flow">
@@ -257,6 +280,7 @@ const Reminder: React.FC = function() {
         ref={tableRef}
         getTableData={getCapitalFlow}
         columns={tableColumns} 
+        onChange={onTableChange}
       />
       <CreateCapitalFlow 
         visible={state.modalVisible} 

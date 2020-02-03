@@ -32,7 +32,6 @@ WEB：[tomato-work](https://github.com/xjh22222228/tomato-work)
 "blueimp-md5": "^2.12.0",
 "moment": "^2.24.0",
 "lodash": "^4.17.15",
-"nprogress": "^0.2.0",
 "query-string": "^6.9.0",
 "webpack": "4.41.2",
 "bizcharts": "^3.5.6",

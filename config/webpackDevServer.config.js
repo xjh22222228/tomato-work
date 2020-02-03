@@ -89,8 +89,8 @@ module.exports = function(proxy, allowedHost) {
     public: allowedHost,
     proxy: {
       '/api':{
-        // target: 'https://tomato-work.xiejiahe.com',
-        target: 'http://localhost:7003',
+        target: 'https://tomato-work.xiejiahe.com',
+        // target: 'http://localhost:7003',
         changeOrigin: true
       },
     },

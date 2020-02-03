@@ -157,6 +157,11 @@ const Reminder: React.FC = function() {
       date[0] = date[1] = moment(moment().subtract(1, 'days').format(dateFormat), dateFormat);
     }
 
+    if (type === 3) {
+      date[0] = moment(moment().subtract(7, 'days').format(dateFormat), dateFormat);
+      date[1] = moment(new Date(), dateFormat);
+    }
+
     setState({ date });
   }, [setState]);
 
@@ -238,28 +243,29 @@ const Reminder: React.FC = function() {
             </Select>
           </>
         )}
-        <span>日期：</span>
-        <RangePicker
-          format={dateFormat} 
-          allowClear 
-          value={state.date} 
-          style={{ width: '280px' }}
-          onChange={(date: any) => setState({ date })} 
+        <Search
+          value={state.searchKeyword}
+          placeholder="试试搜索备注"
+          maxLength={300}
+          onChange={e => setState({ searchKeyword: e.target.value })}
+          onSearch={() => tableRef.current.getTableData()}
+          style={{ width: 260, marginRight: '15px' }}
         />
-        <Button onClick={onFilterDate.bind(null, 1)}>今天</Button>
-        <Button onClick={onFilterDate.bind(null, 2)}>昨天</Button>
-        <div>
-          <Search
-            value={state.searchKeyword}
-            placeholder="试试搜索备注"
-            maxLength={300}
-            onChange={e => setState({ searchKeyword: e.target.value })}
-            onSearch={() => tableRef.current.getTableData()}
-            style={{ width: 260, margin: '10px 15px 0 0' }}
+        <Button type="primary" onClick={() => tableRef.current.getTableData()}>查询</Button>
+        <Button onClick={() => setState({ modalVisible: true, currentRow: null })}>新增</Button>
+        <Button onClick={initParams}>重置</Button>
+        <div style={{ marginTop: '10px' }}>
+          <span>日期：</span>
+          <RangePicker
+            format={dateFormat} 
+            allowClear 
+            value={state.date} 
+            style={{ width: '280px', marginRight: '10px' }}
+            onChange={(date: any) => setState({ date })} 
           />
-          <Button type="primary" onClick={() => tableRef.current.getTableData()}>查询</Button>
-          <Button onClick={() => setState({ modalVisible: true, currentRow: null })}>新增</Button>
-          <Button onClick={initParams}>重置</Button>
+          <Button onClick={onFilterDate.bind(null, 1)}>今天</Button>
+          <Button onClick={onFilterDate.bind(null, 2)}>昨天</Button>
+          <Button onClick={onFilterDate.bind(null, 3)}>最近一周</Button>
         </div>
         <div className="poly">
           <div className="item-price">

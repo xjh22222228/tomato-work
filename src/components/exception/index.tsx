@@ -4,7 +4,7 @@ import { Result, Button } from 'antd';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 interface Props {
-  status?: 403 | 404 | 500;
+  status?: '403' | '404' | '500';
 }
 
 const statusMap = {
@@ -22,11 +22,11 @@ const statusMap = {
   }
 };
 
-const NoMatch: React.FC<Props & RouteComponentProps> = function ({ history, status = 404 }) {
+const NoMatch: React.FC<Props & RouteComponentProps> = function ({ history, status = '404' }) {
   return (
     <Result 
       status={status} 
-      extra={<Button type="primary" onClick={() => history.goBack()}>Back</Button>} 
+      extra={<Button type="primary" onClick={history.goBack}>Back</Button>} 
       {...statusMap[status]}
     />
   );

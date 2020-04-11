@@ -57,8 +57,9 @@ function reducer(state: State, action: any) {
 
 const TableFC: FC<Props & TableProps<unknown>> = ({
   getTableData,
+  forwardedRef: tableRef,
   ...props
-}, tableRef) => {
+}) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const setState = useCallback(state => {
@@ -137,4 +138,8 @@ const TableFC: FC<Props & TableProps<unknown>> = ({
   )
 };
 
-export default React.memo(React.forwardRef(TableFC));
+const forwardedTable = React.forwardRef((props: any, ref) => (
+  <TableFC {...props} forwardedRef={ref} />
+));
+
+export default React.memo(forwardedTable);

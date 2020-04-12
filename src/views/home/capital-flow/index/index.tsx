@@ -86,7 +86,7 @@ const Reminder: React.FC = function() {
       endDate: state.date[1].valueOf() + ONE_DAY_TIMESTAMP
     };
 
-    if (state.sortedInfo && state.sortedInfo.order) {
+    if (state.sortedInfo?.order) {
       params.sort = `${state.sortedInfo.columnKey}-${state.sortedInfo.order.replace('end', '')}`;
     }
 
@@ -148,22 +148,32 @@ const Reminder: React.FC = function() {
 
   // 时间过滤
   const onFilterDate = useCallback(type => {
+    const [startDate] = state.date;
     const date: moment.Moment[] = [
       moment(moment().format(dateFormat), dateFormat),
       moment(moment().format(dateFormat), dateFormat)
     ];
 
-    if (type === 2) {
-      date[0] = date[1] = moment(moment().subtract(1, 'days').format(dateFormat), dateFormat);
-    }
-
-    if (type === 3) {
-      date[0] = moment(moment().subtract(7, 'days').format(dateFormat), dateFormat);
-      date[1] = moment(new Date(), dateFormat);
+    switch (type) {
+      case 2:
+        date[0] = date[1] = moment(moment().subtract(1, 'days').format(dateFormat), dateFormat);
+        break;
+      case 3:
+        date[0] = moment(moment().subtract(7, 'days').format(dateFormat), dateFormat);
+        date[1] = moment(new Date(), dateFormat);
+        break;
+      case 4:
+        date[0] = moment(moment(startDate).subtract(1, 'month').startOf('month').format(dateFormat), dateFormat);
+        date[1] = moment(moment(startDate).subtract(1, 'month').endOf('month').format(dateFormat), dateFormat);
+        break;
+      case 5:
+        date[0] = moment(moment(startDate).add(1, 'month').startOf('month').format(dateFormat), dateFormat);
+        date[1] = moment(moment(startDate).add(1, 'month').endOf('month').format(dateFormat), dateFormat);
+        break;
     }
 
     setState({ date });
-  }, [setState]);
+  }, [setState, state.date]);
 
   const onTableChange = useCallback((pagination, filters, sorter) => {
     setState({
@@ -187,17 +197,17 @@ const Reminder: React.FC = function() {
 
   useEffect(() => {
     if (state.date.length <= 0) return;
-    tableRef.current && tableRef.current.getTableData && tableRef.current.getTableData();
-  }, [state.date, state.sortedInfo]);
+    tableRef?.current?.getTableData();
+  }, [state.name, state.type, state.date]);
 
   const tableColumns = useMemo(() => [
     { title: '入账时间', dataIndex: 'date', width: 180, sorter: true,
-      sortOrder: state.sortedInfo && state.sortedInfo.columnKey === 'date' && state.sortedInfo.order
+      sortOrder: state.sortedInfo?.columnKey === 'date' && state.sortedInfo.order
     },
     { title: '账务类型', dataIndex: 'name', width: 120
     },
     { title: '收支金额（元）', width: 140, sorter: true, dataIndex: 'price',
-      sortOrder: state.sortedInfo && state.sortedInfo.columnKey === 'price' && state.sortedInfo.order,
+      sortOrder: state.sortedInfo?.columnKey === 'price' && state.sortedInfo.order,
       render: (text: any, rowData: any) => (
         <span style={{ color: rowData.__color__ }}>{rowData.__price__}</span>
       )
@@ -226,23 +236,23 @@ const Reminder: React.FC = function() {
           value={state.name}
         >
           <Option value="">全部</Option>
-        {state.nameList.map((item: any) => (
-          <Option value={item.id} key={item.id}>{item.name}</Option>
-        ))}
+          {state.nameList.map((item: any) => (
+            <Option value={item.id} key={item.id}>{item.name}</Option>
+          ))}
         </Select>
-        {!state.name && (
-          <>
-            <span>收支类别：</span>
-            <Select 
-              onChange={(value: string) => setState({ type: value })} 
-              value={state.type}
-            >
-            {OPTION_TYPES.map(item => (
-              <Option value={item.value} key={item.value}>{item.name}</Option>
-            ))}
-            </Select>
-          </>
-        )}
+          {!state.name && (
+            <>
+              <span>收支类别：</span>
+              <Select 
+                onChange={(value: string) => setState({ type: value })} 
+                value={state.type}
+              >
+              {OPTION_TYPES.map(item => (
+                <Option value={item.value} key={item.value}>{item.name}</Option>
+              ))}
+              </Select>
+            </>
+          )}
         <Search
           value={state.searchKeyword}
           placeholder="试试搜索备注"
@@ -266,6 +276,8 @@ const Reminder: React.FC = function() {
           <Button onClick={onFilterDate.bind(null, 1)}>今天</Button>
           <Button onClick={onFilterDate.bind(null, 2)}>昨天</Button>
           <Button onClick={onFilterDate.bind(null, 3)}>最近一周</Button>
+          <Button onClick={onFilterDate.bind(null, 4)}>上个月</Button>
+          <Button onClick={onFilterDate.bind(null, 5)}>下个月</Button>
         </div>
         <div className="poly">
           <div className="item-price">
@@ -286,7 +298,7 @@ const Reminder: React.FC = function() {
         ref={tableRef}
         getTableData={getCapitalFlow}
         columns={tableColumns} 
-        onChange={onTableChange}
+        onTableChange={onTableChange}
       />
       <CreateCapitalFlow 
         visible={state.modalVisible} 

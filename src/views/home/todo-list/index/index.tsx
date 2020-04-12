@@ -130,7 +130,7 @@ const TodoList = () => {
 
   useEffect(() => {
     if (state.date.length <= 0) return;
-    tableRef.current && tableRef.current.getTableData && tableRef.current.getTableData();
+    tableRef?.current?.getTableData();
   }, [state.date]);
 
   return (

@@ -20,21 +20,21 @@ WEB：[tomato-work](https://github.com/xjh22222228/tomato-work)
 ## Tech
 核心技术 React纯hooks/TypeScript/Redux/Antd...
 ``` json
-"react": "^16.12.0",
-"react-dom": "^16.12.0",
-"react-redux": "^7.1.3",
+"react": "^16.13.1",
+"react-dom": "^16.13.1",
+"react-redux": "^7.2.0",
 "redux": "^4.0.5",
 "react-router-dom": "^5.1.2",
 "redux-thunk": "^2.3.0",
-"typescript": "^3.7.2",
-"antd": "^3.26.7",
-"axios": "^0.19.0",
-"blueimp-md5": "^2.12.0",
+"typescript": "^3.8.0",
+"antd": "^3.26.15",
+"axios": "^0.19.2",
+"blueimp-md5": "^2.13.0",
 "moment": "^2.24.0",
 "lodash": "^4.17.15",
-"query-string": "^6.9.0",
-"webpack": "4.41.2",
-"bizcharts": "^3.5.6",
+"query-string": "^6.12.0",
+"webpack": "4.42.0",
+"bizcharts": "^3.5.8",
 "tui-editor": "^1.4.10"
 ```
 

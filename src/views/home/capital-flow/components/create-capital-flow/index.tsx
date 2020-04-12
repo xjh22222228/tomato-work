@@ -142,9 +142,9 @@ const CreateReminder: React.FC<Props> = function ({
             onChange={(value: string) => setState({ typeId: value })} 
             value={state.typeId}
           >
-          {nameList.map((item: any) => (
-            <Option value={item.id} key={item.id}>{item.optionName}</Option>
-          ))}
+            {nameList.map((item: any) => (
+              <Option value={item.id} key={item.id}>{item.optionName}</Option>
+            ))}
           </Select>
         </Form.Item>
         <Form.Item label="收支金额">

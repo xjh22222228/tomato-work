@@ -21,6 +21,7 @@ import { AxiosPromise } from 'axios';
 
 interface Props {
   getTableData: (data: any) => AxiosPromise;
+  onTableChange?: (a: any, b: any, c: any) => void;
   [propsName: string]: any;
 }
 
@@ -57,6 +58,7 @@ function reducer(state: State, action: any) {
 
 const TableFC: FC<Props & TableProps<unknown>> = ({
   getTableData,
+  onTableChange,
   forwardedRef: tableRef,
   ...props
 }) => {
@@ -70,7 +72,10 @@ const TableFC: FC<Props & TableProps<unknown>> = ({
     setState({ isLoading: true });
     const { pageNo, pageSize } = tableRef.current;
     // 调用父组件函数获取数据
-    getTableData({ pageNo: pageNo - 1, pageSize: pageSize })
+    getTableData({
+      pageNo: pageNo - 1,
+      pageSize: pageSize
+    })
     .then(res => {
       if (res.data.success) {
         setState({
@@ -88,16 +93,19 @@ const TableFC: FC<Props & TableProps<unknown>> = ({
     });
   }, [setState, state.pagination, getTableData, tableRef]);
 
-  // 分页改变触发
-  const handlePageChange = useCallback((
-    pageNo: number,
-    pageSize: number | undefined = state.pagination.pageSize
-  ) => {
-    setState({ pagination: { ...state.pagination,  pageNo, pageSize } });
-    tableRef.current.pageNo = pageNo;
-    tableRef.current.pageSize = pageSize;
+  const onChange = function(pagination: any, filters: any, sorter: any) {
+    setState({
+      pagination: {
+        ...state.pagination,
+        pageNo: pagination.pageNo,
+        pageSize: pagination.pageSize
+      }
+    });
+    tableRef.current.pageNo = pagination.pageNo;
+    tableRef.current.pageSize = pagination.pageSize;
     getData();
-  }, [setState, getData, state.pagination, tableRef]);
+    onTableChange && onTableChange(pagination, filters, sorter);
+  };
 
   useEffect(() => {
     tableRef.current.pageNo = 1;
@@ -128,11 +136,10 @@ const TableFC: FC<Props & TableProps<unknown>> = ({
       dataSource={state.tableDataSource} 
       scroll={{ y: state.tableHeight + 'px' }}
       showHeader={state.tableDataSource.length}
+      onChange={onChange}
       pagination={{
         ...state.pagination,
-        size: 'small',
-        onChange: handlePageChange,
-        onShowSizeChange: handlePageChange
+        size: 'small'
       }}
     />
   )

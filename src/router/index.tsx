@@ -12,9 +12,9 @@ const Routes: React.FC<DispatchProp> = function ({ dispatch }) {
   return (
     <Router basename={CONFIG.baseURL}>
       <Switch>
-      {routesMap.map((route, idx) => (
-        <PrivateRoute {...route} key={idx} />
-      ))}
+        {routesMap.map((route, idx) => (
+          <PrivateRoute {...route} key={idx} />
+        ))}
       </Switch>
     </Router>
   )

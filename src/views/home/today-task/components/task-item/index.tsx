@@ -32,7 +32,9 @@ const TaskItem: React.FC<Props> = ({ data, reloadData }) => {
         });
       });
     } else {
-      serviceUpdateTask(data.id, { rollback: buttonType === 2 && true })
+      serviceUpdateTask(data.id, {
+        rollback: buttonType === 2 && true
+      })
       .then(res => {
         if (res.data.success) {
           reloadData();

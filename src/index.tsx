@@ -18,7 +18,8 @@ ReactDOM.render(
       <Routes />
     </ConfigProvider>
   </Provider>,
-document.getElementById('tomato-work') as HTMLDivElement);
+  document.getElementById('tomato-work-root')
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

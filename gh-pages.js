@@ -1,11 +1,10 @@
 const ghpages = require('gh-pages');
 
-ghpages.publish('dist', function(err) {
+ghpages.publish('build', function(err) {
   if (err) {
     throw err;
   }
 
-  console.log('build gh-pages finished!')
-
+  console.log('finished!');
   process.exit(0);
 });

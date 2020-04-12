@@ -13,15 +13,15 @@
   <meta name="author" content="https://github.com/xjh22222228">
 </head>
 <body>
-<div id="tomato-work">
+<div id="tomato-work-root">
   <div style="position:fixed;top:0;left:0;right:0;bottom:0;display:flex;justify-content:center;align-items:center;">Loading...</div>
 </div>
 <script>
 var axiosCancelTokenStore = [];
-var _isDevelopment = '%NODE_ENV%' === 'development';
-var _hmt = _hmt || [];
+var __IS_DEV__ = '%NODE_ENV%' === 'development';
+var _hmt = window._hmt || [];
 (function() {
-  if (_isDevelopment) return;
+  if (__IS_DEV__) return;
   var hm = document.createElement('script');
   hm.src = 'https://hm.baidu.com/hm.js?cd241f0887f9e49d66903f9ae8c391ea';
   var s = document.getElementsByTagName('script')[0]; 

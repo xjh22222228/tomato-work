@@ -59,35 +59,35 @@ const Sidebar: React.FC<Props> = function ({ location, collapsed }) {
         theme="dark" 
       >
         {HOME_SIDER_MENU_LIST.map(menu => {
-            if (Array.isArray(menu.children)) {
-              return (
-                <SubMenu
-                  key={menu.name}
-                  title={
-                    <>
-                      <Icon type={menu.type} />
-                      <span>{menu.name}</span>
-                    </>
-                  }
-                >
+          if (Array.isArray(menu.children)) {
+            return (
+              <SubMenu
+                key={menu.name}
+                title={
+                  <>
+                    <Icon type={menu.type} />
+                    <span>{menu.name}</span>
+                  </>
+                }
+              >
                 {menu.children.map(subItem => (
                   <Menu.Item key={subItem.path}>
                     <Link to={subItem.path}>{subItem.name}</Link>
                   </Menu.Item>
                 ))}
-                </SubMenu>
-              )
-            }
-
-            return (
-              <Menu.Item key={menu.path}>
-                <Link to={menu.path}>
-                  <Icon type={menu.type} />
-                  <span>{menu.name}</span>
-                </Link>
-              </Menu.Item>
+              </SubMenu>
             )
-          })}
+          }
+
+          return (
+            <Menu.Item key={menu.path}>
+              <Link to={menu.path}>
+                <Icon type={menu.type} />
+                <span>{menu.name}</span>
+              </Link>
+            </Menu.Item>
+          )
+        })}
       </Menu>
     </Sider>
   )

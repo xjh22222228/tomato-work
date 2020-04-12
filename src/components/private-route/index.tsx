@@ -38,7 +38,7 @@ const PrivateRoute: React.FC<Props> = function ({
   
   // 验证权限
   const auth = function () {
-    if (meta && meta.requiresAuth) {
+    if (meta?.requiresAuth) {
       if (isLogin) {
         return true;
       }
@@ -47,7 +47,7 @@ const PrivateRoute: React.FC<Props> = function ({
     return true;
   }();
   
-  if (meta && meta.isLoginToHome && isLogin)  {
+  if (meta?.isLoginToHome && isLogin)  {
     const redirectUrl = qs.parse(location.search).redirectUrl as string;
     const url = redirectUrl || HOME.HOME_INDEX.path;
     return <Redirect to={url} />

@@ -53,7 +53,7 @@ function user(state = initialState, action: any): UserState {
   switch (action.type) {
     case LOGIN:
       const userInfo = action.userInfo;
-      if (userInfo && userInfo.token) {
+      if (userInfo?.token) {
         state.isLogin = true;
         window.localStorage.setItem(LOCAL_STORAGE.USER, JSON.stringify(userInfo));
         window.localStorage.setItem(LOCAL_STORAGE.LOGIN_NAME, userInfo.loginName);

@@ -1,3 +1,4 @@
+// https://ui.toast.com/tui-editor/
 import React, { useState, useEffect, useCallback } from 'react';
 import './style.scss';
 import Editor from 'tui-editor';
@@ -10,8 +11,6 @@ import {
   serviceGetMemorandumById,
   serviceUpdateMemorandum
 } from '@/services';
-
-// https://ui.toast.com/tui-editor/
 
 interface Props {
   computedMatch: match<any>
@@ -79,9 +78,7 @@ const Create: React.FC<Props & RouteComponentProps> = ({ history, computedMatch 
     
     return () => {
       // 销毁实例
-      if (editor && editor.remove) {
-        editor.remove();
-      }
+      editor?.remove();
     };
   }, [init]);
 

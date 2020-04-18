@@ -83,3 +83,8 @@ export function getThisYearFirstDay() {
 
   return moment(now.getTime());
 }
+
+// 获取今年最后一天
+export function getThisYearLastDay() {
+  return moment().endOf('year');
+}

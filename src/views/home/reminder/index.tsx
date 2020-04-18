@@ -6,10 +6,9 @@ import { connect } from 'react-redux';
 import { DatePicker, Button, Select, Tag, Modal } from 'antd';
 import { serviceGetReminder, serviceDeleteReminder } from '@/services';
 import {
-  getCurMonthFirstDay,
-  getCurMonthLastDay,
+  getThisYearLastDay,
   modalConfirmDelete,
-  ONE_DAY_TIMESTAMP
+  getThisYearFirstDay
 } from '@/utils';
 
 const { RangePicker } = DatePicker;
@@ -72,8 +71,8 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
 
   // 初始化参数
   const initParams = useCallback(() => {
-    const startDate = moment(getCurMonthFirstDay(dateFormat), dateFormat);
-    const endDate = moment(getCurMonthLastDay(dateFormat), dateFormat);
+    const startDate = moment(getThisYearFirstDay(), dateFormat);
+    const endDate = moment(getThisYearLastDay(), dateFormat);
     setState({
       queryType: '',
       date: [startDate, endDate]
@@ -83,7 +82,7 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
   // 获取事项数据
   const getReminder = useCallback((params: any = {}) => {
     params.startDate = state.date[0].valueOf();
-    params.endDate = state.date[1].valueOf() + ONE_DAY_TIMESTAMP;
+    params.endDate = state.date[1].valueOf();
 
     if (state.queryType !== '') {
       params.type = state.queryType;

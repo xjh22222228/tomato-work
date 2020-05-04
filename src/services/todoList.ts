@@ -13,7 +13,9 @@ export function serviceGetTodoList(params?: object) {
 
 // 删除
 export function serviceDeleteTodoList(id: unknown) {
-  return http.delete(`${api.todoList}/${id}`, { headers: { successAlert: true } });
+  return http.delete(`${api.todoList}/${id}`, {
+    headers: { successAlert: true }
+  });
 }
 
 // 更新

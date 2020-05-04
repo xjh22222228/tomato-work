@@ -3,12 +3,17 @@ import api from '@/api';
 
 // 创建
 export function serviceCreateTask(data: object) {
-  return http.post(api.todayTask, data, { headers: { successAlert: true } });
+  return http.post(api.todayTask, data, {
+    headers: { successAlert: true }
+  });
 }
 
 // 查询
 export function serviceGetTask(params?: object) {
-  return http.get(api.todayTask, { params, headers: { isLoading: true } });
+  return http.get(api.todayTask, {
+    params,
+    headers: { isLoading: true }
+  });
 }
 
 // 删除

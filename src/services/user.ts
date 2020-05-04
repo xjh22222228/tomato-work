@@ -32,5 +32,7 @@ export function serviceGetUserConfig() {
 
 // 更新用户配置信息
 export function serviceUpdateUserConfig(data: object) {
-  return http.put(api.getUserConfig, data, { headers: { successAlert: true } });
+  return http.put(api.getUserConfig, data, {
+    headers: { successAlert: true }
+  });
 }

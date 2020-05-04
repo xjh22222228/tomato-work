@@ -1,6 +1,13 @@
 {
-  "name": "client",
-  "version": "0.1.0",
+  "name": "tomato-work",
+  "version": "1.5.0",
+  "bugs": {
+    "url": "https://github.com/xjh22222228/tomato-work/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xjh22222228/tomato-work.git"
+  },
   "private": true,
   "dependencies": {
     "@babel/core": "7.9.0",
@@ -89,6 +96,7 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
+    "build-gh": "node scripts/build.js && node gh-pages.js",
     "test": "node scripts/test.js"
   },
   "eslintConfig": {

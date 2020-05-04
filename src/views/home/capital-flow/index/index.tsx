@@ -32,6 +32,7 @@ interface State {
   nameList: any[];
   price: { consumption: number; income: number; available: number; };
   sortedInfo: any;
+  filters: object;
 }
 
 const initialState: State = {
@@ -43,7 +44,10 @@ const initialState: State = {
   currentRow: null,
   nameList: [],
   price: { consumption: 0, income: 0, available: 0 },
-  sortedInfo: null
+  sortedInfo: null,
+  filters: {
+    price: [true]
+  }
 };
 
 function reducer(state: State, action: any) {
@@ -180,7 +184,8 @@ const Reminder: React.FC = function() {
       sortedInfo: {
         columnKey: sorter.columnKey,
         order: sorter.order
-      }
+      },
+      filters
     });
   }, [setState]);
 
@@ -201,23 +206,32 @@ const Reminder: React.FC = function() {
   }, [state.name, state.type, state.date]);
 
   const tableColumns = useMemo(() => [
-    { title: '入账时间', dataIndex: 'date', width: 180, sorter: true,
+    {
+      title: '入账时间', dataIndex: 'date', width: 180, sorter: true,
       sortOrder: state.sortedInfo?.columnKey === 'date' && state.sortedInfo.order
     },
-    { title: '账务类型', dataIndex: 'name', width: 120
-    },
-    { title: '收支金额（元）', width: 140, sorter: true, dataIndex: 'price',
+    { title: '账务类型', dataIndex: 'name', width: 120 },
+    { 
+      title: '收支金额（元）', width: 140, sorter: true, dataIndex: 'price',
       sortOrder: state.sortedInfo?.columnKey === 'price' && state.sortedInfo.order,
+      filters: [
+        { text: '隐藏金额', value: true }
+      ],
+      defaultFilteredValue: [true],
       render: (text: any, rowData: any) => (
-        <span style={{ color: rowData.__color__ }}>{rowData.__price__}</span>
+        <span style={{ color: rowData.__color__ }}>
+          {state.filters.price && state.filters.price[0] === true ? '******': rowData.__price__}
+        </span>
       )
     },
-    { title: '备注信息',
+    { 
+      title: '备注信息',
       render: (rowData: any) => (
         <p className="white-space_pre-wrap">{rowData.remarks}</p>
       )
     },
-    { title: '操作', width: 180, align: 'right',
+    { 
+      title: '操作', width: 180, align: 'right',
       render: (row: any) => (
         <>
           <Button onClick={handleActionButton.bind(null, 0, row)} size="small">编辑</Button>
@@ -225,7 +239,7 @@ const Reminder: React.FC = function() {
         </>
       )
     }
-  ], [state.sortedInfo, handleActionButton]);
+  ], [state.sortedInfo, state.filters, handleActionButton]);
 
   return (
     <div className="capital-flow">
@@ -261,7 +275,7 @@ const Reminder: React.FC = function() {
           onSearch={() => tableRef.current.getTableData()}
           style={{ width: 260, marginRight: '15px' }}
         />
-        <Button type="primary" onClick={() => tableRef.current.getTableData()}>查询</Button>
+        <Button type="primary" onClick={tableRef.current?.getTableData}>查询</Button>
         <Button onClick={() => setState({ modalVisible: true, currentRow: null })}>新增</Button>
         <Button onClick={initParams}>重置</Button>
         <div style={{ marginTop: '10px' }}>

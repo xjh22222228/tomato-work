@@ -46,7 +46,7 @@ const MoneyAccessChart = () => {
           <Legend />
           <Axis
             name="price"
-            label={{ formatter: val => `${parseInt(val)}￥` }}
+            label={{ formatter: (val: string) => `${parseInt(val)}￥` }}
           />
           <Tooltip crosshairs={{ type: 'y' }} />
           <Geom

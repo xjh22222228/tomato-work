@@ -34,13 +34,14 @@ interface State {
   }
 }
 
+const DEFAULT_PAGE_SIZE = 50;
 const initialState: State = {
   tableHeight: 0,
   tableDataSource: [],
   isLoading: false,
   pagination: {
     pageNo: 1,
-    pageSize: 50,
+    pageSize: DEFAULT_PAGE_SIZE,
     showSizeChanger: true,
     total: 0,
     pageSizeOptions: ['30', '50', '70', '100', '200']
@@ -109,7 +110,7 @@ const TableFC: FC<Props & TableProps<unknown>> = ({
 
   useEffect(() => {
     tableRef.current.pageNo = 1;
-    tableRef.current.pageSize = 50;
+    tableRef.current.pageSize = DEFAULT_PAGE_SIZE;
   }, [tableRef]);
 
   useEffect(() => {

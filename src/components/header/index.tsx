@@ -108,12 +108,12 @@ const HomeHeader: React.FC<Props> = function ({
           <Icon type={isFullscreen ? 'fullscreen-exit' : 'fullscreen'} />
         </li>
         <li>
-          <a href={config.github.bug} target="_blank">
+          <a href={config.github.bug} target="_blank" rel="noopener noreferrer">
             <Icon type="bug" theme="filled" />
           </a>
         </li>
         <li>
-          <a href={config.github.repositoryUrl} target="_blank">
+          <a href={config.github.repositoryUrl} target="_blank" rel="noopener noreferrer">
             <Icon type="github" />
           </a>
         </li>

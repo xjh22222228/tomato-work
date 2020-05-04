@@ -132,7 +132,13 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
         content: (
           <>
             请将您的GitHub邮箱设为公开，否则影响本功能的使用，
-            <a href="https://github.com/settings/profile" target="_blank">前往设置</a>
+            <a 
+              href="https://github.com/settings/profile" 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              前往设置
+            </a>
           </>
         ),
       });

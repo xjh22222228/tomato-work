@@ -68,7 +68,7 @@ const Account: React.FC<Props & RouteComponentProps> = function ({ userInfo }) {
             onChange={e => setSckey(e.target.value)} 
           />
           <div style={{ textAlign: 'right', marginTop: '5px' }}>
-            <a href="http://sc.ftqq.com" target="_blank">如何获取？</a>
+            <a href="http://sc.ftqq.com" target="_blank" rel="noopener noreferrer">如何获取？</a>
           </div>
         </Form.Item>
         <Form.Item>

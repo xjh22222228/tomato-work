@@ -21,10 +21,9 @@
 
   .wrap {
     flex: 1;
-    margin-bottom: 150px;
+    margin-top: 90px;
     width: 320px;
     align-self: center;
-    @include flex-center;
   }
 
   .ant-input-affix-wrapper:not(:nth-child(1)) {
@@ -61,30 +60,9 @@
     border-left: 1px solid #ccc;
   }
 
-  .other-login {
+  .register {
     margin-top: 15px;
-    display: flex;
-
-    .txt {
-      margin-right: 15px;
-      vertical-align: text-bottom;
-    }
-
-    i {
-      cursor: pointer;
-      transition: .1s linear;
-      font-size: 22px;
-      color: #ccc;
-
-      &:hover {
-        color: #000 !important;
-      }
-    }
-
-    .to-register {
-      flex: 1;
-      text-align: right;
-      color: $theme-color;
-    }
+    text-align: right;
+    color: $theme-color;
   }
 }

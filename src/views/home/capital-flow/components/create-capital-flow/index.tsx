@@ -66,7 +66,7 @@ const CreateReminder: React.FC<Props> = function ({
   const initParams = useCallback(() => {
     const params: any = {
       remarks: '',
-      typeId: '',
+      typeId: state.typeId || (nameList.length && nameList[0].id),
       price: ''
     };
 
@@ -77,7 +77,7 @@ const CreateReminder: React.FC<Props> = function ({
       params.price = rowData.price;
     }
     setState(params);
-  }, [setState, rowData]);
+  }, [setState, rowData, state.typeId, nameList]);
 
   const handleSubmit = useCallback((e: React.MouseEvent | React.FormEvent) => {
     e.preventDefault();

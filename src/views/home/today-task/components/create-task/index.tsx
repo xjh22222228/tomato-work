@@ -90,7 +90,7 @@ const CreateTask: React.FC<Props> = function ({ visible, onSuccess, setParentSta
             placeholder="请输入内容"
           />
         </Form.Item>
-        <Form.Item label="重要级别">
+        <Form.Item label="优先级别">
           <Rate value={state.count} onChange={count => setState({ count })} />
         </Form.Item>
       </Form>

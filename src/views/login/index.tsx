@@ -43,8 +43,8 @@ const Login: React.FC<LoginProps> = function ({
   history,
   location
 }) {
-  const loginName = useFormInput(LOGIN_NAME);
-  const password = useFormInput('');
+  const loginName = useFormInput(config.isDevelopment ? 'test' : LOGIN_NAME);
+  const password = useFormInput(config.isDevelopment ? '123456' : '');
   const code = useFormInput('');
   const [loading, setLoading] = useState(false);
   const [redirectUrl] = useState(() => {
@@ -167,18 +167,25 @@ const Login: React.FC<LoginProps> = function ({
           >
             {loading ? '登 录 中...' : '登 录'}
           </Button>
-          <div className="other-login">
-            <span className="txt">其他登录方式</span>
-            <Icon 
-              type="github" 
-              onClick={githubHandler} 
-            />
-            <div className="to-register">
-              <Popover content={PopoverContent} trigger="hover" placement="bottomRight">
-                <em className="cursor_pointer">注册账号</em>
-              </Popover>
-            </div>
+          <div className="register">
+            <Popover 
+              content={PopoverContent} 
+              trigger="hover" 
+              placement="bottomRight"
+            >
+              注册账号
+            </Popover>
           </div>
+          <Button 
+            style={{ marginTop: '20px' }} 
+            size="large" 
+            loading={loading} 
+            block 
+            icon="github"
+            onClick={githubHandler}
+          >
+            使用 Github 登录
+          </Button>
         </div>
       </div>
       <Footer />

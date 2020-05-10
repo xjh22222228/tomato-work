@@ -10,9 +10,7 @@ import {
 } from 'antd';
 
 interface Props {
-  data: {
-    [propName: string]: any
-  },
+  data: { [key: string]: any },
   reloadData(): void;
 }
 
@@ -20,7 +18,6 @@ const TaskItem: React.FC<Props> = ({ data, reloadData }) => {
 
   // 0=删除, 1=开始/完成, 2=回退
   const handleAction = useCallback(buttonType => {
-
     if (buttonType === 0) {
       modalConfirmDelete()
       .then(() => {
@@ -41,7 +38,6 @@ const TaskItem: React.FC<Props> = ({ data, reloadData }) => {
         }
       });
     }
-
   }, [data, reloadData])
 
   return (
@@ -52,7 +48,7 @@ const TaskItem: React.FC<Props> = ({ data, reloadData }) => {
     >
       <p className="content">{data.content}</p>
       <div className="level">
-        <span>重要级别：</span>
+        <span>优先级别：</span>
         <Rate value={data.count} disabled></Rate>
         <p>创建时间: {moment(data.createdAt).format('HH:mm:ss')}</p>
       </div>

@@ -1,4 +1,4 @@
-import React, { useCallback, useReducer, useEffect } from 'react';
+import React, { useCallback, useReducer, useEffect, useRef } from 'react';
 import moment from 'moment';
 import { 
   Modal,
@@ -58,6 +58,7 @@ const CreateReminder: React.FC<Props> = function ({
   nameList
 }) {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const initRef = useRef(false);
 
   const setState = useCallback((state) => {
     dispatch({ type: 'setState', state })
@@ -115,6 +116,8 @@ const CreateReminder: React.FC<Props> = function ({
   }, [state, setState, onSuccess, rowData]);
 
   useEffect(() => {
+    if (visible === initRef.current) return;
+    initRef.current = visible;
     initParams();
   }, [visible, initParams]);
 

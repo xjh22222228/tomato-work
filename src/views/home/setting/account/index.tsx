@@ -40,7 +40,7 @@ const Account: React.FC<Props & RouteComponentProps> = function ({ userInfo }) {
     serviceGetUserConfig()
     .then(res => {
       if (res.data.success) {
-        setSckey(res.data.data.serverChanSckey);
+        setSckey(res.data.data?.serverChanSckey || '');
       }
     });
   }, []);

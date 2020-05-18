@@ -15,7 +15,9 @@ const Notification: React.FC = function () {
   useEffect(() => {
     serviceGetUserConfig().then(res => {
       if (res.data.success) {
-        setUserConfig(res.data.data);
+        setUserConfig({
+          ...res.data.data
+        });
       }
     });
   }, []);

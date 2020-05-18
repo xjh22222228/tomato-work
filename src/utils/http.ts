@@ -15,7 +15,6 @@ let _logout = false;
 const CancelToken = axios.CancelToken;
 
 function handleError(error: any): Promise<any> | undefined {
-
   if (axios.isCancel(error)) {
     
   } else {
@@ -96,7 +95,6 @@ httpInstance.interceptors.request.use(function (config) {
 
 
 httpInstance.interceptors.response.use(function (res) {
-
   if (res.config.headers.isLoading) {
     spin.done();
   }
@@ -112,9 +110,7 @@ httpInstance.interceptors.response.use(function (res) {
   // 登录凭证失效
   if (res.data.errorCode === 401 && !_logout) {
     _logout = true;
-    setTimeout(() => {
-      logout();
-    }, 2000);
+    setTimeout(logout, 2000);
   }
   return res;
 }, function (error) {

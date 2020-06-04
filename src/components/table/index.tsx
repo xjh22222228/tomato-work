@@ -130,7 +130,7 @@ const TableFC: FC<Props & TableProps<unknown>> = ({
 
   return (
     <Table 
-      { ...props }
+      {...props}
       ref={tableRef}
       rowKey="id"
       loading={state.isLoading}

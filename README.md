@@ -4,11 +4,11 @@
 tomato-work 的命名来源于《番茄工作法》，由于与本项目非常的贴近，所以因此而来。
 
 
-WEB：[tomato-work](https://github.com/xjh22222228/tomato-work)
+服务端：[tomato-work-server](https://github.com/xjh22222228/tomato-work-server)
 
 小程序：[tomato-work-weapp](https://github.com/xjh22222228/tomato-work-weapp)
 
-服务端：[tomato-work-server](https://github.com/xjh22222228/tomato-work-server)
+
 
 
 ## Online preview
@@ -60,6 +60,7 @@ WEB：[tomato-work](https://github.com/xjh22222228/tomato-work)
 yarn or npm install
 
 # serve with hot reload at localhost:9663
+# user: test, password: 123456
 yarn start or npm start
 
 # build for production with minification

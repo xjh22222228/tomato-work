@@ -57,14 +57,14 @@ tomato-work 的命名来源于《番茄工作法》，由于与本项目非常�
 ## Build Setup
 ``` bash
 # install dependencies
-yarn or npm install
+yarn
 
 # serve with hot reload at localhost:9663
 # user: test, password: 123456
-yarn start or npm start
+yarn start
 
 # build for production with minification
-yarn build or npm run build
+yarn build
 ```
 
 

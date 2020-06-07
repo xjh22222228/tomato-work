@@ -12,8 +12,10 @@ jobs:
       with:
         persist-credentials: false
     - name: Install and Build
+      uses: sergioramos/yarn-actions/install@v6
+      with:
+        frozen-lockfile: true
       run: |
-        npm i yarn -g
         yarn
         yarn build
     - name: Deploy

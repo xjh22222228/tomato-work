@@ -14,7 +14,7 @@ tomato-work 的命名来源于《番茄工作法》，由于与本项目非常�
 ## Online preview
 [Follow me](https://tomato-work.xiejiahe.com)
 
-![](https://github.com/xjh22222228/statics/blob/master/images/gif/1.gif)
+![](media/screenshot.png)
 
 
 ## Tech
@@ -27,7 +27,7 @@ tomato-work 的命名来源于《番茄工作法》，由于与本项目非常�
 "react-router-dom": "^5.1.2",
 "redux-thunk": "^2.3.0",
 "typescript": "^3.8.0",
-"antd": "^3.26.15",
+"antd": "^3.26.16",
 "axios": "^0.19.2",
 "blueimp-md5": "^2.13.0",
 "moment": "^2.24.0",

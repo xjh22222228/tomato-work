@@ -54,7 +54,8 @@ const TaskItem: React.FC<Props> = ({ data, reloadData }) => {
       </div>
       <div className="button-wrapper">
         <Button 
-          type="danger" 
+          type="primary" 
+          danger
           size="small" 
           onClick={handleAction.bind(null, 0)}
         >

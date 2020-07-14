@@ -1,9 +1,9 @@
 import React, { FC, useEffect, useState } from 'react';
 import './style.scss';
-import { Icon } from 'antd';
 import { match, Link, RouteComponentProps } from 'react-router-dom';
 import { serviceGetMemorandumById } from '@/services';
 import { defaultTitle } from '../constants';
+import { LeftOutlined, EditOutlined } from '@ant-design/icons';
 
 interface Props {
   computedMatch: match<any>
@@ -33,9 +33,9 @@ const Detail: FC<Props & RouteComponentProps> = ({ computedMatch, history }) => 
   return (
     <div className="memorandum-detail">
       <div className="tool-bar">
-        <Icon type="left" className="icon-left" onClick={goBack} />
+        <LeftOutlined className="icon-left" onClick={goBack} />
         <Link className="edit" to={`/home/memorandum/update/${id}`}>
-          <Icon type="edit" title="编辑" />
+          <EditOutlined title="编辑" />
         </Link>
       </div>
       <h1 className="title">{ title }</h1>

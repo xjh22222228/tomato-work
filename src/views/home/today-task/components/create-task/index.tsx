@@ -43,8 +43,7 @@ const CreateTask: React.FC<Props> = function ({ visible, onSuccess, setParentSta
     dispatch({ type: 'setState', state });
   }, []);
 
-  // 提交表单
-  const handleSubmit = useCallback(() => {
+  const handleSubmitForm = useCallback(() => {
     const params = {
       date: state.date.valueOf(),
       content: state.content.trim(),
@@ -57,28 +56,29 @@ const CreateTask: React.FC<Props> = function ({ visible, onSuccess, setParentSta
     }
 
     serviceCreateTask(params)
-    .then(res => {
-      if (res.data.success) {
-        onSuccess();
-      }
-    });
+      .then(res => {
+        if (res.data.success) {
+          onSuccess();
+        }
+      });
   }, [state, onSuccess]);
 
   return (
     <Modal
       title="新增"
       visible={visible}
-      onOk={handleSubmit}
+      onOk={handleSubmitForm}
       onCancel={() => setParentState({ showCreateTaskModal: false })}
       confirmLoading={state.confirmLoading}
     >
-      <Form onSubmit={handleSubmit} layout="inline">
+      <Form>
         <Form.Item label="开始日期">
           <DatePicker
             allowClear={false}
             value={state.date}
             onChange={date => setState({ date }) }
             disabledDate={isLtTodayTimestamp}
+            style={{ width: '100%' }}
           />
         </Form.Item>
         <Form.Item label="任务内容">

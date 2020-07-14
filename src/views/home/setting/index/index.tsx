@@ -1,7 +1,6 @@
 import React, { Suspense, useEffect, useState } from 'react';
 import './style.scss';
 import PrivateRoute from '@/components/private-route/index';
-import SuspenseFallback from '@/components/suspense-fallback/index';
 import { Layout, Menu } from 'antd';
 import { Switch, Link, RouteComponentProps } from 'react-router-dom';
 import { SETTING_SIDER_MENU_LIST } from '@/constants';
@@ -37,7 +36,7 @@ const SettingIndex: React.FC<RouteComponentProps> = function ({ location }) {
         </Menu>
       </Sider>
       <Content style={{ padding: '0 50px 0 30px' }}>
-        <Suspense fallback={SuspenseFallback()}>
+        <Suspense fallback={null}>
           <Switch>
             {settingRoutes.map((route, idx) => (
               <PrivateRoute {...route} key={idx} />

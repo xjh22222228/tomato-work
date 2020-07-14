@@ -1,7 +1,7 @@
 /**
  * @file User reducers
  * @since 1.0.0
- * @author xiejiahe <mb06@qq.com>
+ * @author xiejiahe <xjh22222228@gmail.com>
  */
 
 import { USER } from '../constants';

@@ -106,7 +106,7 @@ const CreateReminder: React.FC<Props> = function ({ visible, onCancel, onSuccess
       onCancel={onCancel}
       confirmLoading={state.confirmLoading}
     >
-      <Form onSubmit={handleSubmit} layout="inline">
+      <Form >
         <Form.Item label="提醒时间">
           <DatePicker
             mode={state.dateMode}
@@ -116,6 +116,7 @@ const CreateReminder: React.FC<Props> = function ({ visible, onCancel, onSuccess
             onPanelChange={(value, dateMode) => setState({ dateMode })}
             onChange={date => setState({ date }) }
             disabledDate={isLtTodayTimestamp}
+            style={{ width: '100%' }}
           />
         </Form.Item>
         <Form.Item label="提醒内容">

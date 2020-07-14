@@ -1,7 +1,7 @@
 /**
  * @file Global config file
  * @since 1.0.0
- * @author xiejiahe <mb06@qq.com>
+ * @author xiejiahe <xjh22222228@gmail.com>
  */
 
 const isProduction = process.env.NODE_ENV === 'production';

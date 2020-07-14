@@ -1,22 +1,22 @@
+$colors: #f50 #34bfa3 #36a3f7 #40c9c6;
 .panel-group {
-
-  $colors: #f50 #34bfa3 #36a3f7 #40c9c6;
+  .icon svg {
+    width: 75px;
+    height: 75px;
+  }
 
   .ant-col {
     margin-bottom: 20px;
     @for $i from 1 through 4 {
 
       &:nth-child(#{$i}) {
-
         .anticon {
           color: nth($colors, $i);
         }
 
         &:hover {
-
           .anticon {
             color: #fff;
-
             & > svg {
               background: nth($colors, $i);
             }
@@ -36,8 +36,7 @@
     background: #fff;
     cursor: pointer;
 
-    i {
-      font-size: 75px;
+    .icon {
       flex: 1;
       text-align: left;
       align-self: center;

@@ -1,6 +1,6 @@
 /**
  * @since 1.0.1
- * @author xiejiahe <mb06@qq.com>
+ * @author xiejiahe <xjh22222228@gmail.com>
  */
 import axios from 'axios';
 import CONFIG from '@/config';

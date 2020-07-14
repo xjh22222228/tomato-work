@@ -102,7 +102,7 @@ const Type = () => {
   return (
     <div className="capital-flow-type">
       <div className="button-group">
-        <Button type="danger" onClick={deleteCapitalFlowType}>删除</Button>
+        <Button type="primary" danger onClick={deleteCapitalFlowType}>删除</Button>
         <Button type="primary" onClick={handleAdd}>新增</Button>
       </div>
       <Table 

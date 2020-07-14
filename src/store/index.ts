@@ -1,7 +1,7 @@
 /**
  * @file Store main entry.
  * @since 1.0.0
- * @author xiejiahe <mb06@qq.com>
+ * @author xiejiahe <xjh22222228@gmail.com>
  */
 import thunk from 'redux-thunk';
 import rootReducer from './reducers';

@@ -2,9 +2,10 @@ import React from 'react';
 import './style.scss';
 import { Result, Button } from 'antd';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { ExceptionStatusType } from 'antd/lib/result'
 
 interface Props {
-  status?: '403' | '404' | '500';
+  status?: ExceptionStatusType
 }
 
 const statusMap = {

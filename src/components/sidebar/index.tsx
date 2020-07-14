@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import './style.scss';
 import config from '@/config';
-import { Layout, Menu, Icon } from 'antd';
+import { Layout, Menu } from 'antd';
 import { withRouter, RouteComponentProps, Link } from 'react-router-dom';
 import { HomeMainState } from '@/views/home/main-entry/index';
 import { HOME_SIDER_MENU_LIST } from '@/constants';
@@ -13,11 +13,11 @@ type Props = HomeMainState & RouteComponentProps;
 
 const Sidebar: React.FC<Props> = function ({ location, collapsed }) {
   const [selectedKeys, setSelectedKeys] = useState('');
-  const [openKeys, setOpenKeys] = useState([] as string[]);
+  const [openKeys, setOpenKeys] = useState<string[]>([]);
 
-  const handleOpenChange = useCallback(openKeys => {
+  function handleOpenChange(openKeys: any) {
     setOpenKeys(openKeys);
-  }, []);
+  }
 
   useEffect(() => {
     const pathname = location.pathname;
@@ -65,7 +65,7 @@ const Sidebar: React.FC<Props> = function ({ location, collapsed }) {
                 key={menu.name}
                 title={
                   <>
-                    <Icon type={menu.type} />
+                    {menu.icon}
                     <span>{menu.name}</span>
                   </>
                 }
@@ -82,7 +82,7 @@ const Sidebar: React.FC<Props> = function ({ location, collapsed }) {
           return (
             <Menu.Item key={menu.path}>
               <Link to={menu.path}>
-                <Icon type={menu.type} />
+                {menu.icon}
                 <span>{menu.name}</span>
               </Link>
             </Menu.Item>

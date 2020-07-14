@@ -81,7 +81,7 @@ const CreateTodo: React.FC<Props> = function ({
       onCancel={() => setParentState({ showCreateTodoModal: false })}
       confirmLoading={state.confirmLoading}
     >
-      <Form onSubmit={handleSubmit} layout="inline">
+      <Form>
         <Form.Item label="活动内容">
           <TextArea 
             rows={3} 

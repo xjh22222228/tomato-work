@@ -99,7 +99,7 @@ const TodayTask = () => {
           state.data.finished.length > 0 ||
           state.data.unfinished.length > 0
         ) ? (
-          <Row gutter={24} type="flex">
+          <Row gutter={24}>
             {Object.keys(state.data).map((key: string) => (
               <Col span={6} key={key}>
                 <div className="text-align_center">

@@ -10,7 +10,7 @@ import md5 from 'blueimp-md5';
 import _ from 'lodash';
 import api from '@/api';
 import config from '@/config';
-import { Button, Input, Icon, message, Popover } from 'antd';
+import { Button, Input, message, Popover } from 'antd';
 import { useFormInput } from '@/hooks';
 import { RouteComponentProps } from 'react-router-dom';
 import { DispatchProp, connect } from 'react-redux';
@@ -21,6 +21,11 @@ import { serviceLogin } from '@/services';
 import { HOME } from '@/router/constants';
 import { LOCAL_STORAGE } from '@/constants';
 import { randomCode } from '@/utils';
+import {
+  PictureOutlined,
+  LockOutlined,
+  UserOutlined
+} from '@ant-design/icons';
 
 
 type ThunkDispatchProps = ThunkDispatch<{}, {}, AnyAction>;
@@ -126,7 +131,7 @@ const Login: React.FC<LoginProps> = function ({
             <Input
               {...loginName} 
               placeholder="Username"
-              prefix={<Icon type="user" />} 
+              prefix={<UserOutlined />} 
               maxLength={32} 
               autoComplete="off" 
               onPressEnter={handleSubmit} 
@@ -134,7 +139,7 @@ const Login: React.FC<LoginProps> = function ({
             <Input
               {...password}
               placeholder="Password"
-              prefix={<Icon type="lock" />} 
+              prefix={<LockOutlined />} 
               maxLength={32} 
               type="password" 
               autoComplete="off"
@@ -143,7 +148,7 @@ const Login: React.FC<LoginProps> = function ({
             <Input
               {...code}
               placeholder="请输入验证码"
-              prefix={<Icon type="picture" />} 
+              prefix={<PictureOutlined />} 
               maxLength={4} 
               autoComplete="off" 
               onPressEnter={handleSubmit} 
@@ -173,7 +178,7 @@ const Login: React.FC<LoginProps> = function ({
               trigger="hover" 
               placement="bottomRight"
             >
-              注册账号
+              <span>注册账号</span>
             </Popover>
           </div>
           <Button 

@@ -60,7 +60,7 @@ const Memorandum: FC<RouteComponentProps> = ({ history }) => {
   return (
     <div className="memorandum">
       {(list.length > 0) ? (
-        <Row gutter={16} type="flex" align="bottom">
+        <Row gutter={16} align="bottom">
           {list.map((item: any) => (
             <Col span={8} key={item.id}>
               <Link to={`/home/memorandum/detail/${item.id}`}>

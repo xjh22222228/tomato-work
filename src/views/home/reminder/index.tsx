@@ -46,7 +46,7 @@ function reducer(state: State, action: any) {
 
 const Reminder: React.FC<Props> = function({ userInfo }) {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const tableRef = useRef<any>(null);
+  const tableRef = useRef<any>({});
   const [tableColumns] = useState([
     { title: '状态', dataIndex: 'type', width: 100,
       render: (row: any) => (

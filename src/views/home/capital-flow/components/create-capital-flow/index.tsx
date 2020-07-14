@@ -129,7 +129,7 @@ const CreateReminder: React.FC<Props> = function ({
       onCancel={onCancel}
       confirmLoading={state.confirmLoading}
     >
-      <Form onSubmit={handleSubmit} layout="inline">
+      <Form>
         <Form.Item label="入账时间">
           <DatePicker
             mode={state.dateMode}
@@ -138,6 +138,7 @@ const CreateReminder: React.FC<Props> = function ({
             value={state.date}
             onPanelChange={(value, dateMode) => setState({ dateMode }) }
             onChange={date => setState({ date }) }
+            style={{ width: '100%' }}
           />
         </Form.Item>
         <Form.Item label="财务类型">

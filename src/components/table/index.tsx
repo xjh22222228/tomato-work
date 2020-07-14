@@ -1,7 +1,7 @@
 /**
  * @file Antd Table组件封装
  * @since 1.0.0
- * @author xiejiahe <mb06@qq.com>
+ * @author xiejiahe <xjh22222228@gmail.com>
  * @example:
  * <Table 
  *   // 配置ref用于调用父组件方法获取数据
@@ -16,7 +16,7 @@
 
 import React, { FC, useEffect, useCallback, useReducer } from 'react';
 import { Table } from 'antd';
-import { TableProps } from 'antd/lib/table/interface';
+import { TableProps } from 'rc-table/lib/Table';
 import { AxiosPromise } from 'axios';
 
 interface Props {
@@ -109,14 +109,19 @@ const TableFC: FC<Props & TableProps<unknown>> = ({
   };
 
   useEffect(() => {
+    if (!tableRef.current) {
+      tableRef.current = {};
+    }
+    // 新增方法给父组件调用
+    tableRef.current.getTableData = getData;
+  });
+
+  useEffect(() => {
     tableRef.current.pageNo = 1;
     tableRef.current.pageSize = DEFAULT_PAGE_SIZE;
   }, [tableRef]);
 
-  useEffect(() => {
-    // 新增方法给父组件调用
-    tableRef.current.getTableData = getData;
-  });
+  
 
   useEffect(() => {
     // 设置表格的高度
@@ -130,8 +135,7 @@ const TableFC: FC<Props & TableProps<unknown>> = ({
 
   return (
     <Table 
-      {...props}
-      ref={tableRef}
+      {...props as any}
       rowKey="id"
       loading={state.isLoading}
       dataSource={state.tableDataSource} 

@@ -85,7 +85,7 @@ const CreateTask: React.FC<Props> = function ({ visible, rowData, onCancel, onSu
       onCancel={() => onCancel()}
       confirmLoading={state.confirmLoading}
     >
-      <Form onSubmit={handleSubmit} layout="inline">
+      <Form>
         <Form.Item label="名称">
           <Input 
             value={state.name} 

@@ -1,10 +1,15 @@
-![GitHub package.json version](https://img.shields.io/github/package-json/v/xjh22222228/tomato-work) ![GitHub](https://img.shields.io/github/license/xjh22222228/tomato-work) [![HitCount](http://hits.dwyl.com/xjh22222228/tomato-work.svg)](http://hits.dwyl.com/xjh22222228/tomato-work)
-
 
 <p align="center">
   <img src="public/poster.png" width="150" />
   <br />
-  <em>Tomato Work 个人事务管理系统</em>
+  <b>Tomato Work 个人事务管理系统</b>
+  <p align="center">
+    <img src="https://img.shields.io/github/package-json/v/xjh22222228/tomato-work" />
+    <img src="https://img.shields.io/github/license/xjh22222228/tomato-work" />
+    <a href="https://hits.dwyl.com/xjh22222228/tomato-work">
+      <img src="https://hits.dwyl.com/xjh22222228/tomato-work.svg" />
+    </a>
+  </p>
 </p>
 
 

@@ -18,7 +18,7 @@ const CONFIG = {
     baseURL: '/api'
   },
   github: {
-    clientId: isProduction ? '9a6052b7834e7441cb95' : '489b39e1f91d934128c8',
+    clientId: isProduction ? '789d87c19dd5ed1dc42e' : '489b39e1f91d934128c8',
     // callbackURL 不可随意更改, 否则需要与服务端配置文件一同修改
     callbackURL: `${window.location.origin}/api/passport/github/callback`,
     repositoryUrl: 'https://github.com/xjh22222228/tomato-work',

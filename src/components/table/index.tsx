@@ -1,6 +1,4 @@
 /**
- * @file Antd Table组件封装
- * @since 1.0.0
  * @author xiejiahe <xjh22222228@gmail.com>
  * @example:
  * <Table 
@@ -14,7 +12,7 @@
  * />
  */
 
-import React, { FC, useEffect, useCallback } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Table } from 'antd';
 import { TableProps } from 'rc-table/lib/Table';
 import { AxiosPromise } from 'axios';
@@ -57,7 +55,7 @@ const TableFC: FC<Props & TableProps<unknown>> = ({
 }) => {
   const [state, setState] = useKeepState(initialState);
 
-  const getData = useCallback(() => {
+  function getData() {
     setState({ isLoading: true });
     const { pageNo, pageSize } = tableRef.current;
     // 调用父组件函数获取数据
@@ -65,22 +63,22 @@ const TableFC: FC<Props & TableProps<unknown>> = ({
       pageNo: pageNo - 1,
       pageSize: pageSize
     })
-    .then(res => {
-      if (res.data.success) {
-        setState({
-          pagination: {
-            ...state.pagination,
-            total: res.data.data.count,
-            pageSize
-          },
-          tableDataSource: res.data.data.rows
-        });
-      }
-    })
-    .finally(() => {
-      setState({ isLoading: false });
-    });
-  }, [setState, state.pagination, getTableData, tableRef]);
+      .then(res => {
+        if (res.data.success) {
+          setState({
+            pagination: {
+              ...state.pagination,
+              total: res.data.data.count,
+              pageSize
+            },
+            tableDataSource: res.data.data.rows
+          });
+        }
+      })
+      .finally(() => {
+        setState({ isLoading: false });
+      });
+  }
 
   const onChange = function(pagination: any, filters: any, sorter: any) {
     setState({
@@ -108,8 +106,6 @@ const TableFC: FC<Props & TableProps<unknown>> = ({
     tableRef.current.pageNo = 1;
     tableRef.current.pageSize = DEFAULT_PAGE_SIZE;
   }, [tableRef]);
-
-  
 
   useEffect(() => {
     // 设置表格的高度

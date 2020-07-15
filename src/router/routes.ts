@@ -15,16 +15,18 @@ import CapitalFlow from '@/views/home/capital-flow/index';
 import CapitalFlowType from '@/views/home/capital-flow/type';
 import TodoList from '@/views/home/todo-list/index';
 
-
 const routesMap: Array<IRouteProps> = [
   {
     path: HOME.LOGIN.path,
     exact: true,
     component: Login,
     meta: {
-      requiresAuth: false,      // 当前页面是否需要登录状态
-      title: HOME.LOGIN.name,   // 网页标题
-      isLoginToHome: true       // 如果当前登录状态跳转到后台首页
+      // 当前页面是否需要登录状态
+      requiresAuth: false,
+      // 网页标题
+      title: HOME.LOGIN.name,
+      // 如果当前登录状态跳转到后台首页
+      isLoginToHome: true
     }
   },
   {

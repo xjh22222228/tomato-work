@@ -31,15 +31,15 @@ const Type = () => {
     ) },
   ]);
 
-  const onSelectChange = useCallback(selectedRowKeys => {
+  const onSelectChange = function(selectedRowKeys: any) {
     setState({ selectedRowKeys });
-  }, [setState]);
+  };
 
   const getCapitalFlowType = useCallback(() => {
     serviceGetCapitalFlowType()
     .then(res => {
       if (res.data.success) {
-        const handleData = res.data.data.map((item: any, idx: number) => {
+        const handleData = res.data.data.map((item: any) => {
           item.typeName = TypeNames[item.type];
           item.color = TypeColors[item.type];
           item.createdAt = moment(item.createdAt).format('YYYY-MM-DD hh:mm');
@@ -74,9 +74,9 @@ const Type = () => {
     setState({ modalVisible: true, rowData: null });
   }, [state.data, setState]);
 
-  const handleEdit = useCallback((rowData: any) => {
+  function handleEdit(rowData: any) {
     setState({ modalVisible: true, rowData });
-  }, [setState]);
+  }
 
   useEffect(() => {
     getCapitalFlowType();

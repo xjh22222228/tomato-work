@@ -1,7 +1,6 @@
 import React, {
   useState,
   useEffect,
-  useCallback
 } from 'react';
 import './style.scss';
 import Footer from '@/components/footer';
@@ -24,7 +23,8 @@ import { randomCode } from '@/utils';
 import {
   PictureOutlined,
   LockOutlined,
-  UserOutlined
+  UserOutlined,
+  GithubOutlined
 } from '@ant-design/icons';
 
 
@@ -42,6 +42,13 @@ const PopoverContent = (
 
 let captcha = randomCode();
 const LOGIN_NAME = window.localStorage.getItem(LOCAL_STORAGE.LOGIN_NAME) || '';
+
+
+function reloadCaptcha(e: any) {
+  captcha = randomCode();
+  const url = api.getCaptcha + captcha;
+  e.target.src = url;
+}
 
 const Login: React.FC<LoginProps> = function ({
   dispatch,
@@ -68,29 +75,27 @@ const Login: React.FC<LoginProps> = function ({
       if (_code !== captcha) throw new Error('验证码错误');
 
       setLoading(true);
-      serviceLogin({ loginName: _loginName, password: md5(_password), code: _code })
-      .then(res => {
-        setLoading(false);
-        if (res.data.success) {
-          dispatch(setUser(res.data.data.userInfo));
-          history.replace(redirectUrl);
-        }
+      serviceLogin({
+        loginName: _loginName,
+        password: md5(_password),
+        code: _code
       })
-      .catch(_ => {
-        setLoading(false);
-      });
+        .then(res => {
+          setLoading(false);
+          if (res.data.success) {
+            dispatch(setUser(res.data.data.userInfo));
+            history.replace(redirectUrl);
+          }
+        })
+        .catch(_ => {
+          setLoading(false);
+        });
     } catch (err) {
       message.warn(err.message);
       return;
     }
   };
 
-  const reloadCaptcha = useCallback(e => {
-    captcha = randomCode();
-    const url = api.getCaptcha + captcha;
-    e.target.src = url;
-  }, []);
-  
   const githubHandler = () => {
     setLoading(true);
     githubAuthz();
@@ -130,7 +135,7 @@ const Login: React.FC<LoginProps> = function ({
           <Input.Group>
             <Input
               {...loginName} 
-              placeholder="Username"
+              placeholder="用户名"
               prefix={<UserOutlined />} 
               maxLength={32} 
               autoComplete="off" 
@@ -138,7 +143,7 @@ const Login: React.FC<LoginProps> = function ({
             />
             <Input
               {...password}
-              placeholder="Password"
+              placeholder="密码"
               prefix={<LockOutlined />} 
               maxLength={32} 
               type="password" 
@@ -186,7 +191,7 @@ const Login: React.FC<LoginProps> = function ({
             size="large" 
             loading={loading} 
             block 
-            icon="github"
+            icon={<GithubOutlined />}
             onClick={githubHandler}
           >
             使用 Github 登录

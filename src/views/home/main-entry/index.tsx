@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import './style.scss';
 import Sidebar from '@/components/sidebar';
 import Header from '@/components/header';
@@ -20,11 +20,14 @@ const storageCollapsed = Number(window.localStorage.getItem(SIDEBAR_COLLAPSED) |
 const HomeMain: React.FC = function (props) {
   const [collapsed, setCollapsed] = useState(!storageCollapsed);
 
-  const handleToggleCollapsed = useCallback(() => {
+  function handleToggleCollapsed() {
     setCollapsed(!collapsed);
-    window.localStorage.setItem(SIDEBAR_COLLAPSED, Number(collapsed) + '');
-  }, [collapsed]);
-  
+    window.localStorage.setItem(
+      SIDEBAR_COLLAPSED,
+      Number(collapsed) + ''
+    );
+  }
+
   return (
     <section className="home-main">
       <Layout>

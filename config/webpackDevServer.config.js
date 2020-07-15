@@ -103,7 +103,7 @@ module.exports = function(proxy, allowedHost) {
     // `proxy` is run between `before` and `after` `webpack-dev-server` hooks
     proxy: {
       '/api':{
-        target: process.env.APP_PROXY || 'http://localhost:7003',
+        target: process.env.APP_PROXY,
         changeOrigin: true
       },
     },

@@ -1,7 +1,13 @@
 ## tomato-work ![GitHub package.json version](https://img.shields.io/github/package-json/v/xjh22222228/tomato-work) ![GitHub](https://img.shields.io/github/license/xjh22222228/tomato-work)
 **个人事务管理系统**, 为自己精心打造的一个系统并开源分享。
 
-tomato-work 的命名来源于《番茄工作法》，由于与本项目非常的贴近，所以因此而来。
+
+<p align="center">
+  <img src="public/poster.png" width="300" />
+</p>
+
+
+`Tomato Work` 命名来源于《番茄工作法》。
 
 
 服务端：[tomato-work-server](https://github.com/xjh22222228/tomato-work-server)

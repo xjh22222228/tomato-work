@@ -45,7 +45,10 @@ function system(state = initialState, action: any): SystemState {
         return state;
       }
       action.data.arch = action.data.arch.slice(1);
-      return Object.assign({}, state, { info: action.data });
+      return {
+        ...state,
+        info: action.data
+      };
     default:
       return state;
   }

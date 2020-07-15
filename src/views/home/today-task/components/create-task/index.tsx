@@ -3,7 +3,7 @@ import moment from 'moment';
 import useKeepState from 'use-keep-state';
 import { isLtTodayTimestamp } from '@/utils';
 import { serviceCreateTask } from '@/services';
-import { 
+import {
   Modal,
   Form,
   Input,
@@ -29,7 +29,7 @@ const initialState = {
 };
 
 const CreateTask: React.FC<Props> = function ({ visible, onSuccess, setParentState }) {
-  const [state, setState] = useKeepState(initialState); 
+  const [state, setState] = useKeepState(initialState);
 
   const handleSubmitForm = useCallback(() => {
     const params = {
@@ -70,11 +70,11 @@ const CreateTask: React.FC<Props> = function ({ visible, onSuccess, setParentSta
           />
         </Form.Item>
         <Form.Item label="任务内容">
-          <TextArea 
-            rows={3} 
-            value={state.content} 
-            onChange={e => setState({ content: e.target.value })} 
-            maxLength={200} 
+          <TextArea
+            rows={3}
+            value={state.content}
+            onChange={e => setState({ content: e.target.value })}
+            maxLength={200}
             placeholder="请输入内容"
           />
         </Form.Item>

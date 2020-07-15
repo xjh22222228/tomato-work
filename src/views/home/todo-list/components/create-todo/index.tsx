@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import useKeepState from 'use-keep-state';
 import { serviceCreateTodoList, serviceUpdateTodoList } from '@/services';
-import { 
+import {
   Modal,
   Form,
   Input,
@@ -27,7 +27,7 @@ const CreateTodo: React.FC<Props> = function ({
   setParentState,
   rowData
 }) {
-  const [state, setState] = useKeepState(initialState); 
+  const [state, setState] = useKeepState(initialState);
 
   const handleSubmitForm = useCallback(() => {
     const params = {
@@ -40,8 +40,8 @@ const CreateTodo: React.FC<Props> = function ({
     }
 
     (
-      !rowData 
-        ? serviceCreateTodoList(params) 
+      !rowData
+        ? serviceCreateTodoList(params)
           : serviceUpdateTodoList(rowData.id, params)
     )
     .then(res => {
@@ -67,11 +67,11 @@ const CreateTodo: React.FC<Props> = function ({
     >
       <Form>
         <Form.Item label="活动内容">
-          <TextArea 
-            rows={3} 
-            value={state.content} 
-            onChange={e => setState({ content: e.target.value })} 
-            maxLength={250} 
+          <TextArea
+            rows={3}
+            value={state.content}
+            onChange={e => setState({ content: e.target.value })}
+            maxLength={250}
           />
         </Form.Item>
       </Form>

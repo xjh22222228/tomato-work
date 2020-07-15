@@ -62,10 +62,10 @@ const Account: React.FC<Props & RouteComponentProps> = function ({ userInfo }) {
       <Divider orientation="left">Server酱配置</Divider>
       <Form layout="vertical" style={{ width: '300px' }}>
         <Form.Item label="SCKEY">
-          <Input 
-            maxLength={100} 
-            value={sckey} 
-            onChange={e => setSckey(e.target.value)} 
+          <Input
+            maxLength={100}
+            value={sckey}
+            onChange={e => setSckey(e.target.value)}
           />
           <div style={{ textAlign: 'right', marginTop: '5px' }}>
             <a href="http://sc.ftqq.com" target="_blank" rel="noopener noreferrer">如何获取？</a>

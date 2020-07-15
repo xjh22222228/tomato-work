@@ -42,8 +42,8 @@ const TodoList = () => {
         <>
           <Button onClick={handleActionButton.bind(null, 0, row)}>编辑</Button>
           <Button onClick={handleActionButton.bind(null, 1, row)}>删除</Button>
-          <Button 
-            onClick={handleActionButton.bind(null, 2, row)} 
+          <Button
+            onClick={handleActionButton.bind(null, 2, row)}
             disabled={row.status === 2}
           >
             完成
@@ -60,7 +60,7 @@ const TodoList = () => {
   const getTodoList = useCallback((params?: any) => {
     params.startDate = state.date[0].valueOf();
     params.endDate = state.date[1].valueOf() + ONE_DAY_TIMESTAMP;
-    
+
     return serviceGetTodoList(params).then(res => {
       res.data.data.rows.map((item: any) => {
         item.createdAt = moment(item.createdAt).format('YYYY-MM-DD HH:mm');
@@ -126,10 +126,10 @@ const TodoList = () => {
       <div className="query-panel">
         <span>查询日期：</span>
         <RangePicker
-          format={dateFormat} 
-          allowClear 
-          value={state.date} 
-          onChange={(date: any) => setState({ date })} 
+          format={dateFormat}
+          allowClear
+          value={state.date}
+          onChange={(date: any) => setState({ date })}
         />
         <Button type="primary" onClick={getData}>查询</Button>
         <Button onClick={() => setState({
@@ -138,10 +138,10 @@ const TodoList = () => {
         })}>新增</Button>
         <Button onClick={initParams}>重置</Button>
       </div>
-      <Table 
+      <Table
         ref={tableRef}
         getTableData={getTodoList}
-        columns={tableColumns} 
+        columns={tableColumns}
       />
       <CreateTodo
         visible={state.showCreateTodoModal}

@@ -25,9 +25,9 @@ const statusMap = {
 
 const NoMatch: React.FC<Props & RouteComponentProps> = function ({ history, status = '404' }) {
   return (
-    <Result 
-      status={status} 
-      extra={<Button type="primary" onClick={history.goBack}>Back</Button>} 
+    <Result
+      status={status}
+      extra={<Button type="primary" onClick={history.goBack}>Back</Button>}
       {...statusMap[status]}
     />
   );

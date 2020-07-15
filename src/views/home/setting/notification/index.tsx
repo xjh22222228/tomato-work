@@ -47,8 +47,8 @@ const Notification: React.FC = function () {
           <h4 className="title">待办任务</h4>
           <p className="description">开通后将以站内信的形式通知并且通知到邮箱， 否则只会站内信通知</p>
         </div>
-        <Switch 
-          checked={userConfig.isTaskNotify} 
+        <Switch
+          checked={userConfig.isTaskNotify}
           onChange={handleUpdateUserConfig.bind(null, 0)}
         />
       </div>
@@ -57,9 +57,9 @@ const Notification: React.FC = function () {
           <h4 className="title">提醒事项</h4>
           <p className="description">开通后将以站内信的形式通知并且通知到邮箱， 否则只会站内信通知</p>
         </div>
-        <Switch 
-          checked={userConfig.isMatterNotify} 
-          onChange={handleUpdateUserConfig.bind(null, 1)} 
+        <Switch
+          checked={userConfig.isMatterNotify}
+          onChange={handleUpdateUserConfig.bind(null, 1)}
         />
       </div>
     </div>

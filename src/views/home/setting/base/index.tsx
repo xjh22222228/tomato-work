@@ -14,7 +14,7 @@ type Props = {
 }
 
 const Base: React.FC<Props & RouteComponentProps> = function ({ userInfo }) {
-  
+
   const MetaDesc = (
     <div className="meta-desc">
       <div>{userInfo.loginName}</div>

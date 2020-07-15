@@ -119,9 +119,9 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
         content: (
           <>
             请将您的GitHub邮箱设为公开，否则影响本功能的使用，
-            <a 
-              href="https://github.com/settings/profile" 
-              target="_blank" 
+            <a
+              href="https://github.com/settings/profile"
+              target="_blank"
               rel="noopener noreferrer"
             >
               前往设置
@@ -141,8 +141,8 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
     <div className="reminder">
       <div className="query-panel">
         <span>查询类型：</span>
-        <Select 
-          onChange={(value: string) => setState({ queryType: value })} 
+        <Select
+          onChange={(value: string) => setState({ queryType: value })}
           value={state.queryType}
         >
           <Option value="">全部</Option>
@@ -151,22 +151,22 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
         </Select>
         <span>日期：</span>
         <RangePicker
-          format={dateFormat} 
-          allowClear 
-          value={state.date} 
-          onChange={(date: any) => setState({ date })} 
+          format={dateFormat}
+          allowClear
+          value={state.date}
+          onChange={(date: any) => setState({ date })}
         />
         <Button type="primary" onClick={() => tableRef.current.getTableData()}>查询</Button>
         <Button onClick={() => setState({ modalVisible: true, currentRow: null })}>新增</Button>
         <Button onClick={initParams}>重置</Button>
       </div>
-      <Table 
+      <Table
         ref={tableRef}
         getTableData={getReminder}
-        columns={tableColumns} 
+        columns={tableColumns}
       />
-      <CreateReminder 
-        visible={state.modalVisible} 
+      <CreateReminder
+        visible={state.modalVisible}
         rowData={state.currentRow}
         onCancel={() => setState({ modalVisible: false })}
         onSuccess={handleModalOnSuccess}

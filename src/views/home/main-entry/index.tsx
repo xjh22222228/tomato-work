@@ -33,7 +33,7 @@ const HomeMain: React.FC = function (props) {
       <Layout>
         <Sidebar {...{ collapsed }} />
         <Layout className="home-layout">
-          <Header {...{ collapsed, setCollapsed: handleToggleCollapsed }}  />
+          <Header {...{ collapsed, setCollapsed: handleToggleCollapsed }} />
           <Content id="container">
             {React.Children.map(props.children, child => child)}
           </Content>

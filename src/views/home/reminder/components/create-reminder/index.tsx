@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import moment from 'moment';
 import useKeepState from 'use-keep-state';
-import { 
+import {
   Modal,
   Form,
   Input,
@@ -67,8 +67,8 @@ const CreateReminder: React.FC<Props> = function ({ visible, onCancel, onSuccess
     setState({ confirmLoading: true });
 
     (
-      !rowData 
-        ? serviceCreateReminder(params) 
+      !rowData
+        ? serviceCreateReminder(params)
         : serviceUpdateReminder(rowData.id, params)
     )
     .then(res => {
@@ -108,11 +108,11 @@ const CreateReminder: React.FC<Props> = function ({ visible, onCancel, onSuccess
           />
         </Form.Item>
         <Form.Item label="提醒内容">
-          <TextArea 
-            rows={3} 
-            value={state.content} 
-            onChange={e => setState({ content: e.target.value })} 
-            maxLength={200} 
+          <TextArea
+            rows={3}
+            value={state.content}
+            onChange={e => setState({ content: e.target.value })}
+            maxLength={200}
             placeholder="请输入内容"
           />
         </Form.Item>

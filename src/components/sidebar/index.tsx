@@ -43,20 +43,20 @@ const Sidebar: React.FC<Props> = function ({ location, collapsed }) {
   }, [location.pathname]);
 
   return (
-    <Sider 
+    <Sider
       trigger={null}
       collapsible
-      collapsed={collapsed} 
-      width={190} 
+      collapsed={collapsed}
+      width={190}
       className="sidebar"
     >
       <div className="sider-menu-logo">{config.title}</div>
-      <Menu 
+      <Menu
         selectedKeys={[selectedKeys]}
         openKeys={openKeys}
         onOpenChange={handleOpenChange}
         mode="inline"
-        theme="dark" 
+        theme="dark"
       >
         {HOME_SIDER_MENU_LIST.map(menu => {
           if (Array.isArray(menu.children)) {

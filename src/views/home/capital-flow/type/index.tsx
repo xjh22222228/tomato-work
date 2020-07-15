@@ -93,15 +93,15 @@ const Type = () => {
         <Button type="primary" danger onClick={deleteCapitalFlowType}>删除</Button>
         <Button type="primary" onClick={handleAdd}>新增</Button>
       </div>
-      <Table 
-        rowSelection={rowSelection} 
-        columns={columns} 
-        dataSource={state.data} 
+      <Table
+        rowSelection={rowSelection}
+        columns={columns}
+        dataSource={state.data}
         pagination={false}
         rowKey="id"
       />
-      <CreateType 
-        visible={state.modalVisible} 
+      <CreateType
+        visible={state.modalVisible}
         rowData={state.rowData}
         onCancel={() => setState({ modalVisible: false })}
         onSuccess={handleOnSuccess}

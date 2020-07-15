@@ -9,7 +9,6 @@ import { DatePicker, Button, Tag, Row, Col } from 'antd';
 import { getStartTimestampByDate, getEndTimestampByDate } from '@/utils';
 import { serviceGetTask } from '@/services';
 
-
 const dateFormat = 'YYYY-MM-DD';
 const datePickerValue = moment(new Date(getStartTimestampByDate()), dateFormat);
 const TASK_TYPE: any = {
@@ -71,10 +70,10 @@ const TodayTask = () => {
       <div className="query-panel">
         <span>查询日期：</span>
         <DatePicker
-          format={dateFormat} 
-          allowClear 
-          value={state.startDate} 
-          onChange={date => setState({ startDate: date })} 
+          format={dateFormat}
+          allowClear
+          value={state.startDate}
+          onChange={date => setState({ startDate: date })}
         />
         <Button type="primary" onClick={getTask}>查询</Button>
         <Button onClick={() => setState({ showCreateTaskModal: true })}>新增</Button>

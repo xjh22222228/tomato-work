@@ -10,7 +10,7 @@ const InnerMessage = () => {
   const tableRef = useRef<any>(null);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [tableColumns] = useState([
-    { title: '', dataIndex: 'hasRead', width: 12, className: 'unread-row', 
+    { title: '', dataIndex: 'hasRead', width: 12, className: 'unread-row',
       render: (hasRead: boolean) => (
         !hasRead && <i className="unread-dot">●</i>
       )},
@@ -32,7 +32,7 @@ const InnerMessage = () => {
   }, []);
 
   const handleAction = useCallback((buttonType: 1 | 2) => {
-    
+
     let params = selectedRowKeys.join();
     if (buttonType === 2) {
       params = 'all';
@@ -53,18 +53,18 @@ const InnerMessage = () => {
 
   return (
     <div className="inner-message">
-      <Table 
+      <Table
         ref={tableRef}
         getTableData={getInnerMessage}
-        columns={tableColumns} 
+        columns={tableColumns}
         rowSelection={{
           selectedRowKeys,
           onChange: (selectedKeys: any) => setSelectedRowKeys(selectedKeys)
         }}
       />
       <div className="action-group">
-        <Button 
-          onClick={handleAction.bind(null, 1)} 
+        <Button
+          onClick={handleAction.bind(null, 1)}
           disabled={selectedRowKeys.length <= 0}
         >
           标记已读

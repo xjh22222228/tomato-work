@@ -4,7 +4,7 @@ import bytes from 'bytes';
 import moment from 'moment';
 import CONFIG from '@/config';
 import useKeepState from 'use-keep-state';
-import { Row, Col, Card, Progress } from 'antd';
+import { Row, Col, Card, Progress, Empty } from 'antd';
 import { totalPercentage } from '@/utils';
 import { serviceGetInnerMessage } from '@/services';
 
@@ -98,27 +98,31 @@ const System: React.FC<Props> = ({ systemInfo }) => {
       </Col>
       <Col xl={8} lg={12} md={12} sm={24} xs={24}>
         <Card
-          title="我的消息" 
-          hoverable 
+          title="我的消息"
+          hoverable
           loading={state.loading}
         >
-        {state.messageList.map((msg: any) => (
-          <p className="item-text" key={msg.id}>
-            <em>{msg.content}</em>
-          </p>
-        ))}
+          {state.messageList.length > 0 ? (
+            state.messageList.map((msg: any) => (
+              <p className="item-text" key={msg.id}>
+                <em>{msg.content}</em>
+              </p>
+            ))
+          ) : (
+            <Empty />
+          )}
         </Card>
       </Col>
       <Col xl={8} lg={12} md={12} sm={24} xs={24}>
         <Card
-          title={`内存使用率(${bytes(systemInfo.totalmem)})`} 
-          hoverable 
+          title={`内存使用率(${bytes(systemInfo.totalmem)})`}
+          hoverable
           className="mem"
         >
-          <Progress 
-            type="circle" 
-            percent={memPercentage} 
-            strokeColor={statusColor(memPercentage)} 
+          <Progress
+            type="circle"
+            percent={memPercentage}
+            strokeColor={statusColor(memPercentage)}
             format={percent => percent + '%'}
           />
           <div className="surplus">剩余{bytes(systemInfo.freemem)}</div>

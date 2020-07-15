@@ -31,7 +31,7 @@ const Create: React.FC<Props & RouteComponentProps> = ({ history, computedMatch 
     const id = computedMatch.params.id;
 
     if (loading) return;
-    
+
     // 创建或更新
     const params = {
       markdown: editor.getValue(),
@@ -75,7 +75,7 @@ const Create: React.FC<Props & RouteComponentProps> = ({ history, computedMatch 
 
   useEffect(() => {
     init();
-    
+
     return () => {
       // 销毁实例
       editor?.remove();
@@ -84,21 +84,21 @@ const Create: React.FC<Props & RouteComponentProps> = ({ history, computedMatch 
 
   return (
     <div className="editor-page">
-      <Input 
+      <Input
         className="input-title"
-        placeholder={defaultTitle} 
-        maxLength={50} 
-        size="large" 
-        value={title} 
+        placeholder={defaultTitle}
+        maxLength={50}
+        size="large"
+        value={title}
         onChange={e => setTitle(e.target.value)}
         onBlur={() => (!title && setTitle(defaultTitle))}
       />
       <div id="edit-section"></div>
       <div className="button-group">
         <Button onClick={handleActionButton.bind(null, 0)}>取消</Button>
-        <Button 
-          type="primary" 
-          onClick={handleActionButton.bind(null, 1)} 
+        <Button
+          type="primary"
+          onClick={handleActionButton.bind(null, 1)}
           loading={loading}
         >
           提交

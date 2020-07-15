@@ -37,7 +37,7 @@ const initialState: SystemState = {
     cpus: []
   }
 };
- 
+
 function system(state = initialState, action: any): SystemState {
   switch (action.type) {
     case INFO:

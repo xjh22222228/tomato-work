@@ -3,7 +3,7 @@ import './style.scss';
 import Avatar from '@/components/avatar';
 import moment from 'moment';
 import config from '@/config';
-import { Layout, Badge, Popover } from 'antd';
+import { Layout, Badge, Popover, Empty } from 'antd';
 import { withRouter, RouteComponentProps, Link } from 'react-router-dom';
 import { HomeMainState } from '@/views/home/main-entry/index';
 import { connect } from 'react-redux';
@@ -77,13 +77,19 @@ const HomeHeader: React.FC<Props> = function ({
         <span className="left">站内消息通知</span>
         <Link className="right" to={SETTING.NOTIFICATION.path}>消息接收管理</Link>
       </div>
-      {messageList.map((item: any) => (
-        <div className="item-block ls" key={item.id}>
-          <div className="content">{item.content}</div>
-          <div className="date">{item.createdAt}</div>
-        </div>
-      ))}
-      <Link className="item-block ls" to={SETTING.INNER_MESSAGE.path}>查看更多</Link>
+      {messageList.length > 0 ? (
+        <>
+          {messageList.map((item: any) => (
+          <div className="item-block ls" key={item.id}>
+            <div className="content">{item.content}</div>
+            <div className="date">{item.createdAt}</div>
+          </div>
+        ))}
+        <Link className="item-block ls" to={SETTING.INNER_MESSAGE.path}>查看更多</Link>
+        </>
+      ) : (
+        <Empty style={{ padding: '20px 0' }} />
+      )}
     </div>
   ), [messageList]);
 
@@ -130,9 +136,9 @@ const HomeHeader: React.FC<Props> = function ({
             <GithubOutlined />
           </a>
         </li>
-        <Popover 
-          placement="bottomRight" 
-          content={PopoverContent} 
+        <Popover
+          placement="bottomRight"
+          content={PopoverContent}
         >
         <li>
           <Avatar src={userInfo.avatarUrl} />

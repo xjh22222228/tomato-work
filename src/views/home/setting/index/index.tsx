@@ -19,7 +19,7 @@ const SettingIndex: React.FC<RouteComponentProps> = function ({ location }) {
       }
     }
   }, [location.pathname])
-  
+
   return (
     <Layout className="setting-page">
       <Sider width={170}>

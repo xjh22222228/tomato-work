@@ -9,11 +9,14 @@ import { serviceGetMemorandum, serviceDeleteMemorandum } from '@/services';
 import { defaultTitle } from '../constants';
 import { modalConfirmDelete } from '@/utils';
 
-
 const Memorandum: FC<RouteComponentProps> = ({ history }) => {
   const [list, setList] = useState([]);
 
-  const handleButton = useCallback((buttonType: 0 | 1 | 2, item: any, e: React.MouseEvent) => {
+  const handleButton = useCallback((
+    buttonType: 0 | 1 | 2,
+    item: any,
+    e: React.MouseEvent
+  ) => {
     e.stopPropagation();
     e.preventDefault();
 
@@ -39,7 +42,7 @@ const Memorandum: FC<RouteComponentProps> = ({ history }) => {
       history.push('/home/memorandum/create');
       return;
     }
-    
+
     history.push(`/home/memorandum/update/${item.id}`);
   }, [history, list]);
 
@@ -66,8 +69,8 @@ const Memorandum: FC<RouteComponentProps> = ({ history }) => {
               <Link to={`/home/memorandum/detail/${item.id}`}>
                 <Card title={item.title} hoverable>
                   {item.createdAt}
-                  <div 
-                    className="content" 
+                  <div
+                    className="content"
                     dangerouslySetInnerHTML={{ __html: item.html }}
                   >
                   </div>

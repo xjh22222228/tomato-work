@@ -6,7 +6,7 @@ export const SETTING = {
   INNER_MESSAGE: { name: '消息中心', path: '/home/setting/innerMessage' },
 
   NOTIFICATION: { name: '消息通知', path: '/home/setting/notification' },
-  
+
   ACCOUNT: { name: '账号设置', path: '/home/setting/account' },
 };
 

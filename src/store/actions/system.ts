@@ -20,9 +20,9 @@ export function setSystemInfo(data: any = {}) {
 export function getSystemInfo() {
   return function (dispatch: Dispatch, getState: () => any) {
     const { system: { info } } = getState();
-    
+
     if (info.nodeVersion) {
-      return dispatch(setSystemInfo()); 
+      return dispatch(setSystemInfo());
     }
 
     return serviceGetSystemInfo().then((res: any) => {

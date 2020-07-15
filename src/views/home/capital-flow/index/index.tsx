@@ -84,13 +84,13 @@ const Reminder: React.FC = function() {
     return serviceGetCapitalFlow(params).then(res => {
       if (res.data.success) {
         const data = res.data.data;
-        
+
         res.data.data.rows = res.data.data.rows.map((el: any, idx: number) => {
           el.order = idx + 1;
           el.date = moment(el.date).format('YYYY-MM-DD HH:mm');
           el.__price__ = TYPES[el.type - 1].symbol + el.price;
           el.__color__ = TYPES[el.type - 1].color;
-          
+
           return el;
         });
 
@@ -147,7 +147,9 @@ const Reminder: React.FC = function() {
 
     switch (type) {
       case 2:
-        date[0] = date[1] = moment(moment().subtract(1, 'days').format(dateFormat), dateFormat);
+        const prevDay = moment(moment().subtract(1, 'days').format(dateFormat), dateFormat);
+        date[0] = prevDay;
+        date[1] = prevDay;
         break;
       case 3:
         date[0] = moment(moment().subtract(7, 'days').format(dateFormat), dateFormat);
@@ -198,7 +200,7 @@ const Reminder: React.FC = function() {
       sortOrder: state.sortedInfo?.columnKey === 'date' && state.sortedInfo.order
     },
     { title: '账务类型', dataIndex: 'name', width: 120 },
-    { 
+    {
       title: '收支金额（元）', width: 140, sorter: true, dataIndex: 'price',
       sortOrder: state.sortedInfo?.columnKey === 'price' && state.sortedInfo.order,
       filters: [
@@ -207,17 +209,17 @@ const Reminder: React.FC = function() {
       defaultFilteredValue: [true],
       render: (text: any, rowData: any) => (
         <span style={{ color: rowData.__color__ }}>
-          {state.filters.price && state.filters.price[0] === true ? '******': rowData.__price__}
+          {state.filters.price && state.filters.price[0] === true ? '******' : rowData.__price__}
         </span>
       )
     },
-    { 
+    {
       title: '备注信息',
       render: (rowData: any) => (
         <p className="white-space_pre-wrap">{rowData.remarks}</p>
       )
     },
-    { 
+    {
       title: '操作', width: 180, align: 'right',
       render: (row: any) => (
         <>
@@ -232,8 +234,8 @@ const Reminder: React.FC = function() {
     <div className="capital-flow">
       <div className="query-panel">
         <span>账务类型：</span>
-        <Select 
-          onChange={(value: string) => setState({ name: value })} 
+        <Select
+          onChange={(value: string) => setState({ name: value })}
           value={state.name}
         >
           <Option value="">全部</Option>
@@ -244,8 +246,8 @@ const Reminder: React.FC = function() {
           {!state.name && (
             <>
               <span>收支类别：</span>
-              <Select 
-                onChange={(value: string) => setState({ type: value })} 
+              <Select
+                onChange={(value: string) => setState({ type: value })}
                 value={state.type}
               >
               {OPTION_TYPES.map(item => (
@@ -268,11 +270,11 @@ const Reminder: React.FC = function() {
         <div style={{ marginTop: '10px' }}>
           <span>日期：</span>
           <RangePicker
-            format={dateFormat} 
-            allowClear 
-            value={state.date} 
+            format={dateFormat}
+            allowClear
+            value={state.date}
             style={{ width: '280px', marginRight: '10px' }}
-            onChange={(date: any) => setState({ date })} 
+            onChange={(date: any) => setState({ date })}
           />
           <Button onClick={onFilterDate.bind(null, 1)}>今天</Button>
           <Button onClick={onFilterDate.bind(null, 2)}>昨天</Button>
@@ -295,14 +297,14 @@ const Reminder: React.FC = function() {
           </div>
         </div>
       </div>
-      <Table 
+      <Table
         ref={tableRef}
         getTableData={getCapitalFlow}
-        columns={tableColumns} 
+        columns={tableColumns}
         onTableChange={onTableChange}
       />
-      <CreateCapitalFlow 
-        visible={state.modalVisible} 
+      <CreateCapitalFlow
+        visible={state.modalVisible}
         rowData={state.currentRow}
         nameList={state.nameList}
         onCancel={() => setState({ modalVisible: false })}

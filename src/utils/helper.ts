@@ -34,12 +34,12 @@ export function modalConfirmDelete(object = {}) {
 export function fullscreen() {
   try {
     const docElm = document.documentElement as any;
-    if (docElm.requestFullscreen) {  
-      docElm.requestFullscreen();  
-    } else if (docElm.webkitRequestFullScreen) {  
-      docElm.webkitRequestFullScreen();  
-    } else if (docElm.mozRequestFullScreen) {  
-      docElm.mozRequestFullScreen();  
+    if (docElm.requestFullscreen) {
+      docElm.requestFullscreen();
+    } else if (docElm.webkitRequestFullScreen) {
+      docElm.webkitRequestFullScreen();
+    } else if (docElm.mozRequestFullScreen) {
+      docElm.mozRequestFullScreen();
     } else if (docElm.msRequestFullscreen) {
       docElm.msRequestFullscreen();
     }
@@ -52,12 +52,12 @@ export function fullscreen() {
 export function exitFullscreen() {
   try {
     const doc = document as any;
-    if (doc.exitFullscreen) {  
-      doc.exitFullscreen();  
-    } else if (doc.mozCancelFullScreen) {  
-      doc.mozCancelFullScreen();  
-    } else if (doc.webkitCancelFullScreen) {  
-      doc.webkitCancelFullScreen();  
+    if (doc.exitFullscreen) {
+      doc.exitFullscreen();
+    } else if (doc.mozCancelFullScreen) {
+      doc.mozCancelFullScreen();
+    } else if (doc.webkitCancelFullScreen) {
+      doc.webkitCancelFullScreen();
     } else if (doc.msExitFullscreen) {
       doc.msExitFullscreen();
     }
@@ -69,7 +69,7 @@ export function exitFullscreen() {
 // 随机字符串
 export function randomCode(num = 4) {
   let data = '';
-  
+
   for (let i = 0; i < num; i++) {
     const random = Math.floor(Math.random() * CODE.length);
     data += CODE[random];

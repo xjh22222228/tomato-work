@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { 
+import {
   Modal,
   Form,
   Input,
@@ -31,11 +31,11 @@ const CreateTask: React.FC<Props> = function ({
   onCancel,
   onSuccess
 }) {
-  const [state, setState] = useKeepState(initialState); 
+  const [state, setState] = useKeepState(initialState);
 
   const handleSubmitForm = useCallback(e => {
     e.preventDefault();
-    
+
     const name = state.name.trim();
     const params = { type: state.type, name };
 
@@ -46,8 +46,8 @@ const CreateTask: React.FC<Props> = function ({
 
     setState({ confirmLoading: true });
 
-    (rowData 
-      ? serviceUpdateCapitalFlowType(rowData.id, params) 
+    (rowData
+      ? serviceUpdateCapitalFlowType(rowData.id, params)
         : serviceCreateCapitalFlowType(params)
     )
     .then(res => {
@@ -79,16 +79,16 @@ const CreateTask: React.FC<Props> = function ({
     >
       <Form>
         <Form.Item label="名称">
-          <Input 
-            value={state.name} 
-            onChange={e => setState({ name: e.target.value })} 
-            maxLength={20} 
+          <Input
+            value={state.name}
+            onChange={e => setState({ name: e.target.value })}
+            maxLength={20}
             placeholder="请输入名称"
           />
         </Form.Item>
         <Form.Item label="类型">
-          <Select 
-            value={state.type} 
+          <Select
+            value={state.type}
             onChange={(value: any) => setState({ type: value })}
           >
           {TYPES.map(item => (

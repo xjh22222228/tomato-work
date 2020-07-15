@@ -14,12 +14,12 @@ const CancelToken = axios.CancelToken;
 
 function handleError(error: any): Promise<any> | undefined {
   if (axios.isCancel(error)) {
-    
+
   } else {
     const response = error.response;
     message.error(`${response.status} ${response.statusText}`);
   }
-  return;
+  return void 0;
 }
 
 axios.defaults.headers.common.isLoading = true;
@@ -40,15 +40,15 @@ httpInstance.interceptors.request.use(function (config) {
   // 取消重复请求
   window.axiosCancelTokenStore.forEach((store, idx) => {
     if (
-      config.headers.cancelRequest !== false && 
-      store.url === url && 
+      config.headers.cancelRequest !== false &&
+      store.url === url &&
       store.method === method
     ) {
       store.cancel();
       window.axiosCancelTokenStore.splice(idx, 1);
     }
   });
-  
+
   config.headers.token = userState.token;
   config.cancelToken = new CancelToken(cancel => {
     window.axiosCancelTokenStore.push({

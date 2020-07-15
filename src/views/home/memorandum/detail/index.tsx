@@ -39,8 +39,8 @@ const Detail: FC<Props & RouteComponentProps> = ({ computedMatch, history }) => 
         </Link>
       </div>
       <h1 className="title">{ title }</h1>
-      <div 
-        className="markdown-body tui-editor-contents" 
+      <div
+        className="markdown-body tui-editor-contents"
         dangerouslySetInnerHTML={{ __html: content }}
       >
       </div>

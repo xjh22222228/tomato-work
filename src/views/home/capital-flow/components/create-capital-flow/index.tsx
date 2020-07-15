@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import moment from 'moment';
-import { 
+import {
   Modal,
   Form,
   Input,
@@ -88,8 +88,8 @@ const CreateReminder: React.FC<Props> = function ({
     setState({ confirmLoading: true });
 
     (
-      !rowData 
-        ? serviceCreateCapitalFlow(params) 
+      !rowData
+        ? serviceCreateCapitalFlow(params)
         : serviceUpdateCapitalFlow(rowData.id, params)
     )
     .then(res => {
@@ -130,8 +130,8 @@ const CreateReminder: React.FC<Props> = function ({
           />
         </Form.Item>
         <Form.Item label="财务类型">
-          <Select 
-            onChange={(value: string) => setState({ typeId: value })} 
+          <Select
+            onChange={(value: string) => setState({ typeId: value })}
             value={state.typeId}
           >
             {nameList.map((item: any) => (
@@ -140,17 +140,17 @@ const CreateReminder: React.FC<Props> = function ({
           </Select>
         </Form.Item>
         <Form.Item label="收支金额">
-          <Input 
-            value={state.price} 
-            onChange={e => setState({ price: e.target.value })} 
+          <Input
+            value={state.price}
+            onChange={e => setState({ price: e.target.value })}
           />
         </Form.Item>
         <Form.Item label="备注信息">
-          <TextArea 
-            rows={5} 
-            value={state.remarks} 
-            onChange={e => setState({ remarks: e.target.value })} 
-            maxLength={250} 
+          <TextArea
+            rows={5}
+            value={state.remarks}
+            onChange={e => setState({ remarks: e.target.value })}
+            maxLength={250}
           />
         </Form.Item>
       </Form>

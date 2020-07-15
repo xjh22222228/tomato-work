@@ -1,14 +1,14 @@
 /**
  * @author xiejiahe <xjh22222228@gmail.com>
  * @example:
- * <Table 
+ * <Table
  *   // 配置ref用于调用父组件方法获取数据
- *   ref={tableRef}    
- * 
- *   // getData 接口函数获取数据，必须返回一个axios Promise 同时处理好数据       
+ *   ref={tableRef}
+ *
+ *   // getData 接口函数获取数据，必须返回一个axios Promise 同时处理好数据
  *   getTableData={getData}
- * 
- *   columns={tableColumns} 
+ *
+ *   columns={tableColumns}
  * />
  */
 
@@ -118,11 +118,11 @@ const TableFC: FC<Props & TableProps<unknown>> = ({
   }, [setState]);
 
   return (
-    <Table 
+    <Table
       {...props as any}
       rowKey="id"
       loading={state.isLoading}
-      dataSource={state.tableDataSource} 
+      dataSource={state.tableDataSource}
       scroll={{ y: state.tableHeight + 'px' }}
       showHeader={state.tableDataSource.length}
       onChange={onChange}

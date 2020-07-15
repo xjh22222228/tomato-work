@@ -13,7 +13,7 @@ export function useFormInput(initialValue: any): InputProps {
   const [value, setValue] = useState(initialValue);
   function handleChange(event: React.ChangeEvent<HTMLInputElement & HTMLTextAreaElement>): void {
     setValue(event.target.value);
-  };
+  }
   return {
     value,
     onChange: handleChange

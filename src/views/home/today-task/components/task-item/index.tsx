@@ -42,8 +42,8 @@ const TaskItem: React.FC<Props> = ({ data, reloadData }) => {
 
   return (
     <Card
-      title="我的待办" 
-      hoverable 
+      title="我的待办"
+      hoverable
       className="task-component"
     >
       <p className="content">{data.content}</p>
@@ -53,17 +53,17 @@ const TaskItem: React.FC<Props> = ({ data, reloadData }) => {
         <p>创建时间: {moment(data.createdAt).format('HH:mm:ss')}</p>
       </div>
       <div className="button-wrapper">
-        <Button 
-          type="primary" 
+        <Button
+          type="primary"
           danger
-          size="small" 
+          size="small"
           onClick={handleAction.bind(null, 0)}
         >
           删除
         </Button>
         {(data.type === 1) && (
-          <Button 
-            type="primary" 
+          <Button
+            type="primary"
             size="small"
             onClick={handleAction.bind(null, 1)}
           >
@@ -71,8 +71,8 @@ const TaskItem: React.FC<Props> = ({ data, reloadData }) => {
           </Button>
         )}
         {([2, 3].includes(data.type)) && (
-          <Button 
-            type="primary" 
+          <Button
+            type="primary"
             size="small"
             onClick={handleAction.bind(null, 2)}
           >
@@ -80,8 +80,8 @@ const TaskItem: React.FC<Props> = ({ data, reloadData }) => {
           </Button>
         )}
         {(data.type === 2) && (
-          <Button 
-            type="primary" 
+          <Button
+            type="primary"
             size="small"
             onClick={handleAction.bind(null, 1)}
           >

@@ -1,9 +1,9 @@
-## tomato-work ![GitHub package.json version](https://img.shields.io/github/package-json/v/xjh22222228/tomato-work) ![GitHub](https://img.shields.io/github/license/xjh22222228/tomato-work)
+## tomato-work ![GitHub package.json version](https://img.shields.io/github/package-json/v/xjh22222228/tomato-work) ![GitHub](https://img.shields.io/github/license/xjh22222228/tomato-work) [![HitCount](http://hits.dwyl.com/xjh22222228/tomato-work.svg)](http://hits.dwyl.com/xjh22222228/tomato-work)
 **个人事务管理系统**, 为自己精心打造的一个系统并开源分享。
 
 
 <p align="center">
-  <img src="public/poster.png" width="300" />
+  <img src="public/poster.png" width="150" />
 </p>
 
 
@@ -26,7 +26,7 @@
 ## Tech
 核心技术 React纯hooks/TypeScript/Redux/Antd...
 ``` json
-"use-keep-state": "^1.2.5",
+"use-keep-state": "^1.2.7",
 "react": "^16.13.1",
 "react-dom": "^16.13.1",
 "react-redux": "^7.2.0",

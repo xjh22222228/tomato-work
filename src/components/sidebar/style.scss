@@ -1,0 +1,25 @@
+$bg-color: #304156;
+.sidebar {
+  background: $bg-color;
+  user-select: none;
+
+  .ant-menu-dark {
+    background: $bg-color;
+  }
+
+  .ant-menu-sub {
+    background: $bg-color !important;
+    box-shadow: none !important;
+  }
+
+  .sider-menu-logo {
+    overflow: hidden;
+    height: 64px;
+    line-height: 64px;
+    background: #2b2f3a;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+  }
+}

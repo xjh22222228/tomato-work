@@ -1,0 +1,16 @@
+/lambda/
+/scripts
+/config
+.history
+/coverage
+/mock
+/lib
+/public
+/tests
+__tests__
+*.json
+/e2e
+/assets
+serviceWorker.ts
+.github
+.vscode

@@ -1,0 +1,24 @@
+.notification {
+
+  .list {
+    margin-bottom: 10px;
+    display: flex;
+    border-bottom: 1px solid #e6e6e6;
+
+    .left {
+      flex: 1;
+    }
+
+    .title {
+      color: rgba(0, 0, 0, .65);
+    }
+
+    .description {
+      color: rgba(0, 0, 0, .45);
+    }
+
+    .ant-switch {
+      align-self: center;
+    }
+  }
+}

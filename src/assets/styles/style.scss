@@ -1,0 +1,154 @@
+@charset "utf-8";
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup, 
+menu,
+nav,
+section {
+  display: block;
+}
+
+h1 {
+  font-size: 18px;
+}
+
+h2 {
+  font-size: 16px;
+}
+
+h3 {
+  font-size: 14px;
+}
+
+h4,
+h5,
+h6 {
+  font-size: 100%;
+}
+
+address,
+cite,
+dfn,
+em,
+var {
+  font-style: normal;
+}
+
+small {
+  font-size: 12px;
+}
+
+ol,
+ul,
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+pre {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+abbr[title],
+acronym[title] {
+  border-bottom: 1px dotted;
+  cursor: help;
+}
+
+q:after,
+q:before {
+  content: '';
+}
+
+legend {
+  color: #000;
+}
+
+fieldset,
+img,
+iframe {
+  border: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font-size: 100%;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="submit"],
+input[type="reset"],
+input[type="tel"],
+button {
+  -webkit-appearance: none;
+  outline: none;
+  border: 1px solid #e1e1e1;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;   /* 移除number类型样式 */
+}
+
+textarea {
+	resize: none;
+	outline: none;
+	-webkit-appearance: none;
+}
+
+button,
+input[type="submit"],
+input[type="reset"] {
+  cursor: pointer;
+  outline:none;
+}
+
+i,
+em {
+  font-style: normal;
+}
+// 禁用系统默认菜单
+a,
+img {
+  -webkit-touch-callout: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+input,
+textarea {
+
+  &::-webkit-input-placeholder{
+    color:#999;
+  }
+}

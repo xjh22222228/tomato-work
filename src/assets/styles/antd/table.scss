@@ -1,0 +1,45 @@
+.ant-table-wrapper {
+  flex: 1;
+  height: 100%;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #E1E6EB;
+
+  .ant-spin-nested-loading {
+    
+    // loading 设为居中对齐
+    & > div > .ant-spin {
+      max-height: none;
+    }
+  }
+
+  .ant-btn:not(:nth-child(1)) {
+    margin-left: 10px;
+  }
+
+  .ant-spin-nested-loading,
+  .ant-spin-container {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .ant-table {
+    font-size: 12px;
+    flex: 1;
+  }
+
+  .ant-pagination {
+    text-align: right;
+    margin: 10px 0;
+  }
+
+  // 暂无数据居中对齐
+  .ant-table-placeholder {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

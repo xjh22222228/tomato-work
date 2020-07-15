@@ -1,0 +1,30 @@
+.system-data {
+
+  .ant-card {
+    height: 250px;
+    margin-bottom: 25px;
+  }
+  
+  .item-text {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    &:nth-last-child(1) {
+      margin-bottom: 0;
+    }
+
+    em {
+      color: #000;
+      font-weight: 500;
+    }
+  }
+
+  .mem .ant-card-body {
+    text-align: center;
+
+    .surplus {
+      margin-top: 10px;
+    }
+  }
+}

@@ -1,0 +1,62 @@
+// 主题字体颜色
+.theme-font-color {
+  color: $theme-color !important;
+}
+
+.spin-loading {
+  z-index: 6;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, .5);
+  @include flex-center;
+}
+
+.flex-center {
+  @include flex-center;
+}
+
+.user-select_none {
+  user-select: none;
+}
+
+.word-break_break-all {
+  word-break: break-all;
+}
+
+.white-space_nowrap {
+  white-space: nowrap;
+}
+
+.white-space_pre-wrap {
+  white-space: pre-wrap;
+}
+
+.cursor_pointer {
+  cursor: pointer;
+}
+
+.overflow_auto {
+  overflow: auto;
+}
+
+.overflow-y_auto {
+  overflow-y: auto !important;
+}
+
+.overflow-x_auto {
+  overflow-x: auto !important;
+}
+
+.text-align_center {
+  text-align: center;
+}
+
+.white-space_pre {
+  white-space: pre;
+}
+.user-drag_none {
+  -webkit-user-drag: none;
+}

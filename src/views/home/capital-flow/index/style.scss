@@ -1,0 +1,18 @@
+.capital-flow {
+
+  .poly {
+    display: flex;
+    margin-top: 10px;
+    
+    .item-price {
+      display: flex;
+      margin-right: 30px;
+    }
+
+    .ant-statistic-content,
+    .ant-statistic-content-value-decimal {
+      font-size: 14px;
+      color: #666;
+    }
+  }
+}

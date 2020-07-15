@@ -1,5 +1,6 @@
-import React, { useReducer, useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import './style.scss';
+import useKeepState from 'use-keep-state';
 import NoData from '@/components/no-data/index';
 import TaskItem from './components/task-item';
 import CreateTask from './components/create-task';
@@ -35,21 +36,8 @@ const initialState: State = {
   showCreateTaskModal: false
 };
 
-function reducer(state: State, action: any) {
-  switch (action.type) {
-    case 'setState':
-      return { ...state, ...action.state };
-    default:
-      return state;
-  }
-}
-
 const TodayTask = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
-
-  const setState = useCallback((state) => {
-    dispatch({ type: 'setState', state });
-  }, []);
+  const [state, setState] = useKeepState(initialState);
 
   const getTask = useCallback(() => {
     const date = state.startDate.valueOf();

@@ -20,6 +20,7 @@ tomato-work 的命名来源于《番茄工作法》，由于与本项目非常�
 ## Tech
 核心技术 React纯hooks/TypeScript/Redux/Antd...
 ``` json
+"use-keep-state": "^1.2.5",
 "react": "^16.13.1",
 "react-dom": "^16.13.1",
 "react-redux": "^7.2.0",
@@ -27,7 +28,7 @@ tomato-work 的命名来源于《番茄工作法》，由于与本项目非常�
 "react-router-dom": "^5.1.2",
 "redux-thunk": "^2.3.0",
 "typescript": "^3.8.0",
-"antd": "^3.26.16",
+"antd": "^4.4.2",
 "axios": "^0.19.2",
 "blueimp-md5": "^2.13.0",
 "moment": "^2.24.0",

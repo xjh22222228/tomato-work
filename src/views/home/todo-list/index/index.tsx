@@ -1,5 +1,6 @@
-import React, { useReducer, useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import moment from 'moment';
+import useKeepState from 'use-keep-state';
 import Table from '@/components/table';
 import CreateTodo from '../components/create-todo';
 import { serviceGetTodoList, serviceDeleteTodoList, serviceUpdateTodoList } from '@/services';
@@ -18,7 +19,7 @@ const dateFormat = 'YYYY-MM-DD';
 interface State {
   date: moment.Moment[];
   showCreateTodoModal: boolean;
-  currentRowData: { [propName: string]: any; } | null;
+  currentRowData: { [key: string]: any; } | null;
 }
 
 const initialState: State = {
@@ -27,18 +28,9 @@ const initialState: State = {
   currentRowData: null
 };
 
-function reducer(state: State, action: any) {
-  switch (action.type) {
-    case 'setState':
-      return { ...state, ...action.state };
-    default:
-      return state;
-  }
-}
-
 const TodoList = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
-  const tableRef = useRef<any>(null);
+  const [state, setState] = useKeepState(initialState);
+  const tableRef = useRef<any>();
   const [tableColumns] = useState([
     { title: '状态', dataIndex: 'status', width: 90, render: (status: number) => (
       <Tag color={STATUS[status].color}>{STATUS[status].text}</Tag>
@@ -61,13 +53,9 @@ const TodoList = () => {
     }
   ]);
 
-  const setState = useCallback((state) => {
-    dispatch({ type: 'setState', state });
-  }, []);
-
-  const getData = useCallback(() => {
+  function getData() {
     tableRef.current.getTableData();
-  }, []);
+  }
 
   const getTodoList = useCallback((params?: any) => {
     params.startDate = state.date[0].valueOf();

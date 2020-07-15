@@ -14,10 +14,11 @@
  * />
  */
 
-import React, { FC, useEffect, useCallback, useReducer } from 'react';
+import React, { FC, useEffect, useCallback } from 'react';
 import { Table } from 'antd';
 import { TableProps } from 'rc-table/lib/Table';
 import { AxiosPromise } from 'axios';
+import useKeepState from 'use-keep-state';
 
 interface Props {
   getTableData: (data: any) => AxiosPromise;
@@ -48,26 +49,13 @@ const initialState: State = {
   }
 };
 
-function reducer(state: State, action: any) {
-  switch (action.type) {
-    case 'setState':
-      return { ...state, ...action.state };
-    default:
-      return state;
-  }
-}
-
 const TableFC: FC<Props & TableProps<unknown>> = ({
   getTableData,
   onTableChange,
   forwardedRef: tableRef,
   ...props
 }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
-
-  const setState = useCallback(state => {
-    dispatch({ type: 'setState', state });
-  }, []);
+  const [state, setState] = useKeepState(initialState);
 
   const getData = useCallback(() => {
     setState({ isLoading: true });

@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useReducer, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import './style.scss';
 import moment from 'moment';
+import useKeepState from 'use-keep-state';
 import CreateType from '../components/create-type/index';
 import { Table, Button, Tag, message } from 'antd';
 import {
@@ -17,17 +18,8 @@ const initialState = {
   rowData: null
 };
 
-function reducer(state: any, action: any) {
-  switch (action.type) {
-    case 'setState':
-      return {...state, ...action.state};
-    default:
-      return state;
-  }
-}
-
 const Type = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, setState] = useKeepState(initialState);
   const [columns] = useState([
     { title: '账务类型', dataIndex: 'name' },
     { title: '收支类别', render: (rowData: any) => (
@@ -38,10 +30,6 @@ const Type = () => {
       <Button onClick={handleEdit.bind(null, rowData)}>编辑</Button>
     ) },
   ]);
-
-  const setState = useCallback(state => {
-    dispatch({ type: 'setState', state });
-  }, []);
 
   const onSelectChange = useCallback(selectedRowKeys => {
     setState({ selectedRowKeys });

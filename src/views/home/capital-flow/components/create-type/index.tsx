@@ -1,4 +1,4 @@
-import React, { useCallback, useReducer, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { 
   Modal,
   Form,
@@ -8,6 +8,7 @@ import {
 } from 'antd';
 import { serviceCreateCapitalFlowType, serviceUpdateCapitalFlowType } from '@/services';
 import { TYPES } from '../../enum';
+import useKeepState from 'use-keep-state';
 
 type Props = {
   visible: boolean;
@@ -24,24 +25,15 @@ const initialState = {
   type: defaultType
 };
 
-function reducer(state: any, action: any) {
-  switch (action.type) {
-    case 'setState':
-      return { ...state, ...action.state };
-    default:
-      return state;
-  }
-}
+const CreateTask: React.FC<Props> = function ({
+  visible,
+  rowData,
+  onCancel,
+  onSuccess
+}) {
+  const [state, setState] = useKeepState(initialState); 
 
-const CreateTask: React.FC<Props> = function ({ visible, rowData, onCancel, onSuccess }) {
-  const [state, dispatch] = useReducer(reducer, initialState); 
-
-  const setState = useCallback((state) => {
-    dispatch({ type: 'setState', state });
-  }, []);
-
-  // 提交表单
-  const handleSubmit = useCallback((e) => {
+  const handleSubmitForm = useCallback(e => {
     e.preventDefault();
     
     const name = state.name.trim();
@@ -81,7 +73,7 @@ const CreateTask: React.FC<Props> = function ({ visible, rowData, onCancel, onSu
     <Modal
       title="新增类别"
       visible={visible}
-      onOk={handleSubmit}
+      onOk={handleSubmitForm}
       onCancel={() => onCancel()}
       confirmLoading={state.confirmLoading}
     >

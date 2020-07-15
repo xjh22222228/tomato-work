@@ -1,8 +1,9 @@
-import React, { useReducer, useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import './style.scss';
 import bytes from 'bytes';
 import moment from 'moment';
 import CONFIG from '@/config';
+import useKeepState from 'use-keep-state';
 import { Row, Col, Card, Progress } from 'antd';
 import { totalPercentage } from '@/utils';
 import { serviceGetInnerMessage } from '@/services';
@@ -32,24 +33,11 @@ const statusColor = (percentage: number) => {
 };
 let timer: any;
 
-function reducer(state: State, action: any) {
-  switch (action.type) {
-    case 'setState':
-      return { ...state, ...action.state };
-    default:
-      return state;
-  }
-}
-
 const System: React.FC<Props> = ({ systemInfo }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, setState] = useKeepState(initialState);
   const memPercentage = useMemo(() => {
     return totalPercentage(systemInfo.totalmem, systemInfo.freemem);
   }, [systemInfo.totalmem, systemInfo.freemem]);
-
-  const setState = useCallback(state => {
-    dispatch({ type: 'setState', state });
-  }, []);
 
   // 倒计时
   const countdown = useCallback(() => {

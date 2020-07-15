@@ -1,5 +1,6 @@
-import React, { useCallback, useReducer } from 'react';
+import React, { useCallback } from 'react';
 import moment from 'moment';
+import useKeepState from 'use-keep-state';
 import { isLtTodayTimestamp } from '@/utils';
 import { serviceCreateTask } from '@/services';
 import { 
@@ -27,21 +28,8 @@ const initialState = {
   count: 5
 };
 
-function reducer(state: any, action: any) {
-  switch (action.type) {
-    case 'setState':
-      return { ...state, ...action.state };
-    default:
-      return state;
-  }
-}
-
 const CreateTask: React.FC<Props> = function ({ visible, onSuccess, setParentState }) {
-  const [state, dispatch] = useReducer(reducer, initialState); 
-
-  const setState = useCallback((state) => {
-    dispatch({ type: 'setState', state });
-  }, []);
+  const [state, setState] = useKeepState(initialState); 
 
   const handleSubmitForm = useCallback(() => {
     const params = {

@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useCallback, useRef, useReducer } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Table from '@/components/table';
 import moment from 'moment';
 import CreateReminder from './components/create-reminder';
+import useKeepState from 'use-keep-state';
 import { connect } from 'react-redux';
 import { DatePicker, Button, Select, Tag, Modal } from 'antd';
 import { serviceGetReminder, serviceDeleteReminder } from '@/services';
@@ -35,17 +36,8 @@ const initialState: State = {
   currentRow: null
 };
 
-function reducer(state: State, action: any) {
-  switch (action.type) {
-    case 'setState':
-      return { ...state, ...action.state };
-    default:
-      return state;
-  }
-}
-
 const Reminder: React.FC<Props> = function({ userInfo }) {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, setState] = useKeepState(initialState);
   const tableRef = useRef<any>({});
   const [tableColumns] = useState([
     { title: '状态', dataIndex: 'type', width: 100,
@@ -65,11 +57,6 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
     }
   ]);
 
-  const setState = useCallback(state => {
-    dispatch({ type: 'setState', state })
-  }, []);
-
-  // 初始化参数
   const initParams = useCallback(() => {
     const startDate = moment(getThisYearFirstDay(), dateFormat);
     const endDate = moment(getThisYearLastDay(), dateFormat);

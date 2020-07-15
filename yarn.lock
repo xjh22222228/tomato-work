@@ -11747,6 +11747,13 @@ url@^0.11.0:
     punycode "1.3.2"
     querystring "0.2.0"
 
+use-keep-state@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.npm.taobao.org/use-keep-state/download/use-keep-state-1.2.5.tgz#ef81f01a5dcb56973203f63b989c61be53c4630e"
+  integrity sha1-74HwGl3LVpcyA/Y7mJxhvlPEYw4=
+  dependencies:
+    react "^16.13.1"
+
 use@^3.1.0:
   version "3.1.1"
   resolved "https://registry.npm.taobao.org/use/download/use-3.1.1.tgz#d50c8cac79a19fbc20f2911f56eb973f4e10070f"

@@ -1,4 +1,5 @@
-import React, { useCallback, useReducer, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
+import useKeepState from 'use-keep-state';
 import { serviceCreateTodoList, serviceUpdateTodoList } from '@/services';
 import { 
   Modal,
@@ -20,34 +21,15 @@ const initialState = {
   content: '',
 };
 
-function reducer(state: any, action: any) {
-  switch (action.type) {
-    case 'setState':
-      return { ...state, ...action.state };
-    default:
-      return state;
-  }
-}
-
 const CreateTodo: React.FC<Props> = function ({
   visible,
   onSuccess,
   setParentState,
   rowData
 }) {
-  const [state, dispatch] = useReducer(reducer, initialState); 
+  const [state, setState] = useKeepState(initialState); 
 
-  const setState = useCallback((state) => {
-    dispatch({ type: 'setState', state });
-  }, []);
-
-  // 初始化
-  const init = useCallback(() => {
-    setState({ content: rowData ? rowData.content : '' });
-  }, [rowData, setState]);
-
-  // 提交表单
-  const handleSubmit = useCallback(() => {
+  const handleSubmitForm = useCallback(() => {
     const params = {
       content: state.content.trim(),
     };
@@ -70,14 +52,16 @@ const CreateTodo: React.FC<Props> = function ({
   }, [state, onSuccess, rowData]);
 
   useEffect(() => {
-    init();
-  }, [init]);
+    setState({
+      content: rowData ? rowData.content : ''
+    });
+  }, [rowData, setState]);
 
   return (
     <Modal
       title="新增"
       visible={visible}
-      onOk={handleSubmit}
+      onOk={handleSubmitForm}
       onCancel={() => setParentState({ showCreateTodoModal: false })}
       confirmLoading={state.confirmLoading}
     >

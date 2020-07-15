@@ -1,5 +1,6 @@
-import React, { useCallback, useReducer, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import moment from 'moment';
+import useKeepState from 'use-keep-state';
 import { 
   Modal,
   Form,
@@ -35,21 +36,8 @@ const initialState: State = {
   content: ''
 };
 
-function reducer(state: State, action: any) {
-  switch (action.type) {
-    case 'setState':
-      return { ...state, ...action.state };
-    default:
-      return state;
-  }
-}
-
 const CreateReminder: React.FC<Props> = function ({ visible, onCancel, onSuccess, rowData }) {
-  const [state, dispatch] = useReducer(reducer, initialState);
-
-  const setState = useCallback((state) => {
-    dispatch({ type: 'setState', state })
-  }, []);
+  const [state, setState] = useKeepState(initialState);
 
   const initParams = useCallback(() => {
     if (!rowData) {

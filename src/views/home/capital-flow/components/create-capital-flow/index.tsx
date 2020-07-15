@@ -1,4 +1,4 @@
-import React, { useCallback, useReducer, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import moment from 'moment';
 import { 
   Modal,
@@ -9,6 +9,7 @@ import {
   Select
 } from 'antd';
 import { serviceCreateCapitalFlow, serviceUpdateCapitalFlow } from '@/services';
+import useKeepState from 'use-keep-state';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -41,15 +42,6 @@ const initialState: State = {
   price: ''
 };
 
-function reducer(state: State, action: any) {
-  switch (action.type) {
-    case 'setState':
-      return { ...state, ...action.state };
-    default:
-      return state;
-  }
-}
-
 const CreateReminder: React.FC<Props> = function ({
   visible,
   onCancel,
@@ -57,12 +49,8 @@ const CreateReminder: React.FC<Props> = function ({
   rowData,
   nameList
 }) {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, setState] = useKeepState(initialState);
   const initRef = useRef(false);
-
-  const setState = useCallback((state) => {
-    dispatch({ type: 'setState', state })
-  }, []);
 
   const initParams = useCallback(() => {
     const params: any = {

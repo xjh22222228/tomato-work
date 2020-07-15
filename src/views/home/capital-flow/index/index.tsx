@@ -1,6 +1,7 @@
-import React, { useEffect, useCallback, useRef, useReducer, useMemo } from 'react';
+import React, { useEffect, useCallback, useRef, useMemo } from 'react';
 import './style.scss';
 import moment from 'moment';
+import useKeepState from 'use-keep-state';
 import Table from '@/components/table';
 import CreateCapitalFlow from '../components/create-capital-flow';
 import { DatePicker, Button, Select, Statistic, Input } from 'antd';
@@ -50,24 +51,10 @@ const initialState: State = {
   }
 };
 
-function reducer(state: State, action: any) {
-  switch (action.type) {
-    case 'setState':
-      return { ...state, ...action.state };
-    default:
-      return state;
-  }
-}
-
 const Reminder: React.FC = function() {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, setState] = useKeepState(initialState);
   const tableRef = useRef<any>(null);
 
-  const setState = useCallback(state => {
-    dispatch({ type: 'setState', state });
-  }, []);
-
-  // 初始化参数
   const initParams = useCallback(() => {
     const startDate = moment(getCurMonthFirstDay(dateFormat), dateFormat);
     const endDate = moment(getCurMonthLastDay(dateFormat), dateFormat);

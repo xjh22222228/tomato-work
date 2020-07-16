@@ -15,6 +15,9 @@ jobs:
       uses: sergioramos/yarn-actions/install@v6
       with:
         frozen-lockfile: true
+    - name: Lint
+    run: |
+      npm run lint
     - name: Build
       run: |
         npm run build

@@ -1,6 +1,4 @@
 
-
-
 interface Window {
   readonly window: Window;
   axiosCancelTokenStore: { cancel: () => void; pathname: string; [propName: string]: any }[];

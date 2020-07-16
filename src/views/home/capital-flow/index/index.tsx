@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useRef, useMemo } from 'react';
+import React, { useEffect, useCallback, useRef } from 'react';
 import './style.scss';
 import moment from 'moment';
 import useKeepState from 'use-keep-state';
@@ -125,10 +125,8 @@ const Reminder: React.FC = function() {
     if (type === 0) {
       setState({ modalVisible: true, currentRow: row });
     } else {
-      modalConfirmDelete()
-      .then(() => {
-        serviceDeleteCapitalFlow(row.id)
-        .then(res => {
+      modalConfirmDelete().then(() => {
+        serviceDeleteCapitalFlow(row.id).then(res => {
           if (res.data.success) {
             tableRef.current.getTableData();
           }
@@ -194,7 +192,7 @@ const Reminder: React.FC = function() {
     tableRef?.current?.getTableData();
   }, [state.name, state.type, state.date]);
 
-  const tableColumns = useMemo(() => [
+  const tableColumns = [
     {
       title: '入账时间', dataIndex: 'date', width: 180, sorter: true,
       sortOrder: state.sortedInfo?.columnKey === 'date' && state.sortedInfo.order
@@ -228,7 +226,7 @@ const Reminder: React.FC = function() {
         </>
       )
     }
-  ], [state.sortedInfo, state.filters, handleActionButton]);
+  ];
 
   return (
     <div className="capital-flow">

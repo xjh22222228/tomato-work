@@ -24,6 +24,7 @@ const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
+const moment = require('moment');
 
 const postcssNormalize = require('postcss-normalize');
 
@@ -522,6 +523,7 @@ module.exports = function(webpackEnv) {
           {
             inject: true,
             template: paths.appHtml,
+            buildLog: moment().format('YYYY-MM-DD HH:mm:ss')
           },
           isEnvProduction
             ? {

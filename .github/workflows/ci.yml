@@ -1,4 +1,4 @@
-name: GitHub Actions Build and Deploy Demo
+name: Build
 on:
   push:
     branches:
@@ -16,8 +16,8 @@ jobs:
       with:
         frozen-lockfile: true
     - name: Lint
-    run: |
-      npm run lint
+      run: |
+        npm run lint
     - name: Build
       run: |
         npm run build

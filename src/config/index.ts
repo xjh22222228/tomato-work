@@ -1,8 +1,3 @@
-/**
- * @file Global config file
- * @since 1.0.0
- * @author xiejiahe <xjh22222228@gmail.com>
- */
 
 const isProduction = process.env.NODE_ENV === 'production';
 const isDevelopment = !isProduction;

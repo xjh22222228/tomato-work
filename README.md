@@ -23,7 +23,7 @@
 
 
 ## Online preview
-[Follow me](https://tomato-work.xiejiahe.com)
+[Follow me](https://work.xiejiahe.com)
 
 ![](media/screenshot.png)
 
@@ -31,7 +31,7 @@
 ## Tech
 核心技术 React纯hooks/TypeScript/Redux/Antd...
 ``` json
-"use-keep-state": "^1.2.7",
+"use-keep-state": "^1.2.9",
 "react": "^16.13.1",
 "react-dom": "^16.13.1",
 "react-redux": "^7.2.0",

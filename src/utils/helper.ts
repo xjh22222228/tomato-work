@@ -16,7 +16,7 @@ export function totalPercentage(totalmem: number, freemem: number) {
  * 删除模态对话框
  * @return Promise
  */
-export function modalConfirmDelete(object = {}) {
+export function modalConfirmDelete(object: { [k: string]: any }) {
   return new Promise(resolve => {
     Modal.confirm({
       title: '确定要删除吗？',

@@ -3,7 +3,7 @@
   <img src="public/poster.png" width="150" />
   <br />
   <b>Tomato Work 个人事务管理系统</b>
-  <p>
+  <p align="center">
     <a href="https://github.com/xjh22222228/tomato-work-server">服务端 </a>
     <a href="https://github.com/xjh22222228/tomato-work-weapp"> 小程序</a>
   </p>

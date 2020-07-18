@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import './style.scss';
 import moment from 'moment';
 import useKeepState from 'use-keep-state';
@@ -27,9 +27,9 @@ interface State {
   date: moment.Moment[];
   searchKeyword: string,
   name: string;
-  type: any;
+  type: string;
   modalVisible: boolean;
-  currentRow: null | { [propName: string]: any };
+  currentRow: null | { [key: string]: any };
   nameList: any[];
   price: { consumption: number; income: number; available: number; };
   sortedInfo: any;
@@ -47,7 +47,7 @@ const initialState: State = {
   price: { consumption: 0, income: 0, available: 0 },
   sortedInfo: null,
   filters: {
-    price: [true]
+    price: [false]
   }
 };
 
@@ -55,7 +55,7 @@ const Reminder: React.FC = function() {
   const [state, setState] = useKeepState(initialState);
   const tableRef = useRef<any>(null);
 
-  const initParams = useCallback(() => {
+  function initParams() {
     const startDate = moment(getCurMonthFirstDay(dateFormat), dateFormat);
     const endDate = moment(getCurMonthLastDay(dateFormat), dateFormat);
     setState({
@@ -64,10 +64,10 @@ const Reminder: React.FC = function() {
       date: [startDate, endDate],
       sortedInfo: null
     });
-  }, [setState]);
+  }
 
   // 获取数据
-  const getCapitalFlow = useCallback((params: any) => {
+  function getCapitalFlow(params: { [k: string]: any }) {
     params = {
       ...params,
       keyword: state.searchKeyword,
@@ -104,23 +104,23 @@ const Reminder: React.FC = function() {
       }
       return res;
     });
-  }, [state.date, state.searchKeyword, state.name, state.type, state.sortedInfo, setState]);
+  }
 
   // 获取所有类型
-  const getCapitalFlowType = useCallback(() => {
+  function getCapitalFlowType() {
     serviceGetCapitalFlowType()
-    .then(res => {
-      if (res.data.success) {
-        const data = res.data.data.map((item: any) => {
-          item.optionName = `${TypeNames[item.type]} - ${item.name}`;
-          return item;
-        }).sort((a: any, b: any) => a.type - b.type);
-        setState({ nameList: data });
-      }
-    });
-  }, [setState]);
+      .then(res => {
+        if (res.data.success) {
+          const data = res.data.data.map((item: any) => {
+            item.optionName = `${TypeNames[item.type]} - ${item.name}`;
+            return item;
+          }).sort((a: any, b: any) => a.type - b.type);
+          setState({ nameList: data });
+        }
+      });
+  }
 
-  const handleActionButton = useCallback((type: number, row: any) => {
+  function handleActionButton(type: number, row: any) {
     // 编辑
     if (type === 0) {
       setState({ modalVisible: true, currentRow: row });
@@ -133,10 +133,10 @@ const Reminder: React.FC = function() {
         });
       });
     }
-  }, [setState]);
+  }
 
   // 时间过滤
-  const onFilterDate = useCallback(type => {
+  function onFilterDate(type: number) {
     const [startDate] = state.date;
     const date: moment.Moment[] = [
       moment(moment().format(dateFormat), dateFormat),
@@ -145,28 +145,61 @@ const Reminder: React.FC = function() {
 
     switch (type) {
       case 2:
-        const prevDay = moment(moment().subtract(1, 'days').format(dateFormat), dateFormat);
+        const prevDay = moment(
+          moment()
+            .subtract(1, 'days')
+            .format(dateFormat), dateFormat
+        );
         date[0] = prevDay;
         date[1] = prevDay;
         break;
       case 3:
-        date[0] = moment(moment().subtract(7, 'days').format(dateFormat), dateFormat);
+        date[0] = moment(
+          moment()
+            .subtract(7, 'days')
+            .format(dateFormat),
+          dateFormat
+        );
         date[1] = moment(new Date(), dateFormat);
         break;
       case 4:
-        date[0] = moment(moment(startDate).subtract(1, 'month').startOf('month').format(dateFormat), dateFormat);
-        date[1] = moment(moment(startDate).subtract(1, 'month').endOf('month').format(dateFormat), dateFormat);
+        date[0] = moment(
+          moment(startDate)
+            .subtract(1, 'month')
+            .startOf('month')
+            .format(dateFormat),
+          dateFormat
+        );
+        date[1] = moment(
+          moment(startDate)
+            .subtract(1, 'month')
+            .endOf('month')
+            .format(dateFormat),
+          dateFormat
+        );
         break;
       case 5:
-        date[0] = moment(moment(startDate).add(1, 'month').startOf('month').format(dateFormat), dateFormat);
-        date[1] = moment(moment(startDate).add(1, 'month').endOf('month').format(dateFormat), dateFormat);
+        date[0] = moment(
+          moment(startDate)
+            .add(1, 'month')
+            .startOf('month')
+            .format(dateFormat),
+          dateFormat
+        );
+        date[1] = moment(
+          moment(startDate)
+            .add(1, 'month')
+            .endOf('month')
+            .format(dateFormat),
+          dateFormat
+        );
         break;
     }
 
     setState({ date });
-  }, [setState, state.date]);
+  }
 
-  const onTableChange = useCallback((pagination, filters, sorter) => {
+  function onTableChange(pagination: any, filters: any, sorter: any) {
     setState({
       sortedInfo: {
         columnKey: sorter.columnKey,
@@ -174,18 +207,17 @@ const Reminder: React.FC = function() {
       },
       filters
     });
-  }, [setState]);
+  }
 
-  // modal成功新增回调函数
-  const handleModalOnSuccess = useCallback(() => {
+  function handleModalOnSuccess() {
     setState({ modalVisible: false });
     tableRef.current.getTableData();
-  }, [setState]);
+  }
 
   useEffect(() => {
     initParams();
     getCapitalFlowType();
-  }, [initParams, getCapitalFlowType]);
+  }, []);
 
   useEffect(() => {
     if (state.date.length <= 0) return;
@@ -202,7 +234,7 @@ const Reminder: React.FC = function() {
       title: '收支金额（元）', width: 140, sorter: true, dataIndex: 'price',
       sortOrder: state.sortedInfo?.columnKey === 'price' && state.sortedInfo.order,
       filters: [
-        { text: '隐藏金额', value: true }
+        { text: '隐藏金额', value: false }
       ],
       defaultFilteredValue: [true],
       render: (text: any, rowData: any) => (
@@ -300,6 +332,7 @@ const Reminder: React.FC = function() {
         getTableData={getCapitalFlow}
         columns={tableColumns}
         onTableChange={onTableChange}
+        onDelete={serviceDeleteCapitalFlow}
       />
       <CreateCapitalFlow
         visible={state.modalVisible}

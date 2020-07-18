@@ -1,7 +1,3 @@
-/**
- * @since 1.0.1
- * @author xiejiahe <xjh22222228@gmail.com>
- */
 import axios from 'axios';
 import CONFIG from '@/config';
 import store from '@/store';
@@ -22,14 +18,14 @@ function handleError(error: any): Promise<any> | undefined {
   return void 0;
 }
 
-axios.defaults.headers.common.isLoading = true;
-axios.defaults.headers.common.successAlert = false;
-axios.defaults.headers.common.errorAlert = true;
-
 const httpInstance = axios.create({
   timeout: 60000,
   baseURL: CONFIG.http.baseURL
 });
+
+httpInstance.defaults.headers.common.isLoading = true;
+httpInstance.defaults.headers.common.successAlert = false;
+httpInstance.defaults.headers.common.errorAlert = true;
 Object.setPrototypeOf(httpInstance, axios);
 
 httpInstance.interceptors.request.use(function (config) {

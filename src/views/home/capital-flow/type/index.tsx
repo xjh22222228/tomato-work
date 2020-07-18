@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import './style.scss';
 import moment from 'moment';
 import useKeepState from 'use-keep-state';
@@ -20,7 +20,7 @@ const initialState = {
 
 const Type = () => {
   const [state, setState] = useKeepState(initialState);
-  const [columns] = useState([
+  const tableColumns = [
     { title: '账务类型', dataIndex: 'name' },
     { title: '收支类别', render: (rowData: any) => (
       <Tag color={rowData.color}>{rowData.typeName}</Tag>
@@ -29,58 +29,64 @@ const Type = () => {
     { title: '操作', render: (rowData: any) => (
       <Button onClick={handleEdit.bind(null, rowData)}>编辑</Button>
     ) },
-  ]);
+  ];
 
   const onSelectChange = function(selectedRowKeys: any) {
     setState({ selectedRowKeys });
   };
 
-  const getCapitalFlowType = useCallback(() => {
+  function getCapitalFlowType() {
     serviceGetCapitalFlowType()
-    .then(res => {
-      if (res.data.success) {
-        const handleData = res.data.data.map((item: any) => {
-          item.typeName = TypeNames[item.type];
-          item.color = TypeColors[item.type];
-          item.createdAt = moment(item.createdAt).format('YYYY-MM-DD hh:mm');
-          return item;
-        });
-        setState({ data: handleData });
-      }
-    });
-  }, [setState]);
+      .then(res => {
+        if (res.data.success) {
+          const handleData = res.data.data.map((item: any) => {
+            item.typeName = TypeNames[item.type];
+            item.color = TypeColors[item.type];
+            item.createdAt = moment(item.createdAt).format('YYYY-MM-DD hh:mm');
+            return item;
+          });
+          setState({ data: handleData });
+        }
+      });
+  }
 
-  const deleteCapitalFlowType = useCallback(() => {
+  function deleteCapitalFlowType() {
     const ids = state.selectedRowKeys.join();
     if (!ids) return;
     serviceDeleteCapitalFlowType(ids)
-    .then(res => {
-      if (res.data.success) {
-        getCapitalFlowType();
-      }
-    });
-  }, [state.selectedRowKeys, getCapitalFlowType]);
+      .then(res => {
+        if (res.data.success) {
+          getCapitalFlowType();
+        }
+      });
+  }
 
-  const handleOnSuccess = useCallback(() => {
+  function handleOnSuccess() {
     setState({ modalVisible: false });
     getCapitalFlowType();
-  }, [setState, getCapitalFlowType]);
+  }
 
-  const handleAdd = useCallback(() => {
+  function handleAdd() {
     if (state.data.length >= 100) {
       message.warn('类型超出100条');
       return;
     }
-    setState({ modalVisible: true, rowData: null });
-  }, [state.data, setState]);
+    setState({
+      modalVisible: true,
+      rowData: null
+    });
+  }
 
   function handleEdit(rowData: any) {
-    setState({ modalVisible: true, rowData });
+    setState({
+      modalVisible: true,
+      rowData
+    });
   }
 
   useEffect(() => {
     getCapitalFlowType();
-  }, [getCapitalFlowType]);
+  }, []);
 
   const rowSelection = {
     selectedRowKeys: state.selectedRowKeys,
@@ -95,7 +101,7 @@ const Type = () => {
       </div>
       <Table
         rowSelection={rowSelection}
-        columns={columns}
+        columns={tableColumns}
         dataSource={state.data}
         pagination={false}
         rowKey="id"

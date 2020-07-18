@@ -13,15 +13,18 @@
  */
 
 import React, { FC, useEffect } from 'react';
+import './style.scss';
 import { Table } from 'antd';
 import { TableProps } from 'rc-table/lib/Table';
 import { AxiosPromise } from 'axios';
 import useKeepState from 'use-keep-state';
+import ActionPanel from './action-panel';
 
 interface Props {
   getTableData: (data: any) => AxiosPromise;
-  onTableChange?: (a: any, b: any, c: any) => void;
-  [propsName: string]: any;
+  onTableChange?: (pagination: any, filters: any, sorter: any) => void;
+  onDelete?: (id: string) => AxiosPromise;
+  [key: string]: any;
 }
 
 interface State {
@@ -29,8 +32,9 @@ interface State {
   tableDataSource: any[];
   isLoading: boolean;
   pagination: {
-    [propName: string]: any;
-  }
+    [key: string]: any;
+  },
+  selectedRowKeys: string[]
 }
 
 const DEFAULT_PAGE_SIZE = 50;
@@ -44,15 +48,19 @@ const initialState: State = {
     showSizeChanger: true,
     total: 0,
     pageSizeOptions: ['30', '50', '70', '100', '200']
-  }
+  },
+  selectedRowKeys: []
 };
 
 const TableFC: FC<Props & TableProps<unknown>> = ({
   getTableData,
   onTableChange,
+  onDelete,
   forwardedRef: tableRef,
   ...props
 }) => {
+  let rowSelection;
+  const showRowSelection = onDelete;
   const [state, setState] = useKeepState(initialState);
 
   function getData() {
@@ -80,19 +88,21 @@ const TableFC: FC<Props & TableProps<unknown>> = ({
       });
   }
 
-  const onChange = function(pagination: any, filters: any, sorter: any) {
+  function onChange(pagination: any, filters: any, sorter: any) {
+    const pageNo = pagination.current;
+    const pageSize = pagination.pageSize;
     setState({
       pagination: {
         ...state.pagination,
-        pageNo: pagination.pageNo,
-        pageSize: pagination.pageSize
+        pageNo,
+        pageSize
       }
     });
-    tableRef.current.pageNo = pagination.pageNo;
-    tableRef.current.pageSize = pagination.pageSize;
+    tableRef.current.pageNo = pageNo;
+    tableRef.current.pageSize = pageSize;
     getData();
     onTableChange && onTableChange(pagination, filters, sorter);
-  };
+  }
 
   useEffect(() => {
     if (!tableRef.current) {
@@ -117,20 +127,48 @@ const TableFC: FC<Props & TableProps<unknown>> = ({
     }, 0);
   }, [setState]);
 
+  function handleDelete() {
+    if (!onDelete) return null;
+    const selectedRowKeys = state.selectedRowKeys.join(',');
+    onDelete(selectedRowKeys)
+      .then(res => {
+        if (res.data.success) {
+          setState({ selectedRowKeys: [] });
+          getData();
+        }
+      });
+  }
+
+  if (showRowSelection) {
+    rowSelection = {
+      onChange(selectedRowKeys: string[]) {
+        setState({ selectedRowKeys });
+      }
+    };
+  }
+
   return (
-    <Table
-      {...props as any}
-      rowKey="id"
-      loading={state.isLoading}
-      dataSource={state.tableDataSource}
-      scroll={{ y: state.tableHeight + 'px' }}
-      showHeader={state.tableDataSource.length}
-      onChange={onChange}
-      pagination={{
-        ...state.pagination,
-        size: 'small'
-      }}
-    />
+    <React.Fragment>
+      <ActionPanel
+        selectedRowKeys={state.selectedRowKeys}
+        onDelete={onDelete && handleDelete}
+      />
+
+      <Table
+        {...props as any}
+        rowKey="id"
+        loading={state.isLoading}
+        dataSource={state.tableDataSource}
+        scroll={{ y: state.tableHeight + 'px' }}
+        showHeader={state.tableDataSource.length}
+        onChange={onChange}
+        rowSelection={rowSelection}
+        pagination={{
+          ...state.pagination,
+          size: 'small'
+        }}
+      />
+    </React.Fragment>
   )
 };
 

@@ -3,7 +3,12 @@
   <img src="public/poster.png" width="150" />
   <br />
   <b>Tomato Work 个人事务管理系统</b>
+  <p>
+    <a href="https://github.com/xjh22222228/tomato-work-server">服务端 </a>
+    <a href="https://github.com/xjh22222228/tomato-work-weapp"> 小程序</a>
+  </p>
   <p align="center">
+    <a href="https://github.com/xjh22222228/tomato-work/stargazers"><img src="https://img.shields.io/github/stars/xjh22222228/tomato-work" alt="Stars Badge"/></a>
     <img src="https://img.shields.io/github/package-json/v/xjh22222228/tomato-work" />
     <img src="https://img.shields.io/github/license/xjh22222228/tomato-work" />
     <a href="https://hits.dwyl.com/xjh22222228/tomato-work">
@@ -12,12 +17,6 @@
   </p>
 </p>
 
-
-
-
-服务端：[tomato-work-server](https://github.com/xjh22222228/tomato-work-server)
-
-小程序：[tomato-work-weapp](https://github.com/xjh22222228/tomato-work-weapp)
 
 
 
@@ -31,7 +30,7 @@
 ## Tech
 核心技术 React纯hooks/TypeScript/Redux/Antd...
 ``` json
-"use-keep-state": "^1.2.9",
+"use-keep-state": "^1.2.10",
 "react": "^16.13.1",
 "react-dom": "^16.13.1",
 "react-redux": "^7.2.0",

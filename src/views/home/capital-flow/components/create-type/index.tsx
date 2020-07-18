@@ -63,9 +63,15 @@ const CreateTask: React.FC<Props> = function ({
   useEffect(() => {
     // 每次rowData改变重新赋值
     if (rowData) {
-      setState({ name: rowData.name, type: rowData.type });
+      setState({
+        name: rowData.name,
+        type: rowData.type
+      });
     } else {
-      setState({ name: '', type: defaultType });
+      setState({
+        name: '',
+        type: defaultType
+      });
     }
   }, [rowData, setState]);
 
@@ -74,7 +80,7 @@ const CreateTask: React.FC<Props> = function ({
       title="新增类别"
       visible={visible}
       onOk={handleSubmitForm}
-      onCancel={() => onCancel()}
+      onCancel={onCancel}
       confirmLoading={state.confirmLoading}
     >
       <Form>

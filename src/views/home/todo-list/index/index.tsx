@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import moment from 'moment';
 import useKeepState from 'use-keep-state';
 import Table from '@/components/table';
@@ -31,7 +31,7 @@ const initialState: State = {
 const TodoList = () => {
   const [state, setState] = useKeepState(initialState);
   const tableRef = useRef<any>();
-  const [tableColumns] = useState([
+  const tableColumns = [
     { title: '状态', dataIndex: 'status', width: 90, render: (status: number) => (
       <Tag color={STATUS[status].color}>{STATUS[status].text}</Tag>
     )},
@@ -51,7 +51,7 @@ const TodoList = () => {
         </>
       )
     }
-  ]);
+  ];
 
   function getData() {
     tableRef.current.getTableData();
@@ -142,6 +142,7 @@ const TodoList = () => {
         ref={tableRef}
         getTableData={getTodoList}
         columns={tableColumns}
+        onDelete={serviceDeleteTodoList}
       />
       <CreateTodo
         visible={state.showCreateTodoModal}

@@ -1,7 +1,6 @@
 import http from '@/utils/http';
 import api from '@/api';
 
-
 // 类型
 export function serviceGetCapitalFlowType() {
   return http.get(api.capitalFlowType, {
@@ -28,8 +27,7 @@ export function serviceCreateCapitalFlowType(data: object) {
 }
 
 
-// 流动资金
-
+// 资金流动
 export function serviceGetCapitalFlow(params?: object) {
   return http.get(api.capitalFlow, { params });
 }

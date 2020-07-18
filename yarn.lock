@@ -11946,10 +11946,10 @@ url@^0.11.0:
     punycode "1.3.2"
     querystring "0.2.0"
 
-use-keep-state@^1.2.9:
-  version "1.2.9"
-  resolved "https://registry.npm.taobao.org/use-keep-state/download/use-keep-state-1.2.9.tgz?cache=0&sync_timestamp=1594903833624&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fuse-keep-state%2Fdownload%2Fuse-keep-state-1.2.9.tgz#162a36188d61c4130b943835243c01663bfae3a5"
-  integrity sha1-Fio2GI1hxBMLlDg1JDwBZjv646U=
+use-keep-state@1.2.10:
+  version "1.2.10"
+  resolved "https://registry.npm.taobao.org/use-keep-state/download/use-keep-state-1.2.10.tgz#b6c33be5cec13068c7fe1dfa87818d447447a6c2"
+  integrity sha1-tsM75c7BMGjH/h36h4GNRHRHpsI=
   dependencies:
     react "^16.13.1"
 

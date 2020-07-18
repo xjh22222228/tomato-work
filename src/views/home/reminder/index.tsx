@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useEffect, useCallback, useRef } from 'react';
 import Table from '@/components/table';
 import moment from 'moment';
 import CreateReminder from './components/create-reminder';
@@ -38,8 +38,8 @@ const initialState: State = {
 
 const Reminder: React.FC<Props> = function({ userInfo }) {
   const [state, setState] = useKeepState(initialState);
-  const tableRef = useRef<any>({});
-  const [tableColumns] = useState([
+  const tableRef = useRef<any>();
+  const tableColumns = [
     { title: '状态', dataIndex: 'type', width: 100,
       render: (row: any) => (
         <Tag color={STATUS_TYPE[row].color}>{STATUS_TYPE[row].text}</Tag>
@@ -55,19 +55,18 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
         </>
       )
     }
-  ]);
+  ];
 
-  const initParams = useCallback(() => {
+  const initParams = function() {
     const startDate = moment(getThisYearFirstDay(), dateFormat);
     const endDate = moment(getThisYearLastDay(), dateFormat);
     setState({
       queryType: '',
       date: [startDate, endDate]
     });
-  }, [setState]);
+  };
 
-  // 获取事项数据
-  const getReminder = useCallback((params: any = {}) => {
+  function getReminder(params: any = {}) {
     params.startDate = state.date[0].valueOf();
     params.endDate = state.date[1].valueOf();
 
@@ -85,7 +84,7 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
       }
       return res;
     });
-  }, [state.date, state.queryType]);
+  }
 
   const handleButton = useCallback((type: number, rows: any) => {
     // 编辑
@@ -130,12 +129,12 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
         ),
       });
     }
-  }, [initParams, userInfo.email]);
+  }, [userInfo.email]);
 
   useEffect(() => {
     if (state.date.length <= 0) return;
     tableRef?.current?.getTableData();
-  }, [state.date]);
+  }, [state.date, state.queryType]);
 
   return (
     <div className="reminder">
@@ -164,6 +163,7 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
         ref={tableRef}
         getTableData={getReminder}
         columns={tableColumns}
+        onDelete={serviceDeleteReminder}
       />
       <CreateReminder
         visible={state.modalVisible}

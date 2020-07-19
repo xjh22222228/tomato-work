@@ -17,7 +17,8 @@ const Base: React.FC<Props & RouteComponentProps> = function ({ userInfo }) {
 
   const MetaDesc = (
     <div className="meta-desc">
-      <div>{userInfo.loginName}</div>
+      <div className="loginname">{userInfo.loginName}</div>
+      <div>UID：{userInfo.uid}</div>
       <div>简介：{userInfo.bio}</div>
       <div>邮箱：{userInfo.email}</div>
       <div>地区：{userInfo.location}</div>

@@ -53,7 +53,7 @@ const initialState: State = {
 
 const Reminder: React.FC = function() {
   const [state, setState] = useKeepState(initialState);
-  const tableRef = useRef<any>(null);
+  const tableRef = useRef<any>();
 
   function initParams() {
     const startDate = moment(getCurMonthFirstDay(dateFormat), dateFormat);
@@ -295,7 +295,6 @@ const Reminder: React.FC = function() {
           style={{ width: 260, marginRight: '15px' }}
         />
         <Button type="primary" onClick={tableRef.current?.getTableData}>查询</Button>
-        <Button onClick={() => setState({ modalVisible: true, currentRow: null })}>新增</Button>
         <Button onClick={initParams}>重置</Button>
         <div style={{ marginTop: '10px' }}>
           <span>日期：</span>
@@ -333,6 +332,7 @@ const Reminder: React.FC = function() {
         columns={tableColumns}
         onTableChange={onTableChange}
         onDelete={serviceDeleteCapitalFlow}
+        onAdd={() => setState({ modalVisible: true, currentRow: null })}
       />
       <CreateCapitalFlow
         visible={state.modalVisible}

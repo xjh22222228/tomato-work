@@ -24,6 +24,7 @@ interface Props {
   getTableData: (data: any) => AxiosPromise;
   onTableChange?: (pagination: any, filters: any, sorter: any) => void;
   onDelete?: (id: string) => AxiosPromise;
+  onAdd?: () => void;
   [key: string]: any;
 }
 
@@ -56,6 +57,7 @@ const TableFC: FC<Props & TableProps<unknown>> = ({
   getTableData,
   onTableChange,
   onDelete,
+  onAdd,
   forwardedRef: tableRef,
   ...props
 }) => {
@@ -152,6 +154,7 @@ const TableFC: FC<Props & TableProps<unknown>> = ({
       <ActionPanel
         selectedRowKeys={state.selectedRowKeys}
         onDelete={onDelete && handleDelete}
+        onAdd={onAdd}
       />
 
       <Table

@@ -156,7 +156,6 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
           onChange={(date: any) => setState({ date })}
         />
         <Button type="primary" onClick={() => tableRef.current.getTableData()}>查询</Button>
-        <Button onClick={() => setState({ modalVisible: true, currentRow: null })}>新增</Button>
         <Button onClick={initParams}>重置</Button>
       </div>
       <Table
@@ -164,6 +163,7 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
         getTableData={getReminder}
         columns={tableColumns}
         onDelete={serviceDeleteReminder}
+        onAdd={() => setState({ modalVisible: true, currentRow: null })}
       />
       <CreateReminder
         visible={state.modalVisible}

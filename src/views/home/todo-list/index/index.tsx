@@ -76,10 +76,10 @@ const TodoList = () => {
     setState({ date: [startDate, endDate] });
   }, [setState]);
 
-  const handleOnSuccess = useCallback(() => {
+  const handleOnSuccess = function() {
     setState({ showCreateTodoModal: false });
     tableRef.current.getTableData();
-  }, [setState]);
+  };
 
   const handleActionButton = useCallback((buttonType: number, row: any) => {
     switch (buttonType) {
@@ -132,10 +132,6 @@ const TodoList = () => {
           onChange={(date: any) => setState({ date })}
         />
         <Button type="primary" onClick={getData}>查询</Button>
-        <Button onClick={() => setState({
-          showCreateTodoModal: true,
-          currentRowData: null
-        })}>新增</Button>
         <Button onClick={initParams}>重置</Button>
       </div>
       <Table
@@ -143,6 +139,10 @@ const TodoList = () => {
         getTableData={getTodoList}
         columns={tableColumns}
         onDelete={serviceDeleteTodoList}
+        onAdd={() => setState({
+          showCreateTodoModal: true,
+          currentRowData: null
+        })}
       />
       <CreateTodo
         visible={state.showCreateTodoModal}

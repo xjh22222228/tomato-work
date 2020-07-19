@@ -1,6 +1,8 @@
 
 <p align="center">
-  <img src="public/poster.png" width="150" />
+  <a href="https://work.xiejiahe.com">
+    <img src="public/poster.png" width="150" />
+  </a>
   <br />
   <b>Tomato Work 个人事务管理系统</b>
   <p align="center">

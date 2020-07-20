@@ -1,9 +1,25 @@
+@keyframes octocat {
+  0%, 100% {
+    transform: rotate(0);
+  }
+  20%, 60% {
+    transform:rotate(-25deg);
+  }
+  40%, 80% {
+    transform: rotate(100deg);
+  }
+}
+
 .login-page {
   display: flex;
   min-height: 100vh;
   background: #f0f2f5 url("~@/assets/img/public/bg.svg") no-repeat center 110px;
   background-size: 100%;
   flex-direction: column;
+
+  .octo-arm {
+    animation: octocat 1.1s linear infinite;
+  }
 
   .svg-wrapper {
     z-index: 10001;

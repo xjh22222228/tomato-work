@@ -78,7 +78,7 @@ const Reminder: React.FC = function() {
     };
 
     if (state.sortedInfo?.order) {
-      params.sort = `${state.sortedInfo.columnKey}-${state.sortedInfo.order.replace('end', '')}`;
+      params.sort = `${state.sortedInfo.field}-${state.sortedInfo.order.replace('end', '')}`;
     }
 
     return serviceGetCapitalFlow(params).then(res => {
@@ -202,7 +202,7 @@ const Reminder: React.FC = function() {
   function onTableChange(pagination: any, filters: any, sorter: any) {
     setState({
       sortedInfo: {
-        columnKey: sorter.columnKey,
+        field: sorter.field,
         order: sorter.order
       },
       filters
@@ -227,12 +227,12 @@ const Reminder: React.FC = function() {
   const tableColumns = [
     {
       title: '入账时间', dataIndex: 'date', width: 180, sorter: true,
-      sortOrder: state.sortedInfo?.columnKey === 'date' && state.sortedInfo.order
+      sortOrder: state.sortedInfo?.field === 'date' && state.sortedInfo.order
     },
     { title: '账务类型', dataIndex: 'name', width: 120 },
     {
       title: '收支金额（元）', width: 140, sorter: true, dataIndex: 'price',
-      sortOrder: state.sortedInfo?.columnKey === 'price' && state.sortedInfo.order,
+      sortOrder: state.sortedInfo?.field === 'price' && state.sortedInfo.order,
       filters: [
         { text: '隐藏金额', value: false }
       ],

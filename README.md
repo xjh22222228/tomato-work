@@ -40,7 +40,7 @@
 "react-router-dom": "^5.1.2",
 "redux-thunk": "^2.3.0",
 "typescript": "^3.8.0",
-"antd": "^4.4.2",
+"antd": "^4.6.0",
 "axios": "^0.19.2",
 "blueimp-md5": "^2.13.0",
 "moment": "^2.24.0",

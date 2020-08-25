@@ -253,8 +253,8 @@ const Reminder: React.FC = function() {
       title: '操作', width: 180, align: 'right',
       render: (row: any) => (
         <>
-          <Button onClick={handleActionButton.bind(null, 0, row)} size="small">编辑</Button>
-          <Button onClick={handleActionButton.bind(null, 1, row)} size="small">删除</Button>
+          <Button onClick={handleActionButton.bind(null, 0, row)}>编辑</Button>
+          <Button onClick={handleActionButton.bind(null, 1, row)}>删除</Button>
         </>
       )
     }

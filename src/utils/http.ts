@@ -5,7 +5,7 @@ import { message } from 'antd';
 import { logout } from '@/store/actions';
 import { spin } from '@/utils';
 
-let _logout = false;
+let exiting = false;
 const CancelToken = axios.CancelToken;
 
 function handleError(error: any): Promise<any> | undefined {
@@ -90,8 +90,8 @@ httpInstance.interceptors.response.use(function (res) {
     message.success(res.data.msg ?? 'success');
   }
 
-  if (res.data.errorCode === 401 && !_logout) {
-    _logout = true;
+  if (res.data.errorCode === 401 && !exiting) {
+    exiting = true;
     setTimeout(logout, 2000);
   }
   return res;

@@ -46,9 +46,7 @@ const initialState: State = {
   nameList: [],
   price: { consumption: 0, income: 0, available: 0 },
   sortedInfo: null,
-  filters: {
-    price: [false]
-  }
+  filters: {}
 };
 
 const Reminder: React.FC = function() {
@@ -199,7 +197,7 @@ const Reminder: React.FC = function() {
     setState({ date });
   }
 
-  function onTableChange(pagination: any, filters: any, sorter: any) {
+  function onTableChange(_: unknown, filters: any, sorter: any) {
     setState({
       sortedInfo: {
         field: sorter.field,
@@ -236,10 +234,9 @@ const Reminder: React.FC = function() {
       filters: [
         { text: '隐藏金额', value: false }
       ],
-      defaultFilteredValue: [true],
       render: (text: any, rowData: any) => (
         <span style={{ color: rowData.__color__ }}>
-          {state.filters.price && state.filters.price[0] === true ? '******' : rowData.__price__}
+          {state.filters.price && state.filters.price[0] ? '******' : rowData.__price__}
         </span>
       )
     },

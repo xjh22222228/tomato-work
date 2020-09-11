@@ -78,16 +78,17 @@ httpInstance.interceptors.request.use(function (config) {
 
 
 httpInstance.interceptors.response.use(function (res) {
-  if (res.config.headers.isLoading) {
+  const headers = res.config.headers;
+  if (headers.isLoading) {
     spin.done();
   }
 
-  if (!res.data.success && res.config.headers.errorAlert) {
+  if (!res.data.success && headers.errorAlert) {
     message.warn(res.data.msg ?? '服务器出小差');
   }
 
-  if (res.data.success && res.config.headers.successAlert) {
-    message.success(res.data.msg ?? 'success');
+  if (res.data.success && headers.successAlert) {
+    message.success(res.data.msg ?? 'Success');
   }
 
   if (res.data.errorCode === 401 && !exiting) {

@@ -20,7 +20,7 @@ import { AxiosPromise } from 'axios';
 import useKeepState from 'use-keep-state';
 import ActionPanel from './action-panel';
 
-interface Props {
+interface Props extends TableProps {
   getTableData: (data: any) => AxiosPromise;
   onTableChange?: (pagination: any, filters: any, sorter: any) => void;
   onDelete?: (id: string) => AxiosPromise;
@@ -35,10 +35,12 @@ interface State {
   pagination: {
     [key: string]: any;
   },
-  selectedRowKeys: string[]
+  selectedRowKeys: string[];
+  columns: any[]
 }
 
 const DEFAULT_PAGE_SIZE = 50;
+
 const initialState: State = {
   tableHeight: 0,
   tableDataSource: [],
@@ -50,15 +52,17 @@ const initialState: State = {
     total: 0,
     pageSizeOptions: ['30', '50', '70', '100', '200']
   },
-  selectedRowKeys: []
+  selectedRowKeys: [],
+  columns: []
 };
 
-const TableFC: FC<Props & TableProps<unknown>> = ({
+const TableFC: FC<Props> = ({
   getTableData,
   onTableChange,
   onDelete,
   onAdd,
   forwardedRef: tableRef,
+  columns,
   ...props
 }) => {
   let rowSelection;
@@ -129,6 +133,21 @@ const TableFC: FC<Props & TableProps<unknown>> = ({
     }, 0);
   }, [setState]);
 
+  useEffect(() => {
+    if (Array.isArray(columns)) {
+      setState({
+        columns: [
+          {
+            title: '序号',
+            width: 60,
+            render: (_: any, $: any, i: number) => i + 1,
+            align: 'center'
+          }
+        ].concat(columns as [])
+      });
+    }
+  }, [columns]);
+
   function handleDelete() {
     if (!onDelete) return null;
     const selectedRowKeys = state.selectedRowKeys.join(',');
@@ -161,6 +180,7 @@ const TableFC: FC<Props & TableProps<unknown>> = ({
         {...props as any}
         rowKey="id"
         loading={state.isLoading}
+        columns={state.columns}
         dataSource={state.tableDataSource}
         scroll={{ y: state.tableHeight + 'px' }}
         showHeader={state.tableDataSource.length}

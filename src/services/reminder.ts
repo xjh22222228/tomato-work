@@ -23,6 +23,8 @@ export function serviceDeleteReminder(id: unknown) {
 // 更新
 export function serviceUpdateReminder(id: unknown, data: object) {
   return http.put(`${api.reminder}/${id}`, data, {
-    headers: { successAlert: true }
+    headers: {
+      successAlert: true,
+    }
   });
 }

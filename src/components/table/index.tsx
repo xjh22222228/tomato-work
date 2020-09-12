@@ -56,6 +56,10 @@ const initialState: State = {
   columns: []
 };
 
+function showTotal(total: number) {
+  return `共有 ${total} 条`;
+}
+
 const TableFC: FC<Props> = ({
   getTableData,
   onTableChange,
@@ -188,7 +192,8 @@ const TableFC: FC<Props> = ({
         rowSelection={rowSelection}
         pagination={{
           ...state.pagination,
-          size: 'small'
+          size: 'small',
+          showTotal
         }}
       />
     </React.Fragment>

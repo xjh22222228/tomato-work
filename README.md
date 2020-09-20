@@ -30,26 +30,10 @@
 
 
 ## Tech
-核心技术 React纯hooks/TypeScript/Redux/Antd...
-``` json
-"use-keep-state": "^1.2.10",
-"react": "^16.13.1",
-"react-dom": "^16.13.1",
-"react-redux": "^7.2.0",
-"redux": "^4.0.5",
-"react-router-dom": "^5.1.2",
-"redux-thunk": "^2.3.0",
-"typescript": "^3.8.0",
-"antd": "^4.x",
-"axios": "^0.20.0",
-"blueimp-md5": "^2.18.0",
-"moment": "^2.24.0",
-"lodash": "^4.17.15",
-"query-string": "^6.12.0",
-"webpack": "4.42.0",
-"bizcharts": "^3.5.8",
-"tui-editor": "^1.4.10"
-```
+React hooks / TypeScript / Redux / Antd ...
+
+
+
 
 ## Todo list
 - [x] github登录

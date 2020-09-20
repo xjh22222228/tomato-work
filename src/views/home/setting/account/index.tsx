@@ -79,6 +79,7 @@ const Account: React.FC<Props & RouteComponentProps> = function ({ userInfo }) {
         >
           <Input type="password" maxLength={32} />
         </Form.Item>
+        <br />
         <Form.Item>
           <Button type="primary" onClick={handleUpdateUser}>提交</Button>
         </Form.Item>

@@ -49,7 +49,7 @@ const CreateReminder: React.FC<Props> = function ({
       const values = await form.validateFields();
       const params = {
         date: values.date.valueOf(),
-        remarks: values?.remarks.trim() ?? '',
+        remarks: values.remarks?.trim() ?? '',
         typeId: values.typeId,
         price: Number(values.price)
       };

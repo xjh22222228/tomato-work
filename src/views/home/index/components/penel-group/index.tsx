@@ -53,7 +53,7 @@ const PanelGroup = () => {
         data[1].total = res.data.data.todayTaskCount;
         data[2].total = res.data.data.unfinishedTodoListCount;
         data[3].total = res.data.data.reminderCount;
-        setState(data)
+        setState(data);
       }
     });
   }, [state]);
@@ -71,7 +71,7 @@ const PanelGroup = () => {
         </Col>
       ))}
     </Row>
-  )
+  );
 };
 
 export default React.memo(PanelGroup);

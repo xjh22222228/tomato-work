@@ -35,7 +35,7 @@ export function loginByToken(token: string) {
       }
       return dispatch(setUser());
     });
-  }
+  };
 }
 
 /**

@@ -32,5 +32,5 @@ export function getSystemInfo() {
       }
       return dispatch(setSystemInfo());
     });
-  }
+  };
 }

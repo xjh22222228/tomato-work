@@ -25,7 +25,7 @@ const HomeIndex: React.FC<Props> = function ({ system, dispatch: propDispatch })
       <SystemInfo systemInfo={system.info} />
       <MoneyAccessChart />
     </div>
-  )
+  );
 };
 
 export default connect(mapStateToProps)(HomeIndex);

@@ -1,46 +1,48 @@
-import React, { useCallback, useEffect, useState } from 'react';
+/**
+ * 账号设置
+ */
+import React, { useEffect } from 'react';
 import md5 from 'blueimp-md5';
 import { connect } from 'react-redux';
 import { StoreState } from '@/store';
 import { UserInfoProps } from '@/store/reducers/user';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { useFormInput } from '@/hooks';
 import { serviceUpdateUser, serviceGetUserConfig, serviceUpdateUserConfig } from '@/services';
-import {
-  Form, Input, Button, message, Divider
-} from 'antd';
+import { Form, Input, Button, Divider } from 'antd';
 
 type Props = {
   userInfo: UserInfoProps;
 }
 
 const Account: React.FC<Props & RouteComponentProps> = function ({ userInfo }) {
-  const password = useFormInput('');
-  const [sckey, setSckey] = useState('');
-  const passwordValue = password.value.trim();
+  const [form] = Form.useForm();
+  const [form2] = Form.useForm();
 
-  const handleUpdateUser = useCallback(() => {
-    if (passwordValue.length < 6) {
-      message.warn('密码至少6位');
-      return;
+  async function handleUpdateUser() {
+    try {
+      const values = await form.validateFields();
+      serviceUpdateUser({ password: md5(values.password) });
+    } catch (err) {
+      console.log(err);
     }
-    serviceUpdateUser({ password: md5(passwordValue) });
-  }, [passwordValue]);
+  }
 
-  const handleSckey = useCallback(() => {
-    if (!sckey) {
-      message.warn('请正确填写SCKEY');
-      return;
+  async function handleSckey() {
+    try {
+      const values = await form2.validateFields();
+      serviceUpdateUserConfig({ sckey: values.sckey });
+    } catch (err) {
+      console.log(err);
     }
-
-    serviceUpdateUserConfig({ sckey });
-  }, [sckey]);
+  }
 
   useEffect(() => {
     serviceGetUserConfig()
     .then(res => {
       if (res.data.success) {
-        setSckey(res.data.data?.serverChanSckey || '');
+        form.setFieldsValue({
+          sckey: res.data.data?.serverChanSckey || ''
+        });
       }
     });
   }, []);
@@ -48,35 +50,64 @@ const Account: React.FC<Props & RouteComponentProps> = function ({ userInfo }) {
   return (
     <div className="account-setting">
       <Divider orientation="left">修改密码</Divider>
-      <Form layout="vertical" style={{ width: '300px' }}>
-        <Form.Item label="登录名">
-          <Input defaultValue={userInfo.loginName} readOnly disabled />
+      <Form layout="vertical" form={form} style={{ width: '300px' }}>
+        <Form.Item
+          label="登录名"
+          name="name"
+          initialValue={userInfo.loginName}
+          rules={[
+            {
+              required: true
+            }
+          ]}
+        >
+          <Input readOnly disabled />
         </Form.Item>
-        <Form.Item label="密码">
-          <Input type="password" maxLength={32} {...password} />
+        <Form.Item
+          label="新密码"
+          name="password"
+          rules={[
+            {
+              required: true,
+              message: "请输入新密码"
+            },
+            {
+              pattern: /.{6,}/,
+              message: "新密码至少6位"
+            }
+          ]}
+        >
+          <Input type="password" maxLength={32} />
         </Form.Item>
         <Form.Item>
           <Button type="primary" onClick={handleUpdateUser}>提交</Button>
         </Form.Item>
       </Form>
+
       <Divider orientation="left">Server酱配置</Divider>
-      <Form layout="vertical" style={{ width: '300px' }}>
-        <Form.Item label="SCKEY">
-          <Input
-            maxLength={100}
-            value={sckey}
-            onChange={e => setSckey(e.target.value)}
-          />
-          <div style={{ textAlign: 'right', marginTop: '5px' }}>
-            <a href="http://sc.ftqq.com" target="_blank" rel="noopener noreferrer">如何获取？</a>
-          </div>
+
+      <Form layout="vertical" form={form2} style={{ width: '300px' }}>
+        <Form.Item
+          label="SCKEY"
+          name="sckey"
+          rules={[
+            {
+              required: true,
+              message: '请正确填写SCKEY'
+            }
+          ]}
+        >
+          <Input maxLength={100} />
         </Form.Item>
+        <div style={{ textAlign: 'right', marginTop: '5px' }}>
+          <a href="http://sc.ftqq.com" target="_blank" rel="noopener noreferrer">如何获取？</a>
+        </div>
         <Form.Item>
           <Button type="primary" onClick={handleSckey}>提交</Button>
         </Form.Item>
       </Form>
     </div>
-  )
+  );
 };
 
 const mapStateToProps = ({ user }: StoreState): { userInfo: UserInfoProps } => {

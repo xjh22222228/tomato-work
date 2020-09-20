@@ -1,10 +1,12 @@
+/**
+ * 消息中心
+ */
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './style.scss';
 import moment from 'moment';
 import Table from '@/components/table';
 import { Button } from 'antd';
 import { serviceGetInnerMessage, serviceUpdateInnerMessageHasRead } from '@/services';
-
 
 const InnerMessage = () => {
   const tableRef = useRef<any>(null);
@@ -25,7 +27,7 @@ const InnerMessage = () => {
       if (res.data.success) {
         res.data.data.rows.forEach((item: any) => {
           item.createdAt = moment(item.createdAt).format('YYYY-MM-DD HH:mm');
-        })
+        });
       }
       return res;
     });
@@ -44,7 +46,7 @@ const InnerMessage = () => {
         setSelectedRowKeys([]);
         tableRef.current.getTableData();
       }
-    })
+    });
   }, [selectedRowKeys, tableRef, setSelectedRowKeys]);
 
   useEffect(() => {
@@ -72,7 +74,7 @@ const InnerMessage = () => {
         <Button onClick={handleAction.bind(null, 2)}>全部已读</Button>
       </div>
     </div>
-  )
+  );
 };
 
 export default InnerMessage;

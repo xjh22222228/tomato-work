@@ -54,7 +54,7 @@ const System: React.FC<Props> = ({ systemInfo }) => {
 
     return () => {
       clearTimeout(timer);
-    }
+    };
   }, [countdown]);
 
   useEffect(() => {
@@ -129,7 +129,7 @@ const System: React.FC<Props> = ({ systemInfo }) => {
         </Card>
       </Col>
     </Row>
-  )
+  );
 };
 
 export default React.memo(System);

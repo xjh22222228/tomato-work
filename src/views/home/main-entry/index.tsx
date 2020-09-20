@@ -1,3 +1,6 @@
+/**
+ * 主页入口
+ */
 import React, { useState } from 'react';
 import './style.scss';
 import Sidebar from '@/components/sidebar';
@@ -45,6 +48,6 @@ const HomeMain: React.FC = function (props) {
 
 const mapStateToProps = ({ user }: StoreState) => {
   return { userInfo: user.userInfo };
-}
+};
 
 export default connect(mapStateToProps)(HomeMain);

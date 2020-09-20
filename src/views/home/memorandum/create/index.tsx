@@ -105,7 +105,7 @@ const Create: React.FC<Props & RouteComponentProps> = ({ history, computedMatch 
         </Button>
       </div>
     </div>
-  )
+  );
 };
 
 export default Create;

@@ -1,16 +1,12 @@
-import React, {
-  useState,
-  useEffect,
-} from 'react';
+import React, { useState, useEffect } from 'react';
 import './style.scss';
 import Footer from '@/components/footer';
 import qs from 'query-string';
 import md5 from 'blueimp-md5';
-import _ from 'lodash';
+import { isEmpty } from 'lodash';
 import api from '@/api';
 import config from '@/config';
-import { Button, Input, message, Popover } from 'antd';
-import { useFormInput } from '@/hooks';
+import { Button, Input, message, Popover, Form } from 'antd';
 import { RouteComponentProps } from 'react-router-dom';
 import { DispatchProp, connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
@@ -27,7 +23,6 @@ import {
   GithubOutlined
 } from '@ant-design/icons';
 
-
 type ThunkDispatchProps = ThunkDispatch<{}, {}, AnyAction>;
 type LoginProps = {
   dispatch: ThunkDispatchProps;
@@ -43,7 +38,6 @@ const PopoverContent = (
 let captcha = randomCode();
 const LOGIN_NAME = window.localStorage.getItem(LOCAL_STORAGE.LOGIN_NAME) || '';
 
-
 function reloadCaptcha(e: any) {
   captcha = randomCode();
   const url = api.getCaptcha + captcha;
@@ -55,30 +49,22 @@ const Login: React.FC<LoginProps> = function ({
   history,
   location
 }) {
-  const loginName = useFormInput(config.isDevelopment ? 'test' : LOGIN_NAME);
-  const password = useFormInput(config.isDevelopment ? '123456' : '');
-  const code = useFormInput('');
+  const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [redirectUrl] = useState(() => {
     const url = qs.parse(location.search).redirectUrl as string;
     return url || HOME.HOME_INDEX.path;
   });
 
-  const handleSubmit = () => {
-    const _loginName = loginName.value.trim();
-    const _password = password.value.trim();
-    const _code = code.value.trim();
-
+  const handleSubmit = async () => {
     try {
-      if (!_loginName) throw new Error('用户名不能为空');
-      if (!_password) throw new Error('密码不能为空');
-      if (_code !== captcha) throw new Error('验证码错误');
+      const values = await form.validateFields();
 
       setLoading(true);
       serviceLogin({
-        loginName: _loginName,
-        password: md5(_password),
-        code: _code
+        loginName: values.loginName.trim(),
+        password: md5(values.password.trim()),
+        code: values.code.trim()
       })
         .then(res => {
           setLoading(false);
@@ -87,11 +73,11 @@ const Login: React.FC<LoginProps> = function ({
             history.replace(redirectUrl);
           }
         })
-        .catch(_ => {
+        .catch(() => {
           setLoading(false);
         });
     } catch (err) {
-      message.warn(err.message);
+      console.log(err);
     }
   };
 
@@ -105,19 +91,28 @@ const Login: React.FC<LoginProps> = function ({
     const { token, state } = query;
 
     if (Number(state) === 0) {
-      message.error('登录失败，请重新登录');
+      message.error('授权失败，请重新登录');
       return;
     }
 
     if (token) {
       dispatch(loginByToken(token as string))
       .then((res) => {
-        if (!_.isEmpty(res.userInfo)) {
+        if (!isEmpty(res.userInfo)) {
           history.replace(redirectUrl);
         }
       });
     }
   }, [history, location.search, dispatch, redirectUrl]);
+
+  useEffect(() => {
+    if (config.isDevelopment) {
+      form.setFieldsValue({
+        loginName: 'test',
+        password: '123456'
+      });
+    }
+  }, []);
 
   return (
     <section className="login-page">
@@ -131,41 +126,77 @@ const Login: React.FC<LoginProps> = function ({
             <img src={require('@/assets/img/common/logo.png')} className="logo" alt="" />
             <em>{config.title}</em>
           </div>
-          <Input.Group>
-            <Input
-              {...loginName}
-              placeholder="用户名"
-              prefix={<UserOutlined />}
-              maxLength={32}
-              autoComplete="off"
-              onPressEnter={handleSubmit}
-            />
-            <Input
-              {...password}
-              placeholder="密码"
-              prefix={<LockOutlined />}
-              maxLength={32}
-              type="password"
-              autoComplete="off"
-              onPressEnter={handleSubmit}
-            />
-            <Input
-              {...code}
-              placeholder="请输入验证码"
-              prefix={<PictureOutlined />}
-              maxLength={4}
-              autoComplete="off"
-              onPressEnter={handleSubmit}
-              suffix={
-                <img
-                  src={`${api.getCaptcha}${captcha}`}
-                  className="captcha"
-                  onClick={reloadCaptcha}
-                  alt=""
-                />
-              }
-            />
-          </Input.Group>
+
+          <Form form={form}>
+            <Form.Item
+              name="loginName"
+              initialValue={LOGIN_NAME}
+              rules={[
+                {
+                  required: true,
+                  message: "请输入用户名"
+                }
+              ]}
+            >
+              <Input
+                placeholder="用户名"
+                prefix={<UserOutlined />}
+                maxLength={32}
+                autoComplete="off"
+                onPressEnter={handleSubmit}
+              />
+            </Form.Item>
+
+            <Form.Item
+              name="password"
+              rules={[
+                {
+                  required: true,
+                  message: "请输入密码"
+                }
+              ]}
+            >
+              <Input
+                placeholder="密码"
+                prefix={<LockOutlined />}
+                maxLength={32}
+                type="password"
+                autoComplete="off"
+                onPressEnter={handleSubmit}
+              />
+            </Form.Item>
+
+            <Form.Item
+              name="code"
+              rules={[
+                {
+                  required: true,
+                  message: "请输入验证码"
+                },
+                {
+                  pattern: /.{4}/,
+                  message: "请输入正确验证码"
+                }
+              ]}
+            >
+              <Input
+                placeholder="请输入验证码"
+                prefix={<PictureOutlined />}
+                maxLength={4}
+                autoComplete="off"
+                onPressEnter={handleSubmit}
+                suffix={
+                  <img
+                    src={`${api.getCaptcha}${captcha}`}
+                    className="captcha"
+                    onClick={reloadCaptcha}
+                    alt=""
+                  />
+                }
+              />
+            </Form.Item>
+          </Form>
+
           <Button
             type="primary"
             style={{ marginTop: '20px' }}
@@ -199,7 +230,7 @@ const Login: React.FC<LoginProps> = function ({
       </div>
       <Footer />
     </section>
-  )
+  );
 };
 
 export default connect()(Login);

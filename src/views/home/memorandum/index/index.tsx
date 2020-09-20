@@ -1,3 +1,6 @@
+/**
+ * 我的备忘
+ */
 import React, { FC, useState, useEffect, useCallback } from 'react';
 import './style.scss';
 import moment from 'moment';
@@ -90,7 +93,7 @@ const Memorandum: FC<RouteComponentProps> = ({ history }) => {
         />
       )}
     </div>
-  )
+  );
 };
 
 export default Memorandum;

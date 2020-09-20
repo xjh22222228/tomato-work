@@ -1,3 +1,6 @@
+/**
+ * 提醒事项
+ */
 import React, { useEffect, useCallback, useRef } from 'react';
 import Table from '@/components/table';
 import moment from 'moment';
@@ -23,7 +26,7 @@ const STATUS_TYPE: any = {
 interface State {
   date: moment.Moment[];
   queryType: string;
-  modalVisible: boolean;
+  showCreateModal: boolean;
   currentRow: { [propName: string]: any } | null;
 }
 
@@ -32,7 +35,7 @@ type Props = ReturnType<typeof mapStateToProps>;
 const initialState: State = {
   date: [],
   queryType: '',
-  modalVisible: false,
+  showCreateModal: false,
   currentRow: null
 };
 
@@ -47,7 +50,7 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
     },
     { title: '提醒时间', dataIndex: 'date', width: 220 },
     { title: '提醒内容', dataIndex: 'content', className: 'word-break_break-all white-space_pre' },
-    { title: '操作', width: 180, align: 'right',
+    { title: '操作', width: 180, align: 'right', fixed: 'right',
       render: (row: any) => (
         <>
           <Button onClick={handleButton.bind(null, 0, row)}>编辑</Button>
@@ -89,7 +92,10 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
   const handleButton = useCallback((type: number, rows: any) => {
     // 编辑
     if (type === 0) {
-      setState({ modalVisible: true, currentRow: rows });
+      setState({
+        showCreateModal: true,
+        currentRow: rows
+      });
     } else {
       modalConfirmDelete()
       .then(() => {
@@ -105,7 +111,7 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
 
   // modal成功新增回调函数
   const handleModalOnSuccess = useCallback(() => {
-    setState({ modalVisible: false });
+    setState({ showCreateModal: false });
     tableRef.current.getTableData();
   }, [setState]);
 
@@ -163,17 +169,17 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
         getTableData={getReminder}
         columns={tableColumns}
         onDelete={serviceDeleteReminder}
-        onAdd={() => setState({ modalVisible: true, currentRow: null })}
+        onAdd={() => setState({ showCreateModal: true, currentRow: null })}
       />
       <CreateReminder
-        visible={state.modalVisible}
+        visible={state.showCreateModal}
         rowData={state.currentRow}
-        onCancel={() => setState({ modalVisible: false })}
+        onCancel={() => setState({ showCreateModal: false })}
         onSuccess={handleModalOnSuccess}
       />
     </div>
-  )
-}
+  );
+};
 
 const mapStateToProps = (store: any) => ({
   userInfo: store.user.userInfo

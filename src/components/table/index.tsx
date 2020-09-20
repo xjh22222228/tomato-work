@@ -197,7 +197,7 @@ const TableFC: FC<Props> = ({
         }}
       />
     </React.Fragment>
-  )
+  );
 };
 
 const forwardedTable = React.forwardRef((props: any, ref) => (

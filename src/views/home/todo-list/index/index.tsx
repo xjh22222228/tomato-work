@@ -1,3 +1,6 @@
+/**
+ * 活动清单
+ */
 import React, { useCallback, useEffect, useRef } from 'react';
 import moment from 'moment';
 import useKeepState from 'use-keep-state';
@@ -37,7 +40,7 @@ const TodoList = () => {
     )},
     { title: '创建时间', dataIndex: 'createdAt', width: 170 },
     { title: '活动内容', dataIndex: 'content', className: 'word-break_break-all' },
-    { title: '操作', width: 250, align: 'right',
+    { title: '操作', width: 250, align: 'right', fixed: 'right',
       render: (row: any) => (
         <>
           <Button onClick={handleActionButton.bind(null, 0, row)}>编辑</Button>
@@ -67,17 +70,21 @@ const TodoList = () => {
         return item;
       });
       return res;
-    })
+    });
   }, [state.date]);
 
-  const initParams = useCallback(() => {
+  function initParams() {
     const startDate = moment(getThisYearFirstDay(), dateFormat);
     const endDate = moment(getCurMonthLastDay(dateFormat), dateFormat);
     setState({ date: [startDate, endDate] });
-  }, [setState]);
+  }
+
+  function toggleCreateTodoModal() {
+    setState({ showCreateTodoModal: !state.showCreateTodoModal });
+  }
 
   const handleOnSuccess = function() {
-    setState({ showCreateTodoModal: false });
+    toggleCreateTodoModal();
     tableRef.current.getTableData();
   };
 
@@ -114,7 +121,7 @@ const TodoList = () => {
 
   useEffect(() => {
     initParams();
-  }, [initParams]);
+  }, []);
 
   useEffect(() => {
     if (state.date.length <= 0) return;
@@ -147,7 +154,7 @@ const TodoList = () => {
       <CreateTodo
         visible={state.showCreateTodoModal}
         onSuccess={handleOnSuccess}
-        setParentState={setState}
+        onCancel={toggleCreateTodoModal}
         rowData={state.currentRowData}
       />
     </div>

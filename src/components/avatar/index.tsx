@@ -9,7 +9,7 @@ function handleError() {
 const Avatar: React.FC<AvatarProps> = props => {
   return (
     <AvatarComponent {...props} onError={handleError} />
-  )
+  );
 };
 
 export default Avatar;

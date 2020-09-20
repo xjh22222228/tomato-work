@@ -1,11 +1,10 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import moment from 'moment';
 import {
   Modal,
   Form,
   Input,
   DatePicker,
-  message,
   Select
 } from 'antd';
 import { serviceCreateCapitalFlow, serviceUpdateCapitalFlow } from '@/services';
@@ -13,8 +12,11 @@ import useKeepState from 'use-keep-state';
 
 const { TextArea } = Input;
 const { Option } = Select;
-const dateFormat = 'YYYY-MM-DD HH:mm:ss';
-const defaultDate = moment(new Date(), dateFormat);
+
+const formLayout = {
+  labelCol: { span: 4 },
+  wrapperCol: { span: 20 },
+};
 
 type Props = {
   visible: boolean;
@@ -26,20 +28,10 @@ type Props = {
 
 interface State {
   confirmLoading: boolean;
-  dateMode: 'time' | 'date' | 'month' | 'year' | 'decade';
-  date: moment.Moment;
-  remarks: string;
-  typeId: string;
-  price: string | number;
 }
 
 const initialState: State = {
   confirmLoading: false,
-  dateMode: 'date',
-  date: defaultDate,
-  remarks: '',
-  typeId: '',
-  price: ''
 };
 
 const CreateReminder: React.FC<Props> = function ({
@@ -49,65 +41,55 @@ const CreateReminder: React.FC<Props> = function ({
   rowData,
   nameList
 }) {
+  const [form] = Form.useForm();
   const [state, setState] = useKeepState(initialState);
-  const initRef = useRef(false);
 
-  const initParams = useCallback(() => {
-    const params: any = {
-      remarks: '',
-      typeId: state.typeId || (nameList.length && nameList[0].id),
-      price: ''
-    };
-
-    if (rowData) {
-      params.date = moment(rowData.date, dateFormat);
-      params.remarks = rowData.remarks;
-      params.typeId = rowData.typeId;
-      params.price = rowData.price;
-    }
-    setState(params);
-  }, [setState, rowData, state.typeId, nameList]);
-
-  const handleSubmit = useCallback((e: React.MouseEvent | React.FormEvent) => {
-    e.preventDefault();
-    const params = {
-      date: state.date.valueOf(),
-      remarks: state.remarks.trim(),
-      typeId: state.typeId,
-      price: Number(state.price)
-    };
-
+  async function handleSubmit() {
     try {
-      if (!params.price || isNaN(params.price)) throw new Error('金额必须为数字');
-      if (!params.typeId) throw new Error('请选择名称');
+      const values = await form.validateFields();
+      const params = {
+        date: values.date.valueOf(),
+        remarks: values?.remarks.trim() ?? '',
+        typeId: values.typeId,
+        price: Number(values.price)
+      };
+
+      setState({ confirmLoading: true });
+
+      (
+        !rowData
+          ? serviceCreateCapitalFlow(params)
+          : serviceUpdateCapitalFlow(rowData.id, params)
+      )
+        .then(res => {
+          if (res.data.success) {
+            onSuccess(res);
+          }
+        })
+        .finally(() => {
+          setState({ confirmLoading: false });
+        });
     } catch (err) {
-      message.warn(err.message);
-      return;
+      console.log(err);
     }
-
-    setState({ confirmLoading: true });
-
-    (
-      !rowData
-        ? serviceCreateCapitalFlow(params)
-        : serviceUpdateCapitalFlow(rowData.id, params)
-    )
-    .then(res => {
-      if (res.data.success) {
-        onSuccess(res);
-      }
-    })
-    .finally(() => {
-      setState({ confirmLoading: false });
-    });
-
-  }, [state, setState, onSuccess, rowData]);
+  }
 
   useEffect(() => {
-    if (visible === initRef.current) return;
-    initRef.current = visible;
-    initParams();
-  }, [visible, initParams]);
+    if (visible && rowData) {
+      form.setFieldsValue({
+        date: moment(rowData.date),
+        remarks: rowData.remarks,
+        typeId: rowData.typeId,
+        price: rowData.price,
+      });
+    }
+  }, [visible, rowData]);
+
+  useEffect(() => {
+    if (!visible) {
+      form.resetFields();
+    }
+  }, [visible]);
 
   return (
     <Modal
@@ -116,46 +98,65 @@ const CreateReminder: React.FC<Props> = function ({
       onOk={handleSubmit}
       onCancel={onCancel}
       confirmLoading={state.confirmLoading}
+      forceRender
     >
-      <Form>
-        <Form.Item label="入账时间">
+      <Form form={form} {...formLayout}>
+        <Form.Item
+          label="入账时间"
+          name="date"
+          rules={[
+            {
+              required: true,
+              message: "请选择时间"
+            }
+          ]}
+        >
           <DatePicker
-            mode={state.dateMode}
             showTime
             allowClear={false}
-            value={state.date}
-            onPanelChange={(value, dateMode) => setState({ dateMode }) }
-            onChange={date => setState({ date }) }
             style={{ width: '100%' }}
           />
         </Form.Item>
-        <Form.Item label="财务类型">
-          <Select
-            onChange={(value: string) => setState({ typeId: value })}
-            value={state.typeId}
-          >
+        <Form.Item
+          label="财务类别"
+          name="typeId"
+          rules={[
+            {
+              required: true,
+              message: "请选择类别"
+            }
+          ]}
+        >
+          <Select>
             {nameList.map((item: any) => (
               <Option value={item.id} key={item.id}>{item.optionName}</Option>
             ))}
           </Select>
         </Form.Item>
-        <Form.Item label="收支金额">
-          <Input
-            value={state.price}
-            onChange={e => setState({ price: e.target.value })}
-          />
+        <Form.Item
+          label="收支金额"
+          name="price"
+          rules={[
+            {
+              required: true,
+              message: "请输入金额"
+            }
+          ]}
+        >
+          <Input placeholder="请输入金额" prefix="￥" />
         </Form.Item>
-        <Form.Item label="备注信息">
+        <Form.Item
+          label="备注信息"
+          name="remarks"
+        >
           <TextArea
             rows={5}
-            value={state.remarks}
-            onChange={e => setState({ remarks: e.target.value })}
             maxLength={250}
           />
         </Form.Item>
       </Form>
     </Modal>
-  )
+  );
 };
 
 export default React.memo(CreateReminder);

@@ -1,3 +1,6 @@
+/**
+ * 消息通知
+ */
 import React, {
   useState,
   useEffect
@@ -63,7 +66,7 @@ const Notification: React.FC = function () {
         />
       </div>
     </div>
-  )
+  );
 };
 
 export default Notification;

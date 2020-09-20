@@ -38,7 +38,7 @@ const TaskItem: React.FC<Props> = ({ data, reloadData }) => {
         }
       });
     }
-  }, [data, reloadData])
+  }, [data, reloadData]);
 
   return (
     <Card
@@ -90,7 +90,7 @@ const TaskItem: React.FC<Props> = ({ data, reloadData }) => {
         )}
       </div>
     </Card>
-  )
+  );
 };
 
 export default React.memo(TaskItem);

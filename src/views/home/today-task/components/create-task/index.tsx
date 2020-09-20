@@ -1,5 +1,4 @@
-import React, { useCallback } from 'react';
-import moment from 'moment';
+import React from 'react';
 import useKeepState from 'use-keep-state';
 import { isLtTodayTimestamp } from '@/utils';
 import { serviceCreateTask } from '@/services';
@@ -8,82 +7,117 @@ import {
   Form,
   Input,
   DatePicker,
-  message,
   Rate
 } from 'antd';
 
 type Props = {
   visible: boolean;
   data?: object;
-  setParentState(state: any): void;
   onSuccess: (res?: any) => void;
+  onCancel: () => void;
 };
 
-const dateFormat = 'YYYY-MM-DD';
 const { TextArea } = Input;
 const initialState = {
   confirmLoading: false,
-  content: '',
-  date: moment(new Date(), dateFormat),
-  count: 5
 };
 
-const CreateTask: React.FC<Props> = function ({ visible, onSuccess, setParentState }) {
+const CreateTaskModal: React.FC<Props> = function ({
+  visible,
+  onSuccess,
+  onCancel,
+}) {
+  const [form] = Form.useForm();
   const [state, setState] = useKeepState(initialState);
 
-  const handleSubmitForm = useCallback(() => {
-    const params = {
-      date: state.date.valueOf(),
-      content: state.content.trim(),
-      count: state.count
-    };
+  async function handleSubmitForm() {
+    try {
+      const values = await form.validateFields();
+      const params = {
+        date: values.date.valueOf(),
+        content: values.content.trim(),
+        count: values.count
+      };
 
-    if (!params.content) {
-      message.warn('内容不能为空');
-      return;
+      setState({ confirmLoading: true });
+
+      serviceCreateTask(params)
+        .then(res => {
+          if (res.data.success) {
+            onSuccess();
+          }
+        })
+        .finally(() => {
+          setState({ confirmLoading: false });
+        });
+    } catch (err) {
+      console.log(err);
     }
+  }
 
-    serviceCreateTask(params)
-      .then(res => {
-        if (res.data.success) {
-          onSuccess();
-        }
-      });
-  }, [state, onSuccess]);
+  React.useEffect(() => {
+    if (!visible) {
+      form.resetFields();
+    }
+  }, [visible]);
 
   return (
     <Modal
       title="新增"
       visible={visible}
       onOk={handleSubmitForm}
-      onCancel={() => setParentState({ showCreateTaskModal: false })}
+      onCancel={onCancel}
       confirmLoading={state.confirmLoading}
+      forceRender
     >
-      <Form>
-        <Form.Item label="开始日期">
+      <Form form={form}>
+        <Form.Item
+          label="开始日期"
+          name="date"
+          rules={[
+            {
+              required: true,
+              message: "请选择日期"
+            }
+          ]}
+        >
           <DatePicker
             allowClear={false}
-            value={state.date}
-            onChange={date => setState({ date }) }
             disabledDate={isLtTodayTimestamp}
             style={{ width: '100%' }}
           />
         </Form.Item>
-        <Form.Item label="任务内容">
+        <Form.Item
+          label="任务内容"
+          name="content"
+          rules={[
+            {
+              required: true,
+              message: "请输入内容"
+            }
+          ]}
+        >
           <TextArea
             rows={3}
-            value={state.content}
-            onChange={e => setState({ content: e.target.value })}
             maxLength={200}
             placeholder="请输入内容"
           />
         </Form.Item>
-        <Form.Item label="优先级别">
-          <Rate value={state.count} onChange={count => setState({ count })} />
+        <Form.Item
+          label="优先级别"
+          name="count"
+          rules={[
+            {
+              required: true,
+              message: "请选择优先级"
+            }
+          ]}
+        >
+          <Rate />
         </Form.Item>
       </Form>
     </Modal>
-  )
+  );
 };
 
-export default React.memo(CreateTask);
+export default React.memo(CreateTaskModal);

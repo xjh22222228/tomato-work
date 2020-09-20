@@ -1,5 +1,5 @@
 
-const API = {
+const API = Object.freeze({
   // 验证码
   getCaptcha: '/api/captcha?code=',
   // 账号密码登录
@@ -32,6 +32,6 @@ const API = {
   todoList: '/todoList',
   // 获取首页面板数据
   getPanelData: '/panel'
-};
+});
 
 export default API;

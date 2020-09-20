@@ -17,7 +17,7 @@ const NoData: React.FC<Props> = ({ onClick, message = '暂无数据' }) => {
       status={'info'}
       style={{ marginTop: '50px' }}
     />
-  )
+  );
 };
 
 export default React.memo(NoData);

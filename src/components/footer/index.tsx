@@ -12,7 +12,7 @@ const Footer = () => {
         <a href="https://github.com/xjh22222228" target="_blank" rel="noopener noreferrer"> xiejiahe</a>
       </div>
     </footer>
-  )
+  );
 };
 
 export default Footer;

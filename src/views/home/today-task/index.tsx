@@ -1,4 +1,8 @@
-import React, { useCallback, useEffect } from 'react';
+/**
+ * 今日待办
+ * @author xiejiahe
+ */
+import React, { useEffect } from 'react';
 import './style.scss';
 import useKeepState from 'use-keep-state';
 import NoData from '@/components/no-data/index';
@@ -38,7 +42,7 @@ const initialState: State = {
 const TodayTask = () => {
   const [state, setState] = useKeepState(initialState);
 
-  const getTask = useCallback(() => {
+  function getTask() {
     const date = state.startDate.valueOf();
     serviceGetTask({
       startDate: getStartTimestampByDate(date),
@@ -49,21 +53,25 @@ const TodayTask = () => {
         setState({ data: res.data.data });
       }
     });
-  }, [setState, state.startDate]);
+  }
 
-  const initParams = useCallback(() => {
+  function initParams() {
     setState({ startDate: datePickerValue });
     getTask();
-  }, [setState, getTask]);
+  }
 
-  const handleOnSuccess = useCallback(() => {
-    setState({ showCreateTaskModal: false });
+  function toggleCreateTaskModal() {
+    setState({ showCreateTaskModal: !state.showCreateTaskModal });
+  }
+
+  function handleOnSuccess() {
+    toggleCreateTaskModal();
     getTask();
-  }, [setState, getTask]);
+  }
 
   useEffect(() => {
     getTask();
-  }, [getTask]);
+  }, []);
 
   return (
     <div className="today-task">
@@ -101,14 +109,14 @@ const TodayTask = () => {
         ) : (
           <NoData
             message="还没有待办事项，是否马上创建？"
-            onClick={() => setState({ showCreateTaskModal: true })}
+            onClick={toggleCreateTaskModal}
           />
         )}
       </div>
       <CreateTask
         visible={state.showCreateTaskModal}
         onSuccess={handleOnSuccess}
-        setParentState={setState}
+        onCancel={toggleCreateTaskModal}
       />
     </div>
   );

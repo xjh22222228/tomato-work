@@ -1,3 +1,6 @@
+/**
+ * 财务管理
+ */
 import React, { useEffect, useRef } from 'react';
 import './style.scss';
 import moment from 'moment';
@@ -28,7 +31,7 @@ interface State {
   searchKeyword: string,
   name: string;
   type: string;
-  modalVisible: boolean;
+  showCreateCapitalFlowModal: boolean;
   currentRow: null | { [key: string]: any };
   nameList: any[];
   price: { consumption: number; income: number; available: number; };
@@ -41,7 +44,7 @@ const initialState: State = {
   searchKeyword: '',
   name: '',
   type: '',
-  modalVisible: false,
+  showCreateCapitalFlowModal: false,
   currentRow: null,
   nameList: [],
   price: { consumption: 0, income: 0, available: 0 },
@@ -121,7 +124,7 @@ const Reminder: React.FC = function() {
   function handleActionButton(type: number, row: any) {
     // 编辑
     if (type === 0) {
-      setState({ modalVisible: true, currentRow: row });
+      setState({ showCreateCapitalFlowModal: true, currentRow: row });
     } else {
       modalConfirmDelete().then(() => {
         serviceDeleteCapitalFlow(row.id).then(res => {
@@ -208,7 +211,7 @@ const Reminder: React.FC = function() {
   }
 
   function handleModalOnSuccess() {
-    setState({ modalVisible: false });
+    setState({ showCreateCapitalFlowModal: false });
     tableRef.current.getTableData();
   }
 
@@ -247,7 +250,7 @@ const Reminder: React.FC = function() {
       )
     },
     {
-      title: '操作', width: 180, align: 'right',
+      title: '操作', width: 180, align: 'right', fixed: 'right',
       render: (row: any) => (
         <>
           <Button onClick={handleActionButton.bind(null, 0, row)}>编辑</Button>
@@ -329,17 +332,17 @@ const Reminder: React.FC = function() {
         columns={tableColumns}
         onTableChange={onTableChange}
         onDelete={serviceDeleteCapitalFlow}
-        onAdd={() => setState({ modalVisible: true, currentRow: null })}
+        onAdd={() => setState({ showCreateCapitalFlowModal: true, currentRow: null })}
       />
       <CreateCapitalFlow
-        visible={state.modalVisible}
+        visible={state.showCreateCapitalFlowModal}
         rowData={state.currentRow}
         nameList={state.nameList}
-        onCancel={() => setState({ modalVisible: false })}
+        onCancel={() => setState({ showCreateCapitalFlowModal: false })}
         onSuccess={handleModalOnSuccess}
       />
     </div>
-  )
-}
+  );
+};
 
 export default Reminder;

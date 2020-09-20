@@ -17,7 +17,7 @@ const Routes: React.FC<DispatchProp> = function ({ dispatch }) {
         ))}
       </Switch>
     </Router>
-  )
+  );
 };
 
 export default connect()(Routes);

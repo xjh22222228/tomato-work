@@ -64,7 +64,7 @@ httpInstance.interceptors.request.use(function (config) {
   if (method === 'post' || method === 'put') {
     if (config.data instanceof FormData) {
       for (let key in data) {
-        config.data.append(key, data[key])
+        config.data.append(key, data[key]);
       }
     } else {
       config.data = Object.assign(data, config.data);

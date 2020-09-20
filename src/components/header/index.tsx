@@ -21,7 +21,7 @@ import {
   GithubOutlined,
   FullscreenExitOutlined,
   FullscreenOutlined
-} from '@ant-design/icons'
+} from '@ant-design/icons';
 
 const { Header } = Layout;
 const popoverList = [
@@ -147,11 +147,11 @@ const HomeHeader: React.FC<Props> = function ({
         </Popover>
       </ul>
     </Header>
-  )
+  );
 };
 
 const mapStateToProps = ({ user }: StoreState) => {
-  return { userInfo: user.userInfo }
+  return { userInfo: user.userInfo };
 };
 
 export default connect(mapStateToProps)(withRouter(HomeHeader));

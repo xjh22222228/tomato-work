@@ -1,19 +1,16 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import moment from 'moment';
 import useKeepState from 'use-keep-state';
 import {
   Modal,
   Form,
   Input,
-  DatePicker,
-  message
+  DatePicker
 } from 'antd';
 import { serviceCreateReminder, serviceUpdateReminder } from '@/services';
 import { isLtTodayTimestamp } from '@/utils';
 
 const { TextArea } = Input;
-const dateFormat = 'YYYY-MM-DD HH:mm:ss';
-const defaultDate = moment(new Date(), dateFormat);
 
 type Props = {
   visible: boolean;
@@ -24,101 +21,108 @@ type Props = {
 
 interface State {
   confirmLoading: boolean;
-  dateMode: 'time' | 'date' | 'month' | 'year' | 'decade';
-  date: moment.Moment;
-  content: string;
 }
 
 const initialState: State = {
-  confirmLoading: false,
-  dateMode: 'date',
-  date: defaultDate,
-  content: ''
+  confirmLoading: false
 };
 
-const CreateReminder: React.FC<Props> = function ({ visible, onCancel, onSuccess, rowData }) {
+const CreateReminder: React.FC<Props> = function ({
+  visible,
+  rowData,
+  onCancel,
+  onSuccess,
+}) {
+  const [form] = Form.useForm();
   const [state, setState] = useKeepState(initialState);
 
-  const initParams = useCallback(() => {
-    if (!rowData) {
-      setState({ content: '' });
-    } else {
-      setState({
-        date: moment(rowData.date, dateFormat),
+  async function handleSubmitForm() {
+    try {
+      const values = await form.validateFields();
+      const params = {
+        date: values.date.valueOf(),
+        content: values.content.trim()
+      };
+
+      setState({ confirmLoading: true });
+
+      (
+        !rowData
+          ? serviceCreateReminder(params)
+          : serviceUpdateReminder(rowData.id, params)
+      )
+      .then(res => {
+        if (res.data.success) {
+          onSuccess(res);
+        }
+      })
+      .finally(() => {
+        setState({ confirmLoading: false });
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    if (!visible) {
+      form.resetFields();
+    }
+
+    if (visible && rowData) {
+      form.setFieldsValue({
+        date: moment(rowData.date),
         content: rowData.content
       });
     }
-  }, [setState, rowData]);
-
-  const handleSubmit = useCallback((e: React.MouseEvent | React.FormEvent) => {
-    e.preventDefault();
-    const params = {
-      date: state.date.valueOf(),
-      content: state.content.trim()
-    };
-
-    try {
-      if (!params.content) throw new Error('内容不能为空');
-    } catch (err) {
-      message.warn(err.message);
-      return;
-    }
-
-    setState({ confirmLoading: true });
-
-    (
-      !rowData
-        ? serviceCreateReminder(params)
-        : serviceUpdateReminder(rowData.id, params)
-    )
-    .then(res => {
-      if (res.data.success) {
-        onSuccess(res);
-      }
-    })
-    .finally(() => {
-      setState({ confirmLoading: false });
-    });
-
-  }, [state, setState, onSuccess, rowData]);
-
-  useEffect(() => {
-    initParams();
-  }, [visible, initParams]);
+  }, [visible, rowData]);
 
   return (
     <Modal
       title="新增"
       visible={visible}
-      onOk={handleSubmit}
+      onOk={handleSubmitForm}
       onCancel={onCancel}
       confirmLoading={state.confirmLoading}
+      forceRender
     >
-      <Form >
-        <Form.Item label="提醒时间">
+      <Form form={form}>
+        <Form.Item
+          name="date"
+          label="提醒时间"
+          rules={[
+            {
+              required: true,
+              message: "请选择时间"
+            }
+          ]}
+        >
           <DatePicker
-            mode={state.dateMode}
             showTime
             allowClear={false}
-            value={state.date}
-            onPanelChange={(value, dateMode) => setState({ dateMode })}
-            onChange={date => setState({ date }) }
             disabledDate={isLtTodayTimestamp}
             style={{ width: '100%' }}
           />
         </Form.Item>
-        <Form.Item label="提醒内容">
+        <Form.Item
+          name="content"
+          label="提醒内容"
+          rules={[
+            {
+              required: true,
+              message: "请输入提醒内容"
+            }
+          ]}
+        >
           <TextArea
             rows={3}
-            value={state.content}
-            onChange={e => setState({ content: e.target.value })}
             maxLength={200}
             placeholder="请输入内容"
           />
         </Form.Item>
       </Form>
     </Modal>
-  )
+  );
 };
 
 export default React.memo(CreateReminder);

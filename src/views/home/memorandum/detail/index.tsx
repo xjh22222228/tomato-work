@@ -45,7 +45,7 @@ const Detail: FC<Props & RouteComponentProps> = ({ computedMatch, history }) => 
       >
       </div>
     </div>
-  )
+  );
 };
 
 export default Detail;

@@ -18,7 +18,7 @@ const SettingIndex: React.FC<RouteComponentProps> = function ({ location }) {
         break;
       }
     }
-  }, [location.pathname])
+  }, [location.pathname]);
 
   return (
     <Layout className="setting-page">
@@ -45,7 +45,7 @@ const SettingIndex: React.FC<RouteComponentProps> = function ({ location }) {
         </Suspense>
       </Content>
     </Layout>
-  )
+  );
 };
 
 export default SettingIndex;

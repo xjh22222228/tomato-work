@@ -49,7 +49,7 @@ const ActionPanel: React.FC<Props> = function({
         </Button>
       )}
     </div>
-  ) : null
+  ) : null;
 };
 
 export default ActionPanel;

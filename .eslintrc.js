@@ -26,6 +26,7 @@ module.exports = {
     'react/prop-types': 0,
     'react/display-name': 0,
 
+    'semi': ['error', 'always'],
     'no-var': 2,
     'constructor-super': 2,
     'no-class-assign': 2,

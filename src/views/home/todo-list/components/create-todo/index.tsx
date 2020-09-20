@@ -1,18 +1,17 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import useKeepState from 'use-keep-state';
 import { serviceCreateTodoList, serviceUpdateTodoList } from '@/services';
 import {
   Modal,
   Form,
-  Input,
-  message,
+  Input
 } from 'antd';
 
 type Props = {
   visible: boolean;
   rowData?: { [propName: string]: any; } | null;
-  setParentState(state: any): void;
   onSuccess: (res?: any) => void;
+  onCancel: () => void;
 };
 
 const { TextArea } = Input;
@@ -24,59 +23,79 @@ const initialState = {
 const CreateTodo: React.FC<Props> = function ({
   visible,
   onSuccess,
-  setParentState,
+  onCancel,
   rowData
 }) {
+  const [form] = Form.useForm();
   const [state, setState] = useKeepState(initialState);
 
-  const handleSubmitForm = useCallback(() => {
-    const params = {
-      content: state.content.trim(),
-    };
+  async function handleSubmitForm() {
+    try {
+      const values = await form.validateFields();
+      const params = {
+        content: values.content.trim(),
+      };
 
-    if (!params.content) {
-      message.warn('内容不能为空');
-      return;
+      (
+        !rowData
+          ? serviceCreateTodoList(params)
+            : serviceUpdateTodoList(rowData.id, params)
+      )
+      .then(res => {
+        if (res.data.success) {
+          onSuccess();
+        }
+      });
+    } catch (error) {
+      console.log(error);
     }
-
-    (
-      !rowData
-        ? serviceCreateTodoList(params)
-          : serviceUpdateTodoList(rowData.id, params)
-    )
-    .then(res => {
-      if (res.data.success) {
-        onSuccess();
-      }
-    });
-  }, [state, onSuccess, rowData]);
+  }
 
   useEffect(() => {
-    setState({
-      content: rowData ? rowData.content : ''
-    });
-  }, [rowData, setState]);
+    if (visible && rowData) {
+      form.setFieldsValue({
+        content: rowData.content
+      });
+    }
+  }, [visible, rowData]);
+
+  useEffect(() => {
+    if (!visible) {
+      form.resetFields();
+    }
+  }, [visible]);
 
   return (
     <Modal
       title="新增"
       visible={visible}
       onOk={handleSubmitForm}
-      onCancel={() => setParentState({ showCreateTodoModal: false })}
+      onCancel={onCancel}
       confirmLoading={state.confirmLoading}
+      forceRender
     >
-      <Form>
-        <Form.Item label="活动内容">
+      <Form form={form}>
+        <Form.Item
+          label="活动内容"
+          name="content"
+          rules={[
+            {
+              required: true,
+              message: "请输入内容"
+            }
+          ]}
+        >
           <TextArea
             rows={3}
             value={state.content}
             onChange={e => setState({ content: e.target.value })}
             maxLength={250}
+            placeholder="请输入内容"
           />
         </Form.Item>
       </Form>
     </Modal>
-  )
+  );
 };
 
 export default React.memo(CreateTodo);

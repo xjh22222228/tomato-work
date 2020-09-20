@@ -3,7 +3,7 @@ import './style.scss';
 import moment from 'moment';
 import useKeepState from 'use-keep-state';
 import CreateType from '../components/create-type/index';
-import { Table, Button, Tag, message } from 'antd';
+import { Table, Button, Tag } from 'antd';
 import {
   serviceGetCapitalFlowType,
   serviceDeleteCapitalFlowType
@@ -11,7 +11,7 @@ import {
 import { TypeNames, TypeColors } from '../enum';
 
 const initialState = {
-  modalVisible: false,
+  showCreateTypeModal: false,
   selectedRowKeys: [],
   loading: false,
   data: [],
@@ -30,10 +30,6 @@ const Type = () => {
       <Button onClick={handleEdit.bind(null, rowData)}>编辑</Button>
     ) },
   ];
-
-  const onSelectChange = function(selectedRowKeys: any) {
-    setState({ selectedRowKeys });
-  };
 
   function getCapitalFlowType() {
     serviceGetCapitalFlowType()
@@ -62,24 +58,20 @@ const Type = () => {
   }
 
   function handleOnSuccess() {
-    setState({ modalVisible: false });
+    setState({ showCreateTypeModal: false });
     getCapitalFlowType();
   }
 
   function handleAdd() {
-    if (state.data.length >= 100) {
-      message.warn('类型超出100条');
-      return;
-    }
     setState({
-      modalVisible: true,
+      showCreateTypeModal: true,
       rowData: null
     });
   }
 
   function handleEdit(rowData: any) {
     setState({
-      modalVisible: true,
+      showCreateTypeModal: true,
       rowData
     });
   }
@@ -90,7 +82,9 @@ const Type = () => {
 
   const rowSelection = {
     selectedRowKeys: state.selectedRowKeys,
-    onChange: onSelectChange,
+    onChange: (selectedRowKeys: any) => {
+      setState({ selectedRowKeys });
+    }
   };
 
   return (
@@ -107,13 +101,13 @@ const Type = () => {
         rowKey="id"
       />
       <CreateType
-        visible={state.modalVisible}
+        visible={state.showCreateTypeModal}
         rowData={state.rowData}
-        onCancel={() => setState({ modalVisible: false })}
+        onCancel={() => setState({ showCreateTypeModal: false })}
         onSuccess={handleOnSuccess}
       />
     </div>
-  )
+  );
 };
 
 export default Type;

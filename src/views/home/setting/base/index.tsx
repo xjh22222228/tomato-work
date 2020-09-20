@@ -1,3 +1,6 @@
+/**
+ * 个人中心
+ */
 import React from 'react';
 import './style.scss';
 import Avatar from '@/components/avatar';
@@ -46,7 +49,7 @@ const Base: React.FC<Props & RouteComponentProps> = function ({ userInfo }) {
         />
       </Card>
     </div>
-  )
+  );
 };
 
 const mapStateToProps = ({ user }: StoreState): { userInfo: UserInfoProps } => {

@@ -76,7 +76,7 @@ const Sidebar: React.FC<Props> = function ({ location, collapsed }) {
                   </Menu.Item>
                 ))}
               </SubMenu>
-            )
+            );
           }
 
           return (
@@ -86,11 +86,11 @@ const Sidebar: React.FC<Props> = function ({ location, collapsed }) {
                 <span>{menu.name}</span>
               </Link>
             </Menu.Item>
-          )
+          );
         })}
       </Menu>
     </Sider>
-  )
+  );
 };
 
 export default withRouter(Sidebar);

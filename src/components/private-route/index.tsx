@@ -50,7 +50,7 @@ const PrivateRoute: React.FC<Props> = function ({
   if (meta?.isLoginToHome && isLogin) {
     const redirectUrl = qs.parse(location.search).redirectUrl as string;
     const url = redirectUrl || HOME.HOME_INDEX.path;
-    return <Redirect to={url} />
+    return <Redirect to={url} />;
   }
 
   return (
@@ -72,15 +72,15 @@ const PrivateRoute: React.FC<Props> = function ({
             search: `?redirectUrl=${props.location.pathname}`
           }} />
         )
-      )
+      );
     }} />
-  )
+  );
 };
 
 const mapStateToProps = (state: StoreState) => {
   return {
     isLogin: state.user.isLogin
-  }
+  };
 };
 
 export const PrivateRouteComponent = connect(mapStateToProps)(withRouter(PrivateRoute));

@@ -67,7 +67,7 @@ const MoneyAccessChart = () => {
         </Chart>
       ) : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
     </div>
-  )
+  );
 };
 
 export default React.memo(MoneyAccessChart);

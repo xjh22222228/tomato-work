@@ -3,9 +3,7 @@ import api from '@/api';
 
 // 类型
 export function serviceGetCapitalFlowType() {
-  return http.get(api.capitalFlowType, {
-    headers: { isLoading: true }
-  });
+  return http.get(api.capitalFlowType);
 }
 
 export function serviceDeleteCapitalFlowType(id: string) {

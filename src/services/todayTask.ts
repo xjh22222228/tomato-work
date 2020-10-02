@@ -10,10 +10,7 @@ export function serviceCreateTask(data: object) {
 
 // 查询
 export function serviceGetTask(params?: object) {
-  return http.get(api.todayTask, {
-    params,
-    headers: { isLoading: true }
-  });
+  return http.get(api.todayTask, { params });
 }
 
 // 删除

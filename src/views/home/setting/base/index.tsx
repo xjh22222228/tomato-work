@@ -31,7 +31,7 @@ const Base: React.FC<Props & RouteComponentProps> = function ({ userInfo }) {
 
   return (
     <div className="setting-base">
-      <Divider orientation="left">个人中心</Divider>
+      <Divider orientation="left" plain>个人中心</Divider>
       <Card
         style={{ width: 350 }}
         cover={

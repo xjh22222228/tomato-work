@@ -11,16 +11,13 @@ export function serviceCreateMemorandum(data: object) {
 // 查询所有
 export function serviceGetMemorandum(params?: object) {
   return http.get(api.memorandum, {
-    params,
-    headers: { isLoading: true }
+    params
   });
 }
 
 // 通过id查询
 export function serviceGetMemorandumById(id: unknown) {
-  return http.get(`${api.memorandum}/${id}`, {
-    headers: { isLoading: true }
-  });
+  return http.get(`${api.memorandum}/${id}`);
 }
 
 // 删除

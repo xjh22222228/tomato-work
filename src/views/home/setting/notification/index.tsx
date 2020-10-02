@@ -44,7 +44,7 @@ const Notification: React.FC = function () {
 
   return (
     <div className="notification">
-      <Divider orientation="left">消息通知</Divider>
+      <Divider orientation="left" plain>消息通知</Divider>
       <div className="list">
         <div className="left">
           <h4 className="title">待办任务</h4>

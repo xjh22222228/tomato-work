@@ -8,7 +8,7 @@ import Table from '@/components/table';
 import CreateTodo from '../components/create-todo';
 import { serviceGetTodoList, serviceDeleteTodoList, serviceUpdateTodoList } from '@/services';
 import { STATUS } from '../constants';
-import { DatePicker, Button, Tag } from 'antd';
+import { DatePicker, Button, Tag, Form } from 'antd';
 import {
   getThisYearFirstDay,
   getCurMonthLastDay,
@@ -20,18 +20,17 @@ const { RangePicker } = DatePicker;
 const dateFormat = 'YYYY-MM-DD';
 
 interface State {
-  date: moment.Moment[];
   showCreateTodoModal: boolean;
   currentRowData: { [key: string]: any; } | null;
 }
 
 const initialState: State = {
-  date: [],
   showCreateTodoModal: false,
   currentRowData: null
 };
 
 const TodoList = () => {
+  const [form] = Form.useForm();
   const [state, setState] = useKeepState(initialState);
   const tableRef = useRef<any>();
   const tableColumns = [
@@ -60,9 +59,13 @@ const TodoList = () => {
     tableRef.current.getTableData();
   }
 
-  const getTodoList = useCallback((params?: any) => {
-    params.startDate = state.date[0].valueOf();
-    params.endDate = state.date[1].valueOf() + ONE_DAY_TIMESTAMP;
+  function getTodoList(params: any) {
+    const values = form.getFieldsValue();
+
+    if (values.date && values.date.length === 2) {
+      params.startDate = values.date[0].valueOf();
+      params.endDate = values.date[1].valueOf() + ONE_DAY_TIMESTAMP;
+    }
 
     return serviceGetTodoList(params).then(res => {
       res.data.data.rows.map((item: any) => {
@@ -71,12 +74,15 @@ const TodoList = () => {
       });
       return res;
     });
-  }, [state.date]);
+  }
 
   function initParams() {
     const startDate = moment(getThisYearFirstDay(), dateFormat);
     const endDate = moment(getCurMonthLastDay(dateFormat), dateFormat);
-    setState({ date: [startDate, endDate] });
+    form.setFieldsValue({
+      date: [startDate, endDate]
+    });
+    tableRef?.current?.getTableData();
   }
 
   function toggleCreateTodoModal() {
@@ -123,24 +129,25 @@ const TodoList = () => {
     initParams();
   }, []);
 
-  useEffect(() => {
-    if (state.date.length <= 0) return;
-    tableRef?.current?.getTableData();
-  }, [state.date]);
-
   return (
     <div className="today-task">
       <div className="query-panel">
-        <span>查询日期：</span>
-        <RangePicker
-          format={dateFormat}
-          allowClear
-          value={state.date}
-          onChange={(date: any) => setState({ date })}
-        />
-        <Button type="primary" onClick={getData}>查询</Button>
-        <Button onClick={initParams}>重置</Button>
+        <Form
+          form={form}
+          layout="inline"
+          onValuesChange={() => tableRef?.current?.getTableData()}
+        >
+          <Form.Item name="date" label="查询日期">
+            <RangePicker allowClear />
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" onClick={getData}>查询</Button>
+            <Button onClick={initParams}>重置</Button>
+          </Form.Item>
+        </Form>
       </div>
+
       <Table
         ref={tableRef}
         getTableData={getTodoList}

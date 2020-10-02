@@ -7,7 +7,7 @@ import moment from 'moment';
 import CreateReminder from './components/create-reminder';
 import useKeepState from 'use-keep-state';
 import { connect } from 'react-redux';
-import { DatePicker, Button, Select, Tag, Modal } from 'antd';
+import { DatePicker, Button, Select, Tag, Modal, Form } from 'antd';
 import { serviceGetReminder, serviceDeleteReminder } from '@/services';
 import {
   getThisYearLastDay,
@@ -24,8 +24,6 @@ const STATUS_TYPE: any = {
 };
 
 interface State {
-  date: moment.Moment[];
-  queryType: string;
   showCreateModal: boolean;
   currentRow: { [propName: string]: any } | null;
 }
@@ -33,13 +31,12 @@ interface State {
 type Props = ReturnType<typeof mapStateToProps>;
 
 const initialState: State = {
-  date: [],
-  queryType: '',
   showCreateModal: false,
   currentRow: null
 };
 
 const Reminder: React.FC<Props> = function({ userInfo }) {
+  const [form] = Form.useForm();
   const [state, setState] = useKeepState(initialState);
   const tableRef = useRef<any>();
   const tableColumns = [
@@ -63,18 +60,23 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
   const initParams = function() {
     const startDate = moment(getThisYearFirstDay(), dateFormat);
     const endDate = moment(getThisYearLastDay(), dateFormat);
-    setState({
+    form.setFieldsValue({
       queryType: '',
       date: [startDate, endDate]
     });
+    tableRef?.current?.getTableData();
   };
 
   function getReminder(params: any = {}) {
-    params.startDate = state.date[0].valueOf();
-    params.endDate = state.date[1].valueOf();
+    const values = form.getFieldsValue();
 
-    if (state.queryType !== '') {
-      params.type = state.queryType;
+    if (values.date && values.date.length === 2) {
+      params.startDate = values.date[0].valueOf();
+      params.endDate = values.date[1].valueOf();
+    }
+
+    if (values.queryType !== '') {
+      params.type = values.queryType;
     }
 
     return serviceGetReminder(params).then(res => {
@@ -110,10 +112,10 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
   }, [setState]);
 
   // modal成功新增回调函数
-  const handleModalOnSuccess = useCallback(() => {
+  function handleModalOnSuccess() {
     setState({ showCreateModal: false });
     tableRef.current.getTableData();
-  }, [setState]);
+  }
 
   useEffect(() => {
     initParams();
@@ -137,32 +139,35 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
     }
   }, [userInfo.email]);
 
-  useEffect(() => {
-    if (state.date.length <= 0) return;
-    tableRef?.current?.getTableData();
-  }, [state.date, state.queryType]);
-
   return (
     <div className="reminder">
       <div className="query-panel">
-        <span>查询类型：</span>
-        <Select
-          onChange={(value: string) => setState({ queryType: value })}
-          value={state.queryType}
+        <Form
+          form={form}
+          layout="inline"
+          onValuesChange={() => tableRef?.current?.getTableData()}
         >
-          <Option value="">全部</Option>
-          <Option value="1">待提醒</Option>
-          <Option value="2">已提醒</Option>
-        </Select>
-        <span>日期：</span>
-        <RangePicker
-          format={dateFormat}
-          allowClear
-          value={state.date}
-          onChange={(date: any) => setState({ date })}
-        />
-        <Button type="primary" onClick={() => tableRef.current.getTableData()}>查询</Button>
-        <Button onClick={initParams}>重置</Button>
+          <Form.Item
+            name="queryType"
+            label="查询类型"
+            initialValue=""
+          >
+            <Select>
+              <Option value="">全部</Option>
+              <Option value="1">待提醒</Option>
+              <Option value="2">已提醒</Option>
+            </Select>
+          </Form.Item>
+
+          <Form.Item name="date" label="日期">
+            <RangePicker allowClear />
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" onClick={() => tableRef.current.getTableData()}>查询</Button>
+            <Button onClick={initParams}>重置</Button>
+          </Form.Item>
+        </Form>
       </div>
       <Table
         ref={tableRef}

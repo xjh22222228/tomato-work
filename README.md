@@ -13,9 +13,6 @@
     <a href="https://github.com/xjh22222228/tomato-work/stargazers"><img src="https://img.shields.io/github/stars/xjh22222228/tomato-work" alt="Stars Badge"/></a>
     <img src="https://img.shields.io/github/package-json/v/xjh22222228/tomato-work" />
     <img src="https://img.shields.io/github/license/xjh22222228/tomato-work" />
-    <a href="https://hits.dwyl.com/xjh22222228/tomato-work">
-      <img src="https://hits.dwyl.com/xjh22222228/tomato-work.svg" />
-    </a>
   </p>
 </p>
 

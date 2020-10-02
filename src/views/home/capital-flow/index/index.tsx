@@ -326,6 +326,7 @@ const Reminder: React.FC = function() {
           </div>
         </div>
       </div>
+
       <Table
         ref={tableRef}
         getTableData={getCapitalFlow}
@@ -334,6 +335,7 @@ const Reminder: React.FC = function() {
         onDelete={serviceDeleteCapitalFlow}
         onAdd={() => setState({ showCreateCapitalFlowModal: true, currentRow: null })}
       />
+
       <CreateCapitalFlow
         visible={state.showCreateCapitalFlowModal}
         rowData={state.currentRow}

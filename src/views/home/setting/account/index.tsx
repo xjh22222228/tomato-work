@@ -49,7 +49,7 @@ const Account: React.FC<Props & RouteComponentProps> = function ({ userInfo }) {
 
   return (
     <div className="account-setting">
-      <Divider orientation="left">修改密码</Divider>
+      <Divider orientation="left" plain>修改密码</Divider>
       <Form layout="vertical" form={form} style={{ width: '300px' }}>
         <Form.Item
           label="登录名"
@@ -85,7 +85,7 @@ const Account: React.FC<Props & RouteComponentProps> = function ({ userInfo }) {
         </Form.Item>
       </Form>
 
-      <Divider orientation="left">Server酱配置</Divider>
+      <Divider orientation="left" plain>Server酱配置</Divider>
 
       <Form layout="vertical" form={form2} style={{ width: '300px' }}>
         <Form.Item

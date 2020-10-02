@@ -9,7 +9,7 @@ import NoData from '@/components/no-data/index';
 import TaskItem from './components/task-item';
 import CreateTask from './components/create-task';
 import moment from 'moment';
-import { DatePicker, Button, Tag, Row, Col } from 'antd';
+import { DatePicker, Button, Tag, Row, Col, Form } from 'antd';
 import { getStartTimestampByDate, getEndTimestampByDate } from '@/utils';
 import { serviceGetTask } from '@/services';
 
@@ -23,7 +23,6 @@ const TASK_TYPE: any = {
 };
 
 interface State {
-  startDate: moment.Moment;
   data: {
     wait: any[];
     process: any[];
@@ -34,16 +33,22 @@ interface State {
 }
 
 const initialState: State = {
-  startDate: datePickerValue,
-  data: { wait: [], process: [], finished: [], unfinished: [] },
+  data: {
+    wait: [],
+    process: [],
+    finished: [],
+    unfinished: []
+  },
   showCreateTaskModal: false
 };
 
 const TodayTask = () => {
+  const [form] = Form.useForm();
   const [state, setState] = useKeepState(initialState);
 
   function getTask() {
-    const date = state.startDate.valueOf();
+    const values = form.getFieldsValue();
+    const date = values.startDate.valueOf();
     serviceGetTask({
       startDate: getStartTimestampByDate(date),
       endDate: getEndTimestampByDate(date)
@@ -56,7 +61,9 @@ const TodayTask = () => {
   }
 
   function initParams() {
-    setState({ startDate: datePickerValue });
+    form.setFieldsValue({
+      startDate: datePickerValue
+    });
     getTask();
   }
 
@@ -70,23 +77,29 @@ const TodayTask = () => {
   }
 
   useEffect(() => {
-    getTask();
+    initParams();
   }, []);
 
   return (
     <div className="today-task">
       <div className="query-panel">
-        <span>查询日期：</span>
-        <DatePicker
-          format={dateFormat}
-          allowClear
-          value={state.startDate}
-          onChange={date => setState({ startDate: date })}
-        />
-        <Button type="primary" onClick={getTask}>查询</Button>
-        <Button onClick={() => setState({ showCreateTaskModal: true })}>新增</Button>
-        <Button onClick={initParams}>重置</Button>
+        <Form
+          form={form}
+          layout="inline"
+          onValuesChange={getTask}
+        >
+          <Form.Item name="startDate" label="查询日期">
+            <DatePicker allowClear={false} />
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" onClick={getTask}>查询</Button>
+            <Button onClick={() => setState({ showCreateTaskModal: true })}>新增</Button>
+            <Button onClick={initParams}>重置</Button>
+          </Form.Item>
+        </Form>
       </div>
+
       <div className="wrapper">
         {(
           state.data.wait.length > 0 ||
@@ -113,6 +126,7 @@ const TodayTask = () => {
           />
         )}
       </div>
+
       <CreateTask
         visible={state.showCreateTaskModal}
         onSuccess={handleOnSuccess}

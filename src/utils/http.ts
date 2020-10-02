@@ -3,7 +3,6 @@ import CONFIG from '@/config';
 import store from '@/store';
 import { message } from 'antd';
 import { logout } from '@/store/actions';
-import { spin } from '@/utils';
 
 let exiting = false;
 const CancelToken = axios.CancelToken;
@@ -57,10 +56,6 @@ httpInstance.interceptors.request.use(function (config) {
 
   const data: { [k: string]: any } = {};
 
-  if (config.headers.isLoading) {
-    spin.start();
-  }
-
   if (method === 'post' || method === 'put') {
     if (config.data instanceof FormData) {
       for (let key in data) {
@@ -79,9 +74,6 @@ httpInstance.interceptors.request.use(function (config) {
 
 httpInstance.interceptors.response.use(function (res) {
   const headers = res.config.headers;
-  if (headers.isLoading) {
-    spin.done();
-  }
 
   if (!res.data.success && headers.errorAlert) {
     message.warn(res.data.msg ?? '服务器出小差');

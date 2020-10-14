@@ -106,6 +106,7 @@ const CreateTaskModal: React.FC<Props> = function ({
         <Form.Item
           label="优先级别"
           name="count"
+          initialValue={5}
           rules={[
             {
               required: true,

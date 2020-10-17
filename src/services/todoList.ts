@@ -3,7 +3,11 @@ import api from '@/api';
 
 // 创建
 export function serviceCreateTodoList(data: object) {
-  return http.post(api.todoList, data);
+  return http.post(api.todoList, data, {
+    headers: {
+      successAlert: true
+    }
+  });
 }
 
 // 查询

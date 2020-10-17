@@ -13,14 +13,13 @@ const mapStateToProps = ({ system }: StoreState) => ({ system });
 type ThunkDispatchProps = ThunkDispatch<{}, {}, AnyAction>;
 type Props = DispatchProp & ReturnType<typeof mapStateToProps> & { dispatch: ThunkDispatchProps };
 
-const HomeIndex: React.FC<Props> = function ({ system, dispatch: propDispatch }) {
-
+const HomeIndex: React.FC<Props> = function ({ system, dispatch }) {
   useEffect(() => {
-    propDispatch(getSystemInfo());
-  }, [propDispatch]);
+    dispatch(getSystemInfo());
+  }, []);
 
   return (
-    <div className="home-index overflow-y_auto">
+    <div className="home-index oya">
       <PenelGroup />
       <SystemInfo systemInfo={system.info} />
       <MoneyAccessChart />

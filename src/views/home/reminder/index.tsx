@@ -1,7 +1,7 @@
 /**
  * 提醒事项
  */
-import React, { useEffect, useCallback, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Table from '@/components/table';
 import moment from 'moment';
 import CreateReminder from './components/create-reminder';
@@ -9,15 +9,11 @@ import useKeepState from 'use-keep-state';
 import { connect } from 'react-redux';
 import { DatePicker, Button, Select, Tag, Modal, Form } from 'antd';
 import { serviceGetReminder, serviceDeleteReminder } from '@/services';
-import {
-  getThisYearLastDay,
-  modalConfirmDelete,
-  getThisYearFirstDay
-} from '@/utils';
+import { modalConfirmDelete } from '@/utils';
 
 const { RangePicker } = DatePicker;
 const Option = Select.Option;
-const dateFormat = 'YYYY-MM-DD';
+const DATE_FORMAT = 'YYYY-MM-DD';
 const STATUS_TYPE: any = {
   1: { color: '#f50', text: '待提醒' },
   2: { color: '#87d068', text: '已提醒' }
@@ -40,14 +36,31 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
   const [state, setState] = useKeepState(initialState);
   const tableRef = useRef<any>();
   const tableColumns = [
-    { title: '状态', dataIndex: 'type', width: 100,
+    {
+      title: '状态',
+      dataIndex: 'type',
+      width: 100,
       render: (row: any) => (
-        <Tag color={STATUS_TYPE[row].color}>{STATUS_TYPE[row].text}</Tag>
+        <Tag color={STATUS_TYPE[row].color}>
+          {STATUS_TYPE[row].text}
+        </Tag>
       )
     },
-    { title: '提醒时间', dataIndex: 'date', width: 220 },
-    { title: '提醒内容', dataIndex: 'content', className: 'word-break_break-all white-space_pre' },
-    { title: '操作', width: 180, align: 'right', fixed: 'right',
+    {
+      title: '提醒时间',
+      dataIndex: 'date',
+      width: 220
+    },
+    {
+      title: '提醒内容',
+      dataIndex: 'content',
+      className: 'wbba wpr'
+    },
+    {
+      title: '操作',
+      width: 180,
+      align: 'right',
+      fixed: 'right',
       render: (row: any) => (
         <>
           <Button onClick={handleButton.bind(null, 0, row)}>编辑</Button>
@@ -58,8 +71,8 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
   ];
 
   const initParams = function() {
-    const startDate = moment(getThisYearFirstDay(), dateFormat);
-    const endDate = moment(getThisYearLastDay(), dateFormat);
+    const startDate = moment().startOf('year');
+    const endDate = moment().endOf('year');
     form.setFieldsValue({
       queryType: '',
       date: [startDate, endDate]
@@ -71,8 +84,8 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
     const values = form.getFieldsValue();
 
     if (values.date && values.date.length === 2) {
-      params.startDate = values.date[0].valueOf();
-      params.endDate = values.date[1].valueOf();
+      params.startDate = values.date[0].format(DATE_FORMAT);
+      params.endDate = values.date[1].format(DATE_FORMAT);
     }
 
     if (values.queryType !== '') {
@@ -83,7 +96,7 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
       if (res.data.success) {
         res.data.data.rows = res.data.data.rows.map((el: any, idx: number) => {
           el.order = idx + 1;
-          el.date = moment(el.date).format('YYYY-MM-DD HH:mm:ss');
+          el.date = moment(el.createdAt).format('YYYY-MM-DD HH:mm:ss');
           return el;
         });
       }
@@ -91,7 +104,7 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
     });
   }
 
-  const handleButton = useCallback((type: number, rows: any) => {
+  function handleButton(type: number, rows: any) {
     // 编辑
     if (type === 0) {
       setState({
@@ -109,7 +122,7 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
         });
       });
     }
-  }, [setState]);
+  }
 
   // modal成功新增回调函数
   function handleModalOnSuccess() {

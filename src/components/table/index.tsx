@@ -110,8 +110,10 @@ const TableFC: FC<Props> = ({
     });
     tableRef.current.pageNo = pageNo;
     tableRef.current.pageSize = pageSize;
-    getData();
     onTableChange && onTableChange(pagination, filters, sorter);
+    setTimeout(() => {
+      getData();
+    });
   }
 
   useEffect(() => {
@@ -135,7 +137,7 @@ const TableFC: FC<Props> = ({
         setState({ tableHeight: tableEl.clientHeight - 120 });
       }
     }, 0);
-  }, [setState]);
+  }, []);
 
   useEffect(() => {
     if (Array.isArray(columns)) {

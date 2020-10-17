@@ -11,12 +11,13 @@ import { serviceCreateReminder, serviceUpdateReminder } from '@/services';
 import { isLtTodayTimestamp } from '@/utils';
 
 const { TextArea } = Input;
+const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 
 type Props = {
   visible: boolean;
   onCancel: () => void;
   onSuccess: (res?: any) => void;
-  rowData?: { [propName: string]: any; };
+  rowData?: { [key: string]: any; };
 };
 
 interface State {
@@ -40,7 +41,7 @@ const CreateReminder: React.FC<Props> = function ({
     try {
       const values = await form.validateFields();
       const params = {
-        date: values.date.valueOf(),
+        date: values.date.format(DATE_FORMAT),
         content: values.content.trim()
       };
 

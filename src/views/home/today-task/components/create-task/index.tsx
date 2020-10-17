@@ -17,6 +17,7 @@ type Props = {
   onCancel: () => void;
 };
 
+const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 const { TextArea } = Input;
 const initialState = {
   confirmLoading: false,
@@ -34,7 +35,7 @@ const CreateTaskModal: React.FC<Props> = function ({
     try {
       const values = await form.validateFields();
       const params = {
-        date: values.date.valueOf(),
+        date: values.date.format(DATE_FORMAT),
         content: values.content.trim(),
         count: values.count
       };

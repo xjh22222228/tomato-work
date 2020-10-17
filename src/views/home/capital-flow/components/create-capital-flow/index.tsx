@@ -10,6 +10,7 @@ import {
 import { serviceCreateCapitalFlow, serviceUpdateCapitalFlow } from '@/services';
 import useKeepState from 'use-keep-state';
 
+const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 const { TextArea } = Input;
 const { Option } = Select;
 
@@ -22,7 +23,7 @@ type Props = {
   visible: boolean;
   onCancel: () => void;
   onSuccess: (res?: any) => void;
-  rowData?: { [propName: string]: any; };
+  rowData?: { [key: string]: any; };
   nameList: any[];
 };
 
@@ -48,7 +49,7 @@ const CreateReminder: React.FC<Props> = function ({
     try {
       const values = await form.validateFields();
       const params = {
-        date: values.date.valueOf(),
+        date: values.date.format(DATE_FORMAT),
         remarks: values.remarks?.trim() ?? '',
         typeId: values.typeId,
         price: Number(values.price)

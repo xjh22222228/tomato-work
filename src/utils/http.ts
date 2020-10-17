@@ -1,20 +1,22 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import CONFIG from '@/config';
 import store from '@/store';
-import { message } from 'antd';
+import { message, notification } from 'antd';
 import { logout } from '@/store/actions';
 
 let exiting = false;
 const CancelToken = axios.CancelToken;
 
-function handleError(error: any): Promise<any> | undefined {
+function handleError(error: AxiosError) {
   if (axios.isCancel(error)) {
 
   } else {
     const response = error.response;
-    message.error(`${response.status} ${response.statusText}`);
+    notification.error({
+      message: `错误码: ${response?.status ?? -1}`,
+      description: response?.statusText ?? '服务器出小差'
+    });
   }
-  return void 0;
 }
 
 const httpInstance = axios.create({
@@ -68,7 +70,8 @@ httpInstance.interceptors.request.use(function (config) {
 
   return config;
 }, function (error) {
-  return (handleError(error) as any) || Promise.reject(error);
+  handleError(error);
+  return Promise.reject(error);
 });
 
 
@@ -76,7 +79,10 @@ httpInstance.interceptors.response.use(function (res) {
   const headers = res.config.headers;
 
   if (!res.data.success && headers.errorAlert) {
-    message.warn(res.data.msg ?? '服务器出小差');
+    notification.error({
+      message: `错误码: ${res.data.errorCode ?? -1}`,
+      description: res.data.msg ?? '服务器出小差'
+    });
   }
 
   if (res.data.success && headers.successAlert) {
@@ -89,7 +95,8 @@ httpInstance.interceptors.response.use(function (res) {
   }
   return res;
 }, function (error) {
-  return (handleError(error) as any) || Promise.reject(error);
+  handleError(error);
+  return Promise.reject(error);
 });
 
 export default httpInstance;

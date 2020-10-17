@@ -9,7 +9,7 @@ import {
 
 type Props = {
   visible: boolean;
-  rowData?: { [propName: string]: any; } | null;
+  rowData?: { [key: string]: any; } | null;
   onSuccess: (res?: any) => void;
   onCancel: () => void;
 };

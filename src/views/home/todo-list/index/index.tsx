@@ -1,7 +1,7 @@
 /**
  * 活动清单
  */
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import moment from 'moment';
 import useKeepState from 'use-keep-state';
 import Table from '@/components/table';
@@ -9,15 +9,10 @@ import CreateTodo from '../components/create-todo';
 import { serviceGetTodoList, serviceDeleteTodoList, serviceUpdateTodoList } from '@/services';
 import { STATUS } from '../constants';
 import { DatePicker, Button, Tag, Form } from 'antd';
-import {
-  getThisYearFirstDay,
-  getCurMonthLastDay,
-  modalConfirmDelete,
-  ONE_DAY_TIMESTAMP
-} from '@/utils';
+import { modalConfirmDelete } from '@/utils';
 
 const { RangePicker } = DatePicker;
-const dateFormat = 'YYYY-MM-DD';
+const DATE_FORMAT = 'YYYY-MM-DD';
 
 interface State {
   showCreateTodoModal: boolean;
@@ -34,12 +29,30 @@ const TodoList = () => {
   const [state, setState] = useKeepState(initialState);
   const tableRef = useRef<any>();
   const tableColumns = [
-    { title: '状态', dataIndex: 'status', width: 90, render: (status: number) => (
-      <Tag color={STATUS[status].color}>{STATUS[status].text}</Tag>
-    )},
-    { title: '创建时间', dataIndex: 'createdAt', width: 170 },
-    { title: '活动内容', dataIndex: 'content', className: 'word-break_break-all' },
-    { title: '操作', width: 250, align: 'right', fixed: 'right',
+    {
+      title: '状态',
+      dataIndex: 'status',
+      width: 90,
+      render: (status: number) => (
+        <Tag color={STATUS[status].color}>
+          {STATUS[status].text}
+        </Tag>
+      )},
+    {
+      title: '创建时间',
+      dataIndex: 'createdAt',
+      width: 170
+    },
+    {
+      title: '活动内容',
+      dataIndex: 'content',
+      className: 'wbba'
+    },
+    {
+      title: '操作',
+      width: 250,
+      align: 'right',
+      fixed: 'right',
       render: (row: any) => (
         <>
           <Button onClick={handleActionButton.bind(null, 0, row)}>编辑</Button>
@@ -63,8 +76,8 @@ const TodoList = () => {
     const values = form.getFieldsValue();
 
     if (values.date && values.date.length === 2) {
-      params.startDate = values.date[0].valueOf();
-      params.endDate = values.date[1].valueOf() + ONE_DAY_TIMESTAMP;
+      params.startDate = values.date[0].format(DATE_FORMAT);
+      params.endDate = values.date[1].format(DATE_FORMAT);
     }
 
     return serviceGetTodoList(params).then(res => {
@@ -77,8 +90,8 @@ const TodoList = () => {
   }
 
   function initParams() {
-    const startDate = moment(getThisYearFirstDay(), dateFormat);
-    const endDate = moment(getCurMonthLastDay(dateFormat), dateFormat);
+    const startDate = moment().startOf('year');
+    const endDate = moment().endOf('year');
     form.setFieldsValue({
       date: [startDate, endDate]
     });
@@ -94,7 +107,7 @@ const TodoList = () => {
     tableRef.current.getTableData();
   };
 
-  const handleActionButton = useCallback((buttonType: number, row: any) => {
+  function handleActionButton(buttonType: number, row: any) {
     switch (buttonType) {
       // 编辑
       case 0:
@@ -123,7 +136,7 @@ const TodoList = () => {
         break;
       default:
     }
-  }, [setState]);
+  }
 
   useEffect(() => {
     initParams();

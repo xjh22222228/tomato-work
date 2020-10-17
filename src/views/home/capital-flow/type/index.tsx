@@ -21,14 +21,26 @@ const initialState = {
 const Type = () => {
   const [state, setState] = useKeepState(initialState);
   const tableColumns = [
-    { title: '账务类型', dataIndex: 'name' },
-    { title: '收支类别', render: (rowData: any) => (
-      <Tag color={rowData.color}>{rowData.typeName}</Tag>
-    ) },
-    { title: '创建时间', dataIndex: 'createdAt' },
-    { title: '操作', render: (rowData: any) => (
-      <Button onClick={handleEdit.bind(null, rowData)}>编辑</Button>
-    ) },
+    {
+      title: '账务类型',
+      dataIndex: 'name'
+    },
+    {
+      title: '收支类别',
+      render: (rowData: any) => (
+        <Tag color={rowData.color}>{rowData.typeName}</Tag>
+      )
+    },
+    {
+      title: '创建时间',
+      dataIndex: 'createdAt'
+    },
+    {
+      title: '操作',
+      render: (rowData: any) => (
+        <Button onClick={handleEdit.bind(null, rowData)}>编辑</Button>
+      )
+    },
   ];
 
   function getCapitalFlowType() {
@@ -50,10 +62,8 @@ const Type = () => {
     const ids = state.selectedRowKeys.join();
     if (!ids) return;
     serviceDeleteCapitalFlowType(ids)
-      .then(res => {
-        if (res.data.success) {
-          getCapitalFlowType();
-        }
+      .then(() => {
+        getCapitalFlowType();
       });
   }
 

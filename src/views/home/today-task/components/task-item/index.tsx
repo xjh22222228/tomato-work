@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import './style.scss';
 import moment from 'moment';
 import { modalConfirmDelete } from '@/utils';
@@ -17,7 +17,7 @@ interface Props {
 const TaskItem: React.FC<Props> = ({ data, reloadData }) => {
 
   // 0=删除, 1=开始/完成, 2=回退
-  const handleAction = useCallback(buttonType => {
+  function handleAction(buttonType: number) {
     if (buttonType === 0) {
       modalConfirmDelete()
       .then(() => {
@@ -38,7 +38,7 @@ const TaskItem: React.FC<Props> = ({ data, reloadData }) => {
         }
       });
     }
-  }, [data, reloadData]);
+  }
 
   return (
     <Card
@@ -52,6 +52,7 @@ const TaskItem: React.FC<Props> = ({ data, reloadData }) => {
         <Rate value={data.count} disabled></Rate>
         <p>创建时间: {moment(data.createdAt).format('HH:mm:ss')}</p>
       </div>
+
       <div className="button-wrapper">
         <Button
           type="primary"

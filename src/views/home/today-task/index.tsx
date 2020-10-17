@@ -10,11 +10,9 @@ import TaskItem from './components/task-item';
 import CreateTask from './components/create-task';
 import moment from 'moment';
 import { DatePicker, Button, Tag, Row, Col, Form } from 'antd';
-import { getStartTimestampByDate, getEndTimestampByDate } from '@/utils';
 import { serviceGetTask } from '@/services';
 
-const dateFormat = 'YYYY-MM-DD';
-const datePickerValue = moment(new Date(getStartTimestampByDate()), dateFormat);
+const DATE_FORMAT = 'YYYY-MM-DD';
 const TASK_TYPE: any = {
   wait: { text: '待作业', color: 'orange' },
   process: { text: '作业中', color: '#108ee9' },
@@ -48,10 +46,10 @@ const TodayTask = () => {
 
   function getTask() {
     const values = form.getFieldsValue();
-    const date = values.startDate.valueOf();
+    const date = values.startDate.format(DATE_FORMAT);
     serviceGetTask({
-      startDate: getStartTimestampByDate(date),
-      endDate: getEndTimestampByDate(date)
+      startDate: date,
+      endDate: date
     })
     .then(res => {
       if (res.data.success) {
@@ -62,7 +60,7 @@ const TodayTask = () => {
 
   function initParams() {
     form.setFieldsValue({
-      startDate: datePickerValue
+      startDate: moment()
     });
     getTask();
   }
@@ -110,7 +108,7 @@ const TodayTask = () => {
           <Row gutter={24}>
             {Object.keys(state.data).map((key: string) => (
               <Col span={6} key={key}>
-                <div className="text-align_center">
+                <div className="tac">
                   <Tag color={TASK_TYPE[key].color}>{TASK_TYPE[key].text}</Tag>
                 </div>
                 {state.data[key].map((item: any) => (

@@ -48,7 +48,7 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
     },
     {
       title: '提醒时间',
-      dataIndex: 'date',
+      dataIndex: 'createdAt',
       width: 220
     },
     {
@@ -96,7 +96,7 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
       if (res.data.success) {
         res.data.data.rows = res.data.data.rows.map((el: any, idx: number) => {
           el.order = idx + 1;
-          el.date = moment(el.createdAt).format('YYYY-MM-DD HH:mm:ss');
+          el.createdAt = moment(el.createdAt).format('YYYY-MM-DD HH:mm:ss');
           return el;
         });
       }

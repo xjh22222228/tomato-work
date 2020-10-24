@@ -58,10 +58,10 @@ const Reminder: React.FC = function() {
   const tableColumns = [
     {
       title: '入账时间',
-      dataIndex: 'date',
+      dataIndex: 'createdAt',
       width: 180,
       sorter: true,
-      sortOrder: state.sortedInfo?.field === 'date' && state.sortedInfo.order
+      sortOrder: state.sortedInfo?.field === 'createdAt' && state.sortedInfo.order
     },
     {
       title: '账务类型',
@@ -138,7 +138,7 @@ const Reminder: React.FC = function() {
 
         res.data.data.rows = res.data.data.rows.map((el: any, idx: number) => {
           el.order = idx + 1;
-          el.date = moment(el.createdAt).format('YYYY-MM-DD HH:mm');
+          el.createdAt = moment(el.createdAt).format('YYYY-MM-DD HH:mm');
           el.__price__ = TYPES[el.type - 1].symbol + el.price;
           el.__color__ = TYPES[el.type - 1].color;
 

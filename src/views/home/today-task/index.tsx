@@ -40,7 +40,7 @@ const initialState: State = {
   showCreateTaskModal: false
 };
 
-const TodayTask = () => {
+const TodayTaskPage = () => {
   const [form] = Form.useForm();
   const [state, setState] = useKeepState(initialState);
 
@@ -74,6 +74,26 @@ const TodayTask = () => {
     getTask();
   }
 
+  function handlePrevDay() {
+    const startDate: moment.Moment = form.getFieldValue('startDate');
+    form.setFieldsValue({
+      startDate: moment(
+        startDate.subtract(1, 'day').format(DATE_FORMAT)
+      )
+    });
+    getTask();
+  }
+
+  function handleNextDay() {
+    const startDate: moment.Moment = form.getFieldValue('startDate');
+    form.setFieldsValue({
+      startDate: moment(
+        startDate.add(1, 'day').format(DATE_FORMAT)
+      )
+    });
+    getTask();
+  }
+
   useEffect(() => {
     initParams();
   }, []);
@@ -92,7 +112,9 @@ const TodayTask = () => {
 
           <Form.Item>
             <Button type="primary" onClick={getTask}>查询</Button>
-            <Button onClick={() => setState({ showCreateTaskModal: true })}>新增</Button>
+            <Button onClick={handlePrevDay}>上一天</Button>
+            <Button onClick={handleNextDay}>下一天</Button>
+            <Button onClick={toggleCreateTaskModal}>新增</Button>
             <Button onClick={initParams}>重置</Button>
           </Form.Item>
         </Form>
@@ -134,4 +156,4 @@ const TodayTask = () => {
   );
 };
 
-export default TodayTask;
+export default TodayTaskPage;

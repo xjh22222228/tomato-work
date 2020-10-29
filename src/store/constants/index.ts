@@ -7,8 +7,8 @@
 export const USER: any = {
   LOGIN: 'LOGIN',
   LOGOUT: 'LOGOUT',
-};
+}
 
 export const SYSTEM: any = {
   INFO: 'INFO'
-};
+}

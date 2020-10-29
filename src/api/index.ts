@@ -32,6 +32,6 @@ const API = Object.freeze({
   todoList: '/todoList',
   // 获取首页面板数据
   getPanelData: '/panel'
-});
+})
 
-export default API;
+export default API

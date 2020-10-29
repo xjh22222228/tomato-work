@@ -4,30 +4,30 @@
  * @author xiejiahe <xjh22222228@gmail.com>
  */
 
-import { USER } from '../constants';
-import { LOCAL_STORAGE } from '@/constants';
+import { USER } from '../constants'
+import { LOCAL_STORAGE } from '@/constants'
 
-const { LOGIN } = USER;
+const { LOGIN } = USER
 
 export interface UserInfoProps {
-  provider: string;
-  uid: number | undefined;
-  username: string;
-  password: string;
-  loginName: string;
-  avatarUrl: string;
-  email: string;
-  role: string;
-  token: string | undefined;
-  bio: string;
-  location: string;
-  createdAt: string;
+  provider: string
+  uid: number | undefined
+  username: string
+  password: string
+  loginName: string
+  avatarUrl: string
+  email: string
+  role: string
+  token: string | undefined
+  bio: string
+  location: string
+  createdAt: string
 }
 
 export interface UserState {
-  isLogin: boolean;
-  isLockScreen: boolean;
-  userInfo: UserInfoProps;
+  isLogin: boolean
+  isLockScreen: boolean
+  userInfo: UserInfoProps
 }
 
 const initialState: UserState = {
@@ -47,21 +47,21 @@ const initialState: UserState = {
     token: undefined, // 登录凭证
     location: ''
   }
-};
+}
 
 function user(state = initialState, action: any): UserState {
   switch (action.type) {
     case LOGIN:
-      const userInfo = action.userInfo;
+      const userInfo = action.userInfo
       if (userInfo?.token) {
-        state.isLogin = true;
-        window.localStorage.setItem(LOCAL_STORAGE.USER, JSON.stringify(userInfo));
-        window.localStorage.setItem(LOCAL_STORAGE.LOGIN_NAME, userInfo.loginName);
+        state.isLogin = true
+        window.localStorage.setItem(LOCAL_STORAGE.USER, JSON.stringify(userInfo))
+        window.localStorage.setItem(LOCAL_STORAGE.LOGIN_NAME, userInfo.loginName)
       }
-      return { ...state, userInfo: action.userInfo };
+      return { ...state, userInfo: action.userInfo }
     default:
-      return state;
+      return state
   }
 }
 
-export default user;
+export default user

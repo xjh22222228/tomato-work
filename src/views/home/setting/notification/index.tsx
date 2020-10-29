@@ -1,35 +1,32 @@
 /**
  * 消息通知
  */
-import React, {
-  useState,
-  useEffect
-} from 'react';
-import './style.scss';
-import { Switch, Divider } from 'antd';
-import { serviceGetUserConfig, serviceUpdateUserConfig } from '@/services';
+import React, { useState, useEffect } from 'react'
+import './style.scss'
+import { Switch, Divider } from 'antd'
+import { serviceGetUserConfig, serviceUpdateUserConfig } from '@/services'
 
 const Notification: React.FC = function () {
   const [userConfig, setUserConfig] = useState({
     isMatterNotify: true,
     isTaskNotify: true
-  });
+  })
 
   useEffect(() => {
     serviceGetUserConfig().then(res => {
       if (res.data.success) {
         setUserConfig({
           ...res.data.data
-        });
+        })
       }
-    });
-  }, []);
+    })
+  }, [])
 
   function handleUpdateUserConfig(type: number, checked: boolean) {
     const fields: any = {
       0: 'isTaskNotify',
       1: 'isMatterNotify'
-    };
+    }
     serviceUpdateUserConfig({
       [fields[type]]: checked
     }).then(res => {
@@ -37,9 +34,9 @@ const Notification: React.FC = function () {
         setUserConfig({
           ...userConfig,
           [fields[type]]: checked
-        });
+        })
       }
-    });
+    })
   }
 
   return (
@@ -66,7 +63,7 @@ const Notification: React.FC = function () {
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Notification;
+export default Notification

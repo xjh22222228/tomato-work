@@ -1,6 +1,6 @@
 
-const isProduction = process.env.NODE_ENV === 'production';
-const isDevelopment = !isProduction;
+const isProduction = process.env.NODE_ENV === 'production'
+const isDevelopment = !isProduction
 
 const CONFIG = {
   isProduction,
@@ -19,6 +19,6 @@ const CONFIG = {
     repositoryUrl: 'https://github.com/xjh22222228/tomato-work',
     bug: 'https://github.com/xjh22222228/tomato-work/issues'
   }
-};
+}
 
-export default CONFIG;
+export default CONFIG

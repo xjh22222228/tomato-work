@@ -12,34 +12,34 @@
  * />
  */
 
-import React, { FC, useEffect } from 'react';
-import './style.scss';
-import { Table } from 'antd';
-import { TableProps } from 'rc-table/lib/Table';
-import { AxiosPromise } from 'axios';
-import useKeepState from 'use-keep-state';
-import ActionPanel from './action-panel';
+import React, { FC, useEffect } from 'react'
+import './style.scss'
+import { Table } from 'antd'
+import { TableProps } from 'rc-table/lib/Table'
+import { AxiosPromise } from 'axios'
+import useKeepState from 'use-keep-state'
+import ActionPanel from './action-panel'
 
 interface Props extends TableProps {
-  getTableData: (data: any) => AxiosPromise;
-  onTableChange?: (pagination: any, filters: any, sorter: any) => void;
-  onDelete?: (id: string) => AxiosPromise;
-  onAdd?: () => void;
-  [key: string]: any;
+  getTableData: (data: any) => AxiosPromise
+  onTableChange?: (pagination: any, filters: any, sorter: any) => void
+  onDelete?: (id: string) => AxiosPromise
+  onAdd?: () => void
+  [key: string]: any
 }
 
 interface State {
-  tableHeight: number;
-  tableDataSource: any[];
-  isLoading: boolean;
+  tableHeight: number
+  tableDataSource: any[]
+  isLoading: boolean
   pagination: {
-    [key: string]: any;
+    [key: string]: any
   },
-  selectedRowKeys: string[];
+  selectedRowKeys: string[]
   columns: any[]
 }
 
-const DEFAULT_PAGE_SIZE = 50;
+const DEFAULT_PAGE_SIZE = 50
 
 const initialState: State = {
   tableHeight: 0,
@@ -54,10 +54,10 @@ const initialState: State = {
   },
   selectedRowKeys: [],
   columns: []
-};
+}
 
 function showTotal(total: number) {
-  return `共有 ${total} 条`;
+  return `共有 ${total} 条`
 }
 
 const TableFC: FC<Props> = ({
@@ -69,20 +69,20 @@ const TableFC: FC<Props> = ({
   columns,
   ...props
 }) => {
-  let rowSelection;
-  const showRowSelection = onDelete;
-  const [state, setState] = useKeepState(initialState);
+  let rowSelection
+  const showRowSelection = onDelete
+  const [state, setState] = useKeepState(initialState)
 
   function getData() {
-    setState({ isLoading: true });
-    const { pageNo, pageSize } = tableRef.current;
+    setState({ isLoading: true })
+    const { pageNo, pageSize } = tableRef.current
     // 调用父组件函数获取数据
     getTableData({
       pageNo: pageNo - 1,
       pageSize: pageSize
     })
       .then(res => {
-        if (res.data.success) {
+        if (res?.data?.success) {
           setState({
             pagination: {
               ...state.pagination,
@@ -90,54 +90,54 @@ const TableFC: FC<Props> = ({
               pageSize
             },
             tableDataSource: res.data.data.rows
-          });
+          })
         }
       })
       .finally(() => {
-        setState({ isLoading: false });
-      });
+        setState({ isLoading: false })
+      })
   }
 
   function onChange(pagination: any, filters: any, sorter: any) {
-    const pageNo = pagination.current;
-    const pageSize = pagination.pageSize;
+    const pageNo = pagination.current
+    const pageSize = pagination.pageSize
     setState({
       pagination: {
         ...state.pagination,
         pageNo,
         pageSize
       }
-    });
-    tableRef.current.pageNo = pageNo;
-    tableRef.current.pageSize = pageSize;
-    onTableChange && onTableChange(pagination, filters, sorter);
+    })
+    tableRef.current.pageNo = pageNo
+    tableRef.current.pageSize = pageSize
+    onTableChange && onTableChange(pagination, filters, sorter)
     setTimeout(() => {
-      getData();
-    });
+      getData()
+    })
   }
 
   useEffect(() => {
     if (!tableRef.current) {
-      tableRef.current = {};
+      tableRef.current = {}
     }
     // 新增方法给父组件调用
-    tableRef.current.getTableData = getData;
-  });
+    tableRef.current.getTableData = getData
+  })
 
   useEffect(() => {
-    tableRef.current.pageNo = 1;
-    tableRef.current.pageSize = DEFAULT_PAGE_SIZE;
-  }, [tableRef]);
+    tableRef.current.pageNo = 1
+    tableRef.current.pageSize = DEFAULT_PAGE_SIZE
+  }, [tableRef])
 
   useEffect(() => {
     // 设置表格的高度
     setTimeout(() => {
-      const tableEl = document.querySelector('.ant-table-wrapper');
+      const tableEl = document.querySelector('.ant-table-wrapper')
       if (tableEl) {
-        setState({ tableHeight: tableEl.clientHeight - 120 });
+        setState({ tableHeight: tableEl.clientHeight - 120 })
       }
-    }, 0);
-  }, []);
+    }, 0)
+  }, [])
 
   useEffect(() => {
     if (Array.isArray(columns)) {
@@ -150,28 +150,28 @@ const TableFC: FC<Props> = ({
             align: 'center'
           }
         ].concat(columns as [])
-      });
+      })
     }
-  }, [columns]);
+  }, [columns])
 
   function handleDelete() {
-    if (!onDelete) return null;
-    const selectedRowKeys = state.selectedRowKeys.join(',');
+    if (!onDelete) return null
+    const selectedRowKeys = state.selectedRowKeys.join(',')
     onDelete(selectedRowKeys)
       .then(res => {
         if (res.data.success) {
-          setState({ selectedRowKeys: [] });
-          getData();
+          setState({ selectedRowKeys: [] })
+          getData()
         }
-      });
+      })
   }
 
   if (showRowSelection) {
     rowSelection = {
       onChange(selectedRowKeys: string[]) {
-        setState({ selectedRowKeys });
+        setState({ selectedRowKeys })
       }
-    };
+    }
   }
 
   return (
@@ -199,11 +199,11 @@ const TableFC: FC<Props> = ({
         }}
       />
     </React.Fragment>
-  );
-};
+  )
+}
 
 const forwardedTable = React.forwardRef((props: any, ref) => (
   <TableFC {...props} forwardedRef={ref} />
-));
+))
 
-export default React.memo(forwardedTable);
+export default React.memo(forwardedTable)

@@ -1,17 +1,17 @@
-import React from 'react';
-import './style.scss';
-import moment from 'moment';
-import { modalConfirmDelete } from '@/utils';
-import { serviceDeleteTask, serviceUpdateTask } from '@/services';
+import React from 'react'
+import './style.scss'
+import moment from 'moment'
+import { modalConfirmDelete } from '@/utils'
+import { serviceDeleteTask, serviceUpdateTask } from '@/services'
 import {
   Card,
   Button,
   Rate
-} from 'antd';
+} from 'antd'
 
 interface Props {
   data: { [key: string]: any },
-  reloadData(): void;
+  reloadData(): void
 }
 
 const TaskItem: React.FC<Props> = ({ data, reloadData }) => {
@@ -24,19 +24,19 @@ const TaskItem: React.FC<Props> = ({ data, reloadData }) => {
         serviceDeleteTask(data.id)
         .then(res => {
           if (res.data.success) {
-            reloadData();
+            reloadData()
           }
-        });
-      });
+        })
+      })
     } else {
       serviceUpdateTask(data.id, {
         rollback: buttonType === 2 && true
       })
       .then(res => {
         if (res.data.success) {
-          reloadData();
+          reloadData()
         }
-      });
+      })
     }
   }
 
@@ -91,7 +91,7 @@ const TaskItem: React.FC<Props> = ({ data, reloadData }) => {
         )}
       </div>
     </Card>
-  );
-};
+  )
+}
 
-export default React.memo(TaskItem);
+export default React.memo(TaskItem)

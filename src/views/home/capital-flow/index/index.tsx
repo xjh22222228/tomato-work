@@ -1,44 +1,40 @@
 /**
  * 财务管理
  */
-import React, { useEffect, useRef } from 'react';
-import './style.scss';
-import moment from 'moment';
-import useKeepState from 'use-keep-state';
-import Table from '@/components/table';
-import CreateCapitalFlow from '../components/create-capital-flow';
-import { DatePicker, Button, Select, Statistic, Input } from 'antd';
-import { modalConfirmDelete } from '@/utils';
+import React, { useEffect, useRef } from 'react'
+import './style.scss'
+import moment from 'moment'
+import useKeepState from 'use-keep-state'
+import Table from '@/components/table'
+import CreateCapitalFlow from '../components/create-capital-flow'
+import { DatePicker, Button, Select, Statistic, Input, Form } from 'antd'
+import { modalConfirmDelete } from '@/utils'
 import {
   serviceGetCapitalFlow,
   serviceDeleteCapitalFlow,
   serviceGetCapitalFlowType
-} from '@/services';
-import { OPTION_TYPES, TypeNames, TYPES } from '../enum';
+} from '@/services'
+import { OPTION_TYPES, TypeNames, TYPES } from '../enum'
 
-const { Search } = Input;
-const { RangePicker } = DatePicker;
-const Option = Select.Option;
-const DATE_FORMAT = 'YYYY-MM-DD';
+const { Search } = Input
+const { RangePicker } = DatePicker
+const Option = Select.Option
+const DATE_FORMAT = 'YYYY-MM-DD'
 
 interface State {
-  date: moment.Moment[];
-  keyword: string,
-  name: string;
-  type: string;
-  showCreateCapitalFlowModal: boolean;
-  currentRow: null | { [key: string]: any };
-  nameList: any[];
-  price: { consumption: number; income: number; available: number; };
-  sortedInfo: any;
-  filters: object;
+  showCreateCapitalFlowModal: boolean
+  currentRow: null | { [key: string]: any }
+  nameList: any[]
+  price: {
+    consumption: number
+    income: number
+    available: number
+  }
+  sortedInfo: any
+  filters: object
 }
 
 const initialState: State = {
-  date: [],
-  keyword: '',
-  name: '',
-  type: '',
   showCreateCapitalFlowModal: false,
   currentRow: null,
   nameList: [],
@@ -49,11 +45,12 @@ const initialState: State = {
   },
   sortedInfo: null,
   filters: {}
-};
+}
 
 const Reminder: React.FC = function() {
-  const [state, setState] = useKeepState(initialState);
-  const tableRef = useRef<any>();
+  const [form] = Form.useForm()
+  const [state, setState] = useKeepState(initialState)
+  const tableRef = useRef<any>()
 
   const tableColumns = [
     {
@@ -104,57 +101,62 @@ const Reminder: React.FC = function() {
         </>
       )
     }
-  ];
+  ]
 
   function initParams() {
-    const startDate = moment().startOf('month');
-    const endDate = moment().endOf('month');
-    setState({
+    const startDate = moment().startOf('month')
+    const endDate = moment().endOf('month')
+    setState({ sortedInfo: null })
+    form.setFieldsValue({
       keyword: '',
       name: '',
-      date: [startDate, endDate],
-      sortedInfo: null
-    });
+      date: [startDate, endDate]
+    })
   }
 
   // 获取数据
-  function getCapitalFlow(params: { [k: string]: any }) {
-    params = {
-      ...params,
-      keyword: state.keyword,
-      typeNameId: state.name,
-      type: state.type,
-      startDate: state.date[0].format(DATE_FORMAT),
-      endDate: state.date[1].format(DATE_FORMAT)
-    };
-
-    if (state.sortedInfo?.order) {
-      params.sort = `${state.sortedInfo.field}-${state.sortedInfo.order.replace('end', '')}`;
-    }
-
-    return serviceGetCapitalFlow(params).then(res => {
-      if (res.data.success) {
-        const data = res.data.data;
-
-        res.data.data.rows = res.data.data.rows.map((el: any, idx: number) => {
-          el.order = idx + 1;
-          el.createdAt = moment(el.createdAt).format('YYYY-MM-DD HH:mm');
-          el.__price__ = TYPES[el.type - 1].symbol + el.price;
-          el.__color__ = TYPES[el.type - 1].color;
-
-          return el;
-        });
-
-        setState({
-          price: {
-            income: data.income,
-            consumption: data.consumption,
-            available: data.available
-          }
-        });
+  async function getCapitalFlow(params: { [k: string]: any }) {
+    try {
+      const values = await form.validateFields()
+      params = {
+        ...params,
+        keyword: values.keyword,
+        typeNameId: values.name,
+        type: values.type,
+        startDate: values.date[0].format(DATE_FORMAT),
+        endDate: values.date[1].format(DATE_FORMAT)
       }
-      return res;
-    });
+
+      if (state.sortedInfo?.order) {
+        params.sort = `${state.sortedInfo.field}-${state.sortedInfo.order.replace('end', '')}`
+      }
+
+      return serviceGetCapitalFlow(params).then(res => {
+        if (res.data.success) {
+          const data = res.data.data
+
+          res.data.data.rows = res.data.data.rows.map((el: any, idx: number) => {
+            el.order = idx + 1
+            el.createdAt = moment(el.createdAt).format('YYYY-MM-DD HH:mm')
+            el.__price__ = TYPES[el.type - 1].symbol + el.price
+            el.__color__ = TYPES[el.type - 1].color
+
+            return el
+          })
+
+          setState({
+            price: {
+              income: data.income,
+              consumption: data.consumption,
+              available: data.available
+            }
+          })
+        }
+        return res
+      })
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   // 获取所有类型
@@ -164,37 +166,37 @@ const Reminder: React.FC = function() {
         if (res.data.success) {
           const data = res.data.data
             .map((item: any) => {
-              item.optionName = `${TypeNames[item.type]} - ${item.name}`;
-              return item;
+              item.optionName = `${TypeNames[item.type]} - ${item.name}`
+              return item
             })
-            .sort((a: any, b: any) => a.type - b.type);
-          setState({ nameList: data });
+            .sort((a: any, b: any) => a.type - b.type)
+          setState({ nameList: data })
         }
-      });
+      })
   }
 
   function handleActionButton(type: number, row: any) {
     // 编辑
     if (type === 0) {
-      setState({ showCreateCapitalFlowModal: true, currentRow: row });
+      setState({ showCreateCapitalFlowModal: true, currentRow: row })
     } else {
       modalConfirmDelete().then(() => {
         serviceDeleteCapitalFlow(row.id).then(res => {
           if (res.data.success) {
-            tableRef.current.getTableData();
+            tableRef.current.getTableData()
           }
-        });
-      });
+        })
+      })
     }
   }
 
   // 时间过滤
   function onFilterDate(type: number) {
-    const [startDate] = state.date;
+    const [startDate] = form.getFieldValue('name')
     const date: moment.Moment[] = [
       moment(moment().format(DATE_FORMAT), DATE_FORMAT),
       moment(moment().format(DATE_FORMAT), DATE_FORMAT)
-    ];
+    ]
 
     switch (type) {
       case 2:
@@ -202,19 +204,19 @@ const Reminder: React.FC = function() {
           moment()
             .subtract(1, 'days')
             .format(DATE_FORMAT), DATE_FORMAT
-        );
-        date[0] = prevDay;
-        date[1] = prevDay;
-        break;
+        )
+        date[0] = prevDay
+        date[1] = prevDay
+        break
       case 3:
         date[0] = moment(
           moment()
             .subtract(7, 'days')
             .format(DATE_FORMAT),
           DATE_FORMAT
-        );
-        date[1] = moment(new Date(), DATE_FORMAT);
-        break;
+        )
+        date[1] = moment(new Date(), DATE_FORMAT)
+        break
       case 4:
         date[0] = moment(
           moment(startDate)
@@ -222,15 +224,15 @@ const Reminder: React.FC = function() {
             .startOf('month')
             .format(DATE_FORMAT),
           DATE_FORMAT
-        );
+        )
         date[1] = moment(
           moment(startDate)
             .subtract(1, 'month')
             .endOf('month')
             .format(DATE_FORMAT),
           DATE_FORMAT
-        );
-        break;
+        )
+        break
       case 5:
         date[0] = moment(
           moment(startDate)
@@ -238,18 +240,18 @@ const Reminder: React.FC = function() {
             .startOf('month')
             .format(DATE_FORMAT),
           DATE_FORMAT
-        );
+        )
         date[1] = moment(
           moment(startDate)
             .add(1, 'month')
             .endOf('month')
             .format(DATE_FORMAT),
           DATE_FORMAT
-        );
-        break;
+        )
+        break
     }
 
-    setState({ date });
+    form.setFieldsValue({ date })
   }
 
   function onTableChange(_: unknown, filters: any, sorter: any) {
@@ -259,77 +261,89 @@ const Reminder: React.FC = function() {
         order: sorter.order
       },
       filters
-    });
+    })
   }
 
   function handleModalOnSuccess() {
-    setState({ showCreateCapitalFlowModal: false });
-    tableRef.current.getTableData();
+    setState({ showCreateCapitalFlowModal: false })
+    tableRef.current.getTableData()
   }
 
   useEffect(() => {
-    initParams();
-    getCapitalFlowType();
-  }, []);
+    initParams()
+    getCapitalFlowType()
+  }, [])
 
   useEffect(() => {
-    if (state.date.length <= 0) return;
-    tableRef?.current?.getTableData();
-  }, [state.name, state.type, state.date]);
+    const date = form.getFieldValue('date')
+    if (date.length <= 0) return
+    tableRef?.current?.getTableData()
+  }, [])
 
   return (
     <div className="capital-flow">
       <div className="query-panel">
-        <span>账务类型：</span>
-        <Select
-          onChange={(value: string) => setState({ name: value })}
-          value={state.name}
-        >
-          <Option value="">全部</Option>
-          {state.nameList.map((item: any) => (
-            <Option value={item.id} key={item.id}>{item.name}</Option>
-          ))}
-        </Select>
-
-        {!state.name && (
-          <>
-            <span>收支类别：</span>
-            <Select
-              onChange={(value: string) => setState({ type: value })}
-              value={state.type}
-            >
-            {OPTION_TYPES.map(item => (
-              <Option value={item.value} key={item.value}>{item.name}</Option>
-            ))}
+        <Form form={form} layout="inline">
+          <Form.Item
+            label="账务类型"
+            name="name"
+            initialValue=""
+          >
+            <Select>
+              <Option value="">全部</Option>
+              {state.nameList.map((item: any) => (
+                <Option value={item.id} key={item.id}>{item.name}</Option>
+              ))}
             </Select>
-          </>
-        )}
+          </Form.Item>
 
-        <Search
-          value={state.keyword}
-          placeholder="试试搜索备注"
-          maxLength={300}
-          onChange={e => setState({ keyword: e.target.value })}
-          onSearch={() => tableRef.current.getTableData()}
-          style={{ width: 260, marginRight: '15px' }}
-        />
-        <Button type="primary" onClick={tableRef.current?.getTableData}>查询</Button>
-        <Button onClick={initParams}>重置</Button>
-        <div style={{ marginTop: '10px' }}>
-          <span>日期：</span>
-          <RangePicker
-            format={DATE_FORMAT}
-            allowClear
-            value={state.date}
-            style={{ width: '280px', marginRight: '10px' }}
-            onChange={(date: any) => setState({ date })}
-          />
+          {!form.getFieldValue('name') && (
+            <Form.Item
+              label="收支类别"
+              name="type"
+              initialValue=""
+            >
+              <Select>
+                {OPTION_TYPES.map(item => (
+                  <Option value={item.value} key={item.value}>{item.name}</Option>
+                ))}
+              </Select>
+            </Form.Item>
+          )}
+
+          <Form.Item
+            label=""
+            name="keyword"
+            initialValue=""
+          >
+            <Search
+              placeholder="试试搜索备注"
+              maxLength={300}
+              onSearch={() => tableRef.current.getTableData()}
+              style={{ width: 260 }}
+            />
+          </Form.Item>
+
+          <Button type="primary" onClick={tableRef.current?.getTableData}>查询</Button>
+          <Button onClick={initParams}>重置</Button>
+        </Form>
+
+        <Form form={form} layout="inline" style={{ marginTop: 10 }}>
+          <Form.Item
+            label="日期"
+            name="date"
+            initialValue={[]}
+          >
+            <RangePicker />
+          </Form.Item>
+
           <Button onClick={onFilterDate.bind(null, 1)}>今天</Button>
           <Button onClick={onFilterDate.bind(null, 2)}>昨天</Button>
           <Button onClick={onFilterDate.bind(null, 3)}>最近一周</Button>
           <Button onClick={onFilterDate.bind(null, 4)}>上个月</Button>
           <Button onClick={onFilterDate.bind(null, 5)}>下个月</Button>
-        </div>
+        </Form>
+
         <div className="poly">
           <div className="item-price">
             <em>收入：￥</em>
@@ -363,7 +377,7 @@ const Reminder: React.FC = function() {
         onSuccess={handleModalOnSuccess}
       />
     </div>
-  );
-};
+  )
+}
 
-export default Reminder;
+export default Reminder

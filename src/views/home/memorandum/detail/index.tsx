@@ -1,39 +1,35 @@
-import React, { FC, useEffect, useState } from 'react';
-import './style.scss';
-import { match, Link, RouteComponentProps } from 'react-router-dom';
-import { serviceGetMemorandumById } from '@/services';
-import { defaultTitle } from '../constants';
-import { LeftOutlined, EditOutlined } from '@ant-design/icons';
+import React, { FC, useEffect, useState } from 'react'
+import './style.scss'
+import { match, Link, RouteComponentProps } from 'react-router-dom'
+import { serviceGetMemorandumById } from '@/services'
+import { defaultTitle } from '../constants'
+import { LeftOutlined, EditOutlined } from '@ant-design/icons'
 
 interface Props {
   computedMatch: match<any>
 }
 
 const Detail: FC<Props & RouteComponentProps> = ({ computedMatch, history }) => {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const id = computedMatch.params.id;
-
-  const goBack = function () {
-    history.goBack();
-  };
+  const [title, setTitle] = useState('')
+  const [content, setContent] = useState('')
+  const id = computedMatch.params.id
 
   useEffect(() => {
     serviceGetMemorandumById(id)
     .then(res => {
       if (res.data.success) {
-        const title = res.data.data.title || defaultTitle;
-        document.title = title;
-        setTitle(title);
-        setContent(res.data.data.html);
+        const title = res.data.data.title || defaultTitle
+        document.title = title
+        setTitle(title)
+        setContent(res.data.data.html)
       }
-    });
-  }, [id]);
+    })
+  }, [id])
 
   return (
     <div className="memorandum-detail">
       <div className="tool-bar">
-        <LeftOutlined className="icon-left" onClick={goBack} />
+        <LeftOutlined className="icon-left" onClick={history.goBack} />
         <Link className="edit" to={`/home/memorandum/update/${id}`}>
           <EditOutlined title="编辑" />
         </Link>
@@ -45,7 +41,7 @@ const Detail: FC<Props & RouteComponentProps> = ({ computedMatch, history }) => 
       >
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Detail;
+export default Detail

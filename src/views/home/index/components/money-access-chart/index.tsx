@@ -1,42 +1,42 @@
-import React, { useEffect, useState } from 'react';
-import './style.scss';
-import { Empty } from 'antd';
+import React, { useEffect, useState } from 'react'
+import './style.scss'
+import { Empty } from 'antd'
 import {
   Chart,
   Geom,
   Axis,
   Tooltip,
   Legend,
-} from 'bizcharts';
-import { serviceGetCapitalFlowPrice } from '@/services';
+} from 'bizcharts'
+import { serviceGetCapitalFlowPrice } from '@/services'
 
 const cols = {
   date: {
     range: [0, 1]
   }
-};
+}
 
 const MoneyAccessChart = () => {
-  const [data, setData] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0);
+  const [data, setData] = useState([])
+  const [totalPrice, setTotalPrice] = useState(0)
 
   useEffect(() => {
     serviceGetCapitalFlowPrice()
     .then(res => {
       if (res.data.success) {
-        let price = 0;
+        let price = 0
         const data = res.data.data.map((item: any) => {
-          item.date = item.date.slice(5);
-          item.price = Number(item.price);
-          price += item.price;
-          return item;
-        });
+          item.date = item.date.slice(5)
+          item.price = Number(item.price)
+          price += item.price
+          return item
+        })
 
-        setData(data);
-        setTotalPrice(price);
+        setData(data)
+        setTotalPrice(price)
       }
-    });
-  }, []);
+    })
+  }, [])
 
   return (
     <div className="money-access">
@@ -67,7 +67,7 @@ const MoneyAccessChart = () => {
         </Chart>
       ) : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
     </div>
-  );
-};
+  )
+}
 
-export default React.memo(MoneyAccessChart);
+export default React.memo(MoneyAccessChart)

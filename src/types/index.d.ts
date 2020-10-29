@@ -11,4 +11,4 @@ declare namespace NodeJS {
   }
 }
 
-declare let window: Window;
+declare let window: Window

@@ -1,24 +1,24 @@
-import React, { Suspense, useEffect, useState } from 'react';
-import './style.scss';
-import PrivateRoute from '@/components/private-route/index';
-import { Layout, Menu } from 'antd';
-import { Switch, Link, RouteComponentProps } from 'react-router-dom';
-import { SETTING_SIDER_MENU_LIST } from '@/constants';
-import { settingRoutes } from '@/router/routes';
+import React, { Suspense, useEffect, useState } from 'react'
+import './style.scss'
+import PrivateRoute from '@/components/private-route/index'
+import { Layout, Menu } from 'antd'
+import { Switch, Link, RouteComponentProps } from 'react-router-dom'
+import { SETTING_SIDER_MENU_LIST } from '@/constants'
+import { settingRoutes } from '@/router/routes'
 
-const { Content, Sider } = Layout;
+const { Content, Sider } = Layout
 
 const SettingIndex: React.FC<RouteComponentProps> = function ({ location }) {
-  const [selectedKeys, setSelectedKeys] = useState('');
+  const [selectedKeys, setSelectedKeys] = useState('')
 
   useEffect(() => {
     for (let i = 0; i < SETTING_SIDER_MENU_LIST.length; i++) {
       if (SETTING_SIDER_MENU_LIST[i].path === location.pathname) {
-        setSelectedKeys(SETTING_SIDER_MENU_LIST[i].path);
-        break;
+        setSelectedKeys(SETTING_SIDER_MENU_LIST[i].path)
+        break
       }
     }
-  }, [location.pathname]);
+  }, [location.pathname])
 
   return (
     <Layout className="setting-page">
@@ -45,7 +45,7 @@ const SettingIndex: React.FC<RouteComponentProps> = function ({ location }) {
         </Suspense>
       </Content>
     </Layout>
-  );
-};
+  )
+}
 
-export default SettingIndex;
+export default SettingIndex

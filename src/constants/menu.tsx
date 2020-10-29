@@ -1,5 +1,5 @@
-import React from 'react';
-import { HOME, SETTING } from '@/router/constants';
+import React from 'react'
+import { HOME, SETTING } from '@/router/constants'
 import {
   HomeOutlined,
   ClockCircleOutlined,
@@ -8,7 +8,7 @@ import {
   BarChartOutlined,
   FormOutlined,
   UserOutlined
-} from '@ant-design/icons';
+} from '@ant-design/icons'
 
 export const HOME_SIDER_MENU_LIST = [
   {
@@ -66,7 +66,7 @@ export const HOME_SIDER_MENU_LIST = [
     icon: <UserOutlined />,
     name: SETTING.BASE.name
   }
-];
+]
 
 export const SETTING_SIDER_MENU_LIST = [
   {
@@ -85,4 +85,4 @@ export const SETTING_SIDER_MENU_LIST = [
     path: SETTING.ACCOUNT.path,
     name: SETTING.ACCOUNT.name
   },
-];
+]

@@ -1,12 +1,12 @@
-import React from 'react';
-import { Button } from 'antd';
-import { modalConfirmDelete } from '@/utils/helper';
-import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+import React from 'react'
+import { Button } from 'antd'
+import { modalConfirmDelete } from '@/utils/helper'
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 
 interface Props {
-  onDelete?: () => void;
-  onAdd?: () => void;
-  selectedRowKeys: string[];
+  onDelete?: () => void
+  onAdd?: () => void
+  selectedRowKeys: string[]
 }
 
 const ActionPanel: React.FC<Props> = function({
@@ -14,15 +14,15 @@ const ActionPanel: React.FC<Props> = function({
   onDelete,
   onAdd
 }) {
-  const isShowPanel = onDelete || onAdd;
-  const disabled = selectedRowKeys.length <= 0;
+  const isShowPanel = onDelete || onAdd
+  const disabled = selectedRowKeys.length <= 0
 
   function handleDelete() {
     modalConfirmDelete({
       title: '确定要删除选中'
     }).then(() => {
-      onDelete && onDelete();
-    });
+      onDelete && onDelete()
+    })
   }
 
   return isShowPanel ? (
@@ -49,7 +49,7 @@ const ActionPanel: React.FC<Props> = function({
         </Button>
       )}
     </div>
-  ) : null;
-};
+  ) : null
+}
 
-export default ActionPanel;
+export default ActionPanel

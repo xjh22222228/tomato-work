@@ -1,38 +1,38 @@
 /**
  * 账号设置
  */
-import React, { useEffect } from 'react';
-import md5 from 'blueimp-md5';
-import { connect } from 'react-redux';
-import { StoreState } from '@/store';
-import { UserInfoProps } from '@/store/reducers/user';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { serviceUpdateUser, serviceGetUserConfig, serviceUpdateUserConfig } from '@/services';
-import { Form, Input, Button, Divider } from 'antd';
+import React, { useEffect } from 'react'
+import md5 from 'blueimp-md5'
+import { connect } from 'react-redux'
+import { StoreState } from '@/store'
+import { UserInfoProps } from '@/store/reducers/user'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
+import { serviceUpdateUser, serviceGetUserConfig, serviceUpdateUserConfig } from '@/services'
+import { Form, Input, Button, Divider } from 'antd'
 
 type Props = {
-  userInfo: UserInfoProps;
+  userInfo: UserInfoProps
 }
 
 const Account: React.FC<Props & RouteComponentProps> = function ({ userInfo }) {
-  const [form] = Form.useForm();
-  const [form2] = Form.useForm();
+  const [form] = Form.useForm()
+  const [form2] = Form.useForm()
 
   async function handleUpdateUser() {
     try {
-      const values = await form.validateFields();
-      serviceUpdateUser({ password: md5(values.password) });
+      const values = await form.validateFields()
+      serviceUpdateUser({ password: md5(values.password) })
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
   }
 
   async function handleSckey() {
     try {
-      const values = await form2.validateFields();
-      serviceUpdateUserConfig({ sckey: values.sckey });
+      const values = await form2.validateFields()
+      serviceUpdateUserConfig({ sckey: values.sckey })
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
   }
 
@@ -40,12 +40,12 @@ const Account: React.FC<Props & RouteComponentProps> = function ({ userInfo }) {
     serviceGetUserConfig()
     .then(res => {
       if (res.data.success) {
-        form.setFieldsValue({
+        form2.setFieldsValue({
           sckey: res.data.data?.serverChanSckey || ''
-        });
+        })
       }
-    });
-  }, []);
+    })
+  }, [])
 
   return (
     <div className="account-setting">
@@ -108,11 +108,11 @@ const Account: React.FC<Props & RouteComponentProps> = function ({ userInfo }) {
         </Form.Item>
       </Form>
     </div>
-  );
-};
+  )
+}
 
 const mapStateToProps = ({ user }: StoreState): { userInfo: UserInfoProps } => {
-  return { userInfo: user.userInfo };
-};
+  return { userInfo: user.userInfo }
+}
 
-export default connect(mapStateToProps)(withRouter(Account));
+export default connect(mapStateToProps)(withRouter(Account))

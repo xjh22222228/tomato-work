@@ -1,33 +1,33 @@
 /**
  * 活动清单
  */
-import React, { useEffect, useRef } from 'react';
-import moment from 'moment';
-import useKeepState from 'use-keep-state';
-import Table from '@/components/table';
-import CreateTodo from '../components/create-todo';
-import { serviceGetTodoList, serviceDeleteTodoList, serviceUpdateTodoList } from '@/services';
-import { STATUS } from '../constants';
-import { DatePicker, Button, Tag, Form } from 'antd';
-import { modalConfirmDelete } from '@/utils';
+import React, { useEffect, useRef } from 'react'
+import moment from 'moment'
+import useKeepState from 'use-keep-state'
+import Table from '@/components/table'
+import CreateTodo from '../components/create-todo'
+import { serviceGetTodoList, serviceDeleteTodoList, serviceUpdateTodoList } from '@/services'
+import { STATUS } from '../constants'
+import { DatePicker, Button, Tag, Form } from 'antd'
+import { modalConfirmDelete } from '@/utils'
 
-const { RangePicker } = DatePicker;
-const DATE_FORMAT = 'YYYY-MM-DD';
+const { RangePicker } = DatePicker
+const DATE_FORMAT = 'YYYY-MM-DD'
 
 interface State {
-  showCreateTodoModal: boolean;
-  currentRowData: { [key: string]: any; } | null;
+  showCreateTodoModal: boolean
+  currentRowData: { [key: string]: any } | null
 }
 
 const initialState: State = {
   showCreateTodoModal: false,
   currentRowData: null
-};
+}
 
 const TodoList = () => {
-  const [form] = Form.useForm();
-  const [state, setState] = useKeepState(initialState);
-  const tableRef = useRef<any>();
+  const [form] = Form.useForm()
+  const [state, setState] = useKeepState(initialState)
+  const tableRef = useRef<any>()
   const tableColumns = [
     {
       title: '状态',
@@ -66,53 +66,53 @@ const TodoList = () => {
         </>
       )
     }
-  ];
+  ]
 
   function getData() {
-    tableRef.current.getTableData();
+    tableRef.current.getTableData()
   }
 
   function getTodoList(params: any) {
-    const values = form.getFieldsValue();
+    const values = form.getFieldsValue()
 
     if (values.date && values.date.length === 2) {
-      params.startDate = values.date[0].format(DATE_FORMAT);
-      params.endDate = values.date[1].format(DATE_FORMAT);
+      params.startDate = values.date[0].format(DATE_FORMAT)
+      params.endDate = values.date[1].format(DATE_FORMAT)
     }
 
     return serviceGetTodoList(params).then(res => {
       res.data.data.rows.map((item: any) => {
-        item.createdAt = moment(item.createdAt).format('YYYY-MM-DD HH:mm');
-        return item;
-      });
-      return res;
-    });
+        item.createdAt = moment(item.createdAt).format('YYYY-MM-DD HH:mm')
+        return item
+      })
+      return res
+    })
   }
 
   function initParams() {
-    const startDate = moment().startOf('year');
-    const endDate = moment().endOf('year');
+    const startDate = moment().startOf('year')
+    const endDate = moment().endOf('year')
     form.setFieldsValue({
       date: [startDate, endDate]
-    });
-    tableRef?.current?.getTableData();
+    })
+    tableRef?.current?.getTableData()
   }
 
   function toggleCreateTodoModal() {
-    setState({ showCreateTodoModal: !state.showCreateTodoModal });
+    setState({ showCreateTodoModal: !state.showCreateTodoModal })
   }
 
   const handleOnSuccess = function() {
-    toggleCreateTodoModal();
-    tableRef.current.getTableData();
-  };
+    toggleCreateTodoModal()
+    tableRef.current.getTableData()
+  }
 
   function handleActionButton(buttonType: number, row: any) {
     switch (buttonType) {
       // 编辑
       case 0:
-        setState({ showCreateTodoModal: true, currentRowData: row });
-        break;
+        setState({ showCreateTodoModal: true, currentRowData: row })
+        break
       // 删除
       case 1:
         modalConfirmDelete()
@@ -120,27 +120,27 @@ const TodoList = () => {
           serviceDeleteTodoList(row.id)
           .then(res => {
             if (res.data.success) {
-              tableRef.current.getTableData();
+              tableRef.current.getTableData()
             }
-          });
-        });
-        break;
+          })
+        })
+        break
       // 状态
       case 2:
         serviceUpdateTodoList(row.id, { status: 2 })
         .then(res => {
           if (res.data.success) {
-            tableRef.current.getTableData();
+            tableRef.current.getTableData()
           }
-        });
-        break;
+        })
+        break
       default:
     }
   }
 
   useEffect(() => {
-    initParams();
-  }, []);
+    initParams()
+  }, [])
 
   return (
     <div className="today-task">
@@ -178,7 +178,7 @@ const TodoList = () => {
         rowData={state.currentRowData}
       />
     </div>
-  );
-};
+  )
+}
 
-export default TodoList;
+export default TodoList

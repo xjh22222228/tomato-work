@@ -1,19 +1,19 @@
-import { lazy } from 'react';
-import { IRouteProps } from '@/router/types';
-import { HOME, SETTING } from './constants';
-import Login from '@/views/login/index';
-import NoMatch from '@/views/exception/no-match';
-import MainEntry from '@/views/home/main-entry';
-import Reminder from '@/views/home/reminder';
-import SettingIndex from '@/views/home/setting/index';
-import HomeIndex from '@/views/home/index';
-import TodayTask from '@/views/home/today-task';
-import Memorandum from '@/views/home/memorandum/index';
-import MemorandumCreate from '@/views/home/memorandum/create';
-import MemorandumDetail from '@/views/home/memorandum/detail';
-import CapitalFlow from '@/views/home/capital-flow/index';
-import CapitalFlowType from '@/views/home/capital-flow/type';
-import TodoList from '@/views/home/todo-list/index';
+import { lazy } from 'react'
+import { IRouteProps } from '@/router/types'
+import { HOME, SETTING } from './constants'
+import Login from '@/views/login/index'
+import NoMatch from '@/views/exception/no-match'
+import MainEntry from '@/views/home/main-entry'
+import Reminder from '@/views/home/reminder'
+import SettingIndex from '@/views/home/setting/index'
+import HomeIndex from '@/views/home/index'
+import TodayTask from '@/views/home/today-task'
+import Memorandum from '@/views/home/memorandum/index'
+import MemorandumCreate from '@/views/home/memorandum/create'
+import MemorandumDetail from '@/views/home/memorandum/detail'
+import CapitalFlow from '@/views/home/capital-flow/index'
+import CapitalFlowType from '@/views/home/capital-flow/type'
+import TodoList from '@/views/home/todo-list/index'
 
 const routesMap: Array<IRouteProps> = [
   {
@@ -142,12 +142,12 @@ const routesMap: Array<IRouteProps> = [
       title: HOME.NO_MATCH.name
     }
   },
-];
+]
 
-const Base = lazy(() => import('@/views/home/setting/base'));
-const InnerMessage = lazy(() => import('@/views/home/setting/inner-message'));
-const Notification = lazy(() => import('@/views/home/setting/notification'));
-const Account = lazy(() => import('@/views/home/setting/account'));
+const Base = lazy(() => import('@/views/home/setting/base'))
+const InnerMessage = lazy(() => import('@/views/home/setting/inner-message'))
+const Notification = lazy(() => import('@/views/home/setting/notification'))
+const Account = lazy(() => import('@/views/home/setting/account'))
 
 export const settingRoutes: Array<IRouteProps> = [
   {
@@ -182,6 +182,6 @@ export const settingRoutes: Array<IRouteProps> = [
       title: SETTING.ACCOUNT.name
     }
   },
-];
+]
 
-export default routesMap;
+export default routesMap

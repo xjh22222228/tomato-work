@@ -1,8 +1,8 @@
-import React from 'react';
-import './style.scss';
-import CONFIG from '@/config';
+import React from 'react'
+import './style.scss'
+import CONFIG from '@/config'
 
-const currentYear = new Date().getFullYear();
+const currentYear = new Date().getFullYear()
 
 const Footer = () => {
   return (
@@ -12,7 +12,7 @@ const Footer = () => {
         <a href="https://github.com/xjh22222228" target="_blank" rel="noopener noreferrer"> xiejiahe</a>
       </div>
     </footer>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer

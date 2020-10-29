@@ -1,40 +1,40 @@
 /**
  * 提醒事项
  */
-import React, { useEffect, useRef } from 'react';
-import Table from '@/components/table';
-import moment from 'moment';
-import CreateReminder from './components/create-reminder';
-import useKeepState from 'use-keep-state';
-import { connect } from 'react-redux';
-import { DatePicker, Button, Select, Tag, Modal, Form } from 'antd';
-import { serviceGetReminder, serviceDeleteReminder } from '@/services';
-import { modalConfirmDelete } from '@/utils';
+import React, { useEffect, useRef } from 'react'
+import Table from '@/components/table'
+import moment from 'moment'
+import CreateReminder from './components/create-reminder'
+import useKeepState from 'use-keep-state'
+import { connect } from 'react-redux'
+import { DatePicker, Button, Select, Tag, Modal, Form } from 'antd'
+import { serviceGetReminder, serviceDeleteReminder } from '@/services'
+import { modalConfirmDelete } from '@/utils'
 
-const { RangePicker } = DatePicker;
-const Option = Select.Option;
-const DATE_FORMAT = 'YYYY-MM-DD';
+const { RangePicker } = DatePicker
+const Option = Select.Option
+const DATE_FORMAT = 'YYYY-MM-DD'
 const STATUS_TYPE: any = {
   1: { color: '#f50', text: '待提醒' },
   2: { color: '#87d068', text: '已提醒' }
-};
-
-interface State {
-  showCreateModal: boolean;
-  currentRow: { [propName: string]: any } | null;
 }
 
-type Props = ReturnType<typeof mapStateToProps>;
+interface State {
+  showCreateModal: boolean
+  currentRow: { [propName: string]: any } | null
+}
+
+type Props = ReturnType<typeof mapStateToProps>
 
 const initialState: State = {
   showCreateModal: false,
   currentRow: null
-};
+}
 
 const Reminder: React.FC<Props> = function({ userInfo }) {
-  const [form] = Form.useForm();
-  const [state, setState] = useKeepState(initialState);
-  const tableRef = useRef<any>();
+  const [form] = Form.useForm()
+  const [state, setState] = useKeepState(initialState)
+  const tableRef = useRef<any>()
   const tableColumns = [
     {
       title: '状态',
@@ -68,40 +68,40 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
         </>
       )
     }
-  ];
+  ]
 
   const initParams = function() {
-    const startDate = moment().startOf('year');
-    const endDate = moment().endOf('year');
+    const startDate = moment().startOf('year')
+    const endDate = moment().endOf('year')
     form.setFieldsValue({
       queryType: '',
       date: [startDate, endDate]
-    });
-    tableRef?.current?.getTableData();
-  };
+    })
+    tableRef?.current?.getTableData()
+  }
 
   function getReminder(params: any = {}) {
-    const values = form.getFieldsValue();
+    const values = form.getFieldsValue()
 
     if (values.date && values.date.length === 2) {
-      params.startDate = values.date[0].format(DATE_FORMAT);
-      params.endDate = values.date[1].format(DATE_FORMAT);
+      params.startDate = values.date[0].format(DATE_FORMAT)
+      params.endDate = values.date[1].format(DATE_FORMAT)
     }
 
     if (values.queryType !== '') {
-      params.type = values.queryType;
+      params.type = values.queryType
     }
 
     return serviceGetReminder(params).then(res => {
       if (res.data.success) {
         res.data.data.rows = res.data.data.rows.map((el: any, idx: number) => {
-          el.order = idx + 1;
-          el.createdAt = moment(el.createdAt).format('YYYY-MM-DD HH:mm:ss');
-          return el;
-        });
+          el.order = idx + 1
+          el.createdAt = moment(el.createdAt).format('YYYY-MM-DD HH:mm:ss')
+          return el
+        })
       }
-      return res;
-    });
+      return res
+    })
   }
 
   function handleButton(type: number, rows: any) {
@@ -110,28 +110,28 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
       setState({
         showCreateModal: true,
         currentRow: rows
-      });
+      })
     } else {
       modalConfirmDelete()
       .then(() => {
         serviceDeleteReminder(rows.id)
         .then(res => {
           if (res.data.success) {
-            tableRef.current.getTableData();
+            tableRef.current.getTableData()
           }
-        });
-      });
+        })
+      })
     }
   }
 
   // modal成功新增回调函数
   function handleModalOnSuccess() {
-    setState({ showCreateModal: false });
-    tableRef.current.getTableData();
+    setState({ showCreateModal: false })
+    tableRef.current.getTableData()
   }
 
   useEffect(() => {
-    initParams();
+    initParams()
 
     if (!userInfo.email) {
       Modal.warning({
@@ -148,9 +148,9 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
             </a>
           </>
         ),
-      });
+      })
     }
-  }, [userInfo.email]);
+  }, [userInfo.email])
 
   return (
     <div className="reminder">
@@ -196,11 +196,11 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
         onSuccess={handleModalOnSuccess}
       />
     </div>
-  );
-};
+  )
+}
 
 const mapStateToProps = (store: any) => ({
   userInfo: store.user.userInfo
-});
+})
 
-export default connect(mapStateToProps)(Reminder);
+export default connect(mapStateToProps)(Reminder)

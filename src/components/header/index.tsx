@@ -1,17 +1,17 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import './style.scss';
-import Avatar from '@/components/avatar';
-import moment from 'moment';
-import config from '@/config';
-import { Layout, Badge, Popover, Empty } from 'antd';
-import { withRouter, RouteComponentProps, Link } from 'react-router-dom';
-import { HomeMainState } from '@/views/home/main-entry/index';
-import { connect } from 'react-redux';
-import { StoreState } from '@/store';
-import { logout } from '@/store/actions/user';
-import { SETTING } from '@/router/constants';
-import { serviceGetInnerMessage } from '@/services';
-import { fullscreen, exitFullscreen } from '@/utils';
+import React, { useEffect, useState, useMemo } from 'react'
+import './style.scss'
+import Avatar from '@/components/avatar'
+import moment from 'moment'
+import config from '@/config'
+import { Layout, Badge, Popover, Empty } from 'antd'
+import { withRouter, RouteComponentProps, Link } from 'react-router-dom'
+import { HomeMainState } from '@/views/home/main-entry/index'
+import { connect } from 'react-redux'
+import { StoreState } from '@/store'
+import { logout } from '@/store/actions/user'
+import { SETTING } from '@/router/constants'
+import { serviceGetInnerMessage } from '@/services'
+import { fullscreen, exitFullscreen } from '@/utils'
 import {
   PoweroffOutlined,
   MenuUnfoldOutlined,
@@ -21,16 +21,16 @@ import {
   GithubOutlined,
   FullscreenExitOutlined,
   FullscreenOutlined
-} from '@ant-design/icons';
+} from '@ant-design/icons'
 
-const { Header } = Layout;
+const { Header } = Layout
 const popoverList = [
   { name: SETTING.BASE.name, path: SETTING.BASE.path },
   { name: SETTING.NOTIFICATION.name, path: SETTING.NOTIFICATION.path },
   { name: SETTING.ACCOUNT.name, path: SETTING.ACCOUNT.path }
-];
+]
 
-type Props = ReturnType<typeof mapStateToProps> & HomeMainState & RouteComponentProps;
+type Props = ReturnType<typeof mapStateToProps> & HomeMainState & RouteComponentProps
 
 const PopoverContent = (
   <div className="popover-content">
@@ -42,34 +42,34 @@ const PopoverContent = (
       退出
     </div>
   </div>
-);
+)
 
 const HomeHeader: React.FC<Props> = function ({
   collapsed,
   setCollapsed,
   userInfo
 }) {
-  const [messageList, setMessageList] = useState([]);
-  const [unReadCount, setUnReadCount] = useState(0);
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [messageList, setMessageList] = useState([])
+  const [unReadCount, setUnReadCount] = useState(0)
+  const [isFullscreen, setIsFullscreen] = useState(false)
 
   useEffect(() => {
     serviceGetInnerMessage({ pageSize: 5 })
     .then(res => {
       if (res.data.success) {
-        let count = 0;
+        let count = 0
         const data = res.data.data.rows.map((item: any) => {
-          item.createdAt = moment(item.createdAt).format('YYYY-MM-DD HH:mm');
+          item.createdAt = moment(item.createdAt).format('YYYY-MM-DD HH:mm')
           if (!item.hasRead) {
-            count++;
+            count++
           }
-          return item;
-        });
-        setUnReadCount(count);
-        setMessageList(data);
+          return item
+        })
+        setUnReadCount(count)
+        setMessageList(data)
       }
-    });
-  }, []);
+    })
+  }, [])
 
   const MessageContent = useMemo(() => (
     <div className="message-popover">
@@ -91,13 +91,13 @@ const HomeHeader: React.FC<Props> = function ({
         <Empty style={{ padding: '20px 0' }} />
       )}
     </div>
-  ), [messageList]);
+  ), [messageList])
 
   function handleFullscreen() {
     setIsFullscreen(isFullscreen => {
-      isFullscreen ? exitFullscreen() : fullscreen();
-      return !isFullscreen;
-    });
+      isFullscreen ? exitFullscreen() : fullscreen()
+      return !isFullscreen
+    })
   }
 
   return (
@@ -147,11 +147,11 @@ const HomeHeader: React.FC<Props> = function ({
         </Popover>
       </ul>
     </Header>
-  );
-};
+  )
+}
 
 const mapStateToProps = ({ user }: StoreState) => {
-  return { userInfo: user.userInfo };
-};
+  return { userInfo: user.userInfo }
+}
 
-export default connect(mapStateToProps)(withRouter(HomeHeader));
+export default connect(mapStateToProps)(withRouter(HomeHeader))

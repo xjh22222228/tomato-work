@@ -1,18 +1,18 @@
-import React, { useState, useEffect, useRef } from 'react';
-import './style.scss';
-import { Row, Col, Statistic } from 'antd';
-import { Link } from 'react-router-dom';
-import { serviceGetPanelData } from '@/services';
-import { HOME } from '@/router/constants';
+import React, { useState, useEffect, useRef } from 'react'
+import './style.scss'
+import { Row, Col, Statistic } from 'antd'
+import { Link } from 'react-router-dom'
+import { serviceGetPanelData } from '@/services'
+import { HOME } from '@/router/constants'
 import {
   PropertySafetyFilled,
   ScheduleFilled,
   FileTextFilled,
   AlertFilled
-} from '@ant-design/icons';
+} from '@ant-design/icons'
 
 const PanelGroup = () => {
-  const isInit = useRef<boolean>(false);
+  const isInit = useRef<boolean>(false)
   const [state, setState] = useState([
     {
       title: '今日支出',
@@ -38,25 +38,25 @@ const PanelGroup = () => {
       Icon: <AlertFilled className="icon" />,
       path: HOME.REMINDER.path
     },
-  ]);
+  ])
 
   useEffect(() => {
-    if (isInit.current) return;
+    if (isInit.current) return
 
-    isInit.current = true;
+    isInit.current = true
 
     serviceGetPanelData()
     .then(res => {
       if (res.data.success) {
-        const data = state.slice();
-        data[0].total = res.data.data.consumption;
-        data[1].total = res.data.data.todayTaskCount;
-        data[2].total = res.data.data.unfinishedTodoListCount;
-        data[3].total = res.data.data.reminderCount;
-        setState(data);
+        const data = state.slice()
+        data[0].total = res.data.data.consumption
+        data[1].total = res.data.data.todayTaskCount
+        data[2].total = res.data.data.unfinishedTodoListCount
+        data[3].total = res.data.data.reminderCount
+        setState(data)
       }
-    });
-  }, [state]);
+    })
+  }, [state])
 
   return (
     <Row gutter={{ xs: 8, sm: 16, md: 24}} className="panel-group">
@@ -71,7 +71,7 @@ const PanelGroup = () => {
         </Col>
       ))}
     </Row>
-  );
-};
+  )
+}
 
-export default React.memo(PanelGroup);
+export default React.memo(PanelGroup)

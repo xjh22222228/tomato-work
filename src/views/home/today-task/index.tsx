@@ -2,32 +2,32 @@
  * 今日待办
  * @author xiejiahe
  */
-import React, { useEffect } from 'react';
-import './style.scss';
-import useKeepState from 'use-keep-state';
-import NoData from '@/components/no-data/index';
-import TaskItem from './components/task-item';
-import CreateTask from './components/create-task';
-import moment from 'moment';
-import { DatePicker, Button, Tag, Row, Col, Form } from 'antd';
-import { serviceGetTask } from '@/services';
+import React, { useEffect } from 'react'
+import './style.scss'
+import useKeepState from 'use-keep-state'
+import NoData from '@/components/no-data/index'
+import TaskItem from './components/task-item'
+import CreateTask from './components/create-task'
+import moment from 'moment'
+import { DatePicker, Button, Tag, Row, Col, Form } from 'antd'
+import { serviceGetTask } from '@/services'
 
-const DATE_FORMAT = 'YYYY-MM-DD';
+const DATE_FORMAT = 'YYYY-MM-DD'
 const TASK_TYPE: any = {
   wait: { text: '待作业', color: 'orange' },
   process: { text: '作业中', color: '#108ee9' },
   finished: { text: '已完成', color: '#87d068' },
   unfinished: { text: '未完成', color: '#f50' }
-};
+}
 
 interface State {
   data: {
-    wait: any[];
-    process: any[];
-    finished: any[];
-    unfinished: any[];
-  };
-  showCreateTaskModal: boolean;
+    wait: any[]
+    process: any[]
+    finished: any[]
+    unfinished: any[]
+  }
+  showCreateTaskModal: boolean
 }
 
 const initialState: State = {
@@ -38,65 +38,65 @@ const initialState: State = {
     unfinished: []
   },
   showCreateTaskModal: false
-};
+}
 
 const TodayTaskPage = () => {
-  const [form] = Form.useForm();
-  const [state, setState] = useKeepState(initialState);
+  const [form] = Form.useForm()
+  const [state, setState] = useKeepState(initialState)
 
   function getTask() {
-    const values = form.getFieldsValue();
-    const date = values.startDate.format(DATE_FORMAT);
+    const values = form.getFieldsValue()
+    const date = values.startDate.format(DATE_FORMAT)
     serviceGetTask({
       startDate: date,
       endDate: date
     })
     .then(res => {
       if (res.data.success) {
-        setState({ data: res.data.data });
+        setState({ data: res.data.data })
       }
-    });
+    })
   }
 
   function initParams() {
     form.setFieldsValue({
       startDate: moment()
-    });
-    getTask();
+    })
+    getTask()
   }
 
   function toggleCreateTaskModal() {
-    setState({ showCreateTaskModal: !state.showCreateTaskModal });
+    setState({ showCreateTaskModal: !state.showCreateTaskModal })
   }
 
   function handleOnSuccess() {
-    toggleCreateTaskModal();
-    getTask();
+    toggleCreateTaskModal()
+    getTask()
   }
 
   function handlePrevDay() {
-    const startDate: moment.Moment = form.getFieldValue('startDate');
+    const startDate: moment.Moment = form.getFieldValue('startDate')
     form.setFieldsValue({
       startDate: moment(
         startDate.subtract(1, 'day').format(DATE_FORMAT)
       )
-    });
-    getTask();
+    })
+    getTask()
   }
 
   function handleNextDay() {
-    const startDate: moment.Moment = form.getFieldValue('startDate');
+    const startDate: moment.Moment = form.getFieldValue('startDate')
     form.setFieldsValue({
       startDate: moment(
         startDate.add(1, 'day').format(DATE_FORMAT)
       )
-    });
-    getTask();
+    })
+    getTask()
   }
 
   useEffect(() => {
-    initParams();
-  }, []);
+    initParams()
+  }, [])
 
   return (
     <div className="today-task">
@@ -153,7 +153,7 @@ const TodayTaskPage = () => {
         onCancel={toggleCreateTaskModal}
       />
     </div>
-  );
-};
+  )
+}
 
-export default TodayTaskPage;
+export default TodayTaskPage

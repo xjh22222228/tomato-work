@@ -1,24 +1,24 @@
-import React, { useEffect } from 'react';
-import useKeepState from 'use-keep-state';
-import { serviceCreateTodoList, serviceUpdateTodoList } from '@/services';
+import React, { useEffect } from 'react'
+import useKeepState from 'use-keep-state'
+import { serviceCreateTodoList, serviceUpdateTodoList } from '@/services'
 import {
   Modal,
   Form,
   Input
-} from 'antd';
+} from 'antd'
 
 type Props = {
-  visible: boolean;
-  rowData?: { [key: string]: any; } | null;
-  onSuccess: (res?: any) => void;
-  onCancel: () => void;
-};
+  visible: boolean
+  rowData?: { [key: string]: any } | null
+  onSuccess: (res?: any) => void
+  onCancel: () => void
+}
 
-const { TextArea } = Input;
+const { TextArea } = Input
 const initialState = {
   confirmLoading: false,
   content: '',
-};
+}
 
 const CreateTodo: React.FC<Props> = function ({
   visible,
@@ -26,12 +26,12 @@ const CreateTodo: React.FC<Props> = function ({
   onCancel,
   rowData
 }) {
-  const [form] = Form.useForm();
-  const [state, setState] = useKeepState(initialState);
+  const [form] = Form.useForm()
+  const [state, setState] = useKeepState(initialState)
 
   async function handleSubmitForm() {
     try {
-      const values = await form.validateFields();
+      const values = await form.validateFields()
       const params = {
         content: values.content.trim(),
       };
@@ -43,11 +43,11 @@ const CreateTodo: React.FC<Props> = function ({
       )
       .then(res => {
         if (res.data.success) {
-          onSuccess();
+          onSuccess()
         }
-      });
+      })
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   }
 
@@ -55,15 +55,15 @@ const CreateTodo: React.FC<Props> = function ({
     if (visible && rowData) {
       form.setFieldsValue({
         content: rowData.content
-      });
+      })
     }
-  }, [visible, rowData]);
+  }, [visible, rowData])
 
   useEffect(() => {
     if (!visible) {
-      form.resetFields();
+      form.resetFields()
     }
-  }, [visible]);
+  }, [visible])
 
   return (
     <Modal
@@ -95,7 +95,7 @@ const CreateTodo: React.FC<Props> = function ({
         </Form.Item>
       </Form>
     </Modal>
-  );
-};
+  )
+}
 
-export default React.memo(CreateTodo);
+export default React.memo(CreateTodo)

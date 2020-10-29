@@ -1,8 +1,8 @@
-import React from 'react';
-import './style.scss';
-import { Result, Button } from 'antd';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { ExceptionStatusType } from 'antd/lib/result';
+import React from 'react'
+import './style.scss'
+import { Result, Button } from 'antd'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
+import { ExceptionStatusType } from 'antd/lib/result'
 
 interface Props {
   status?: ExceptionStatusType
@@ -21,7 +21,7 @@ const statusMap = {
     title: '500',
     subTitle: 'Sorry, the server is wrong.',
   }
-};
+}
 
 const NoMatch: React.FC<Props & RouteComponentProps> = function ({ history, status = '404' }) {
   return (
@@ -30,7 +30,7 @@ const NoMatch: React.FC<Props & RouteComponentProps> = function ({ history, stat
       extra={<Button type="primary" onClick={history.goBack}>Back</Button>}
       {...statusMap[status]}
     />
-  );
-};
+  )
+}
 
-export default withRouter(NoMatch);
+export default withRouter(NoMatch)

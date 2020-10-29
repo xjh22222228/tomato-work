@@ -1,66 +1,66 @@
-import React from 'react';
-import useKeepState from 'use-keep-state';
-import { isLtTodayTimestamp } from '@/utils';
-import { serviceCreateTask } from '@/services';
+import React from 'react'
+import useKeepState from 'use-keep-state'
+import { isLtTodayTimestamp } from '@/utils'
+import { serviceCreateTask } from '@/services'
 import {
   Modal,
   Form,
   Input,
   DatePicker,
   Rate
-} from 'antd';
+} from 'antd'
 
 type Props = {
-  visible: boolean;
-  data?: object;
-  onSuccess: (res?: any) => void;
-  onCancel: () => void;
-};
+  visible: boolean
+  data?: object
+  onSuccess: (res?: any) => void
+  onCancel: () => void
+}
 
-const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss';
-const { TextArea } = Input;
+const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss'
+const { TextArea } = Input
 const initialState = {
   confirmLoading: false,
-};
+}
 
 const CreateTaskModal: React.FC<Props> = function ({
   visible,
   onSuccess,
   onCancel,
 }) {
-  const [form] = Form.useForm();
-  const [state, setState] = useKeepState(initialState);
+  const [form] = Form.useForm()
+  const [state, setState] = useKeepState(initialState)
 
   async function handleSubmitForm() {
     try {
-      const values = await form.validateFields();
+      const values = await form.validateFields()
       const params = {
         date: values.date.format(DATE_FORMAT),
         content: values.content.trim(),
         count: values.count
-      };
+      }
 
-      setState({ confirmLoading: true });
+      setState({ confirmLoading: true })
 
       serviceCreateTask(params)
         .then(res => {
           if (res.data.success) {
-            onSuccess();
+            onSuccess()
           }
         })
         .finally(() => {
-          setState({ confirmLoading: false });
-        });
+          setState({ confirmLoading: false })
+        })
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
   }
 
   React.useEffect(() => {
     if (!visible) {
-      form.resetFields();
+      form.resetFields()
     }
-  }, [visible]);
+  }, [visible])
 
   return (
     <Modal
@@ -119,7 +119,7 @@ const CreateTaskModal: React.FC<Props> = function ({
         </Form.Item>
       </Form>
     </Modal>
-  );
-};
+  )
+}
 
-export default React.memo(CreateTaskModal);
+export default React.memo(CreateTaskModal)

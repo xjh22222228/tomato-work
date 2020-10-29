@@ -1,70 +1,70 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
-import './style.scss';
-import bytes from 'bytes';
-import moment from 'moment';
-import CONFIG from '@/config';
-import useKeepState from 'use-keep-state';
-import { Row, Col, Card, Progress, Empty } from 'antd';
-import { totalPercentage } from '@/utils';
-import { serviceGetInnerMessage } from '@/services';
+import React, { useCallback, useEffect, useMemo } from 'react'
+import './style.scss'
+import bytes from 'bytes'
+import moment from 'moment'
+import CONFIG from '@/config'
+import useKeepState from 'use-keep-state'
+import { Row, Col, Card, Progress, Empty } from 'antd'
+import { totalPercentage } from '@/utils'
+import { serviceGetInnerMessage } from '@/services'
 
 interface Props {
   systemInfo: {
-    [propName: string]: any;
+    [key: string]: any
   }
 }
 
 interface State {
-  curSystemTime: string;
-  messageList: any[];
-  loading: boolean;
+  curSystemTime: string
+  messageList: any[]
+  loading: boolean
 }
 
 const initialState: State = {
   curSystemTime: '',
   messageList: [],
   loading: true
-};
+}
 
 const statusColor = (percentage: number) => {
-  if (percentage < 40) return '#52c41a';
-  if (percentage < 80) return '#ffa500';
-  return '#f50';
-};
-let timer: any;
+  if (percentage < 40) return '#52c41a'
+  if (percentage < 80) return '#ffa500'
+  return '#f50'
+}
+let timer: any
 
 const System: React.FC<Props> = ({ systemInfo }) => {
-  const [state, setState] = useKeepState(initialState);
+  const [state, setState] = useKeepState(initialState)
   const memPercentage = useMemo(() => {
-    return totalPercentage(systemInfo.totalmem, systemInfo.freemem);
-  }, [systemInfo.totalmem, systemInfo.freemem]);
+    return totalPercentage(systemInfo.totalmem, systemInfo.freemem)
+  }, [systemInfo.totalmem, systemInfo.freemem])
 
   // 倒计时
   const countdown = useCallback(() => {
-    clearTimeout(timer);
-    const timeDiff = systemInfo.currentSystemTime + (Date.now() - systemInfo.currentSystemTime);
-    setState({ curSystemTime: moment(timeDiff).format('YYYY-MM-DD HH:mm:ss') });
+    clearTimeout(timer)
+    const timeDiff = systemInfo.currentSystemTime + (Date.now() - systemInfo.currentSystemTime)
+    setState({ curSystemTime: moment(timeDiff).format('YYYY-MM-DD HH:mm:ss') })
     timer = setTimeout(() => {
-      countdown();
-    }, 1000);
-  }, [systemInfo.currentSystemTime, setState]);
+      countdown()
+    }, 1000)
+  }, [systemInfo.currentSystemTime, setState])
 
   useEffect(() => {
-    countdown();
+    countdown()
 
     return () => {
-      clearTimeout(timer);
-    };
-  }, [countdown]);
+      clearTimeout(timer)
+    }
+  }, [countdown])
 
   useEffect(() => {
     serviceGetInnerMessage({ pageSize: 5 })
     .then(res => {
       if (res.data.success) {
-        setState({ loading: false, messageList: res.data.data.rows });
+        setState({ loading: false, messageList: res.data.data.rows })
       }
-    });
-  }, [setState]);
+    })
+  }, [setState])
 
   return (
     <Row gutter={{ xs: 8, sm: 16, md: 24}} className="system-data">
@@ -129,7 +129,7 @@ const System: React.FC<Props> = ({ systemInfo }) => {
         </Card>
       </Col>
     </Row>
-  );
-};
+  )
+}
 
-export default React.memo(System);
+export default React.memo(System)

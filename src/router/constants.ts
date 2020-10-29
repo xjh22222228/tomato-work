@@ -8,7 +8,7 @@ export const SETTING = {
   NOTIFICATION: { name: '消息通知', path: '/home/setting/notification' },
 
   ACCOUNT: { name: '账号设置', path: '/home/setting/account' },
-};
+}
 
 export const HOME = {
   LOGIN: { name: '登录', path: ['/', '/login'] },
@@ -35,4 +35,4 @@ export const HOME = {
   TODO_LIST: { name: '活动清单', path: '/home/todoList' },
 
   NO_MATCH: { name: '404 Not Found', path: '*' },
-};
+}

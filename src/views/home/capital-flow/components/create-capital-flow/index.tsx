@@ -1,39 +1,39 @@
-import React, { useEffect } from 'react';
-import moment from 'moment';
+import React, { useEffect } from 'react'
+import moment from 'moment'
 import {
   Modal,
   Form,
   Input,
   DatePicker,
   Select
-} from 'antd';
-import { serviceCreateCapitalFlow, serviceUpdateCapitalFlow } from '@/services';
-import useKeepState from 'use-keep-state';
+} from 'antd'
+import { serviceCreateCapitalFlow, serviceUpdateCapitalFlow } from '@/services'
+import useKeepState from 'use-keep-state'
 
-const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss';
-const { TextArea } = Input;
-const { Option } = Select;
+const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss'
+const { TextArea } = Input
+const { Option } = Select
 
 const formLayout = {
   labelCol: { span: 4 },
   wrapperCol: { span: 20 },
-};
+}
 
 type Props = {
-  visible: boolean;
-  onCancel: () => void;
-  onSuccess: (res?: any) => void;
-  rowData?: { [key: string]: any; };
-  nameList: any[];
-};
+  visible: boolean
+  onCancel: () => void
+  onSuccess: (res?: any) => void
+  rowData?: { [key: string]: any }
+  nameList: any[]
+}
 
 interface State {
-  confirmLoading: boolean;
+  confirmLoading: boolean
 }
 
 const initialState: State = {
   confirmLoading: false,
-};
+}
 
 const CreateReminder: React.FC<Props> = function ({
   visible,
@@ -42,18 +42,18 @@ const CreateReminder: React.FC<Props> = function ({
   rowData,
   nameList
 }) {
-  const [form] = Form.useForm();
-  const [state, setState] = useKeepState(initialState);
+  const [form] = Form.useForm()
+  const [state, setState] = useKeepState(initialState)
 
   async function handleSubmit() {
     try {
-      const values = await form.validateFields();
+      const values = await form.validateFields()
       const params = {
         date: values.date.format(DATE_FORMAT),
         remarks: values.remarks?.trim() ?? '',
         typeId: values.typeId,
         price: Number(values.price)
-      };
+      }
 
       setState({ confirmLoading: true });
 
@@ -64,33 +64,33 @@ const CreateReminder: React.FC<Props> = function ({
       )
         .then(res => {
           if (res.data.success) {
-            onSuccess(res);
+            onSuccess(res)
           }
         })
         .finally(() => {
-          setState({ confirmLoading: false });
-        });
+          setState({ confirmLoading: false })
+        })
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
   }
 
   useEffect(() => {
     if (visible && rowData) {
       form.setFieldsValue({
-        date: moment(rowData.date),
+        date: moment(rowData.createdAt),
         remarks: rowData.remarks,
         typeId: rowData.typeId,
         price: rowData.price,
-      });
+      })
     }
-  }, [visible, rowData]);
+  }, [visible, rowData])
 
   useEffect(() => {
     if (!visible) {
-      form.resetFields();
+      form.resetFields()
     }
-  }, [visible]);
+  }, [visible])
 
   return (
     <Modal
@@ -157,7 +157,7 @@ const CreateReminder: React.FC<Props> = function ({
         </Form.Item>
       </Form>
     </Modal>
-  );
-};
+  )
+}
 
-export default React.memo(CreateReminder);
+export default React.memo(CreateReminder)

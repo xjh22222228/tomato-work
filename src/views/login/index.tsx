@@ -1,47 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import './style.scss';
-import Footer from '@/components/footer';
-import qs from 'query-string';
-import md5 from 'blueimp-md5';
-import api from '@/api';
-import config from '@/config';
-import { isEmpty } from 'lodash';
-import { Button, Input, message, Popover, Form } from 'antd';
-import { RouteComponentProps } from 'react-router-dom';
-import { DispatchProp, connect } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
-import { AnyAction } from 'redux';
-import { githubAuthz, loginByToken, setUser } from '@/store/actions';
-import { serviceLogin } from '@/services';
-import { HOME } from '@/router/constants';
-import { LOCAL_STORAGE } from '@/constants';
-import { randomCode } from '@/utils';
+import React, { useState, useEffect } from 'react'
+import './style.scss'
+import Footer from '@/components/footer'
+import qs from 'query-string'
+import md5 from 'blueimp-md5'
+import api from '@/api'
+import config from '@/config'
+import { isEmpty } from 'lodash'
+import { Button, Input, message, Popover, Form } from 'antd'
+import { RouteComponentProps } from 'react-router-dom'
+import { DispatchProp, connect } from 'react-redux'
+import { ThunkDispatch } from 'redux-thunk'
+import { AnyAction } from 'redux'
+import { githubAuthz, loginByToken, setUser } from '@/store/actions'
+import { serviceLogin } from '@/services'
+import { HOME } from '@/router/constants'
+import { LOCAL_STORAGE } from '@/constants'
+import { randomCode } from '@/utils'
 import {
   PictureOutlined,
   LockOutlined,
   UserOutlined,
   GithubOutlined
-} from '@ant-design/icons';
+} from '@ant-design/icons'
 
-type ThunkDispatchProps = ThunkDispatch<{}, {}, AnyAction>;
+type ThunkDispatchProps = ThunkDispatch<{}, {}, AnyAction>
 type LoginProps = {
-  dispatch: ThunkDispatchProps;
-} & DispatchProp & RouteComponentProps;
+  dispatch: ThunkDispatchProps
+} & DispatchProp & RouteComponentProps
 
 const PopoverContent = (
   <div style={{ padding: '10px 20px 10px 20px' }}>
     <div>本站不开放注册账号，首次登陆请使用GitHub</div>
     <div>登陆后系统将自动注册账号, 密码为123456</div>
   </div>
-);
+)
 
-let captcha = randomCode();
-const LOGIN_NAME = window.localStorage.getItem(LOCAL_STORAGE.LOGIN_NAME) || '';
+let captcha = randomCode()
+const LOGIN_NAME = window.localStorage.getItem(LOCAL_STORAGE.LOGIN_NAME) || ''
 
 function reloadCaptcha(e: any) {
-  captcha = randomCode();
-  const url = api.getCaptcha + captcha;
-  e.target.src = url;
+  captcha = randomCode()
+  const url = api.getCaptcha + captcha
+  e.target.src = url
 }
 
 const Login: React.FC<LoginProps> = function ({
@@ -49,70 +49,70 @@ const Login: React.FC<LoginProps> = function ({
   history,
   location
 }) {
-  const [form] = Form.useForm();
-  const [loading, setLoading] = useState(false);
+  const [form] = Form.useForm()
+  const [loading, setLoading] = useState(false)
   const [redirectUrl] = useState(() => {
-    const url = qs.parse(location.search).redirectUrl as string;
-    return url || HOME.HOME_INDEX.path;
-  });
+    const url = qs.parse(location.search).redirectUrl as string
+    return url || HOME.HOME_INDEX.path
+  })
 
   const handleSubmit = async () => {
     try {
-      const values = await form.validateFields();
+      const values = await form.validateFields()
 
-      setLoading(true);
+      setLoading(true)
       serviceLogin({
         loginName: values.loginName.trim(),
         password: md5(values.password.trim()),
         code: values.code.trim()
       })
         .then(res => {
-          setLoading(false);
+          setLoading(false)
           if (res.data.success) {
-            dispatch(setUser(res.data.data.userInfo));
-            history.replace(redirectUrl);
+            dispatch(setUser(res.data.data.userInfo))
+            history.replace(redirectUrl)
           }
         })
         .catch(() => {
-          setLoading(false);
-        });
+          setLoading(false)
+        })
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
-  };
+  }
 
   const githubHandler = () => {
-    setLoading(true);
-    githubAuthz();
-  };
+    setLoading(true)
+    githubAuthz()
+  }
 
   useEffect(() => {
-    const query = qs.parse(location.search);
-    const { token, state } = query;
+    const query = qs.parse(location.search)
+    const { token, state } = query
 
     if (Number(state) === 0) {
-      message.error('授权失败，请重新登录');
-      return;
+      message.error('授权失败，请重新登录')
+      return
     }
 
     if (token) {
       dispatch(loginByToken(token as string))
       .then((res) => {
         if (!isEmpty(res.userInfo)) {
-          history.replace(redirectUrl);
+          history.replace(redirectUrl)
         }
-      });
+      })
     }
-  }, [history, location.search, dispatch, redirectUrl]);
+  }, [history, location.search, dispatch, redirectUrl])
 
   useEffect(() => {
     if (config.isDevelopment) {
       form.setFieldsValue({
         loginName: 'test',
         password: '123456'
-      });
+      })
     }
-  }, []);
+  }, [])
 
   return (
     <section className="login-page">
@@ -230,7 +230,7 @@ const Login: React.FC<LoginProps> = function ({
       </div>
       <Footer />
     </section>
-  );
-};
+  )
+}
 
-export default connect()(Login);
+export default connect()(Login)

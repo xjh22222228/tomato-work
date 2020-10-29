@@ -1,2 +1,2 @@
 
-export const defaultTitle = '无标题';
+export const defaultTitle = '无标题'

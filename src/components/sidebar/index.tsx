@@ -1,46 +1,46 @@
-import React, { useEffect, useState } from 'react';
-import './style.scss';
-import config from '@/config';
-import { Layout, Menu } from 'antd';
-import { withRouter, RouteComponentProps, Link } from 'react-router-dom';
-import { HomeMainState } from '@/views/home/main-entry/index';
-import { HOME_SIDER_MENU_LIST } from '@/constants';
+import React, { useEffect, useState } from 'react'
+import './style.scss'
+import config from '@/config'
+import { Layout, Menu } from 'antd'
+import { withRouter, RouteComponentProps, Link } from 'react-router-dom'
+import { HomeMainState } from '@/views/home/main-entry/index'
+import { HOME_SIDER_MENU_LIST } from '@/constants'
 
-const { Sider } = Layout;
-const { SubMenu } = Menu;
+const { Sider } = Layout
+const { SubMenu } = Menu
 
-type Props = HomeMainState & RouteComponentProps;
+type Props = HomeMainState & RouteComponentProps
 
 const Sidebar: React.FC<Props> = function ({ location, collapsed }) {
-  const [selectedKeys, setSelectedKeys] = useState('');
-  const [openKeys, setOpenKeys] = useState<string[]>([]);
+  const [selectedKeys, setSelectedKeys] = useState('')
+  const [openKeys, setOpenKeys] = useState<string[]>([])
 
   function handleOpenChange(openKeys: any) {
-    setOpenKeys(openKeys);
+    setOpenKeys(openKeys)
   }
 
   useEffect(() => {
-    const pathname = location.pathname;
-    const fragment = pathname.split('/').slice(0, 3);
-    const prefixPath = fragment.join('/');
+    const pathname = location.pathname
+    const fragment = pathname.split('/').slice(0, 3)
+    const prefixPath = fragment.join('/')
     if (fragment.length === 3) {
       for (let i = 0; i < HOME_SIDER_MENU_LIST.length; i++) {
-        const menu = HOME_SIDER_MENU_LIST[i];
+        const menu = HOME_SIDER_MENU_LIST[i]
         if (Array.isArray(menu.children)) {
-          const findIdx = menu.children.findIndex(menu => pathname === menu.path);
+          const findIdx = menu.children.findIndex(menu => pathname === menu.path)
           if (findIdx !== -1) {
-            setSelectedKeys(menu.children[findIdx].path);
-            setOpenKeys([menu.name]);
-            break;
+            setSelectedKeys(menu.children[findIdx].path)
+            setOpenKeys([menu.name])
+            break
           }
         }
         if (menu.path.indexOf(prefixPath) !== -1) {
-          setSelectedKeys(menu.path);
-          break;
+          setSelectedKeys(menu.path)
+          break
         }
       }
     }
-  }, [location.pathname]);
+  }, [location.pathname])
 
   return (
     <Sider
@@ -76,7 +76,7 @@ const Sidebar: React.FC<Props> = function ({ location, collapsed }) {
                   </Menu.Item>
                 ))}
               </SubMenu>
-            );
+            )
           }
 
           return (
@@ -86,11 +86,11 @@ const Sidebar: React.FC<Props> = function ({ location, collapsed }) {
                 <span>{menu.name}</span>
               </Link>
             </Menu.Item>
-          );
+          )
         })}
       </Menu>
     </Sider>
-  );
-};
+  )
+}
 
-export default withRouter(Sidebar);
+export default withRouter(Sidebar)

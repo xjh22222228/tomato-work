@@ -1,25 +1,25 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from 'react'
 import {
   Modal,
   Form,
   Input,
   Select
-} from 'antd';
-import { serviceCreateCapitalFlowType, serviceUpdateCapitalFlowType } from '@/services';
-import { TYPES } from '../../enum';
-import useKeepState from 'use-keep-state';
+} from 'antd'
+import { serviceCreateCapitalFlowType, serviceUpdateCapitalFlowType } from '@/services'
+import { TYPES } from '../../enum'
+import useKeepState from 'use-keep-state'
 
 type Props = {
-  visible: boolean;
-  onSuccess: (res?: any) => void;
-  onCancel: () => void;
-  rowData: null | { [propName: string]: any; }
-};
+  visible: boolean
+  onSuccess: (res?: any) => void
+  onCancel: () => void
+  rowData: null | { [propName: string]: any }
+}
 
-const { Option } = Select;
+const { Option } = Select
 const initialState = {
   confirmLoading: false,
-};
+}
 
 const CreateTask: React.FC<Props> = function ({
   visible,
@@ -27,17 +27,17 @@ const CreateTask: React.FC<Props> = function ({
   onCancel,
   onSuccess
 }) {
-  const [form] = Form.useForm();
-  const [state, setState] = useKeepState(initialState);
+  const [form] = Form.useForm()
+  const [state, setState] = useKeepState(initialState)
 
   async function handleSubmitForm() {
     try {
-      const values = await form.validateFields();
+      const values = await form.validateFields()
 
       const params = {
         type: values.type,
         name: values.name.trim()
-      };
+      }
 
       setState({ confirmLoading: true });
 
@@ -47,14 +47,14 @@ const CreateTask: React.FC<Props> = function ({
       )
       .then(res => {
         if (res.data.success) {
-          onSuccess(res.data.data);
+          onSuccess(res.data.data)
         }
       })
       .finally(() => {
-        setState({ confirmLoading: false });
-      });
+        setState({ confirmLoading: false })
+      })
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
   }
 
@@ -63,15 +63,15 @@ const CreateTask: React.FC<Props> = function ({
       form.setFieldsValue({
         name: rowData.name,
         type: rowData.type
-      });
+      })
     }
-  }, [visible, rowData]);
+  }, [visible, rowData])
 
   useEffect(() => {
     if (!visible) {
-      form.resetFields();
+      form.resetFields()
     }
-  }, [visible]);
+  }, [visible])
 
   return (
     <Modal
@@ -116,7 +116,7 @@ const CreateTask: React.FC<Props> = function ({
         </Form.Item>
       </Form>
     </Modal>
-  );
-};
+  )
+}
 
-export default React.memo(CreateTask);
+export default React.memo(CreateTask)

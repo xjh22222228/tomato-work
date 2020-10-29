@@ -1,19 +1,19 @@
 /**
  * 个人中心
  */
-import React from 'react';
-import './style.scss';
-import Avatar from '@/components/avatar';
-import { Card, Divider } from 'antd';
-import { connect } from 'react-redux';
-import { StoreState } from '@/store';
-import { UserInfoProps } from '@/store/reducers/user';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import React from 'react'
+import './style.scss'
+import Avatar from '@/components/avatar'
+import { Card, Divider } from 'antd'
+import { connect } from 'react-redux'
+import { StoreState } from '@/store'
+import { UserInfoProps } from '@/store/reducers/user'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
 
-const { Meta } = Card;
+const { Meta } = Card
 
 type Props = {
-  userInfo: UserInfoProps;
+  userInfo: UserInfoProps
 }
 
 const Base: React.FC<Props & RouteComponentProps> = function ({ userInfo }) {
@@ -27,7 +27,7 @@ const Base: React.FC<Props & RouteComponentProps> = function ({ userInfo }) {
       <div>地区：{userInfo.location}</div>
       <div>注册时间：{userInfo.createdAt}</div>
     </div>
-  );
+  )
 
   return (
     <div className="setting-base">
@@ -49,11 +49,11 @@ const Base: React.FC<Props & RouteComponentProps> = function ({ userInfo }) {
         />
       </Card>
     </div>
-  );
-};
+  )
+}
 
 const mapStateToProps = ({ user }: StoreState): { userInfo: UserInfoProps } => {
-  return { userInfo: user.userInfo };
-};
+  return { userInfo: user.userInfo }
+}
 
-export default connect(mapStateToProps)(withRouter(Base));
+export default connect(mapStateToProps)(withRouter(Base))

@@ -192,7 +192,7 @@ const Reminder: React.FC = function() {
 
   // 时间过滤
   function onFilterDate(type: number) {
-    const [startDate] = form.getFieldValue('name')
+    const [startDate] = form.getFieldValue('date')
     const date: moment.Moment[] = [
       moment(moment().format(DATE_FORMAT), DATE_FORMAT),
       moment(moment().format(DATE_FORMAT), DATE_FORMAT)
@@ -252,6 +252,7 @@ const Reminder: React.FC = function() {
     }
 
     form.setFieldsValue({ date })
+    tableRef.current?.getTableData()
   }
 
   function onTableChange(_: unknown, filters: any, sorter: any) {
@@ -328,7 +329,12 @@ const Reminder: React.FC = function() {
           <Button onClick={initParams}>重置</Button>
         </Form>
 
-        <Form form={form} layout="inline" style={{ marginTop: 10 }}>
+        <Form
+          form={form}
+          layout="inline"
+          style={{ marginTop: 10 }}
+          onValuesChange={() => tableRef?.current?.getTableData()}
+        >
           <Form.Item
             label="日期"
             name="date"

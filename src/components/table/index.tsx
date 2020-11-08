@@ -19,6 +19,7 @@ import { TableProps } from 'rc-table/lib/Table'
 import { AxiosPromise } from 'axios'
 import useKeepState from 'use-keep-state'
 import ActionPanel from './action-panel'
+import useDebounceFn from '@/hooks/useDebounceFn'
 
 interface Props extends TableProps {
   getTableData: (data: any) => AxiosPromise
@@ -73,7 +74,7 @@ const TableFC: FC<Props> = ({
   const showRowSelection = onDelete
   const [state, setState] = useKeepState(initialState)
 
-  function getData() {
+  const { run: getData } = useDebounceFn(() => {
     setState({ isLoading: true })
     const { pageNo, pageSize } = tableRef.current
     // 调用父组件函数获取数据
@@ -96,7 +97,7 @@ const TableFC: FC<Props> = ({
       .finally(() => {
         setState({ isLoading: false })
       })
-  }
+  }, { wait: 500, leading: true })
 
   function onChange(pagination: any, filters: any, sorter: any) {
     const pageNo = pagination.current

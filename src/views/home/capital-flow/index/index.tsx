@@ -103,7 +103,7 @@ const Reminder: React.FC = function() {
     }
   ]
 
-  function initParams() {
+  function initParams(isGetData?: boolean) {
     const startDate = moment().startOf('month')
     const endDate = moment().endOf('month')
     setState({ sortedInfo: null })
@@ -112,6 +112,10 @@ const Reminder: React.FC = function() {
       name: '',
       date: [startDate, endDate]
     })
+
+    if (isGetData !== false) {
+      tableRef.current.getTableData()
+    }
   }
 
   // 获取数据
@@ -271,7 +275,7 @@ const Reminder: React.FC = function() {
   }
 
   useEffect(() => {
-    initParams()
+    initParams(false)
     getCapitalFlowType()
   }, [])
 
@@ -326,7 +330,7 @@ const Reminder: React.FC = function() {
           </Form.Item>
 
           <Button type="primary" onClick={tableRef.current?.getTableData}>查询</Button>
-          <Button onClick={initParams}>重置</Button>
+          <Button onClick={() => initParams()}>重置</Button>
         </Form>
 
         <Form

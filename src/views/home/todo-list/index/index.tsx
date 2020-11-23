@@ -8,8 +8,7 @@ import Table from '@/components/table'
 import CreateTodo from '../components/create-todo'
 import { serviceGetTodoList, serviceDeleteTodoList, serviceUpdateTodoList } from '@/services'
 import { STATUS } from '../constants'
-import { DatePicker, Button, Tag, Form } from 'antd'
-import { modalConfirmDelete } from '@/utils'
+import { DatePicker, Button, Tag, Form, Popconfirm } from 'antd'
 
 const { RangePicker } = DatePicker
 const DATE_FORMAT = 'YYYY-MM-DD'
@@ -56,7 +55,14 @@ const TodoList = () => {
       render: (row: any) => (
         <>
           <Button onClick={handleActionButton.bind(null, 0, row)}>编辑</Button>
-          <Button onClick={handleActionButton.bind(null, 1, row)}>删除</Button>
+          <Popconfirm
+            title="您确定要删除吗？"
+            onConfirm={handleActionButton.bind(null, 1, row)}
+            placement="bottomLeft"
+            okType="danger"
+          >
+            <Button>删除</Button>
+          </Popconfirm>
           <Button
             onClick={handleActionButton.bind(null, 2, row)}
             disabled={row.status === 2}
@@ -115,14 +121,11 @@ const TodoList = () => {
         break
       // 删除
       case 1:
-        modalConfirmDelete()
-        .then(() => {
-          serviceDeleteTodoList(row.id)
-          .then(res => {
-            if (res.data.success) {
-              tableRef.current.getTableData()
-            }
-          })
+        serviceDeleteTodoList(row.id)
+        .then(res => {
+          if (res.data.success) {
+            tableRef.current.getTableData()
+          }
         })
         break
       // 状态

@@ -7,9 +7,8 @@ import moment from 'moment'
 import CreateReminder from './components/create-reminder'
 import useKeepState from 'use-keep-state'
 import { connect } from 'react-redux'
-import { DatePicker, Button, Select, Tag, Modal, Form } from 'antd'
+import { DatePicker, Button, Select, Tag, Modal, Form, Popconfirm } from 'antd'
 import { serviceGetReminder, serviceDeleteReminder } from '@/services'
-import { modalConfirmDelete } from '@/utils'
 
 const { RangePicker } = DatePicker
 const Option = Select.Option
@@ -64,7 +63,14 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
       render: (row: any) => (
         <>
           <Button onClick={handleButton.bind(null, 0, row)}>编辑</Button>
-          <Button onClick={handleButton.bind(null, 1, row)}>删除</Button>
+          <Popconfirm
+            title="您确定要删除吗？"
+            onConfirm={handleButton.bind(null, 1, row)}
+            placement="bottomLeft"
+            okType="danger"
+          >
+            <Button>删除</Button>
+          </Popconfirm>
         </>
       )
     }
@@ -112,14 +118,11 @@ const Reminder: React.FC<Props> = function({ userInfo }) {
         currentRow: rows
       })
     } else {
-      modalConfirmDelete()
-      .then(() => {
-        serviceDeleteReminder(rows.id)
-        .then(res => {
-          if (res.data.success) {
-            tableRef.current.getTableData()
-          }
-        })
+      serviceDeleteReminder(rows.id)
+      .then(res => {
+        if (res.data.success) {
+          tableRef.current.getTableData()
+        }
       })
     }
   }

@@ -1,16 +1,15 @@
 /**
  * 我的备忘
  */
-import React, { FC, useState, useEffect, useCallback } from 'react'
+import React, { FC, useState, useEffect } from 'react'
 import './style.scss'
 import moment from 'moment'
 import NoData from '@/components/no-data/index'
 import { RouteComponentProps } from 'react-router-dom'
-import { Card, Col, Row, Button } from 'antd'
+import { Card, Col, Row, Button, Popconfirm } from 'antd'
 import { Link } from 'react-router-dom'
 import { serviceGetMemorandum, serviceDeleteMemorandum } from '@/services'
 import { defaultTitle } from '../constants'
-import { modalConfirmDelete } from '@/utils'
 
 const Memorandum: FC<RouteComponentProps> = ({ history }) => {
   const [list, setList] = useState([])
@@ -18,25 +17,15 @@ const Memorandum: FC<RouteComponentProps> = ({ history }) => {
   function handleButton(
     buttonType: 0 | 1 | 2,
     item: any,
-    e: React.MouseEvent
+    e?: React.MouseEvent
   ) {
-    e.stopPropagation()
-    e.preventDefault()
+    e?.stopPropagation()
+    e?.preventDefault()
 
     if (buttonType === 0) {
-      modalConfirmDelete()
+      serviceDeleteMemorandum(item.id)
       .then(() => {
-        serviceDeleteMemorandum(item.id)
-        .then(res => {
-          if (res.data.success) {
-            const index = list.findIndex((el: any) => el.title === item.title)
-            if (index !== -1) {
-              const copyList = [...list]
-              copyList.splice(index, 1)
-              setList(copyList)
-            }
-          }
-        })
+        getData()
       })
       return
     }
@@ -49,7 +38,7 @@ const Memorandum: FC<RouteComponentProps> = ({ history }) => {
     history.push(`/home/memorandum/update/${item.id}`)
   }
 
-  useEffect(() => {
+  function getData() {
     serviceGetMemorandum()
     .then(res => {
       if (res.data.success) {
@@ -61,6 +50,10 @@ const Memorandum: FC<RouteComponentProps> = ({ history }) => {
         setList(data)
       }
     })
+  }
+
+  useEffect(() => {
+    getData()
   }, [])
 
   return (
@@ -78,7 +71,17 @@ const Memorandum: FC<RouteComponentProps> = ({ history }) => {
                   >
                   </div>
                   <div className="button-group">
-                    <Button size="small" onClick={handleButton.bind(null, 0, item)}>删除</Button>
+                    <Popconfirm
+                      title="您确定要删除吗？"
+                      onConfirm={e => {
+                        e?.stopPropagation()
+                        handleButton(0, item)
+                      }}
+                      placement="bottomLeft"
+                      okType="danger"
+                    >
+                      <Button size="small">删除</Button>
+                    </Popconfirm>
                     <Button size="small" onClick={handleButton.bind(null, 1, item)}>编辑</Button>
                   </div>
                 </Card>

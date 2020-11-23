@@ -7,8 +7,7 @@ import moment from 'moment'
 import useKeepState from 'use-keep-state'
 import Table from '@/components/table'
 import CreateCapitalFlow from '../components/create-capital-flow'
-import { DatePicker, Button, Select, Statistic, Input, Form } from 'antd'
-import { modalConfirmDelete } from '@/utils'
+import { DatePicker, Button, Select, Statistic, Input, Form, Popconfirm } from 'antd'
 import {
   serviceGetCapitalFlow,
   serviceDeleteCapitalFlow,
@@ -97,7 +96,14 @@ const Reminder: React.FC = function() {
       render: (row: any) => (
         <>
           <Button onClick={handleActionButton.bind(null, 0, row)}>编辑</Button>
-          <Button onClick={handleActionButton.bind(null, 1, row)}>删除</Button>
+          <Popconfirm
+            title="您确定要删除吗？"
+            onConfirm={handleActionButton.bind(null, 1, row)}
+            placement="bottomLeft"
+            okType="danger"
+          >
+            <Button>删除</Button>
+          </Popconfirm>
         </>
       )
     }
@@ -184,12 +190,10 @@ const Reminder: React.FC = function() {
     if (type === 0) {
       setState({ showCreateCapitalFlowModal: true, currentRow: row })
     } else {
-      modalConfirmDelete().then(() => {
-        serviceDeleteCapitalFlow(row.id).then(res => {
-          if (res.data.success) {
-            tableRef.current.getTableData()
-          }
-        })
+      serviceDeleteCapitalFlow(row.id).then(res => {
+        if (res.data.success) {
+          tableRef.current.getTableData()
+        }
       })
     }
   }

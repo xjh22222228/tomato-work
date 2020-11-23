@@ -1,12 +1,12 @@
 import React from 'react'
 import './style.scss'
 import moment from 'moment'
-import { modalConfirmDelete } from '@/utils'
 import { serviceDeleteTask, serviceUpdateTask } from '@/services'
 import {
   Card,
   Button,
-  Rate
+  Rate,
+  Popconfirm
 } from 'antd'
 
 interface Props {
@@ -21,14 +21,11 @@ const TaskItem: React.FC<Props> = ({ data, reloadData }) => {
   // 0=删除, 1=开始/完成, 2=回退
   function handleAction(buttonType: number) {
     if (buttonType === 0) {
-      modalConfirmDelete()
-      .then(() => {
-        serviceDeleteTask(data.id)
-        .then(res => {
-          if (res.data.success) {
-            reloadData()
-          }
-        })
+      serviceDeleteTask(data.id)
+      .then(res => {
+        if (res.data.success) {
+          reloadData()
+        }
       })
     } else {
       serviceUpdateTask(data.id, {
@@ -58,14 +55,21 @@ const TaskItem: React.FC<Props> = ({ data, reloadData }) => {
       </div>
 
       <div className="button-wrapper">
-        <Button
-          type="primary"
-          danger
-          size="small"
-          onClick={handleAction.bind(null, 0)}
+        <Popconfirm
+          title="您确定要删除吗？"
+          onConfirm={handleAction.bind(null, 0)}
+          placement="bottomLeft"
+          okType="danger"
         >
-          删除
-        </Button>
+          <Button
+            type="primary"
+            danger
+            size="small"
+          >
+            删除
+          </Button>
+        </Popconfirm>
+
         {(data.type === 1) && (
           <Button
             type="primary"

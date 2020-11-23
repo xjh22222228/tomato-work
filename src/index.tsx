@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './assets/styles/global.scss'
+import 'antd/dist/antd.css'
 import Routes from './router'
 import { Provider } from 'react-redux'
 import * as serviceWorker from './serviceWorker'

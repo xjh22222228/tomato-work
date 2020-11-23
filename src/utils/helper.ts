@@ -12,24 +12,6 @@ export function totalPercentage(totalmem: number, freemem: number) {
   return Math.floor((totalmem - freemem) / totalmem * 100)
 }
 
-/**
- * 删除模态对话框
- * @return Promise
- */
-export function modalConfirmDelete(object?: { [k: string]: any }) {
-  return new Promise(resolve => {
-    Modal.confirm({
-      title: '确定要删除吗？',
-      okType: 'danger',
-      onOk() {
-        resolve(true)
-      },
-      ...object
-    })
-  })
-}
-
-
 // 全屏浏览器
 export function fullscreen() {
   try {

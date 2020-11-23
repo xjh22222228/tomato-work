@@ -3,7 +3,7 @@ import './style.scss'
 import moment from 'moment'
 import useKeepState from 'use-keep-state'
 import CreateType from '../components/create-type/index'
-import { Table, Button, Tag } from 'antd'
+import { Table, Button, Tag, Popconfirm } from 'antd'
 import {
   serviceGetCapitalFlowType,
   serviceDeleteCapitalFlowType
@@ -61,9 +61,14 @@ const Type = () => {
   function deleteCapitalFlowType() {
     const ids = state.selectedRowKeys.join()
     if (!ids) return
+
+    setState({ loading: true })
     serviceDeleteCapitalFlowType(ids)
       .then(() => {
         getCapitalFlowType()
+      })
+      .finally(() => {
+        setState({ loading: false })
       })
   }
 
@@ -100,7 +105,14 @@ const Type = () => {
   return (
     <div className="capital-flow-type">
       <div className="button-group">
-        <Button type="primary" danger onClick={deleteCapitalFlowType}>删除</Button>
+        <Popconfirm
+          title="您确定要删除吗？"
+          onConfirm={deleteCapitalFlowType}
+          placement="bottomLeft"
+          okType="danger"
+        >
+          <Button type="primary" danger>删除</Button>
+        </Popconfirm>
         <Button type="primary" onClick={handleAdd}>新增</Button>
       </div>
       <Table
@@ -109,6 +121,7 @@ const Type = () => {
         dataSource={state.data}
         pagination={false}
         rowKey="id"
+        loading={state.loading}
       />
       <CreateType
         visible={state.showCreateTypeModal}

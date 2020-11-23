@@ -1,6 +1,5 @@
 import React from 'react'
-import { Button } from 'antd'
-import { modalConfirmDelete } from '@/utils/helper'
+import { Button, Popconfirm } from 'antd'
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 
 interface Props {
@@ -17,14 +16,6 @@ const ActionPanel: React.FC<Props> = function({
   const isShowPanel = onDelete || onAdd
   const disabled = selectedRowKeys.length <= 0
 
-  function handleDelete() {
-    modalConfirmDelete({
-      title: '确定要删除选中'
-    }).then(() => {
-      onDelete && onDelete()
-    })
-  }
-
   return isShowPanel ? (
     <div className="table-action-panel">
       {onAdd && (
@@ -38,15 +29,21 @@ const ActionPanel: React.FC<Props> = function({
       )}
 
       {onDelete && (
-        <Button
-          type="primary"
-          danger
-          onClick={handleDelete}
-          disabled={disabled}
-          icon={<DeleteOutlined />}
+        <Popconfirm
+          title="您确定要删除吗？"
+          onConfirm={onDelete}
+          placement="bottomLeft"
+          okType="danger"
         >
-          批量删除
-        </Button>
+          <Button
+            type="primary"
+            danger
+            disabled={disabled}
+            icon={<DeleteOutlined />}
+          >
+            批量删除
+          </Button>
+        </Popconfirm>
       )}
     </div>
   ) : null

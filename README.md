@@ -44,12 +44,14 @@ React hooks / TypeScript / Redux / Antd ...
 - [x] 邮件推送 - (github邮箱必须设为公开)
 - [x] 微信推送 - 感谢Server酱 (需要在个人中心设置sckey)
 - [ ] 单词备忘
-- [ ] 微信登录
 - [ ] 日报管理
 
 
 ## Build Setup
 ``` bash
+# Clone
+git clone --depth=1 https://github.com/xjh22222228/tomato-work.git
+
 # install dependencies
 yarn
 

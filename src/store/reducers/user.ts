@@ -1,9 +1,3 @@
-/**
- * @file User reducers
- * @since 1.0.0
- * @author xiejiahe <xjh22222228@gmail.com>
- */
-
 import { USER } from '../constants'
 import { LOCAL_STORAGE } from '@/constants'
 
@@ -58,7 +52,10 @@ function user(state = initialState, action: any): UserState {
         window.localStorage.setItem(LOCAL_STORAGE.USER, JSON.stringify(userInfo))
         window.localStorage.setItem(LOCAL_STORAGE.LOGIN_NAME, userInfo.loginName)
       }
-      return { ...state, userInfo: action.userInfo }
+      return {
+        ...state,
+        userInfo: action.userInfo
+      }
     default:
       return state
   }

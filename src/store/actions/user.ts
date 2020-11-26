@@ -1,11 +1,6 @@
-/**
- * @file User Action Creator
- * @since 1.0.0
- * @author xiejiahe <xjh22222228@gmail.com>
- */
 import config from '@/config'
-import _ from 'lodash'
 import moment from 'moment'
+import { isPlainObject } from 'lodash'
 import { USER } from '../constants'
 import { LOCAL_STORAGE } from '@/constants'
 import { serviceLoginByToken, serviceLogout } from '@/services'
@@ -24,7 +19,7 @@ export function setUser(userInfo: any = {}) {
 }
 
 /**
- * 使用token进行登录
+ * Token 登录
  */
 export function loginByToken(token: string) {
   return function (dispatch: Dispatch) {
@@ -78,7 +73,7 @@ export function validateLocalStatus() {
   let userInfo = {}
   try {
     userInfo = JSON.parse(window.localStorage.getItem(LOCAL_STORAGE.USER) as string)
-    if (!_.isPlainObject(userInfo)) {
+    if (!isPlainObject(userInfo)) {
       userInfo = {}
     }
   } catch {}

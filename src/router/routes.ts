@@ -3,7 +3,7 @@ import { IRouteProps } from '@/router/types'
 import { HOME, SETTING } from './constants'
 import Login from '@/views/login/index'
 import NoMatch from '@/views/exception/no-match'
-import MainEntry from '@/views/home/main-entry'
+import MainEntry from '@/views/home/main'
 import Reminder from '@/views/home/reminder'
 import SettingIndex from '@/views/home/setting/index'
 import HomeIndex from '@/views/home/index'
@@ -15,7 +15,7 @@ import CapitalFlow from '@/views/home/capital-flow/index'
 import CapitalFlowType from '@/views/home/capital-flow/type'
 import TodoList from '@/views/home/todo-list/index'
 
-const routesMap: Array<IRouteProps> = [
+const routesMap: IRouteProps[] = [
   {
     path: HOME.LOGIN.path,
     exact: true,
@@ -149,7 +149,7 @@ const InnerMessage = lazy(() => import('@/views/home/setting/inner-message'))
 const Notification = lazy(() => import('@/views/home/setting/notification'))
 const Account = lazy(() => import('@/views/home/setting/account'))
 
-export const settingRoutes: Array<IRouteProps> = [
+export const settingRoutes: IRouteProps[] = [
   {
     path: SETTING.BASE.path,
     component: Base,

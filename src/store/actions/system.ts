@@ -1,8 +1,3 @@
-/**
- * @file System Action Creator
- * @since 1.0.0
- * @author xiejiahe <xjh22222228@gmail.com>
- */
 import { SYSTEM } from '../constants'
 import { serviceGetSystemInfo } from '@/services'
 import { Dispatch } from 'redux'

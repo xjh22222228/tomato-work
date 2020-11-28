@@ -111,7 +111,7 @@ const TableFC: FC<Props> = ({
     })
     tableRef.current.pageNo = pageNo
     tableRef.current.pageSize = pageSize
-    onTableChange && onTableChange(pagination, filters, sorter)
+    onTableChange?.(pagination, filters, sorter)
     setTimeout(() => {
       getData()
     })

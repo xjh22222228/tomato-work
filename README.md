@@ -48,6 +48,9 @@ React hooks / TypeScript / Redux / Antd ...
 
 
 ## Build Setup
+- Node >= 14
+- 确保已安装 [yarn](https://yarnpkg.com/)
+
 ``` bash
 # Clone
 git clone --depth=1 https://github.com/xjh22222228/tomato-work.git

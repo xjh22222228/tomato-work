@@ -26,8 +26,11 @@
 ![](media/screenshot.png)
 
 
-## Tech
-React hooks / TypeScript / Redux / Antd ...
+## Built with
+- [hooks](https://zh-hans.reactjs.org/docs/hooks-intro.html)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Redux](https://redux.js.org/tutorials/fundamentals/part-5-ui-react)
+- [Ant Design](https://ant.design/docs/react/introduce-cn)
 
 
 

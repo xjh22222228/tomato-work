@@ -4,6 +4,14 @@ import store from '@/store'
 import { message, notification } from 'antd'
 import { logout } from '@/store/actions'
 
+interface RespData {
+  success: boolean
+  errorCode: number
+  msg?: string
+  data?: any
+  [key: string]: any
+}
+
 let exiting = false
 const CancelToken = axios.CancelToken
 
@@ -13,7 +21,7 @@ function handleError(error: AxiosError) {
   } else {
     const response = error.response
     notification.error({
-      message: `错误码: ${response?.status ?? -1}`,
+      message: `Error Code: ${response?.status ?? -1}`,
       description: response?.statusText ?? '服务器出小差'
     })
   }
@@ -77,19 +85,20 @@ httpInstance.interceptors.request.use(function (config) {
 
 httpInstance.interceptors.response.use(function (res) {
   const headers = res.config.headers
+  const data: RespData = res.data
 
-  if (!res.data.success && headers.errorAlert) {
+  if (!data.success && headers.errorAlert) {
     notification.error({
-      message: `错误码: ${res.data.errorCode ?? -1}`,
-      description: res.data.msg ?? '服务器出小差'
+      message: `错误码: ${data.errorCode ?? -1}`,
+      description: data.msg ?? '服务器出小差'
     })
   }
 
-  if (res.data.success && headers.successAlert) {
-    message.success(res.data.msg ?? 'Success')
+  if (data.success && headers.successAlert) {
+    message.success(data.msg ?? 'Success')
   }
 
-  if (res.data.errorCode === 401 && !exiting) {
+  if (data.errorCode === 401 && !exiting) {
     exiting = true
     setTimeout(logout, 2000)
   }

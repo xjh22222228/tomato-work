@@ -51,7 +51,7 @@
 
 
 ## Build Setup
-- Node >= 14
+- Node.js >= 14
 - 确保已安装 [yarn](https://yarnpkg.com/)
 
 ``` bash
@@ -73,9 +73,6 @@ yarn build
 
 
 
-## Support open source
-
-<img src="https://raw.githubusercontent.com/xjh22222228/statics/master/images/2018/32.png" width="500">
 
 
 ---

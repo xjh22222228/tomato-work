@@ -16,7 +16,6 @@
     "axios": "^0.20.0",
     "bizcharts": "^4.0.2",
     "blueimp-md5": "^2.18.0",
-    "eslint": "^7.4.0",
     "lodash": "^4.17.15",
     "moment": "^2.25.1",
     "query-string": "^6.12.1",
@@ -32,6 +31,8 @@
     "web-vitals": "^0.2.4"
   },
   "devDependencies": {
+    "eslint": "^7.4.0",
+    "eslint-plugin-react": "7.19.0",
     "react-scripts": "4.0.1",
     "react-app-rewire-alias": "^0.1.8",
     "react-app-rewired": "^2.1.7",
@@ -51,6 +52,7 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
+    "lint": "eslint --cache --ext .js,.jsx,.tsx,.ts ./src",
     "build": "react-app-rewired build"
   },
   "browserslist": {

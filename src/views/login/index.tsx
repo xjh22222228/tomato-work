@@ -16,6 +16,7 @@ import { serviceLogin } from '@/services'
 import { HOME } from '@/router/constants'
 import { LOCAL_STORAGE } from '@/constants'
 import { randomCode } from '@/utils'
+import logo from '@/assets/img/common/logo.png'
 import {
   PictureOutlined,
   LockOutlined,
@@ -123,7 +124,7 @@ const Login: React.FC<LoginProps> = function ({
       <div className="wrap">
         <div>
           <div className="logo-wrap">
-            <img src={require('@/assets/img/common/logo.png')} className="logo" alt="" />
+            <img src={logo} className="logo" alt="" />
             <em>{config.title}</em>
           </div>
 

@@ -4,6 +4,7 @@
 import React from 'react'
 import './style.scss'
 import Avatar from '@/components/avatar'
+import userPoster from '@/assets/img/common/user-poster.png'
 import { Card, Divider } from 'antd'
 import { connect } from 'react-redux'
 import { StoreState } from '@/store'
@@ -37,7 +38,7 @@ const Base: React.FC<Props & RouteComponentProps> = function ({ userInfo }) {
         cover={
           <img
             alt=""
-            src={require('@/assets/img/common/user-poster.png')}
+            src={userPoster}
             className="poster"
           />
         }

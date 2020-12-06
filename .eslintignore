@@ -12,5 +12,6 @@ __tests__
 /e2e
 /assets
 serviceWorker.ts
+src/reportWebVitals.ts
 .github
 .vscode

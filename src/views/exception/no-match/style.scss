@@ -1,3 +1,5 @@
+@import "@/assets/styles/mixins.scss";
+
 .exception-wrapper {
   height: 100vh;
   @include flex-center;

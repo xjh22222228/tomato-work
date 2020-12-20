@@ -5,6 +5,7 @@ import { Layout, Menu } from 'antd'
 import { withRouter, RouteComponentProps, Link } from 'react-router-dom'
 import { HomeMainState } from '@/views/home/main/index'
 import { HOME_SIDER_MENU_LIST } from '@/constants'
+import logoImage from '@/assets/img/common/logo.png'
 
 const { Sider } = Layout
 const { SubMenu } = Menu
@@ -50,7 +51,12 @@ const Sidebar: React.FC<Props> = function ({ location, collapsed }) {
       width={190}
       className="sidebar"
     >
-      <div className="sider-menu-logo">{config.title}</div>
+      <div className="sider-menu-logo">
+        {collapsed ? (
+          <img src={logoImage} />
+        ) : config.title}
+      </div>
+
       <Menu
         selectedKeys={[selectedKeys]}
         openKeys={openKeys}

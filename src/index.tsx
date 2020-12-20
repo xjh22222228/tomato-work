@@ -14,13 +14,13 @@ import store from '@/store'
 moment.locale('zh-cn')
 
 ReactDOM.render(
-  // <React.StrictMode>
+  <React.StrictMode>
     <Provider store={store}>
       <ConfigProvider locale={zh_CN}>
         <Routes />
       </ConfigProvider>
     </Provider>
-  // </React.StrictMode>
+  </React.StrictMode>
   ,
   document.getElementById('tomato-work-root')
 )

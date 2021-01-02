@@ -11,6 +11,7 @@
   </p>
   <p align="center">
     <a href="https://github.com/xjh22222228/tomato-work/stargazers"><img src="https://img.shields.io/github/stars/xjh22222228/tomato-work" alt="Stars Badge"/></a>
+    <img alt="React" src="https://img.shields.io/static/v1.svg?label=&message=React&style=flat-square&color=61daeb">
     <img src="https://img.shields.io/github/package-json/v/xjh22222228/tomato-work" />
     <img src="https://img.shields.io/github/license/xjh22222228/tomato-work" />
   </p>
@@ -20,14 +21,12 @@
 
 
 
-## Online preview
-[Follow me](https://work.xiejiahe.com)
-
+## Screenshot
 ![](media/screenshot.png)
 
 
 ## Built with
-- [hooks](https://zh-hans.reactjs.org/docs/hooks-intro.html)
+- [Hooks](https://zh-hans.reactjs.org/docs/hooks-intro.html)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Redux](https://redux.js.org/tutorials/fundamentals/part-5-ui-react)
 - [Ant Design](https://ant.design/docs/react/introduce-cn)

@@ -112,8 +112,8 @@ const TodayTaskPage = () => {
 
           <Form.Item>
             <Button type="primary" onClick={getTask}>查询</Button>
-            <Button onClick={handlePrevDay}>上一天</Button>
-            <Button onClick={handleNextDay}>下一天</Button>
+            <Button onClick={handlePrevDay}>前一天</Button>
+            <Button onClick={handleNextDay}>后一天</Button>
             <Button onClick={toggleCreateTaskModal}>新增</Button>
             <Button onClick={initParams}>重置</Button>
           </Form.Item>

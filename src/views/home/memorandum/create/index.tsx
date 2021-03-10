@@ -18,7 +18,7 @@ interface Props {
 
 let editor: Editor
 
-const Create: React.FC<Props & RouteComponentProps> = ({ history, computedMatch }) => {
+const CreatePage: React.FC<Props & RouteComponentProps> = ({ history, computedMatch }) => {
   const [title, setTitle] = useState(defaultTitle)
   const [loading, setLoading] = useState(false)
 
@@ -108,4 +108,4 @@ const Create: React.FC<Props & RouteComponentProps> = ({ history, computedMatch 
   )
 }
 
-export default Create
+export default CreatePage

@@ -13,7 +13,15 @@ import { DatePicker, Button, Tag, Row, Col, Form } from 'antd'
 import { serviceGetTask } from '@/services'
 
 const DATE_FORMAT = 'YYYY-MM-DD'
-const TASK_TYPE: any = {
+
+interface TaskProp {
+  text: string
+  color: string
+}
+
+const TASK_TYPE: {
+  [key: string]: TaskProp
+} = {
   wait: { text: '待作业', color: 'orange' },
   process: { text: '作业中', color: '#108ee9' },
   finished: { text: '已完成', color: '#87d068' },
@@ -22,10 +30,10 @@ const TASK_TYPE: any = {
 
 interface State {
   data: {
-    wait: any[]
-    process: any[]
-    finished: any[]
-    unfinished: any[]
+    wait: TaskProp[]
+    process: TaskProp[]
+    finished: TaskProp[]
+    unfinished: TaskProp[]
   }
   showCreateTaskModal: boolean
 }

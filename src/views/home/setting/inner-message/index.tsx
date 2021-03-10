@@ -8,7 +8,7 @@ import Table from '@/components/table'
 import { Button } from 'antd'
 import { serviceGetInnerMessage, serviceUpdateInnerMessageHasRead } from '@/services'
 
-const InnerMessage = () => {
+const InnerMessagePage = () => {
   const tableRef = useRef<any>(null)
   const [selectedRowKeys, setSelectedRowKeys] = useState([])
   const [tableColumns] = useState([
@@ -77,4 +77,4 @@ const InnerMessage = () => {
   )
 }
 
-export default InnerMessage
+export default InnerMessagePage

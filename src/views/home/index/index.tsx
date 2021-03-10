@@ -13,7 +13,7 @@ const mapStateToProps = ({ system }: StoreState) => ({ system })
 type ThunkDispatchProps = ThunkDispatch<{}, {}, AnyAction>
 type Props = DispatchProp & ReturnType<typeof mapStateToProps> & { dispatch: ThunkDispatchProps }
 
-const HomeIndex: React.FC<Props> = function ({ system, dispatch }) {
+const HomeIndexPage: React.FC<Props> = function ({ system, dispatch }) {
   useEffect(() => {
     dispatch(getSystemInfo())
   }, [])
@@ -27,4 +27,4 @@ const HomeIndex: React.FC<Props> = function ({ system, dispatch }) {
   )
 }
 
-export default connect(mapStateToProps)(HomeIndex)
+export default connect(mapStateToProps)(HomeIndexPage)

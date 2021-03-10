@@ -6,7 +6,7 @@ import './style.scss'
 import { Switch, Divider } from 'antd'
 import { serviceGetUserConfig, serviceUpdateUserConfig } from '@/services'
 
-const Notification: React.FC = function () {
+const NotificationPage: React.FC = function () {
   const [userConfig, setUserConfig] = useState({
     isMatterNotify: true,
     isTaskNotify: true
@@ -66,4 +66,4 @@ const Notification: React.FC = function () {
   )
 }
 
-export default Notification
+export default NotificationPage

@@ -8,7 +8,7 @@ import {
   DatePicker
 } from 'antd'
 import { serviceCreateReminder, serviceUpdateReminder } from '@/services'
-import { isLtTodayTimestamp } from '@/utils'
+import { isBefore } from '@/utils'
 
 const { TextArea } = Input
 const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss'
@@ -101,7 +101,7 @@ const CreateReminder: React.FC<Props> = function ({
           <DatePicker
             showTime
             allowClear={false}
-            disabledDate={isLtTodayTimestamp}
+            disabledDate={isBefore}
             style={{ width: '100%' }}
           />
         </Form.Item>

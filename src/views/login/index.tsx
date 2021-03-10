@@ -45,7 +45,7 @@ function reloadCaptcha(e: any) {
   e.target.src = url
 }
 
-const Login: React.FC<LoginProps> = function ({
+const LoginPage: React.FC<LoginProps> = function ({
   dispatch,
   history,
   location
@@ -234,4 +234,4 @@ const Login: React.FC<LoginProps> = function ({
   )
 }
 
-export default connect()(Login)
+export default connect()(LoginPage)

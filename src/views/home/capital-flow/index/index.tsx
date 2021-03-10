@@ -46,7 +46,7 @@ const initialState: State = {
   filters: {}
 }
 
-const Reminder: React.FC = function() {
+const ReminderPage: React.FC = function() {
   const [form] = Form.useForm()
   const [state, setState] = useKeepState(initialState)
   const tableRef = useRef<any>()
@@ -394,4 +394,4 @@ const Reminder: React.FC = function() {
   )
 }
 
-export default Reminder
+export default ReminderPage

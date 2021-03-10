@@ -23,7 +23,7 @@ const initialState: State = {
   currentRowData: null
 }
 
-const TodoList = () => {
+const TodoListPage = () => {
   const [form] = Form.useForm()
   const [state, setState] = useKeepState(initialState)
   const tableRef = useRef<any>()
@@ -174,6 +174,7 @@ const TodoList = () => {
           currentRowData: null
         })}
       />
+
       <CreateTodo
         visible={state.showCreateTodoModal}
         onSuccess={handleOnSuccess}
@@ -184,4 +185,4 @@ const TodoList = () => {
   )
 }
 
-export default TodoList
+export default TodoListPage

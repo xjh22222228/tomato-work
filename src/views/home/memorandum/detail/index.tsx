@@ -10,7 +10,7 @@ interface Props {
   computedMatch: match<any>
 }
 
-const Detail: FC<Props & RouteComponentProps> = ({ computedMatch, history }) => {
+const DetailPage: FC<Props & RouteComponentProps> = ({ computedMatch, history }) => {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [loading, setLoading] = useState(true)
@@ -49,4 +49,4 @@ const Detail: FC<Props & RouteComponentProps> = ({ computedMatch, history }) => 
   )
 }
 
-export default Detail
+export default DetailPage

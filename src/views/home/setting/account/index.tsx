@@ -14,7 +14,7 @@ type Props = {
   userInfo: UserInfoProps
 }
 
-const Account: React.FC<Props & RouteComponentProps> = function ({ userInfo }) {
+const AccountPage: React.FC<Props & RouteComponentProps> = function ({ userInfo }) {
   const [form] = Form.useForm()
   const [form2] = Form.useForm()
 
@@ -115,4 +115,4 @@ const mapStateToProps = ({ user }: StoreState): { userInfo: UserInfoProps } => {
   return { userInfo: user.userInfo }
 }
 
-export default connect(mapStateToProps)(withRouter(Account))
+export default connect(mapStateToProps)(withRouter(AccountPage))

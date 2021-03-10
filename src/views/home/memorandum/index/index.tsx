@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom'
 import { serviceGetMemorandum, serviceDeleteMemorandum } from '@/services'
 import { defaultTitle } from '../constants'
 
-const Memorandum: FC<RouteComponentProps> = ({ history }) => {
+const MemorandumPage: FC<RouteComponentProps> = ({ history }) => {
   const [list, setList] = useState([])
   const [loading, setLoading] = useState(true)
 
@@ -103,4 +103,4 @@ const Memorandum: FC<RouteComponentProps> = ({ history }) => {
   )
 }
 
-export default Memorandum
+export default MemorandumPage

@@ -20,7 +20,7 @@ export interface HomeMainState {
 
 const storageCollapsed = Number(window.localStorage.getItem(SIDEBAR_COLLAPSED) || true)
 
-const HomeMain: React.FC = function (props) {
+const HomeMainPage: React.FC = function (props) {
   const [collapsed, setCollapsed] = useState(!storageCollapsed)
 
   function handleToggleCollapsed() {
@@ -50,4 +50,4 @@ const mapStateToProps = ({ user }: StoreState) => {
   return { userInfo: user.userInfo }
 }
 
-export default connect(mapStateToProps)(HomeMain)
+export default connect(mapStateToProps)(HomeMainPage)

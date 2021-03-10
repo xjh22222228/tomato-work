@@ -1,6 +1,6 @@
 import React from 'react'
 import useKeepState from 'use-keep-state'
-import { isLtTodayTimestamp } from '@/utils'
+import { isBefore } from '@/utils'
 import { serviceCreateTask } from '@/services'
 import {
   Modal,
@@ -84,10 +84,11 @@ const CreateTaskModal: React.FC<Props> = function ({
         >
           <DatePicker
             allowClear={false}
-            disabledDate={isLtTodayTimestamp}
-            style={{ width: '100%' }}
+            disabledDate={isBefore}
+            className="w100"
           />
         </Form.Item>
+
         <Form.Item
           label="任务内容"
           name="content"
@@ -104,6 +105,7 @@ const CreateTaskModal: React.FC<Props> = function ({
             placeholder="请输入内容"
           />
         </Form.Item>
+
         <Form.Item
           label="优先级别"
           name="count"

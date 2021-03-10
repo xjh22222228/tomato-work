@@ -17,7 +17,7 @@ type Props = {
   userInfo: UserInfoProps
 }
 
-const Base: React.FC<Props & RouteComponentProps> = function ({ userInfo }) {
+const BasePage: React.FC<Props & RouteComponentProps> = function ({ userInfo }) {
 
   const MetaDesc = (
     <div className="meta-desc">
@@ -57,4 +57,4 @@ const mapStateToProps = ({ user }: StoreState): { userInfo: UserInfoProps } => {
   return { userInfo: user.userInfo }
 }
 
-export default connect(mapStateToProps)(withRouter(Base))
+export default connect(mapStateToProps)(withRouter(BasePage))

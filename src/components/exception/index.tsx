@@ -23,7 +23,10 @@ const statusMap = {
   }
 }
 
-const NoMatch: React.FC<Props & RouteComponentProps> = function ({ history, status = '404' }) {
+const NoMatch: React.FC<Props & RouteComponentProps> = function ({
+  history,
+  status = '404'
+}) {
   return (
     <Result
       status={status}

@@ -30,7 +30,7 @@ const initialState: State = {
   currentRow: null
 }
 
-const Reminder: React.FC<Props> = function({ userInfo }) {
+const ReminderPage: React.FC<Props> = function({ userInfo }) {
   const [form] = Form.useForm()
   const [state, setState] = useKeepState(initialState)
   const tableRef = useRef<any>()
@@ -206,4 +206,4 @@ const mapStateToProps = (store: any) => ({
   userInfo: store.user.userInfo
 })
 
-export default connect(mapStateToProps)(Reminder)
+export default connect(mapStateToProps)(ReminderPage)

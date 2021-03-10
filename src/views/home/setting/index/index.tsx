@@ -8,7 +8,7 @@ import { settingRoutes } from '@/router/routes'
 
 const { Content, Sider } = Layout
 
-const SettingIndex: React.FC<RouteComponentProps> = function ({ location }) {
+const SettingIndexPage: React.FC<RouteComponentProps> = function ({ location }) {
   const [selectedKeys, setSelectedKeys] = useState('')
 
   useEffect(() => {
@@ -48,4 +48,4 @@ const SettingIndex: React.FC<RouteComponentProps> = function ({ location }) {
   )
 }
 
-export default SettingIndex
+export default SettingIndexPage

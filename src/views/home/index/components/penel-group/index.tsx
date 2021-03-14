@@ -16,25 +16,26 @@ const PanelGroup = () => {
   const [state, setState] = useState([
     {
       title: '今日支出',
-      total: 0,
+      total: '0',
       Icon: <PropertySafetyFilled className="icon" />,
       suffix: '￥',
       path: HOME.CAPITAL_FLOW.path
     },
     {
-      title: '今日待办', total: 0,
+      title: '今日待办',
+      total: '0',
       Icon: <ScheduleFilled className="icon" />,
       path: HOME.TODAY_TASK.path
     },
     {
       title: '活动清单',
-      total: 0,
+      total: '0',
       Icon: <FileTextFilled className="icon" />,
       path: HOME.TODO_LIST.path
     },
     {
       title: '提醒事项',
-      total: 0,
+      total: '0',
       Icon: <AlertFilled className="icon" />,
       path: HOME.REMINDER.path
     },
@@ -49,7 +50,7 @@ const PanelGroup = () => {
     .then(res => {
       if (res.data.success) {
         const data = state.slice()
-        data[0].total = res.data.data.consumption
+        data[0].total = Number(res.data.data.consumption).toFixed(2)
         data[1].total = res.data.data.todayTaskCount
         data[2].total = res.data.data.unfinishedTodoListCount
         data[3].total = res.data.data.reminderCount

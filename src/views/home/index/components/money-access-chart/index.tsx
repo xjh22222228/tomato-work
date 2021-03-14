@@ -50,10 +50,12 @@ const MoneyAccessChart = () => {
       if (res.data.success) {
         let price = 0
         const data = res.data.data.map((item: any) => {
-          price += Number(item.price)
+          const amount = Number(item.price)
+          price += amount
 
           item.date = item.date.slice(5)
-          item.price = Number(item.price)
+          item.price = amount
+          item.priceLabel = '￥' + amount.toFixed(2)
           return item
         })
 

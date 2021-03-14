@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import './style.scss'
 import PenelGroup from './components/penel-group'
 import SystemInfo from './components/system-info'
 import MoneyAccessChart from './components/money-access-chart'

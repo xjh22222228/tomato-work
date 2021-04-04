@@ -1,7 +1,8 @@
+import config from '../config'
 
 const API = Object.freeze({
   // 验证码
-  getCaptcha: '/api/captcha?code=',
+  getCaptcha: config.http.baseURL + '/captcha?code=',
   // 账号密码登录
   login: '/passport/local',
   // 使用token登录

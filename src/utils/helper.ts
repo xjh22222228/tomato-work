@@ -1,5 +1,4 @@
-import { Modal, message } from 'antd'
-
+import { message } from 'antd'
 
 const CODE = 'qwertyuipasdfghjklxcvbnm13456789'
 

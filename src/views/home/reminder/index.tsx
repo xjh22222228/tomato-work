@@ -128,7 +128,7 @@ const ReminderPage: React.FC<Props> = function({ userInfo }) {
   }
 
   // modal成功新增回调函数
-  function handleModalOnSuccess() {
+  function handleCloseModal() {
     setState({ showCreateModal: false })
     tableRef.current.getTableData()
   }
@@ -185,6 +185,7 @@ const ReminderPage: React.FC<Props> = function({ userInfo }) {
           </Form.Item>
         </Form>
       </div>
+
       <Table
         ref={tableRef}
         getTableData={getReminder}
@@ -192,11 +193,12 @@ const ReminderPage: React.FC<Props> = function({ userInfo }) {
         onDelete={serviceDeleteReminder}
         onAdd={() => setState({ showCreateModal: true, currentRow: null })}
       />
+
       <CreateReminder
         visible={state.showCreateModal}
         rowData={state.currentRow}
-        onCancel={() => setState({ showCreateModal: false })}
-        onSuccess={handleModalOnSuccess}
+        onCancel={handleCloseModal}
+        onSuccess={handleCloseModal}
       />
     </div>
   )

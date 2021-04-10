@@ -17,7 +17,7 @@ const CancelToken = axios.CancelToken
 
 function handleError(error: AxiosError) {
   if (axios.isCancel(error)) {
-
+    console.log(error)
   } else {
     const response = error.response
     notification.error({

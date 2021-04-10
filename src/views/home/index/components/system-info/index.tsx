@@ -13,18 +13,6 @@ interface Props {
   }
 }
 
-interface State {
-  curSystemTime: string
-  messageList: any[]
-  loading: boolean
-}
-
-const initialState: State = {
-  curSystemTime: '',
-  messageList: [],
-  loading: true
-}
-
 const statusColor = (percentage: number) => {
   if (percentage < 40) return '#52c41a'
   if (percentage < 80) return '#ffa500'

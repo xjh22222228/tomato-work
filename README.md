@@ -30,6 +30,7 @@
 - [TypeScript](https://www.typescriptlang.org/)
 - [Redux](https://redux.js.org/tutorials/fundamentals/part-5-ui-react)
 - [Ant Design](https://ant.design/docs/react/introduce-cn)
+- [Vite](https://vitejs.dev)
 
 
 

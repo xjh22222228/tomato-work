@@ -13,7 +13,6 @@ interface RespData {
 }
 
 let exiting = false
-const CancelToken = axios.CancelToken
 
 function handleError(error: AxiosError) {
   if (axios.isCancel(error)) {
@@ -42,27 +41,7 @@ httpInstance.interceptors.request.use(function (config) {
   const url = config.url
   const userState = store.getState().user.userInfo
 
-  // 取消重复请求
-  window.axiosCancelTokenStore.forEach((store, idx) => {
-    if (
-      config.headers.cancelRequest !== false &&
-      store.url === url &&
-      store.method === method
-    ) {
-      store.cancel()
-      window.axiosCancelTokenStore.splice(idx, 1)
-    }
-  })
-
   config.headers.token = userState.token
-  config.cancelToken = new CancelToken(cancel => {
-    window.axiosCancelTokenStore.push({
-      pathname: window.location.pathname,
-      method,
-      url,
-      cancel
-    })
-  })
 
   const data: { [k: string]: any } = {}
 

@@ -12,7 +12,7 @@ const CONFIG = {
   http: {
     baseURL: isDevelopment
       ? 'http://localhost:7003/api'
-      : 'https://work.xiejiahe.com/api'
+      : 'https://work-api.xiejiahe.com/api'
   },
   github: {
     clientId: isProduction ? '789d87c19dd5ed1dc42e' : '489b39e1f91d934128c8',

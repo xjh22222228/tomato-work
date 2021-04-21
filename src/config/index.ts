@@ -1,5 +1,5 @@
 
-const isProduction = process.env.NODE_ENV === 'production'
+const isProduction = import.meta.env.PROD
 const isDevelopment = !isProduction
 
 const CONFIG = {

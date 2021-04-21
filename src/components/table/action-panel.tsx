@@ -14,7 +14,8 @@ const ActionPanel: React.FC<Props> = function({
   onAdd
 }) {
   const isShowPanel = onDelete || onAdd
-  const disabled = selectedRowKeys.length <= 0
+  const selectedLen = selectedRowKeys.length
+  const disabled = selectedLen <= 0
 
   return isShowPanel ? (
     <div className="table-action-panel">
@@ -30,7 +31,7 @@ const ActionPanel: React.FC<Props> = function({
 
       {onDelete && (
         <Popconfirm
-          title="您确定要删除吗？"
+          title={`确定要删除选中 ${selectedLen} 条记录吗？`}
           onConfirm={onDelete}
           placement="bottomLeft"
           okType="danger"

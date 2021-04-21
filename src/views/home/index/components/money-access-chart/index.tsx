@@ -2,20 +2,16 @@ import React, { useEffect, useState } from 'react'
 import './style.scss'
 import moment from 'moment'
 import { Empty, DatePicker } from 'antd'
-import {
-  Chart,
-  Point,
-  Line,
-  Tooltip,
-  Legend,
-} from 'bizcharts'
 import { serviceGetCapitalFlowPrice } from '@/services'
+import {
+  LineChart, Line, XAxis,
+  YAxis, CartesianGrid, Tooltip,
+  Legend, ResponsiveContainer
+} from 'recharts'
 
 type DataProp = {
   date: string
-  name: string
-  price: string
-  type: number
+  [key: string]: any
 }
 
 const { RangePicker } = DatePicker
@@ -25,22 +21,9 @@ const DEFAULT_DATE: any = [
   moment()
 ]
 
-const scale = {
-  temperature: { min: 0 },
-  city: {
-    formatter: (v: string): any => {
-      const payload = {
-        1: '收入',
-        2: '支出'
-      } as any
-      return payload[v]
-    }
-  }
-}
-
 const MoneyAccessChart = () => {
   const [data, setData] = useState<DataProp[]>([])
-  const [totalPrice, setTotalPrice] = useState(0)
+  const [totalAmount, setTotalAmount] = useState(0)
 
   function getData(params?: object) {
     serviceGetCapitalFlowPrice({
@@ -49,18 +32,24 @@ const MoneyAccessChart = () => {
     .then(res => {
       if (res.data.success) {
         let price = 0
-        const data = res.data.data.map((item: any) => {
+        const data: DataProp[] = []
+        res.data.data.forEach((item: DataProp, idx: number) => {
+          const date = item.date.slice(5)
           const amount = Number(item.price)
           price += amount
 
-          item.date = item.date.slice(5)
-          item.price = amount
-          item.priceLabel = '￥' + amount.toFixed(2)
-          return item
+          if (idx % 2 === 0) {
+            data.push({
+              date,
+              '收入': amount
+            })
+          } else {
+            data[data.length - 1]['支出'] = amount
+          }
         })
 
         setData(data)
-        setTotalPrice(price)
+        setTotalAmount(price)
       }
     })
   }
@@ -88,37 +77,28 @@ const MoneyAccessChart = () => {
         />
       </h2>
 
-      {(totalPrice > 0) ? (
-        <Chart
-          scale={scale}
-          padding={[30, 20, 60, 40]}
-          autoFit
-          height={399}
-          data={data}
-          interactions={['element-active']}
-        >
-          <Point position="date*price" color="name" shape="circle" />
-          <Line
-            shape="smooth"
-            position="date*price"
-            color="name"
-            label={['price',
-              percent => {
-                return {
-                  content: () => '￥' + Number(percent).toFixed(2),
-                }
-              }
-            ]}
-          />
-          <Tooltip shared showCrosshairs />
-          <Legend background={{
-            padding:[5,100,5,36],
-            style: {
-              fill: '#eaeaea',
-              stroke: '#fff'
-            }
-          }} />
-        </Chart>
+      {(totalAmount > 0) ? (
+        <ResponsiveContainer width="100%" height={350}>
+          <LineChart
+            width={500}
+            height={300}
+            data={data}
+            margin={{
+              top: 5,
+              right: 30,
+              left: 20,
+              bottom: 5,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="date" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="收入" stroke="#82ca9d" activeDot={{ r: 8 }} />
+            <Line type="monotone" dataKey="支出" stroke="#ff5000" />
+          </LineChart>
+        </ResponsiveContainer>
       ) : (
         <div className="no-data">
           <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />

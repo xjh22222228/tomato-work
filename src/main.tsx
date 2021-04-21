@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './assets/styles/global.scss'
 import 'antd/dist/antd.css'
-import reportWebVitals from './reportWebVitals'
 import Routes from './router'
 import { Provider } from 'react-redux'
 import { ConfigProvider } from 'antd'
@@ -24,5 +23,3 @@ ReactDOM.render(
   ,
   document.getElementById('tomato-work-root')
 )
-
-reportWebVitals()

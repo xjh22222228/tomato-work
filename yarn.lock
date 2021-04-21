@@ -815,6 +815,11 @@ browserslist@^4.14.5:
     escalade "^3.1.1"
     node-releases "^1.1.66"
 
+bytes@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/bytes/-/bytes-3.1.0.tgz#f6cf7933a360e0588fa9fde85651cdc7f805d1f6"
+  integrity sha512-zauLjrfCG+xvoyaqLoV8bLVXXNGC4JqlxFCutSDWA6fJrTo2ZuvLYTqZ7aHBLZSMOopbzwv8f+wZcVzfVTI2Dg==
+
 call-bind@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/call-bind/-/call-bind-1.0.0.tgz#24127054bb3f9bdcb4b1fb82418186072f77b8ce"

@@ -10,7 +10,7 @@ const CONFIG = {
   // 网页标题
   title: 'Tomato Work',
   http: {
-    baseURL: isDevelopment
+    baseURL: !isDevelopment
       ? 'http://localhost:7003/api'
       : 'https://work-api.xiejiahe.com/api'
   },

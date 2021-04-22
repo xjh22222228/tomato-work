@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["*"]
+    },
     "target": "ESNext",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "types": ["vite/client"],
@@ -19,6 +23,5 @@
   },
   "include": [
     "src"
-  ],
-  "extends": "./paths.json"
+  ]
 }

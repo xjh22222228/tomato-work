@@ -8,16 +8,16 @@ interface Props {
   selectedRowKeys: string[]
 }
 
-const ActionPanel: React.FC<Props> = function({
+const Toolbar: React.FC<Props> = function({
   selectedRowKeys,
   onDelete,
   onAdd
 }) {
-  const isShowPanel = onDelete || onAdd
+  const showToolbar = onDelete || onAdd
   const selectedLen = selectedRowKeys.length
   const disabled = selectedLen <= 0
 
-  return isShowPanel ? (
+  return showToolbar ? (
     <div className="table-action-panel">
       {onAdd && (
         <Button
@@ -35,6 +35,7 @@ const ActionPanel: React.FC<Props> = function({
           onConfirm={onDelete}
           placement="bottomLeft"
           okType="danger"
+          disabled={disabled}
         >
           <Button
             type="primary"
@@ -50,4 +51,4 @@ const ActionPanel: React.FC<Props> = function({
   ) : null
 }
 
-export default ActionPanel
+export default Toolbar

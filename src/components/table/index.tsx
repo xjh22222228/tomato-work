@@ -18,7 +18,7 @@ import { Table } from 'antd'
 import { TableProps } from 'rc-table/lib/Table'
 import { AxiosPromise } from 'axios'
 import useKeepState from 'use-keep-state'
-import ActionPanel from './action-panel'
+import Toolbar from './Toolbar'
 import useDebounceFn from '@/hooks/useDebounceFn'
 
 interface Props extends TableProps {
@@ -177,7 +177,7 @@ const TableFC: FC<Props> = ({
 
   return (
     <React.Fragment>
-      <ActionPanel
+      <Toolbar
         selectedRowKeys={state.selectedRowKeys}
         onDelete={onDelete && handleDelete}
         onAdd={onAdd}

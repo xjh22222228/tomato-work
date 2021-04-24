@@ -3,7 +3,7 @@
   padding: 15px 20px;
   background: #fff;
   overflow-y: auto !important;
-  min-height: 500px;
+  height: calc(100vh - 50px);
 
   .tool-bar {
     display: flex;

@@ -1,7 +1,7 @@
 // https://ui.toast.com/tui-editor/
 import React, { useState, useEffect, useCallback } from 'react'
 import './style.scss'
-import Editor from 'tui-editor'
+import Editor from '@toast-ui/editor'
 import { Input, Button, message } from 'antd'
 import { RouteComponentProps, match } from 'react-router-dom'
 import { HOME } from '@/router/constants'
@@ -67,7 +67,7 @@ const CreatePage: React.FC<Props & RouteComponentProps> = ({ history, computedMa
       .then(res => {
         if (res.data.success) {
           setTitle(res.data.data.title)
-          editor.setValue(res.data.data.markdown)
+          editor.setMarkdown(res.data.data.markdown)
         }
       })
     }

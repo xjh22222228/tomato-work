@@ -38,7 +38,6 @@ Object.setPrototypeOf(httpInstance, axios)
 
 httpInstance.interceptors.request.use(function (config) {
   const method = config.method
-  const url = config.url
   const userState = store.getState().user.userInfo
 
   config.headers.token = userState.token

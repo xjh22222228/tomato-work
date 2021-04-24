@@ -34,7 +34,6 @@ const InnerMessagePage = () => {
   }, [])
 
   const handleAction = useCallback((buttonType: 1 | 2) => {
-
     let params = selectedRowKeys.join()
     if (buttonType === 2) {
       params = 'all'

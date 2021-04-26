@@ -41,6 +41,7 @@
 - [x] 活动清单
 - [x] 今日待办
 - [x] 财务管理
+- [x] 公司单位
 - [x] 个人中心
 - [x] 我的备忘 - 支持Markdown & WYSIWYG
 - [x] 站内消息
@@ -61,7 +62,7 @@ git clone --depth=1 https://github.com/xjh22222228/tomato-work.git
 # install dependencies
 yarn
 
-# serve with hot reload at localhost:9663
+# serve with hot reload at localhost:7000
 # user: test, password: 123456
 yarn start
 

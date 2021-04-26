@@ -3,7 +3,6 @@ import './style.scss'
 import Footer from '@/components/footer'
 import qs from 'query-string'
 import md5 from 'blueimp-md5'
-import api from '@/api'
 import config from '@/config'
 import { isEmpty } from 'lodash'
 import { Button, Input, message, Popover, Form } from 'antd'
@@ -39,9 +38,11 @@ const PopoverContent = (
 let captcha = randomCode()
 const LOGIN_NAME = window.localStorage.getItem(LOCAL_STORAGE.LOGIN_NAME) || ''
 
+const captchaUrl = config.http.baseURL + '/captcha?code='
+
 function reloadCaptcha(e: any) {
   captcha = randomCode()
-  const url = api.getCaptcha + captcha
+  const url = captchaUrl + captcha
   e.target.src = url
 }
 
@@ -188,7 +189,7 @@ const LoginPage: React.FC<LoginProps> = function ({
                 onPressEnter={handleSubmit}
                 suffix={
                   <img
-                    src={`${api.getCaptcha}${captcha}`}
+                    src={`${captchaUrl}${captcha}`}
                     className="captcha"
                     onClick={reloadCaptcha}
                     alt=""

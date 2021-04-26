@@ -9,7 +9,7 @@ import { RouteComponentProps } from 'react-router-dom'
 import { Card, Col, Row, Button, Popconfirm, Spin } from 'antd'
 import { Link } from 'react-router-dom'
 import { serviceGetMemorandum, serviceDeleteMemorandum } from '@/services'
-import { defaultTitle } from '../constants'
+import { defaultTitle } from './constants'
 
 const MemorandumPage: FC<RouteComponentProps> = ({ history }) => {
   const [list, setList] = useState([])

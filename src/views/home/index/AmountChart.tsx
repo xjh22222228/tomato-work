@@ -21,7 +21,7 @@ const DEFAULT_DATE: any = [
   moment()
 ]
 
-const MoneyAccessChart = () => {
+const AmountChart = () => {
   const [data, setData] = useState<DataProp[]>([])
   const [totalAmount, setTotalAmount] = useState(0)
 
@@ -66,7 +66,7 @@ const MoneyAccessChart = () => {
   }, [])
 
   return (
-    <div className="money-access">
+    <div className="amount-chart">
       <h2 className="title">
         资金流动
         <RangePicker
@@ -108,4 +108,4 @@ const MoneyAccessChart = () => {
   )
 }
 
-export default React.memo(MoneyAccessChart)
+export default React.memo(AmountChart)

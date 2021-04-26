@@ -80,6 +80,7 @@ httpInstance.interceptors.response.use(function (res) {
     exiting = true
     setTimeout(logout, 2000)
   }
+
   return res
 }, function (error) {
   handleError(error)

@@ -1,0 +1,90 @@
+@import "@/assets/styles/mixins.scss";
+
+// Index
+.memorandum {
+  .button-group {
+    margin-top: 15px;
+    text-align: right;
+    .ant-btn {
+      margin-left: 10px;
+    }
+  }
+
+  .ant-card-body {
+    padding: 10px 20px;
+  }
+  
+  .ant-col {
+    margin-bottom: 15px;
+  }
+
+  .ant-card-head-title,
+  .ant-card-body {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .content {
+    margin-top: 5px;
+    @include lineClamp(1);
+
+    & > * {
+      display: inline;
+      font-size: 14px;
+      font-weight: normal;
+      color: #333;
+    }
+  }
+}
+
+// CreatePage
+.editor-page {
+  .input-title {
+    font-weight: bold;
+  }
+
+  #edit-section {
+    margin: 20px 0;
+    flex: 1;
+    background: #fff;
+  }
+
+  .button-group {
+    text-align: right;
+    .ant-btn {
+      margin-left: 15px;
+    }
+  }
+}
+
+// DetailPage
+.memorandum-detail {
+  position: relative;
+  padding: 15px 20px;
+  background: #fff;
+  overflow-y: auto !important;
+  height: calc(100vh - 50px);
+
+  .tool-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+
+  .icon-left {
+    font-size: 22px;
+    cursor: pointer;
+  }
+
+  .title {
+    font-size: 36px;
+    color: #262626;
+    border-bottom: 1px solid #e6e6e6;
+  }
+
+  .edit {
+    font-size: 16px;
+    color: inherit;
+  }
+}

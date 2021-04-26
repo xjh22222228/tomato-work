@@ -8,12 +8,13 @@ import Reminder from '@/views/home/reminder'
 import SettingIndex from '@/views/home/setting/index'
 import HomeIndex from '@/views/home/index'
 import TodayTask from '@/views/home/today-task'
-import Memorandum from '@/views/home/memorandum/index'
-import MemorandumCreate from '@/views/home/memorandum/create'
-import MemorandumDetail from '@/views/home/memorandum/detail'
-import CapitalFlow from '@/views/home/capital-flow/index'
-import CapitalFlowType from '@/views/home/capital-flow/type'
-import TodoList from '@/views/home/todo-list/index'
+import Memorandum from '@/views/home/memorandum'
+import MemorandumCreate from '@/views/home/memorandum/CreatePage'
+import MemorandumDetail from '@/views/home/memorandum/DetailPage'
+import CapitalFlow from '@/views/home/capital-flow'
+import CapitalFlowType from '@/views/home/capital-flow/TypeList'
+import TodoList from '@/views/home/todo-list'
+import Company from '@/views/home/company'
 
 const routesMap: IRouteProps[] = [
   {
@@ -42,6 +43,15 @@ const routesMap: IRouteProps[] = [
         exact: true,
         meta: {
           title: HOME.HOME_INDEX.name,
+          requiresAuth: true,
+        }
+      },
+      {
+        path: HOME.COMPANY.path,
+        component: Company,
+        exact: true,
+        meta: {
+          title: HOME.COMPANY.name,
           requiresAuth: true,
         }
       },

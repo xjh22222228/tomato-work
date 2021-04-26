@@ -1,7 +1,5 @@
 import { message } from 'antd'
 
-const CODE = 'qwertyuipasdfghjklxcvbnm13456789'
-
 /**
  * 计算百分比
  * @example
@@ -49,6 +47,7 @@ export function exitFullscreen() {
 
 // 随机字符串
 export function randomCode(num = 4) {
+  const CODE = 'qwertyuipasdfghjklxcvbnm13456789'
   let data = ''
 
   for (let i = 0; i < num; i++) {

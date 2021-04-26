@@ -35,7 +35,7 @@ const initialState: State = {
   confirmLoading: false,
 }
 
-const CreateReminder: React.FC<Props> = function ({
+const CreateCapitalFlowModal: React.FC<Props> = function ({
   visible,
   onCancel,
   onSuccess,
@@ -160,4 +160,4 @@ const CreateReminder: React.FC<Props> = function ({
   )
 }
 
-export default React.memo(CreateReminder)
+export default React.memo(CreateCapitalFlowModal)

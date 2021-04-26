@@ -6,8 +6,8 @@ import React, { useEffect } from 'react'
 import './style.scss'
 import useKeepState from 'use-keep-state'
 import NoData from '@/components/no-data/index'
-import TaskItem from './components/task-item'
-import CreateTask from './components/create-task'
+import TaskItem from './TaskItem'
+import CreateTaskModal from './CreateTaskModal'
 import moment from 'moment'
 import { DatePicker, Button, Tag, Row, Col, Form } from 'antd'
 import { serviceGetTask } from '@/services'
@@ -155,7 +155,7 @@ const TodayTaskPage = () => {
         )}
       </div>
 
-      <CreateTask
+      <CreateTaskModal
         visible={state.showCreateTaskModal}
         onSuccess={handleOnSuccess}
         onCancel={toggleCreateTaskModal}

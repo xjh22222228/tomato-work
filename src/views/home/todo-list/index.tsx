@@ -5,9 +5,9 @@ import React, { useEffect, useRef } from 'react'
 import moment from 'moment'
 import useKeepState from 'use-keep-state'
 import Table from '@/components/table'
-import CreateTodo from '../components/create-todo'
+import CreateTodoModal from './CreateTodoModal'
 import { serviceGetTodoList, serviceDeleteTodoList, serviceUpdateTodoList } from '@/services'
-import { STATUS } from '../constants'
+import { STATUS } from './constants'
 import { DatePicker, Button, Tag, Form, Popconfirm } from 'antd'
 
 const { RangePicker } = DatePicker
@@ -175,7 +175,7 @@ const TodoListPage = () => {
         })}
       />
 
-      <CreateTodo
+      <CreateTodoModal
         visible={state.showCreateTodoModal}
         onSuccess={handleOnSuccess}
         onCancel={toggleCreateTodoModal}

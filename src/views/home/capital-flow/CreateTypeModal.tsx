@@ -6,7 +6,7 @@ import {
   Select
 } from 'antd'
 import { serviceCreateCapitalFlowType, serviceUpdateCapitalFlowType } from '@/services'
-import { TYPES } from '../../enum'
+import { TYPES } from './enum'
 import useKeepState from 'use-keep-state'
 
 type Props = {
@@ -21,7 +21,7 @@ const initialState = {
   confirmLoading: false,
 }
 
-const CreateTask: React.FC<Props> = function ({
+const CreateTypeModal: React.FC<Props> = function ({
   visible,
   rowData,
   onCancel,
@@ -119,4 +119,4 @@ const CreateTask: React.FC<Props> = function ({
   )
 }
 
-export default React.memo(CreateTask)
+export default React.memo(CreateTypeModal)

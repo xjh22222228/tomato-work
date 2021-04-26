@@ -1,5 +1,5 @@
+// Index
 .capital-flow {
-
   .poly {
     display: flex;
     margin-top: 10px;
@@ -14,5 +14,22 @@
       font-size: 14px;
       color: #666;
     }
+  }
+}
+
+// Type
+.capital-flow-type {
+  .button-group {
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    background: #fff;
+
+    .ant-btn {
+      margin-right: 10px;
+    }
+  }
+
+  .ant-table-wrapper {
+    overflow-y: auto;
   }
 }

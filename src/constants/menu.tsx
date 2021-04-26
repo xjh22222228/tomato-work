@@ -7,7 +7,8 @@ import {
   ScheduleOutlined,
   BarChartOutlined,
   FormOutlined,
-  UserOutlined
+  UserOutlined,
+  InsertRowLeftOutlined
 } from '@ant-design/icons'
 
 export const HOME_SIDER_MENU_LIST = [
@@ -30,6 +31,11 @@ export const HOME_SIDER_MENU_LIST = [
     path: HOME.TODAY_TASK.path,
     icon: <ScheduleOutlined />,
     name: HOME.TODAY_TASK.name
+  },
+  {
+    path: HOME.COMPANY.path,
+    icon: <InsertRowLeftOutlined />,
+    name: HOME.COMPANY.name
   },
   {
     path: '',

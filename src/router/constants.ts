@@ -17,7 +17,9 @@ export const HOME = {
 
   HOME_INDEX: { name: '后台首页', path: '/home/index' },
 
-  REMINDER: { name: '提醒事项', path: '/home/reminder' },
+  REMINDER: { name: '提醒事项', path: '/home/company' },
+
+  COMPANY: { name: '公司单位', path: '/home/reminder' },
 
   SETTING_INDEX: { name: '个人中心', path: '/home/setting' },
 

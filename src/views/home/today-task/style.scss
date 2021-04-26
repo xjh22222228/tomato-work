@@ -1,5 +1,4 @@
 .today-task {
-
   .ant-tag {
     margin-bottom: 10px;
   }
@@ -14,13 +13,39 @@
     flex: 1;
     overflow: hidden;
     overflow-y: auto;
-
     .ant-row-flex {
       height: 100%;
-
       .ant-col:not(:nth-last-child(1)) {
         border-right: 1px dashed #dcd5d5;
       }
+    }
+  }
+}
+
+// TaskItem
+.task-component {
+  $padding: 15px;
+  .ant-card-body {
+    padding: $padding 0;
+  }
+
+  .content {
+    padding: 0 24px $padding $padding;
+    border-bottom: 1px dashed #ccc;
+    white-space: pre-wrap;
+  }
+
+  .level {
+    padding-left: $padding;
+  }
+  
+  .button-wrapper {
+    padding: 0 $padding;
+    display: flex;
+    justify-content: flex-end;
+
+    .ant-btn:not(:nth-last-child(1)) {
+      margin-right: 7px;
     }
   }
 }

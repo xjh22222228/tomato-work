@@ -13,7 +13,7 @@ export default defineConfig({
   },
 
   server: {
-    port: 9663
+    port: 7000
   },
 
   build: {

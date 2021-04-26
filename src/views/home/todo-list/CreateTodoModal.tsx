@@ -20,7 +20,7 @@ const initialState = {
   content: '',
 }
 
-const CreateTodo: React.FC<Props> = function ({
+const CreateTodoModal: React.FC<Props> = function ({
   visible,
   onSuccess,
   onCancel,
@@ -98,4 +98,4 @@ const CreateTodo: React.FC<Props> = function ({
   )
 }
 
-export default React.memo(CreateTodo)
+export default React.memo(CreateTodoModal)

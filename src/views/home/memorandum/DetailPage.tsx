@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react'
 import './style.scss'
 import { match, Link, RouteComponentProps } from 'react-router-dom'
 import { serviceGetMemorandumById } from '@/services'
-import { defaultTitle } from '../constants'
+import { defaultTitle } from './constants'
 import { LeftOutlined, EditOutlined } from '@ant-design/icons'
 import { Spin } from 'antd'
 

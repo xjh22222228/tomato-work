@@ -6,14 +6,14 @@ import './style.scss'
 import moment from 'moment'
 import useKeepState from 'use-keep-state'
 import Table from '@/components/table'
-import CreateCapitalFlow from '../components/create-capital-flow'
+import CreateCapitalFlowModal from './CreateCapitalFlowModal'
 import { DatePicker, Button, Select, Statistic, Input, Form, Popconfirm } from 'antd'
 import {
   serviceGetCapitalFlow,
   serviceDeleteCapitalFlow,
   serviceGetCapitalFlowType
 } from '@/services'
-import { OPTION_TYPES, TypeNames, TYPES } from '../enum'
+import { OPTION_TYPES, TypeNames, TYPES } from './enum'
 
 const { Search } = Input
 const { RangePicker } = DatePicker
@@ -383,7 +383,7 @@ const ReminderPage: React.FC = function() {
         onAdd={() => setState({ showCreateCapitalFlowModal: true, currentRow: null })}
       />
 
-      <CreateCapitalFlow
+      <CreateCapitalFlowModal
         visible={state.showCreateCapitalFlowModal}
         rowData={state.currentRow}
         nameList={state.nameList}

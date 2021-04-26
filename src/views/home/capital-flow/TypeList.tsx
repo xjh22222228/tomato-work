@@ -2,13 +2,13 @@ import React, { useEffect } from 'react'
 import './style.scss'
 import moment from 'moment'
 import useKeepState from 'use-keep-state'
-import CreateType from '../components/create-type/index'
+import CreateTypeModal from './CreateTypeModal'
 import { Table, Button, Tag, Popconfirm } from 'antd'
 import {
   serviceGetCapitalFlowType,
   serviceDeleteCapitalFlowType
 } from '@/services'
-import { TypeNames, TypeColors } from '../enum'
+import { TypeNames, TypeColors } from './enum'
 
 const initialState = {
   showCreateTypeModal: false,
@@ -123,7 +123,8 @@ const Type = () => {
         rowKey="id"
         loading={state.loading}
       />
-      <CreateType
+
+      <CreateTypeModal
         visible={state.showCreateTypeModal}
         rowData={state.rowData}
         onCancel={() => setState({ showCreateTypeModal: false })}

@@ -5,7 +5,7 @@ import Editor from '@toast-ui/editor'
 import { Input, Button, message } from 'antd'
 import { RouteComponentProps, match } from 'react-router-dom'
 import { HOME } from '@/router/constants'
-import { defaultTitle } from '../constants'
+import { defaultTitle } from './constants'
 import {
   serviceCreateMemorandum,
   serviceGetMemorandumById,

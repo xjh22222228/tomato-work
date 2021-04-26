@@ -4,7 +4,7 @@
 import React, { useEffect, useRef } from 'react'
 import Table from '@/components/table'
 import moment from 'moment'
-import CreateReminder from './components/create-reminder'
+import CreateReminder from './CreateReminder'
 import useKeepState from 'use-keep-state'
 import { connect } from 'react-redux'
 import { DatePicker, Button, Select, Tag, Modal, Form, Popconfirm } from 'antd'

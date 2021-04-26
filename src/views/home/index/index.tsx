@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import './style.scss'
-import PenelGroup from './components/penel-group'
-import SystemInfo from './components/system-info'
-import MoneyAccessChart from './components/money-access-chart'
+import PenelGroup from './PenelGroup'
+import SystemInfo from './SystemInfo'
+import MoneyAccessChart from './AmountChart'
 import { DispatchProp, connect } from 'react-redux'
 import { ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
@@ -12,6 +12,7 @@ import { StoreState } from '@/store'
 const mapStateToProps = ({ system }: StoreState) => ({ system })
 
 type ThunkDispatchProps = ThunkDispatch<{}, {}, AnyAction>
+
 type Props = DispatchProp & ReturnType<typeof mapStateToProps> & { dispatch: ThunkDispatchProps }
 
 const HomeIndexPage: React.FC<Props> = function ({ system, dispatch }) {

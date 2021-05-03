@@ -5,3 +5,11 @@ export function isBefore(current: moment.Moment | null): boolean {
   const today = new Date().setHours(0, 0, 0, 0)
   return moment(current).isBefore(today)
 }
+
+export function formatDate(date: any): string {
+  return moment(date).format('YYYY-MM-DD')
+}
+
+export function formatDateTime(date: any): string {
+  return moment(date).format('YYYY-MM-DD HH:mm:ss')
+}

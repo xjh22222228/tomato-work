@@ -1,4 +1,5 @@
 import React from 'react'
+import './style.scss'
 import { Button, Result } from 'antd'
 import NoDataSvg from '@/assets/img/common/no-data.svg'
 

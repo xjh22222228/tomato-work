@@ -1,6 +1,6 @@
 import React from 'react'
 import useKeepState from 'use-keep-state'
-import { isBefore } from '@/utils'
+import { isBefore, formatDateTime } from '@/utils'
 import { serviceCreateTask } from '@/services'
 import {
   Modal,
@@ -13,11 +13,10 @@ import {
 type Props = {
   visible: boolean
   data?: object
-  onSuccess: (res?: any) => void
+  onSuccess: () => void
   onCancel: () => void
 }
 
-const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss'
 const { TextArea } = Input
 const initialState = {
   confirmLoading: false,
@@ -35,7 +34,7 @@ const CreateTaskModal: React.FC<Props> = function ({
     try {
       const values = await form.validateFields()
       const params = {
-        date: values.date.format(DATE_FORMAT),
+        date: formatDateTime(values.date),
         content: values.content.trim(),
         count: values.count
       }
@@ -56,12 +55,6 @@ const CreateTaskModal: React.FC<Props> = function ({
     }
   }
 
-  React.useEffect(() => {
-    if (!visible) {
-      form.resetFields()
-    }
-  }, [visible])
-
   return (
     <Modal
       title="新增"
@@ -69,9 +62,9 @@ const CreateTaskModal: React.FC<Props> = function ({
       onOk={handleSubmitForm}
       onCancel={onCancel}
       confirmLoading={state.confirmLoading}
-      forceRender
+      destroyOnClose
     >
-      <Form form={form}>
+      <Form form={form} preserve={false}>
         <Form.Item
           label="开始日期"
           name="date"

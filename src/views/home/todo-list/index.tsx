@@ -18,14 +18,19 @@ interface State {
   currentRowData: { [key: string]: any } | null
 }
 
-const initialState: State = {
+const DEFAULT_DATE = [
+  moment().startOf('year'),
+  moment().endOf('year')
+]
+
+const initState: State = {
   showCreateTodoModal: false,
   currentRowData: null
 }
 
 const TodoListPage = () => {
   const [form] = Form.useForm()
-  const [state, setState] = useKeepState(initialState)
+  const [state, setState] = useKeepState(initState)
   const tableRef = useRef<any>()
   const tableColumns = [
     {
@@ -36,7 +41,8 @@ const TodoListPage = () => {
         <Tag color={STATUS[status].color}>
           {STATUS[status].text}
         </Tag>
-      )},
+      )
+    },
     {
       title: '创建时间',
       dataIndex: 'createdAt',
@@ -96,11 +102,7 @@ const TodoListPage = () => {
   }
 
   function initParams() {
-    const startDate = moment().startOf('year')
-    const endDate = moment().endOf('year')
-    form.setFieldsValue({
-      date: [startDate, endDate]
-    })
+    form.resetFields()
     tableRef?.current?.getTableData()
   }
 
@@ -108,7 +110,7 @@ const TodoListPage = () => {
     setState({ showCreateTodoModal: !state.showCreateTodoModal })
   }
 
-  const handleOnSuccess = function() {
+  const handleSuccess = function() {
     toggleCreateTodoModal()
     tableRef.current.getTableData()
   }
@@ -153,7 +155,7 @@ const TodoListPage = () => {
           layout="inline"
           onValuesChange={() => tableRef?.current?.getTableData()}
         >
-          <Form.Item name="date" label="查询日期">
+          <Form.Item name="date" label="查询日期" initialValue={DEFAULT_DATE}>
             <RangePicker allowClear />
           </Form.Item>
 
@@ -177,7 +179,7 @@ const TodoListPage = () => {
 
       <CreateTodoModal
         visible={state.showCreateTodoModal}
-        onSuccess={handleOnSuccess}
+        onSuccess={handleSuccess}
         onCancel={toggleCreateTodoModal}
         rowData={state.currentRowData}
       />

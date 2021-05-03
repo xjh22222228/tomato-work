@@ -8,10 +8,9 @@ import {
   DatePicker
 } from 'antd'
 import { serviceCreateReminder, serviceUpdateReminder } from '@/services'
-import { isBefore } from '@/utils'
+import { isBefore, formatDateTime } from '@/utils'
 
 const { TextArea } = Input
-const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss'
 
 type Props = {
   visible: boolean
@@ -41,7 +40,7 @@ const CreateReminder: React.FC<Props> = function ({
     try {
       const values = await form.validateFields()
       const params = {
-        date: values.date.format(DATE_FORMAT),
+        date: formatDateTime(values.date),
         content: values.content.trim()
       }
 
@@ -102,9 +101,10 @@ const CreateReminder: React.FC<Props> = function ({
             showTime
             allowClear={false}
             disabledDate={isBefore}
-            style={{ width: '100%' }}
+            className="w100"
           />
         </Form.Item>
+
         <Form.Item
           name="content"
           label="提醒内容"
@@ -118,7 +118,7 @@ const CreateReminder: React.FC<Props> = function ({
           <TextArea
             rows={3}
             maxLength={200}
-            placeholder="请输入内容"
+            placeholder="请输入"
           />
         </Form.Item>
       </Form>

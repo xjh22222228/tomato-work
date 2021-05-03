@@ -216,6 +216,7 @@ const ReminderPage: React.FC = function() {
         date[0] = prevDay
         date[1] = prevDay
         break
+
       case 3:
         date[0] = moment(
           moment()
@@ -225,6 +226,7 @@ const ReminderPage: React.FC = function() {
         )
         date[1] = moment(new Date(), DATE_FORMAT)
         break
+
       case 4:
         date[0] = moment(
           moment(startDate)
@@ -241,6 +243,7 @@ const ReminderPage: React.FC = function() {
           DATE_FORMAT
         )
         break
+
       case 5:
         date[0] = moment(
           moment(startDate)

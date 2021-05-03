@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import useKeepState from 'use-keep-state'
 import { serviceCreateTodoList, serviceUpdateTodoList } from '@/services'
 import {
@@ -10,7 +10,7 @@ import {
 type Props = {
   visible: boolean
   rowData?: { [key: string]: any } | null
-  onSuccess: (res?: any) => void
+  onSuccess: () => void
   onCancel: () => void
 }
 
@@ -31,6 +31,7 @@ const CreateTodoModal: React.FC<Props> = function ({
 
   async function handleSubmitForm() {
     try {
+      setState({ confirmLoading: true })
       const values = await form.validateFields()
       const params = {
         content: values.content.trim(),
@@ -41,29 +42,18 @@ const CreateTodoModal: React.FC<Props> = function ({
           ? serviceCreateTodoList(params)
             : serviceUpdateTodoList(rowData.id, params)
       )
-      .then(res => {
-        if (res.data.success) {
-          onSuccess()
-        }
-      })
+        .then(res => {
+          if (res.data.success) {
+            onSuccess()
+          }
+        })
+        .finally(() => {
+          setState({ confirmLoading: false })
+        })
     } catch (error) {
       console.log(error)
     }
   }
-
-  useEffect(() => {
-    if (visible && rowData) {
-      form.setFieldsValue({
-        content: rowData.content
-      })
-    }
-  }, [visible, rowData])
-
-  useEffect(() => {
-    if (!visible) {
-      form.resetFields()
-    }
-  }, [visible])
 
   return (
     <Modal
@@ -72,12 +62,13 @@ const CreateTodoModal: React.FC<Props> = function ({
       onOk={handleSubmitForm}
       onCancel={onCancel}
       confirmLoading={state.confirmLoading}
-      forceRender
+      destroyOnClose
     >
-      <Form form={form}>
+      <Form form={form} preserve={false}>
         <Form.Item
           label="活动内容"
           name="content"
+          initialValue={rowData?.content}
           rules={[
             {
               required: true,

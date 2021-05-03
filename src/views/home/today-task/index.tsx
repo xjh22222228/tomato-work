@@ -77,7 +77,7 @@ const TodayTaskPage = () => {
     setState({ showCreateTaskModal: !state.showCreateTaskModal })
   }
 
-  function handleOnSuccess() {
+  function handleSuccess() {
     toggleCreateTaskModal()
     getTask()
   }
@@ -157,7 +157,7 @@ const TodayTaskPage = () => {
 
       <CreateTaskModal
         visible={state.showCreateTaskModal}
-        onSuccess={handleOnSuccess}
+        onSuccess={handleSuccess}
         onCancel={toggleCreateTaskModal}
       />
     </div>

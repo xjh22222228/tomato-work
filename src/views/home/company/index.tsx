@@ -7,6 +7,7 @@ import Table from '@/components/table'
 import CreateCompanyModal from './CreateCompanyModal'
 import { serviceGetAllCompany, serviceDelCompany } from '@/services'
 import { Button, Popconfirm } from 'antd'
+import { fromNow } from '@/utils'
 
 interface State {
   showCreateCompanyModal: boolean
@@ -30,17 +31,25 @@ const CompanyPage = () => {
     {
       title: '入职日期',
       dataIndex: 'startDate',
-      width: 170
+      width: 130
     },
     {
       title: '离职日期',
       dataIndex: 'endDate',
-      width: 170,
-      render: (endDate: unknown) => endDate ?? '至今'
+      width: 130,
+      render: (endDate: string|null) => endDate ?? '至今'
+    },
+    {
+      title: '在职天数',
+      dataIndex: 'id',
+      width: 100,
+      render: (_: unknown, record: any) =>
+        fromNow(record.startDate, record.endDate) + ' 天'
     },
     {
       title: '薪资',
       dataIndex: 'amount',
+      render: (amount: string) => `￥${amount}`
     },
     {
       title: '备注',

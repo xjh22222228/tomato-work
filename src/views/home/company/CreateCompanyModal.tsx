@@ -60,7 +60,7 @@ const CreateCompanyModal: React.FC<Props> = function ({
       const params: any = {
         companyName: values.companyName,
         startDate: formatDate(values.startDate),
-        amount: values.amount,
+        amount: Number(values.amount),
         remark: values.remark.trim(),
       }
 

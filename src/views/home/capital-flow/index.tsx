@@ -20,6 +20,15 @@ const { RangePicker } = DatePicker
 const Option = Select.Option
 const DATE_FORMAT = 'YYYY-MM-DD'
 
+enum FilterType {
+  Today = 1,
+  Yesterday,
+  LastWeek,
+  ThisYear,
+  PrevMonth,
+  NextMonth
+}
+
 interface State {
   showCreateCapitalFlowModal: boolean
   currentRow: null | { [key: string]: any }
@@ -46,7 +55,7 @@ const initialState: State = {
   filters: {}
 }
 
-const ReminderPage: React.FC = function() {
+const CapitalFlowPage: React.FC = function() {
   const [form] = Form.useForm()
   const [state, setState] = useKeepState(initialState)
   const tableRef = useRef<any>()
@@ -207,7 +216,7 @@ const ReminderPage: React.FC = function() {
     ]
 
     switch (type) {
-      case 2:
+      case FilterType.Yesterday:
         const prevDay = moment(
           moment()
             .subtract(1, 'days')
@@ -217,7 +226,7 @@ const ReminderPage: React.FC = function() {
         date[1] = prevDay
         break
 
-      case 3:
+      case FilterType.LastWeek:
         date[0] = moment(
           moment()
             .subtract(7, 'days')
@@ -227,7 +236,7 @@ const ReminderPage: React.FC = function() {
         date[1] = moment(new Date(), DATE_FORMAT)
         break
 
-      case 4:
+      case FilterType.PrevMonth:
         date[0] = moment(
           moment(startDate)
             .subtract(1, 'month')
@@ -244,7 +253,7 @@ const ReminderPage: React.FC = function() {
         )
         break
 
-      case 5:
+      case FilterType.NextMonth:
         date[0] = moment(
           moment(startDate)
             .add(1, 'month')
@@ -256,6 +265,21 @@ const ReminderPage: React.FC = function() {
           moment(startDate)
             .add(1, 'month')
             .endOf('month')
+            .format(DATE_FORMAT),
+          DATE_FORMAT
+        )
+        break
+
+      case FilterType.ThisYear:
+        date[0] = moment(
+          moment(startDate)
+            .startOf('year')
+            .format(DATE_FORMAT),
+          DATE_FORMAT
+        )
+        date[1] = moment(
+          moment(startDate)
+            .endOf('year')
             .format(DATE_FORMAT),
           DATE_FORMAT
         )
@@ -343,7 +367,7 @@ const ReminderPage: React.FC = function() {
         <Form
           form={form}
           layout="inline"
-          style={{ marginTop: 10 }}
+          className="mt10"
           onValuesChange={() => tableRef?.current?.getTableData()}
         >
           <Form.Item
@@ -354,11 +378,12 @@ const ReminderPage: React.FC = function() {
             <RangePicker />
           </Form.Item>
 
-          <Button onClick={onFilterDate.bind(null, 1)}>今天</Button>
-          <Button onClick={onFilterDate.bind(null, 2)}>昨天</Button>
-          <Button onClick={onFilterDate.bind(null, 3)}>最近一周</Button>
-          <Button onClick={onFilterDate.bind(null, 4)}>上个月</Button>
-          <Button onClick={onFilterDate.bind(null, 5)}>下个月</Button>
+          <Button onClick={() => onFilterDate(FilterType.Today)}>今天</Button>
+          <Button onClick={() => onFilterDate(FilterType.Yesterday)}>昨天</Button>
+          <Button onClick={() => onFilterDate(FilterType.LastWeek)}>最近一周</Button>
+          <Button onClick={() => onFilterDate(FilterType.ThisYear)}>今年</Button>
+          <Button onClick={() => onFilterDate(FilterType.PrevMonth)}>上个月</Button>
+          <Button onClick={() => onFilterDate(FilterType.NextMonth)}>下个月</Button>
         </Form>
 
         <div className="poly">
@@ -397,4 +422,4 @@ const ReminderPage: React.FC = function() {
   )
 }
 
-export default ReminderPage
+export default CapitalFlowPage

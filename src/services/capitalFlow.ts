@@ -45,6 +45,10 @@ export function serviceCreateCapitalFlow(data: object) {
   return http.post('/capitalFlow', data)
 }
 
-export function serviceGetCapitalFlowPrice(params?: object) {
-  return http.get('/capitalFlow/price', { params })
+export function serviceGetCapitalFlowAmount(params?: object) {
+  return http.get('/capitalFlow/amount', { params })
+}
+
+export function serviceGetCapitalFlowAmountGroup(params: object) {
+  return http.get('/capitalFlow/amount/group', { params })
 }

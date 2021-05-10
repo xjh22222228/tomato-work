@@ -2,15 +2,24 @@ import React, { useEffect, useState } from 'react'
 import './style.scss'
 import moment from 'moment'
 import { Empty, DatePicker } from 'antd'
-import { serviceGetCapitalFlowPrice } from '@/services'
+import { serviceGetCapitalFlowAmount, serviceGetCapitalFlowAmountGroup } from '@/services'
 import {
   LineChart, Line, XAxis,
   YAxis, CartesianGrid, Tooltip,
-  Legend, ResponsiveContainer
+  Legend, ResponsiveContainer, BarChart,
+  Bar
 } from 'recharts'
+import { formatDate } from '@/utils'
 
 type DataProp = {
   date: string
+  [key: string]: any
+}
+
+interface GroupProp {
+  amount: string
+  name: string
+  type: number
   [key: string]: any
 }
 
@@ -23,10 +32,11 @@ const DEFAULT_DATE: any = [
 
 const AmountChart = () => {
   const [data, setData] = useState<DataProp[]>([])
+  const [group, setGroup] = useState<GroupProp[]>([])
   const [totalAmount, setTotalAmount] = useState(0)
 
   function getData(params?: object) {
-    serviceGetCapitalFlowPrice({
+    serviceGetCapitalFlowAmount({
       ...params
     })
     .then(res => {
@@ -50,6 +60,21 @@ const AmountChart = () => {
 
         setData(data)
         setTotalAmount(price)
+      }
+    })
+
+    serviceGetCapitalFlowAmountGroup({
+      startDate: formatDate(DEFAULT_DATE[0]),
+      endDate: formatDate(DEFAULT_DATE[1]),
+      ...params
+    }).then(res => {
+      if (res.data.success) {
+        setGroup(
+          res.data.data.map((item: GroupProp) => {
+            item.name = item.type === 1 ? `+ ${item.name}` : `- ${item.name}`
+            return item
+          })
+        )
       }
     })
   }
@@ -103,6 +128,30 @@ const AmountChart = () => {
         <div className="no-data">
           <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
         </div>
+      )}
+
+      {group.length > 0 && (
+        <ResponsiveContainer width="100%" height={350} className="mt10">
+          <BarChart
+            width={500}
+            height={300}
+            data={group}
+            margin={{
+              top: 5,
+              right: 30,
+              left: 20,
+              bottom: 5,
+            }}
+            barSize={20}
+          >
+            <XAxis dataKey="name" scale="point" padding={{ left: 10, right: 10 }} />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <CartesianGrid strokeDasharray="3 3" />
+            <Bar dataKey="amount" fill="#8884d8" background={{ fill: '#f1f1f1' }} />
+          </BarChart>
+        </ResponsiveContainer>
       )}
     </div>
   )

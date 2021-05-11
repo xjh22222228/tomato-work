@@ -43,7 +43,7 @@ const Toolbar: React.FC<Props> = function({
             disabled={disabled}
             icon={<DeleteOutlined />}
           >
-            批量删除
+            删除
           </Button>
         </Popconfirm>
       )}

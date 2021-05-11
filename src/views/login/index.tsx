@@ -1,3 +1,4 @@
+// https://007.qq.com/quick-start.html?ADTAG=acces.cfg
 import React, { useState, useEffect } from 'react'
 import './style.scss'
 import Footer from '@/components/footer'

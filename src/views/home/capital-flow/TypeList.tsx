@@ -9,6 +9,7 @@ import {
   serviceDeleteCapitalFlowType
 } from '@/services'
 import { TypeNames, TypeColors } from './enum'
+import { FORMAT_DATE_MINUTE } from '@/utils'
 
 const initialState = {
   showCreateTypeModal: false,
@@ -50,7 +51,7 @@ const Type = () => {
           const handleData = res.data.data.map((item: any) => {
             item.typeName = TypeNames[item.type]
             item.color = TypeColors[item.type]
-            item.createdAt = moment(item.createdAt).format('YYYY-MM-DD hh:mm')
+            item.createdAt = moment(item.createdAt).format(FORMAT_DATE_MINUTE)
             return item
           })
           setState({ data: handleData })

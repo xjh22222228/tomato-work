@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import './style.scss'
-import moment from 'moment'
 import { Empty, DatePicker } from 'antd'
 import { serviceGetCapitalFlowAmount, serviceGetCapitalFlowAmountGroup } from '@/services'
 import {
@@ -9,7 +8,7 @@ import {
   Legend, ResponsiveContainer, BarChart,
   Bar
 } from 'recharts'
-import { formatDate } from '@/utils'
+import { formatDate, FORMAT_DATE, DATE_WEEK } from '@/utils'
 
 type DataProp = {
   date: string
@@ -24,11 +23,6 @@ interface GroupProp {
 }
 
 const { RangePicker } = DatePicker
-const FORMAT = 'YYYY-MM-DD'
-const DEFAULT_DATE: any = [
-  moment().subtract(7, 'day'),
-  moment()
-]
 
 const AmountChart = () => {
   const [data, setData] = useState<DataProp[]>([])
@@ -64,8 +58,8 @@ const AmountChart = () => {
     })
 
     serviceGetCapitalFlowAmountGroup({
-      startDate: formatDate(DEFAULT_DATE[0]),
-      endDate: formatDate(DEFAULT_DATE[1]),
+      startDate: formatDate(DATE_WEEK[0]),
+      endDate: formatDate(DATE_WEEK[1]),
       ...params
     }).then(res => {
       if (res.data.success) {
@@ -95,8 +89,8 @@ const AmountChart = () => {
       <h2 className="title">
         资金流动
         <RangePicker
-          format={FORMAT}
-          value={DEFAULT_DATE}
+          format={FORMAT_DATE}
+          value={DATE_WEEK}
           onChange={handleChangeDate}
           className="date-picker"
         />

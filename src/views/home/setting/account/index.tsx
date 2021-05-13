@@ -50,19 +50,18 @@ const AccountPage: React.FC<Props & RouteComponentProps> = function ({ userInfo 
   return (
     <div className="account-setting">
       <Divider orientation="left" plain>修改密码</Divider>
-      <Form layout="vertical" form={form} style={{ width: '300px' }}>
+      <Form layout="vertical" form={form} style={{ width: 300 }}>
         <Form.Item
           label="登录名"
           name="name"
           initialValue={userInfo.loginName}
           rules={[
-            {
-              required: true
-            }
+            { required: true }
           ]}
         >
           <Input readOnly disabled />
         </Form.Item>
+
         <Form.Item
           label="新密码"
           name="password"
@@ -79,7 +78,9 @@ const AccountPage: React.FC<Props & RouteComponentProps> = function ({ userInfo 
         >
           <Input type="password" maxLength={32} />
         </Form.Item>
+
         <br />
+
         <Form.Item>
           <Button type="primary" onClick={handleUpdateUser}>提交</Button>
         </Form.Item>

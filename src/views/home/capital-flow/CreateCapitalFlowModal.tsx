@@ -9,8 +9,8 @@ import {
 } from 'antd'
 import { serviceCreateCapitalFlow, serviceUpdateCapitalFlow } from '@/services'
 import useKeepState from 'use-keep-state'
+import { filterOption, FORMAT_DATETIME } from '@/utils'
 
-const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss'
 const { TextArea } = Input
 const { Option } = Select
 
@@ -49,7 +49,7 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
     try {
       const values = await form.validateFields()
       const params = {
-        date: values.date.format(DATE_FORMAT),
+        date: values.date.format(FORMAT_DATETIME),
         remarks: values.remarks?.trim() ?? '',
         typeId: values.typeId,
         price: Number(values.price)
@@ -86,12 +86,6 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
     }
   }, [visible, rowData])
 
-  useEffect(() => {
-    if (!visible) {
-      form.resetFields()
-    }
-  }, [visible])
-
   return (
     <Modal
       title="新增"
@@ -99,9 +93,9 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
       onOk={handleSubmit}
       onCancel={onCancel}
       confirmLoading={state.confirmLoading}
-      forceRender
+      destroyOnClose
     >
-      <Form form={form} {...formLayout}>
+      <Form form={form} preserve={false} {...formLayout}>
         <Form.Item
           label="入账时间"
           name="date"
@@ -115,9 +109,10 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
           <DatePicker
             showTime
             allowClear={false}
-            style={{ width: '100%' }}
+            className="w100"
           />
         </Form.Item>
+
         <Form.Item
           label="财务类别"
           name="typeId"
@@ -128,12 +123,16 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
             }
           ]}
         >
-          <Select>
+          <Select
+            showSearch
+            filterOption={filterOption}
+          >
             {nameList.map((item: any) => (
               <Option value={item.id} key={item.id}>{item.optionName}</Option>
             ))}
           </Select>
         </Form.Item>
+
         <Form.Item
           label="收支金额"
           name="price"
@@ -146,6 +145,7 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
         >
           <Input placeholder="请输入金额" prefix="￥" />
         </Form.Item>
+
         <Form.Item
           label="备注信息"
           name="remarks"

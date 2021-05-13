@@ -56,7 +56,7 @@ const CreatePage: React.FC<Props & RouteComponentProps> = ({ history, computedMa
     const id = computedMatch.params.id
 
     editor = new Editor({
-      el: document.querySelector('#edit-section') as HTMLElement,
+      el: document.querySelector('#edit-section') as HTMLDivElement,
       initialEditType: 'markdown',
       previewStyle: 'vertical',
       usageStatistics: false

@@ -1,6 +1,5 @@
 import React from 'react'
 import './style.scss'
-import moment from 'moment'
 import { serviceDeleteTask, serviceUpdateTask } from '@/services'
 import {
   Card,
@@ -8,13 +7,12 @@ import {
   Rate,
   Popconfirm
 } from 'antd'
+import { formatDateTime } from '@/utils'
 
 interface Props {
   data: { [key: string]: any },
   reloadData(): void
 }
-
-const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss'
 
 const TaskItem: React.FC<Props> = ({ data, reloadData }) => {
 
@@ -50,7 +48,7 @@ const TaskItem: React.FC<Props> = ({ data, reloadData }) => {
         <span>优先级别：</span>
         <Rate value={data.count} disabled></Rate>
         <p className="mt10">
-          创建时间: {moment(data.createdAt).format(DATE_FORMAT)}
+          创建时间: {formatDateTime(data.createdAt)}
         </p>
       </div>
 

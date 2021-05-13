@@ -9,10 +9,10 @@ import useKeepState from 'use-keep-state'
 import { connect } from 'react-redux'
 import { DatePicker, Button, Select, Tag, Modal, Form, Popconfirm } from 'antd'
 import { serviceGetReminder, serviceDeleteReminder } from '@/services'
+import { FORMAT_DATE, formatDateTime } from '@/utils'
 
 const { RangePicker } = DatePicker
 const Option = Select.Option
-const DATE_FORMAT = 'YYYY-MM-DD'
 const STATUS_TYPE: any = {
   1: { color: '#f50', text: '待提醒' },
   2: { color: '#87d068', text: '已提醒' }
@@ -90,8 +90,8 @@ const ReminderPage: React.FC<Props> = function({ userInfo }) {
     const values = form.getFieldsValue()
 
     if (values.date && values.date.length === 2) {
-      params.startDate = values.date[0].format(DATE_FORMAT)
-      params.endDate = values.date[1].format(DATE_FORMAT)
+      params.startDate = values.date[0].format(FORMAT_DATE)
+      params.endDate = values.date[1].format(FORMAT_DATE)
     }
 
     if (values.queryType !== '') {
@@ -102,7 +102,7 @@ const ReminderPage: React.FC<Props> = function({ userInfo }) {
       if (res.data.success) {
         res.data.data.rows = res.data.data.rows.map((el: any, idx: number) => {
           el.order = idx + 1
-          el.createdAt = moment(el.createdAt).format('YYYY-MM-DD HH:mm:ss')
+          el.createdAt = formatDateTime(el.createdAt)
           return el
         })
       }

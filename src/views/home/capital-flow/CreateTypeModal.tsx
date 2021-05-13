@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import useKeepState from 'use-keep-state'
 import {
   Modal,
   Form,
@@ -7,7 +8,7 @@ import {
 } from 'antd'
 import { serviceCreateCapitalFlowType, serviceUpdateCapitalFlowType } from '@/services'
 import { TYPES } from './enum'
-import useKeepState from 'use-keep-state'
+import { filterOption } from '@/utils'
 
 type Props = {
   visible: boolean
@@ -67,12 +68,6 @@ const CreateTypeModal: React.FC<Props> = function ({
     }
   }, [visible, rowData])
 
-  useEffect(() => {
-    if (!visible) {
-      form.resetFields()
-    }
-  }, [visible])
-
   return (
     <Modal
       title="新增类别"
@@ -80,9 +75,9 @@ const CreateTypeModal: React.FC<Props> = function ({
       onOk={handleSubmitForm}
       onCancel={onCancel}
       confirmLoading={state.confirmLoading}
-      forceRender
+      destroyOnClose
     >
-      <Form form={form}>
+      <Form form={form} preserve={false}>
         <Form.Item
           label="名称"
           name="name"
@@ -98,6 +93,7 @@ const CreateTypeModal: React.FC<Props> = function ({
             placeholder="请输入类别名称"
           />
         </Form.Item>
+
         <Form.Item
           label="类型"
           name="type"
@@ -108,7 +104,10 @@ const CreateTypeModal: React.FC<Props> = function ({
             }
           ]}
         >
-          <Select>
+          <Select
+            showSearch
+            filterOption={filterOption}
+          >
             {TYPES.map(item => (
               <Option value={item.value} key={item.value}>{item.name}</Option>
             ))}

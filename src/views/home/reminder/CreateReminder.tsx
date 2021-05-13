@@ -84,9 +84,9 @@ const CreateReminder: React.FC<Props> = function ({
       onOk={handleSubmitForm}
       onCancel={onCancel}
       confirmLoading={state.confirmLoading}
-      forceRender
+      destroyOnClose
     >
-      <Form form={form}>
+      <Form form={form} preserve={false}>
         <Form.Item
           name="date"
           label="提醒时间"

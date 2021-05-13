@@ -2,26 +2,20 @@
  * 活动清单
  */
 import React, { useEffect, useRef } from 'react'
-import moment from 'moment'
 import useKeepState from 'use-keep-state'
 import Table from '@/components/table'
 import CreateTodoModal from './CreateTodoModal'
 import { serviceGetTodoList, serviceDeleteTodoList, serviceUpdateTodoList } from '@/services'
 import { STATUS } from './constants'
 import { DatePicker, Button, Tag, Form, Popconfirm } from 'antd'
+import { FORMAT_DATE, formatDateMinute, DATE_YEAR } from '@/utils'
 
 const { RangePicker } = DatePicker
-const DATE_FORMAT = 'YYYY-MM-DD'
 
 interface State {
   showCreateTodoModal: boolean
   currentRowData: { [key: string]: any } | null
 }
-
-const DEFAULT_DATE = [
-  moment().startOf('year'),
-  moment().endOf('year')
-]
 
 const initState: State = {
   showCreateTodoModal: false,
@@ -88,13 +82,13 @@ const TodoListPage = () => {
     const values = form.getFieldsValue()
 
     if (values.date && values.date.length === 2) {
-      params.startDate = values.date[0].format(DATE_FORMAT)
-      params.endDate = values.date[1].format(DATE_FORMAT)
+      params.startDate = values.date[0].format(FORMAT_DATE)
+      params.endDate = values.date[1].format(FORMAT_DATE)
     }
 
     return serviceGetTodoList(params).then(res => {
       res.data.data.rows.map((item: any) => {
-        item.createdAt = moment(item.createdAt).format('YYYY-MM-DD HH:mm')
+        item.createdAt = formatDateMinute(item.createdAt)
         return item
       })
       return res
@@ -155,7 +149,7 @@ const TodoListPage = () => {
           layout="inline"
           onValuesChange={() => tableRef?.current?.getTableData()}
         >
-          <Form.Item name="date" label="查询日期" initialValue={DEFAULT_DATE}>
+          <Form.Item name="date" label="查询日期" initialValue={DATE_YEAR}>
             <RangePicker allowClear />
           </Form.Item>
 

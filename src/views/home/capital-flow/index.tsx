@@ -14,11 +14,11 @@ import {
   serviceGetCapitalFlowType
 } from '@/services'
 import { OPTION_TYPES, TypeNames, TYPES } from './enum'
+import { filterOption, FORMAT_DATE, FORMAT_DATE_MINUTE } from '@/utils'
 
 const { Search } = Input
 const { RangePicker } = DatePicker
 const Option = Select.Option
-const DATE_FORMAT = 'YYYY-MM-DD'
 
 enum FilterType {
   Today = 1,
@@ -142,8 +142,8 @@ const CapitalFlowPage: React.FC = function() {
         keyword: values.keyword,
         typeNameId: values.name,
         type: values.type,
-        startDate: values.date[0].format(DATE_FORMAT),
-        endDate: values.date[1].format(DATE_FORMAT)
+        startDate: values.date[0].format(FORMAT_DATE),
+        endDate: values.date[1].format(FORMAT_DATE)
       }
 
       if (state.sortedInfo?.order) {
@@ -156,7 +156,7 @@ const CapitalFlowPage: React.FC = function() {
 
           res.data.data.rows = res.data.data.rows.map((el: any, idx: number) => {
             el.order = idx + 1
-            el.createdAt = moment(el.createdAt).format('YYYY-MM-DD HH:mm')
+            el.createdAt = moment(el.createdAt).format(FORMAT_DATE_MINUTE)
             el.__price__ = TYPES[el.type - 1].symbol + el.price
             el.__color__ = TYPES[el.type - 1].color
 
@@ -211,8 +211,8 @@ const CapitalFlowPage: React.FC = function() {
   function onFilterDate(type: number) {
     const [startDate] = form.getFieldValue('date')
     const date: moment.Moment[] = [
-      moment(moment().format(DATE_FORMAT), DATE_FORMAT),
-      moment(moment().format(DATE_FORMAT), DATE_FORMAT)
+      moment(moment().format(FORMAT_DATE), FORMAT_DATE),
+      moment(moment().format(FORMAT_DATE), FORMAT_DATE)
     ]
 
     switch (type) {
@@ -220,7 +220,7 @@ const CapitalFlowPage: React.FC = function() {
         const prevDay = moment(
           moment()
             .subtract(1, 'days')
-            .format(DATE_FORMAT), DATE_FORMAT
+            .format(FORMAT_DATE), FORMAT_DATE
         )
         date[0] = prevDay
         date[1] = prevDay
@@ -230,10 +230,10 @@ const CapitalFlowPage: React.FC = function() {
         date[0] = moment(
           moment()
             .subtract(7, 'days')
-            .format(DATE_FORMAT),
-          DATE_FORMAT
+            .format(FORMAT_DATE),
+          FORMAT_DATE
         )
-        date[1] = moment(new Date(), DATE_FORMAT)
+        date[1] = moment(new Date(), FORMAT_DATE)
         break
 
       case FilterType.PrevMonth:
@@ -241,15 +241,15 @@ const CapitalFlowPage: React.FC = function() {
           moment(startDate)
             .subtract(1, 'month')
             .startOf('month')
-            .format(DATE_FORMAT),
-          DATE_FORMAT
+            .format(FORMAT_DATE),
+          FORMAT_DATE
         )
         date[1] = moment(
           moment(startDate)
             .subtract(1, 'month')
             .endOf('month')
-            .format(DATE_FORMAT),
-          DATE_FORMAT
+            .format(FORMAT_DATE),
+          FORMAT_DATE
         )
         break
 
@@ -258,15 +258,15 @@ const CapitalFlowPage: React.FC = function() {
           moment(startDate)
             .add(1, 'month')
             .startOf('month')
-            .format(DATE_FORMAT),
-          DATE_FORMAT
+            .format(FORMAT_DATE),
+          FORMAT_DATE
         )
         date[1] = moment(
           moment(startDate)
             .add(1, 'month')
             .endOf('month')
-            .format(DATE_FORMAT),
-          DATE_FORMAT
+            .format(FORMAT_DATE),
+          FORMAT_DATE
         )
         break
 
@@ -274,14 +274,14 @@ const CapitalFlowPage: React.FC = function() {
         date[0] = moment(
           moment(startDate)
             .startOf('year')
-            .format(DATE_FORMAT),
-          DATE_FORMAT
+            .format(FORMAT_DATE),
+          FORMAT_DATE
         )
         date[1] = moment(
           moment(startDate)
             .endOf('year')
-            .format(DATE_FORMAT),
-          DATE_FORMAT
+            .format(FORMAT_DATE),
+          FORMAT_DATE
         )
         break
     }
@@ -325,7 +325,11 @@ const CapitalFlowPage: React.FC = function() {
             name="name"
             initialValue=""
           >
-            <Select>
+            <Select
+              className="w150px"
+              showSearch
+              filterOption={filterOption}
+            >
               <Option value="">全部</Option>
               {state.nameList.map((item: any) => (
                 <Option value={item.id} key={item.id}>{item.name}</Option>
@@ -339,7 +343,11 @@ const CapitalFlowPage: React.FC = function() {
               name="type"
               initialValue=""
             >
-              <Select>
+              <Select
+                className="w150px"
+                showSearch
+                filterOption={filterOption}
+              >
                 {OPTION_TYPES.map(item => (
                   <Option value={item.value} key={item.value}>{item.name}</Option>
                 ))}

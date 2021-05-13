@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import './style.scss'
 import bytes from 'bytes'
-import moment from 'moment'
 import CONFIG from '@/config'
 import { Row, Col, Card, Progress, Empty } from 'antd'
-import { totalPercentage } from '@/utils'
+import { totalPercentage, formatDateTime } from '@/utils'
 import { serviceGetInnerMessage } from '@/services'
 
 interface Props {
@@ -33,7 +32,7 @@ const System: React.FC<Props> = ({ systemInfo }) => {
   const countdown = useCallback(() => {
     clearTimeout(timer)
     const timeDiff = systemInfo.currentSystemTime + (Date.now() - systemInfo.currentSystemTime)
-    setCurSystemTime(moment(timeDiff).format('YYYY-MM-DD HH:mm:ss'))
+    setCurSystemTime(formatDateTime(timeDiff))
 
     timer = setTimeout(() => {
       countdown()

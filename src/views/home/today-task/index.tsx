@@ -11,8 +11,7 @@ import CreateTaskModal from './CreateTaskModal'
 import moment from 'moment'
 import { DatePicker, Button, Tag, Row, Col, Form } from 'antd'
 import { serviceGetTask } from '@/services'
-
-const DATE_FORMAT = 'YYYY-MM-DD'
+import { FORMAT_DATE } from '@/utils'
 
 interface TaskProp {
   text: string
@@ -54,7 +53,7 @@ const TodayTaskPage = () => {
 
   function getTask() {
     const values = form.getFieldsValue()
-    const date = values.startDate.format(DATE_FORMAT)
+    const date = values.startDate.format(FORMAT_DATE)
     serviceGetTask({
       startDate: date,
       endDate: date
@@ -86,7 +85,7 @@ const TodayTaskPage = () => {
     const startDate: moment.Moment = form.getFieldValue('startDate')
     form.setFieldsValue({
       startDate: moment(
-        startDate.subtract(1, 'day').format(DATE_FORMAT)
+        startDate.subtract(1, 'day').format(FORMAT_DATE)
       )
     })
     getTask()
@@ -96,7 +95,7 @@ const TodayTaskPage = () => {
     const startDate: moment.Moment = form.getFieldValue('startDate')
     form.setFieldsValue({
       startDate: moment(
-        startDate.add(1, 'day').format(DATE_FORMAT)
+        startDate.add(1, 'day').format(FORMAT_DATE)
       )
     })
     getTask()

@@ -50,7 +50,7 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
       const values = await form.validateFields()
       const params = {
         date: values.date.format(FORMAT_DATETIME),
-        remarks: values.remarks?.trim() ?? '',
+        remark: values.remark?.trim() ?? '',
         typeId: values.typeId,
         price: Number(values.price)
       }
@@ -79,7 +79,7 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
     if (visible && rowData) {
       form.setFieldsValue({
         date: moment(rowData.createdAt),
-        remarks: rowData.remarks,
+        remark: rowData.remark,
         typeId: rowData.typeId,
         price: rowData.price,
       })
@@ -148,7 +148,7 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
 
         <Form.Item
           label="备注信息"
-          name="remarks"
+          name="remark"
         >
           <TextArea
             rows={5}

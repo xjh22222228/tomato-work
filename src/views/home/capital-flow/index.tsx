@@ -94,7 +94,7 @@ const CapitalFlowPage: React.FC = function() {
     {
       title: '备注信息',
       render: (rowData: any) => (
-        <p className="wspw">{rowData.remarks}</p>
+        <p className="wspw">{rowData.remark}</p>
       )
     },
     {

@@ -60,12 +60,12 @@ const ReminderPage: React.FC<Props> = function({ userInfo }) {
       width: 180,
       align: 'right',
       fixed: 'right',
-      render: (row: any) => (
+      render: (record: any) => (
         <>
-          <Button onClick={handleButton.bind(null, 0, row)}>编辑</Button>
+          <Button onClick={() => handleEdit(record)}>编辑</Button>
           <Popconfirm
             title="您确定要删除吗？"
-            onConfirm={handleButton.bind(null, 1, row)}
+            onConfirm={() => handleDelete(record)}
             placement="bottomLeft"
             okType="danger"
           >
@@ -110,21 +110,20 @@ const ReminderPage: React.FC<Props> = function({ userInfo }) {
     })
   }
 
-  function handleButton(type: number, rows: any) {
-    // 编辑
-    if (type === 0) {
-      setState({
-        showCreateModal: true,
-        currentRow: rows
-      })
-    } else {
-      serviceDeleteReminder(rows.id)
+  function handleEdit(record: any) {
+    setState({
+      showCreateModal: true,
+      currentRow: record
+    })
+  }
+
+  function handleDelete(record: any) {
+    serviceDeleteReminder(record.id)
       .then(res => {
         if (res.data.success) {
           tableRef.current.getTableData()
         }
       })
-    }
   }
 
   // modal成功新增回调函数

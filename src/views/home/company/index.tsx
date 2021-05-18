@@ -40,6 +40,19 @@ const CompanyPage = () => {
       render: (endDate: string|null) => endDate ?? '至今'
     },
     {
+      title: '计划离职日期',
+      dataIndex: 'expectLeaveDate',
+      width: 130,
+      render: (expectLeaveDate: string|null) => (
+        expectLeaveDate && (
+          <>
+            {expectLeaveDate}
+            <div>还有 {fromNow(Date.now(), expectLeaveDate)} 天</div>
+          </>
+        )
+      )
+    },
+    {
       title: '在职天数',
       dataIndex: 'id',
       width: 100,

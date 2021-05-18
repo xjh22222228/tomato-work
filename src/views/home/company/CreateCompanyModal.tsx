@@ -67,6 +67,9 @@ const CreateCompanyModal: React.FC<Props> = function ({
       if (values.endDate) {
         params.endDate = formatDate(values.endDate)
       }
+      if (values.expectLeaveDate) {
+        params.expectLeaveDate = formatDate(values.expectLeaveDate)
+      }
 
       (
         !isEdit
@@ -131,6 +134,14 @@ const CreateCompanyModal: React.FC<Props> = function ({
           name="endDate"
           label="离职日期"
           initialValue={detail.endDate && moment(detail.endDate)}
+        >
+          <DatePicker className="w100" />
+        </Form.Item>
+
+        <Form.Item
+          name="expectLeaveDate"
+          label="期望离开"
+          initialValue={detail.expectLeaveDate && moment(detail.expectLeaveDate)}
         >
           <DatePicker className="w100" />
         </Form.Item>

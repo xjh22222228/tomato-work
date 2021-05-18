@@ -9,6 +9,9 @@ export async function serviceGetAllCompany() {
     if (item.endDate) {
       item.endDate = formatDate(item.endDate)
     }
+    if (item.expectLeaveDate) {
+      item.expectLeaveDate = formatDate(item.expectLeaveDate)
+    }
     return item
   })
   return res

@@ -9,6 +9,7 @@ import {
   Bar
 } from 'recharts'
 import { formatDate, FORMAT_DATE, DATE_WEEK } from '@/utils'
+import config from '@/config'
 
 type DataProp = {
   date: string
@@ -83,6 +84,10 @@ const AmountChart = () => {
   useEffect(() => {
     getData()
   }, [])
+
+  if (config.isProduction) {
+    return null
+  }
 
   return (
     <div className="amount-chart">

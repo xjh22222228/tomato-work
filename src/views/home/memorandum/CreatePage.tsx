@@ -18,23 +18,23 @@ interface Props {
 
 let editor: Editor
 
+
 const CreatePage: React.FC<Props & RouteComponentProps> = ({ history, computedMatch }) => {
   const [title, setTitle] = useState(defaultTitle)
   const [loading, setLoading] = useState(false)
 
-  const handleActionButton = useCallback((buttonType: 0 | 1) => {
-    if (buttonType === 0) {
-      history.replace(HOME.MEMORANDUM.path)
-      return
-    }
+  function goBack() {
+    history.replace(HOME.MEMORANDUM.path)
+  }
+
+  function handleSubmit() {
+    if (loading) return
 
     const id = computedMatch.params.id
 
-    if (loading) return
-
     // 创建或更新
     const params = {
-      markdown: editor.getValue(),
+      markdown: editor.getMarkdown(),
       title
     }
     if (!params.markdown) {
@@ -50,7 +50,7 @@ const CreatePage: React.FC<Props & RouteComponentProps> = ({ history, computedMa
         history.replace(HOME.MEMORANDUM.path)
       }
     })
-  }, [history, title, loading, computedMatch])
+  }
 
   const init = useCallback(() => {
     const id = computedMatch.params.id
@@ -78,7 +78,7 @@ const CreatePage: React.FC<Props & RouteComponentProps> = ({ history, computedMa
 
     return () => {
       // 销毁实例
-      editor?.remove()
+      editor?.destroy()
     }
   }, [init])
 
@@ -95,10 +95,10 @@ const CreatePage: React.FC<Props & RouteComponentProps> = ({ history, computedMa
       />
       <div id="edit-section"></div>
       <div className="button-group">
-        <Button onClick={handleActionButton.bind(null, 0)}>取消</Button>
+        <Button onClick={goBack}>取消</Button>
         <Button
           type="primary"
-          onClick={handleActionButton.bind(null, 1)}
+          onClick={handleSubmit}
           loading={loading}
         >
           提交

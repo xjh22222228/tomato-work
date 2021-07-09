@@ -43,13 +43,13 @@ const CompanyPage = () => {
       title: '计划离职日期',
       dataIndex: 'expectLeaveDate',
       width: 130,
-      render: (expectLeaveDate: string|null) => (
-        expectLeaveDate && (
+      render: (expectLeaveDate: any) => (
+        expectLeaveDate > 0 ? (
           <div>
             {expectLeaveDate}
             <div>还有 {fromNow(Date.now(), expectLeaveDate)} 天</div>
           </div>
-        )
+        ) : '已离职'
       )
     },
     {

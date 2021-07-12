@@ -9,8 +9,6 @@ import {
   Bar
 } from 'recharts'
 import { formatDate, FORMAT_DATE, DATE_WEEK } from '@/utils'
-import { useLocation } from 'react-router-dom'
-import config from '@/config'
 
 type DataProp = {
   date: string
@@ -30,8 +28,6 @@ const AmountChart = () => {
   const [data, setData] = useState<DataProp[]>([])
   const [group, setGroup] = useState<GroupProp[]>([])
   const [totalAmount, setTotalAmount] = useState(0)
-
-  const { search } = useLocation()
 
   function getData(params?: object) {
     serviceGetCapitalFlowAmount({
@@ -87,10 +83,6 @@ const AmountChart = () => {
   useEffect(() => {
     getData()
   }, [])
-
-  if (config.isProduction && !search.includes('env=dev')) {
-    return null
-  }
 
   return (
     <div className="amount-chart">

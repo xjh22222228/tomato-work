@@ -1,22 +1,24 @@
 import React from 'react'
 import CONFIG from '@/config'
 import qs from 'query-string'
-import { Switch, Route, Redirect, withRouter, RouteComponentProps } from 'react-router-dom'
+import { Switch, Route, Redirect, useLocation } from 'react-router-dom'
 import { IRouteProps } from '@/router/types'
 import { connect } from 'react-redux'
 import { StoreState } from '@/store/index'
 import { HOME } from '@/router/constants'
 
-type Props = IRouteProps & ReturnType<typeof mapStateToProps> & RouteComponentProps
+type Props = IRouteProps & ReturnType<typeof mapStateToProps>
 
 const PrivateRoute: React.FC<Props> = function ({
   component: Component,
   childrenRoutes,
   isLogin,
-  location,
   ...rest
 }) {
   const { meta } = rest
+  const location = useLocation()
+  const querySearch = location.search
+
   if (meta) {
     if (meta.title) {
       document.title = `${meta.title} - ${CONFIG.title}`
@@ -38,7 +40,7 @@ const PrivateRoute: React.FC<Props> = function ({
 
   if (meta?.isLoginToHome && isLogin) {
     const redirectUrl = qs.parse(location.search).redirectUrl as string
-    const url = redirectUrl || HOME.HOME_INDEX.path
+    const url = redirectUrl || (HOME.HOME_INDEX.path + location.search)
     return <Redirect to={url} />
   }
 
@@ -58,7 +60,7 @@ const PrivateRoute: React.FC<Props> = function ({
         ) : (
           <Redirect to={{
             pathname: '/',
-            search: `?redirectUrl=${props.location.pathname}`
+            search: `?redirectUrl=${props.location.pathname}${querySearch}`
           }} />
         )
       )
@@ -72,6 +74,6 @@ const mapStateToProps = (state: StoreState) => {
   }
 }
 
-export const PrivateRouteComponent = connect(mapStateToProps)(withRouter(PrivateRoute))
+export const PrivateRouteComponent = connect(mapStateToProps)(PrivateRoute)
 
 export default PrivateRouteComponent

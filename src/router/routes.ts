@@ -3,18 +3,18 @@ import { IRouteProps } from '@/router/types'
 import { HOME, SETTING } from './constants'
 import Login from '@/views/login/index'
 import NoMatch from '@/views/exception/404'
-import MainEntry from '@/views/home/main'
-import Reminder from '@/views/home/reminder'
-import SettingIndex from '@/views/home/setting/index'
-import HomeIndex from '@/views/home/index'
-import TodayTask from '@/views/home/today-task'
-import Memorandum from '@/views/home/memorandum'
-import MemorandumCreate from '@/views/home/memorandum/CreatePage'
-import MemorandumDetail from '@/views/home/memorandum/DetailPage'
-import CapitalFlow from '@/views/home/capital-flow'
-import CapitalFlowType from '@/views/home/capital-flow/TypeList'
-import TodoList from '@/views/home/todo-list'
-import Company from '@/views/home/company'
+import MainEntry from '@/views/main'
+import Reminder from '@/views/reminder'
+import SettingIndex from '@/views/setting/index'
+import HomeIndex from '@/views/index'
+import TodayTask from '@/views/today-task'
+import Memorandum from '@/views/memorandum'
+import MemorandumCreate from '@/views/memorandum/CreatePage'
+import MemorandumDetail from '@/views/memorandum/DetailPage'
+import CapitalFlow from '@/views/capital-flow'
+import CapitalFlowType from '@/views/capital-flow/TypeList'
+import TodoList from '@/views/todo-list'
+import Company from '@/views/company'
 
 const routesMap: IRouteProps[] = [
   {
@@ -154,10 +154,10 @@ const routesMap: IRouteProps[] = [
   },
 ]
 
-const Base = lazy(() => import('@/views/home/setting/base'))
-const InnerMessage = lazy(() => import('@/views/home/setting/inner-message'))
-const Notification = lazy(() => import('@/views/home/setting/notification'))
-const Account = lazy(() => import('@/views/home/setting/account'))
+const Base = lazy(() => import('@/views/setting/base'))
+const InnerMessage = lazy(() => import('@/views/setting/inner-message'))
+const Notification = lazy(() => import('@/views/setting/notification'))
+const Account = lazy(() => import('@/views/setting/account'))
 
 export const settingRoutes: IRouteProps[] = [
   {

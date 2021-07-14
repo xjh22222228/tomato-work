@@ -1,7 +1,7 @@
 /**
  * 创建单位
  */
-import React, { useEffect } from 'react'
+import React from 'react'
 import useKeepState from 'use-keep-state'
 import {
   Modal,

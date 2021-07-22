@@ -37,5 +37,5 @@ export function fromNow(
   const start = moment(startDate).valueOf()
   const end = moment(endDate || Date.now()).valueOf()
   const n = end - start
-  return Math.trunc(n / (1000 * 60 * 60 * 24))
+  return Math.ceil(n / (1000 * 60 * 60 * 24))
 }

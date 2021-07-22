@@ -35,9 +35,8 @@ const CompanyPage = () => {
     },
     {
       title: '离职日期',
-      dataIndex: 'endDate',
+      dataIndex: '__endDate__',
       width: 130,
-      render: (endDate: string|null) => endDate ?? '至今'
     },
     {
       title: '计划离职日期',
@@ -49,20 +48,17 @@ const CompanyPage = () => {
             {expectLeaveDate}
             <div>还有 {fromNow(Date.now(), expectLeaveDate)} 天</div>
           </div>
-        ) : '已离职'
+        ) : null
       )
     },
     {
       title: '在职天数',
-      dataIndex: 'id',
+      dataIndex: '__jobDay__',
       width: 100,
-      render: (_: unknown, record: any) =>
-        fromNow(record.startDate, record.endDate) + ' 天'
     },
     {
       title: '薪资',
-      dataIndex: 'amount',
-      render: (amount: string) => `￥${amount}`
+      dataIndex: '__amount__',
     },
     {
       title: '备注',

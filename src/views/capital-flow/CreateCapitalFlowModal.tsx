@@ -5,7 +5,8 @@ import {
   Form,
   Input,
   DatePicker,
-  Select
+  Select,
+  InputNumber
 } from 'antd'
 import { serviceCreateCapitalFlow, serviceUpdateCapitalFlow } from '@/services'
 import useKeepState from 'use-keep-state'
@@ -52,7 +53,7 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
         date: values.date.format(FORMAT_DATETIME),
         remark: values.remark?.trim() ?? '',
         typeId: values.typeId,
-        price: Number(values.price)
+        price: Number(values.amount)
       }
 
       setState({ confirmLoading: true });
@@ -81,7 +82,7 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
         date: moment(rowData.createdAt),
         remark: rowData.remark,
         typeId: rowData.typeId,
-        price: rowData.price,
+        amount: rowData.price,
       })
     }
   }, [visible, rowData])
@@ -135,7 +136,7 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
 
         <Form.Item
           label="收支金额"
-          name="price"
+          name="amount"
           rules={[
             {
               required: true,
@@ -143,7 +144,14 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
             }
           ]}
         >
-          <Input placeholder="请输入金额" prefix="￥" />
+          <InputNumber
+            className="w100"
+            placeholder="请输入金额"
+            formatter={value => `￥ ${value}`}
+            max={9999999}
+            min={0}
+            precision={2}
+          />
         </Form.Item>
 
         <Form.Item

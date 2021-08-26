@@ -42,7 +42,7 @@ httpInstance.interceptors.request.use(function (config) {
 
   config.headers.token = userState.token
 
-  const data: { [k: string]: any } = {}
+  const data: Record<string, any> = {}
 
   if (method === 'post' || method === 'put') {
     if (config.data instanceof FormData) {

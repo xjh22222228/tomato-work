@@ -87,7 +87,9 @@ const CapitalFlowPage: React.FC = function() {
       ],
       render: (text: string, rowData: any) => (
         <span style={{ color: rowData.__color__ }}>
-          {state.filters.price && state.filters.price[0] ? '******' : rowData.__price__}
+          {state.filters.price && !state.filters.price[0]
+            ? '******'
+            : rowData.__price__}
         </span>
       )
     },
@@ -134,7 +136,7 @@ const CapitalFlowPage: React.FC = function() {
   }
 
   // 获取数据
-  async function getCapitalFlow(params: { [k: string]: any }) {
+  async function getCapitalFlow(params: Record<string, any>) {
     try {
       const values = await form.validateFields()
       params = {

@@ -24,7 +24,7 @@ type Props = {
   visible: boolean
   onCancel: () => void
   onSuccess: (res?: any) => void
-  rowData?: { [key: string]: any }
+  rowData?: Record<string, any>
   nameList: any[]
 }
 

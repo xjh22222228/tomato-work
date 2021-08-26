@@ -14,7 +14,7 @@ type Props = {
   visible: boolean
   onSuccess: (res?: any) => void
   onCancel: () => void
-  rowData: null | { [propName: string]: any }
+  rowData: null | Record<string, any>
 }
 
 const { Option } = Select

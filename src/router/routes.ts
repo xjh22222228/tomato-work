@@ -15,6 +15,8 @@ import CapitalFlow from '@/views/capital-flow'
 import CapitalFlowType from '@/views/capital-flow/TypeList'
 import TodoList from '@/views/todo-list'
 import Company from '@/views/company'
+import Log from '@/views/log'
+import CreateLog from '@/views/log/CreateLog'
 
 const routesMap: IRouteProps[] = [
   {
@@ -43,6 +45,24 @@ const routesMap: IRouteProps[] = [
         exact: true,
         meta: {
           title: HOME.HOME_INDEX.name,
+          requiresAuth: true,
+        }
+      },
+      {
+        path: HOME.LOG.path,
+        component: Log,
+        exact: true,
+        meta: {
+          title: HOME.LOG.name,
+          requiresAuth: true,
+        }
+      },
+      {
+        path: HOME.LOG_CREATE.path,
+        component: CreateLog,
+        exact: true,
+        meta: {
+          title: HOME.LOG_CREATE.name,
           requiresAuth: true,
         }
       },

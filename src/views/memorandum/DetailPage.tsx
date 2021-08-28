@@ -1,27 +1,31 @@
 import React, { FC, useEffect, useState } from 'react'
 import './style.scss'
-import { match, Link, RouteComponentProps } from 'react-router-dom'
+import { match, Link, useHistory } from 'react-router-dom'
 import { serviceGetMemorandumById } from '@/services'
 import { defaultTitle } from './constants'
 import { LeftOutlined, EditOutlined } from '@ant-design/icons'
 import { Spin } from 'antd'
+import config from '@/config'
 
 interface Props {
-  computedMatch: match<any>
+  computedMatch: match<Record<string, any>>
 }
 
-const DetailPage: FC<Props & RouteComponentProps> = ({ computedMatch, history }) => {
+const DetailPage: FC<Props> = ({ computedMatch }) => {
+  const history = useHistory()
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [loading, setLoading] = useState(true)
   const id = computedMatch.params.id
 
   useEffect(() => {
+    if (!id) return
+
     serviceGetMemorandumById(id)
     .then(res => {
       if (res.data.success) {
         const title = res.data.data.title || defaultTitle
-        document.title = title
+        document.title = `${title} - ${config.title}`
         setTitle(title)
         setContent(res.data.data.html)
       }

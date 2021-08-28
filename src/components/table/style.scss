@@ -2,6 +2,10 @@
   background: #fff;
   padding: 10px 15px;
   margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  padding-right: 20px;
+  align-items: center;
 
   .ant-btn {
     margin-right: 15px;

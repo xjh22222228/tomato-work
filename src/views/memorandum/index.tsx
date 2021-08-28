@@ -1,17 +1,18 @@
 /**
  * 我的备忘
  */
-import React, { FC, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import './style.scss'
 import moment from 'moment'
 import NoData from '@/components/no-data/index'
-import { RouteComponentProps } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { Card, Col, Row, Button, Popconfirm, Spin } from 'antd'
 import { Link } from 'react-router-dom'
 import { serviceGetMemorandum, serviceDeleteMemorandum } from '@/services'
 import { defaultTitle } from './constants'
 
-const MemorandumPage: FC<RouteComponentProps> = ({ history }) => {
+const MemorandumPage: React.FC = () => {
+  const history = useHistory()
   const [list, setList] = useState([])
   const [loading, setLoading] = useState(true)
 

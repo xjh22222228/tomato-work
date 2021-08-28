@@ -7,8 +7,8 @@ import md5 from 'blueimp-md5'
 import config from '@/config'
 import { isEmpty } from 'lodash'
 import { Button, Input, message, Popover, Form } from 'antd'
-import { RouteComponentProps } from 'react-router-dom'
-import { DispatchProp, connect } from 'react-redux'
+import { useHistory, useLocation } from 'react-router-dom'
+import { DispatchProp, useDispatch } from 'react-redux'
 import { ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
 import { githubAuthz, loginByToken, setUser } from '@/store/actions'
@@ -27,7 +27,7 @@ import {
 type ThunkDispatchProps = ThunkDispatch<{}, {}, AnyAction>
 type LoginProps = {
   dispatch: ThunkDispatchProps
-} & DispatchProp & RouteComponentProps
+} & DispatchProp
 
 const PopoverContent = (
   <div style={{ padding: '10px 20px 10px 20px' }}>
@@ -47,11 +47,10 @@ function reloadCaptcha(e: any) {
   e.target.src = url
 }
 
-const LoginPage: React.FC<LoginProps> = function ({
-  dispatch,
-  history,
-  location
-}) {
+const LoginPage: React.FC<LoginProps> = function () {
+  const history = useHistory()
+  const location = useLocation()
+  const dispatch = useDispatch<any>()
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(false)
   const [redirectUrl] = useState(() => {
@@ -100,7 +99,7 @@ const LoginPage: React.FC<LoginProps> = function ({
 
     if (token) {
       dispatch(loginByToken(token as string))
-      .then((res) => {
+      .then((res: any) => {
         if (!isEmpty(res.userInfo)) {
           history.replace(redirectUrl)
         }
@@ -236,4 +235,4 @@ const LoginPage: React.FC<LoginProps> = function ({
   )
 }
 
-export default connect()(LoginPage)
+export default LoginPage

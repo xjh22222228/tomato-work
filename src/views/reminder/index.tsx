@@ -13,14 +13,14 @@ import { FORMAT_DATE, formatDateTime } from '@/utils'
 
 const { RangePicker } = DatePicker
 const Option = Select.Option
-const STATUS_TYPE: any = {
+const STATUS_TYPE: Record<string, any> = {
   1: { color: '#f50', text: '待提醒' },
   2: { color: '#87d068', text: '已提醒' }
 }
 
 interface State {
   showCreateModal: boolean
-  currentRow: { [propName: string]: any } | null
+  currentRow: Record<string, any> | null
 }
 
 type Props = ReturnType<typeof mapStateToProps>

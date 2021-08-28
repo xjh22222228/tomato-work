@@ -16,7 +16,7 @@ type Props = {
   visible: boolean
   onCancel: () => void
   onSuccess: (res?: any) => void
-  rowData?: { [key: string]: any }
+  rowData?: Record<string, any>
 }
 
 interface State {
@@ -65,10 +65,6 @@ const CreateReminder: React.FC<Props> = function ({
   }
 
   useEffect(() => {
-    if (!visible) {
-      form.resetFields()
-    }
-
     if (visible && rowData) {
       form.setFieldsValue({
         date: moment(rowData.createdAt),

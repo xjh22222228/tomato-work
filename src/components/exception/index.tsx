@@ -1,7 +1,7 @@
 import React from 'react'
 import './style.scss'
 import { Result, Button } from 'antd'
-import { withRouter, RouteComponentProps } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { ExceptionStatusType } from 'antd/lib/result'
 
 interface Props {
@@ -23,10 +23,11 @@ const statusMap = {
   }
 }
 
-const NoMatch: React.FC<Props & RouteComponentProps> = function ({
-  history,
+const NoMatch: React.FC<Props> = function ({
   status = '404'
 }) {
+  const history = useHistory()
+
   return (
     <Result
       status={status}
@@ -36,4 +37,4 @@ const NoMatch: React.FC<Props & RouteComponentProps> = function ({
   )
 }
 
-export default withRouter(NoMatch)
+export default NoMatch

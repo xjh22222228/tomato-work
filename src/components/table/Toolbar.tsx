@@ -4,12 +4,14 @@ import { DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 
 interface Props {
   onDelete?: () => void
-  onAdd?: () => void
+  onAdd?: () => void,
+  toolbar?: React.ReactChild
   selectedRowKeys: string[]
 }
 
 const Toolbar: React.FC<Props> = function({
   selectedRowKeys,
+  toolbar,
   onDelete,
   onAdd
 }) {
@@ -19,34 +21,38 @@ const Toolbar: React.FC<Props> = function({
 
   return showToolbar ? (
     <div className="table-action-panel">
-      {onAdd && (
-        <Button
-          type="primary"
-          onClick={onAdd}
-          icon={<PlusOutlined />}
-        >
-          新增
-        </Button>
-      )}
-
-      {onDelete && (
-        <Popconfirm
-          title={`确定要删除选中 ${selectedLen} 条记录吗？`}
-          onConfirm={onDelete}
-          placement="bottomLeft"
-          okType="danger"
-          disabled={disabled}
-        >
+      <div>
+        {onAdd && (
           <Button
             type="primary"
-            danger
-            disabled={disabled}
-            icon={<DeleteOutlined />}
+            onClick={onAdd}
+            icon={<PlusOutlined />}
           >
-            删除
+            新增
           </Button>
-        </Popconfirm>
-      )}
+        )}
+
+        {onDelete && (
+          <Popconfirm
+            title={`确定要删除选中 ${selectedLen} 条记录吗？`}
+            onConfirm={onDelete}
+            placement="bottomLeft"
+            okType="danger"
+            disabled={disabled}
+          >
+            <Button
+              type="primary"
+              danger
+              disabled={disabled}
+              icon={<DeleteOutlined />}
+            >
+              删除
+            </Button>
+          </Popconfirm>
+        )}
+      </div>
+
+      {toolbar}
     </div>
   ) : null
 }

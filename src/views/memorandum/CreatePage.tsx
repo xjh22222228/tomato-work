@@ -3,7 +3,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import './style.scss'
 import Editor from '@toast-ui/editor'
 import { Input, Button, message } from 'antd'
-import { RouteComponentProps, match } from 'react-router-dom'
+import { useHistory, match } from 'react-router-dom'
 import { HOME } from '@/router/constants'
 import { defaultTitle } from './constants'
 import {
@@ -18,8 +18,8 @@ interface Props {
 
 let editor: Editor
 
-
-const CreatePage: React.FC<Props & RouteComponentProps> = ({ history, computedMatch }) => {
+const CreatePage: React.FC<Props> = ({ computedMatch }) => {
+  const history = useHistory()
   const [title, setTitle] = useState(defaultTitle)
   const [loading, setLoading] = useState(false)
 

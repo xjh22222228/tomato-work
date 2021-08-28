@@ -26,6 +26,7 @@ interface Props extends TableProps {
   onTableChange?: (pagination: any, filters: any, sorter: any) => void
   onDelete?: (id: string) => AxiosPromise
   onAdd?: () => void
+  toolbar?: React.ReactChild
   [key: string]: any
 }
 
@@ -33,9 +34,7 @@ interface State {
   tableHeight: number
   tableDataSource: any[]
   isLoading: boolean
-  pagination: {
-    [key: string]: any
-  },
+  pagination: Record<string, any>,
   selectedRowKeys: string[]
   columns: any[]
 }
@@ -68,6 +67,7 @@ const TableFC: FC<Props> = ({
   onAdd,
   forwardedRef: tableRef,
   columns,
+  toolbar,
   ...props
 }) => {
   let rowSelection
@@ -179,6 +179,7 @@ const TableFC: FC<Props> = ({
     <React.Fragment>
       <Toolbar
         selectedRowKeys={state.selectedRowKeys}
+        toolbar={toolbar}
         onDelete={onDelete && handleDelete}
         onAdd={onAdd}
       />

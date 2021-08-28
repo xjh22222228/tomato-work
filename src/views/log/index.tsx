@@ -1,42 +1,38 @@
 /**
- * 活动清单
+ * 日志管理
  */
 import React, { useEffect, useRef } from 'react'
 import useKeepState from 'use-keep-state'
 import Table from '@/components/table'
-import CreateTodoModal from './CreateTodoModal'
-import { serviceGetTodoList, serviceDeleteTodoList, serviceUpdateTodoList } from '@/services'
-import { STATUS } from './constants'
-import { DatePicker, Button, Tag, Form, Popconfirm } from 'antd'
+import {
+  serviceGetTodoList,
+  serviceDeleteTodoList,
+  serviceGetAllCompany
+} from '@/services'
+import { DatePicker, Button, Select, Form, Popconfirm, Dropdown, Menu } from 'antd'
 import { FORMAT_DATE, formatDateMinute, DATE_YEAR } from '@/utils'
+import { DownOutlined } from '@ant-design/icons'
+import { MenuInfo } from 'antd/node_modules/rc-menu/lib/interface'
+import { LOG_LIST } from './constants'
+import { useHistory } from 'react-router-dom'
 
 const { RangePicker } = DatePicker
+const { Option } = Select
 
 interface State {
-  showCreateTodoModal: boolean
-  currentRowData: Record<string, any> | null
+  companyAll: Record<string, any>[]
 }
 
 const initState: State = {
-  showCreateTodoModal: false,
-  currentRowData: null
+  companyAll: []
 }
 
-const TodoListPage = () => {
+const LogPage = () => {
+  const history = useHistory()
   const [form] = Form.useForm()
   const [state, setState] = useKeepState(initState)
   const tableRef = useRef<any>()
   const tableColumns = [
-    {
-      title: '状态',
-      dataIndex: 'status',
-      width: 90,
-      render: (status: number) => (
-        <Tag color={STATUS[status].color}>
-          {STATUS[status].text}
-        </Tag>
-      )
-    },
     {
       title: '创建时间',
       dataIndex: 'createdAt',
@@ -52,23 +48,16 @@ const TodoListPage = () => {
       width: 250,
       align: 'right',
       fixed: 'right',
-      render: (row: any) => (
+      render: (row: Record<string, any>) => (
         <>
-          <Button onClick={handleActionButton.bind(null, 0, row)}>编辑</Button>
+          <Button>编辑</Button>
           <Popconfirm
             title="您确定要删除吗？"
-            onConfirm={handleActionButton.bind(null, 1, row)}
             placement="bottomLeft"
             okType="danger"
           >
             <Button>删除</Button>
           </Popconfirm>
-          <Button
-            onClick={handleActionButton.bind(null, 2, row)}
-            disabled={row.status === 2}
-          >
-            完成
-          </Button>
         </>
       )
     }
@@ -100,55 +89,56 @@ const TodoListPage = () => {
     tableRef?.current?.getTableData()
   }
 
-  function toggleCreateTodoModal() {
-    setState({ showCreateTodoModal: !state.showCreateTodoModal })
-  }
-
-  const handleSuccess = function() {
-    toggleCreateTodoModal()
-    tableRef.current.getTableData()
-  }
-
-  function handleActionButton(buttonType: number, row: any) {
-    switch (buttonType) {
-      // 编辑
-      case 0:
-        setState({ showCreateTodoModal: true, currentRowData: row })
-        break
-      // 删除
-      case 1:
-        serviceDeleteTodoList(row.id)
-        .then(res => {
-          if (res.data.success) {
-            tableRef.current.getTableData()
-          }
-        })
-        break
-      // 状态
-      case 2:
-        serviceUpdateTodoList(row.id, { status: 2 })
-        .then(res => {
-          if (res.data.success) {
-            tableRef.current.getTableData()
-          }
-        })
-        break
-      default:
-    }
-  }
-
   useEffect(() => {
     initParams()
+
+    serviceGetAllCompany().then(res => {
+      const rows = res.data.data.rows
+      rows.unshift({
+        companyName: '全部',
+        id: ''
+      })
+      setState({ companyAll: rows })
+    })
   }, [])
 
+  function handleClickMenu({ key }: MenuInfo) {
+    history.push(`/home/log/create/${key}`)
+  }
+
+  const menu = (
+    <Menu onClick={handleClickMenu}>
+      {LOG_LIST.map(item => (
+        <Menu.Item key={item.key}>{item.name}</Menu.Item>
+      ))}
+    </Menu>
+  )
+
+  const toolbar = (
+    <Dropdown overlay={menu}>
+      <Button type="primary">
+        新增
+        <DownOutlined />
+      </Button>
+    </Dropdown>
+  )
+
   return (
-    <div className="today-task">
+    <div className="log-page">
       <div className="query-panel">
         <Form
           form={form}
           layout="inline"
           onValuesChange={() => tableRef?.current?.getTableData()}
         >
+          <Form.Item name="company" label="单位" initialValue="">
+            <Select style={{ width: 200 }}>
+              {state.companyAll.map((item: Record<string, any>) => (
+                <Option key={item.id} value={item.id}>{item.companyName}</Option>
+              ))}
+            </Select>
+          </Form.Item>
+
           <Form.Item name="date" label="查询日期" initialValue={DATE_YEAR}>
             <RangePicker allowClear />
           </Form.Item>
@@ -164,21 +154,11 @@ const TodoListPage = () => {
         ref={tableRef}
         getTableData={getTodoList}
         columns={tableColumns}
+        toolbar={toolbar}
         onDelete={serviceDeleteTodoList}
-        onAdd={() => setState({
-          showCreateTodoModal: true,
-          currentRowData: null
-        })}
-      />
-
-      <CreateTodoModal
-        visible={state.showCreateTodoModal}
-        onSuccess={handleSuccess}
-        onCancel={toggleCreateTodoModal}
-        rowData={state.currentRowData}
       />
     </div>
   )
 }
 
-export default TodoListPage
+export default LogPage

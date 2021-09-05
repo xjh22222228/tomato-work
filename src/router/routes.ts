@@ -67,6 +67,15 @@ const routesMap: IRouteProps[] = [
         }
       },
       {
+        path: HOME.LOG_DETAIL.path,
+        component: CreateLog,
+        exact: true,
+        meta: {
+          title: HOME.LOG_DETAIL.name,
+          requiresAuth: true,
+        }
+      },
+      {
         path: HOME.COMPANY.path,
         component: Company,
         exact: true,

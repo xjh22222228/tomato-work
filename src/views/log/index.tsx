@@ -4,17 +4,17 @@
 import React, { useEffect, useRef } from 'react'
 import useKeepState from 'use-keep-state'
 import Table from '@/components/table'
+import { serviceGetAllCompany } from '@/services'
 import {
-  serviceGetTodoList,
-  serviceDeleteTodoList,
-  serviceGetAllCompany
-} from '@/services'
+  serviceDeleteLog,
+  serviceGetLogList
+} from '@/services/log'
 import { DatePicker, Button, Select, Form, Popconfirm, Dropdown, Menu } from 'antd'
-import { FORMAT_DATE, formatDateMinute, DATE_YEAR } from '@/utils'
+import { FORMAT_DATE, filterOption } from '@/utils'
 import { DownOutlined } from '@ant-design/icons'
 import { MenuInfo } from 'antd/node_modules/rc-menu/lib/interface'
 import { LOG_LIST } from './constants'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 
 const { RangePicker } = DatePicker
 const { Option } = Select
@@ -35,13 +35,16 @@ const LogPage = () => {
   const tableColumns = [
     {
       title: '创建时间',
-      dataIndex: 'createdAt',
+      dataIndex: '__createdAt__',
       width: 170
     },
     {
-      title: '活动内容',
-      dataIndex: 'content',
-      className: 'wbba'
+      title: '日志类型',
+      dataIndex: '__logType__',
+    },
+    {
+      title: '所属单位',
+      dataIndex: 'companyName',
     },
     {
       title: '操作',
@@ -50,11 +53,15 @@ const LogPage = () => {
       fixed: 'right',
       render: (row: Record<string, any>) => (
         <>
-          <Button>编辑</Button>
+          <Link to={`/home/log/detail/${row.id}`}>
+            <Button>编辑</Button>
+          </Link>
+
           <Popconfirm
             title="您确定要删除吗？"
             placement="bottomLeft"
             okType="danger"
+            onConfirm={() => handleDelLog(row.id)}
           >
             <Button>删除</Button>
           </Popconfirm>
@@ -63,25 +70,27 @@ const LogPage = () => {
     }
   ]
 
+  function handleDelLog(logId: string) {
+    serviceDeleteLog(logId).then(() => {
+      getData()
+    })
+  }
+
   function getData() {
     tableRef.current.getTableData()
   }
 
-  function getTodoList(params: any) {
+  function getLogList(params: any) {
     const values = form.getFieldsValue()
 
-    if (values.date && values.date.length === 2) {
+    if (values.date?.length === 2) {
       params.startDate = values.date[0].format(FORMAT_DATE)
       params.endDate = values.date[1].format(FORMAT_DATE)
     }
+    params.companyId = values.company
+    params.logType = values.logType
 
-    return serviceGetTodoList(params).then(res => {
-      res.data.data.rows.map((item: any) => {
-        item.createdAt = formatDateMinute(item.createdAt)
-        return item
-      })
-      return res
-    })
+    return serviceGetLogList(params)
   }
 
   function initParams() {
@@ -96,7 +105,7 @@ const LogPage = () => {
       const rows = res.data.data.rows
       rows.unshift({
         companyName: '全部',
-        id: ''
+        id: '-1'
       })
       setState({ companyAll: rows })
     })
@@ -131,31 +140,46 @@ const LogPage = () => {
           layout="inline"
           onValuesChange={() => tableRef?.current?.getTableData()}
         >
-          <Form.Item name="company" label="单位" initialValue="">
-            <Select style={{ width: 200 }}>
-              {state.companyAll.map((item: Record<string, any>) => (
-                <Option key={item.id} value={item.id}>{item.companyName}</Option>
-              ))}
-            </Select>
-          </Form.Item>
+          <div className="w100">
+            <div className="flex">
+              <Form.Item name="company" label="所属单位" initialValue="-1">
+                <Select style={{ width: 200 }} showSearch filterOption={filterOption}>
+                  {state.companyAll.map((item: Record<string, any>) => (
+                    <Option key={item.id} value={item.id}>{item.companyName}</Option>
+                  ))}
+                </Select>
+              </Form.Item>
 
-          <Form.Item name="date" label="查询日期" initialValue={DATE_YEAR}>
-            <RangePicker allowClear />
-          </Form.Item>
+              <Form.Item name="date" label="查询日期">
+                <RangePicker allowClear />
+              </Form.Item>
 
-          <Form.Item>
-            <Button type="primary" onClick={getData}>查询</Button>
-            <Button onClick={initParams}>重置</Button>
-          </Form.Item>
+              <Form.Item>
+                <Button type="primary" onClick={getData}>查询</Button>
+                <Button onClick={initParams}>重置</Button>
+              </Form.Item>
+            </div>
+          </div>
+
+          <div className="flex mt10">
+            <Form.Item name="logType" label="日志类型" initialValue="-1">
+              <Select style={{ width: 200 }} showSearch filterOption={filterOption}>
+                <Option value="-1">全部</Option>
+                {LOG_LIST.map((item: Record<string, any>) => (
+                  <Option key={item.key} value={item.key}>{item.name}</Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </div>
         </Form>
       </div>
 
       <Table
         ref={tableRef}
-        getTableData={getTodoList}
+        getTableData={getLogList}
         columns={tableColumns}
         toolbar={toolbar}
-        onDelete={serviceDeleteTodoList}
+        onDelete={serviceDeleteLog}
       />
     </div>
   )

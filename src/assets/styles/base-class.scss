@@ -6,6 +6,10 @@
   color: $theme-color !important;
 }
 
+.flex {
+  display: flex
+}
+
 .flex-center {
   @include flex-center;
 }

@@ -62,7 +62,7 @@ export function logout() {
  * Github Auth
  */
 export function githubAuthz() {
-  const url = `https://github.com/login/oauth/authorize?response_type=code&redirect_uri=${config.github.callbackURL}&client_id=${config.github.clientId}`
+  const url = `https://github.com/login/oauth/authorize?response_type=code&redirect_uri=${config.github.callbackURL}&client_id=${config.github.clientId}&scope=repo%20repo_deployment%20read:user`
   window.location.replace(url)
 }
 

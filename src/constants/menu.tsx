@@ -33,11 +33,11 @@ export const HOME_SIDER_MENU_LIST = [
     icon: <ScheduleOutlined />,
     name: HOME.TODAY_TASK.name
   },
-  // {
-  //   path: HOME.LOG.path,
-  //   icon: <SnippetsOutlined />,
-  //   name: HOME.LOG.name
-  // },
+  {
+    path: HOME.LOG.path,
+    icon: <SnippetsOutlined />,
+    name: HOME.LOG.name
+  },
   {
     path: HOME.COMPANY.path,
     icon: <InsertRowLeftOutlined />,

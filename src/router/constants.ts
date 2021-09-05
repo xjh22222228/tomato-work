@@ -20,9 +20,8 @@ export const HOME = {
   REMINDER: { name: '提醒事项', path: '/home/reminder' },
 
   LOG: { name: '日志管理', path: '/home/log' },
-  LOG_CREATE: { name: '日志创建', path: [
-    '/home/log/create/:type', '/home/log/:id'
-  ] },
+  LOG_CREATE: { name: '日志创建', path: '/home/log/create/:type' },
+  LOG_DETAIL: { name: '查看日志', path: '/home/log/detail/:id' },
 
   COMPANY: { name: '公司单位', path: '/home/company' },
 

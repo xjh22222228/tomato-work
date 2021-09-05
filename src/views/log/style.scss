@@ -1,0 +1,26 @@
+.createlog-page {
+  height: 100%;
+  background-color: #fff;
+  padding: 15px;
+
+  .icon-arrow {
+    font-size: 22px;
+    cursor: pointer;
+  }
+  .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    .title {
+      font-size: 26px;
+      align-self: center;
+      margin-bottom: 0;
+    }
+  }
+  .footbar {
+    display: flex;
+    justify-content: center;
+    column-gap: 20px;
+  }
+}

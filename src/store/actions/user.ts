@@ -54,7 +54,7 @@ export function logout() {
       }
     })
     window.sessionStorage.clear()
-    window.location.reload(true)
+    window.location.reload()
   })
 }
 

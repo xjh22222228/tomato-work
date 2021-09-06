@@ -17,13 +17,14 @@ const CreateLogPage: React.FC = function() {
   const [form] = Form.useForm()
   const history = useHistory()
   const params = useRouteMatch([HOME.LOG_CREATE.path, HOME.LOG_DETAIL.path])?.params as Record<string, any>
-  const { type, id } = params
+  const { id } = params
   const isEdit = !!id
 
   const [typeRecord, setTypeRecord] = useState<Record<string, any>>({})
   const [companyAll, setCompanyAll] = useState<Record<string, any>[]>([])
   const [loading, setLoading] = useState(false)
   const [detail, setDetail] = useState<Record<string, any>>({})
+  const type = params.type || detail.logType
 
   function goBack() {
     history.replace(HOME.LOG.path)
@@ -74,9 +75,11 @@ const CreateLogPage: React.FC = function() {
 
   useEffect(() => {
     if (type) {
-      const res = LOG_LIST.find(item => item.key === type)
-      setTypeRecord(res!)
-      document.title = `创建${res!.name} - ${config.title}`
+      const res = LOG_LIST.find(item => Number(item.key) === Number(type))
+      if (res) {
+        setTypeRecord(res!)
+        document.title = `创建${res!.name} - ${config.title}`
+      }
     }
   }, [type])
 

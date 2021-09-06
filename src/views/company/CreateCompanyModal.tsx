@@ -54,8 +54,6 @@ const CreateCompanyModal: React.FC<Props> = function ({
 
   async function handleSubmitForm() {
     try {
-      setState({ confirmLoading: true })
-
       const values = await form.validateFields()
       const params: any = {
         companyName: values.companyName,
@@ -70,6 +68,8 @@ const CreateCompanyModal: React.FC<Props> = function ({
       if (values.expectLeaveDate) {
         params.expectLeaveDate = formatDate(values.expectLeaveDate)
       }
+
+      setState({ confirmLoading: true });
 
       (
         !isEdit

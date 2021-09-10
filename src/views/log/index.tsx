@@ -4,6 +4,7 @@
 import React, { useEffect, useRef } from 'react'
 import useKeepState from 'use-keep-state'
 import Table from '@/components/table'
+import DetailDrawer from './DetailDrawer'
 import { serviceGetAllCompany } from '@/services'
 import {
   serviceDeleteLog,
@@ -21,10 +22,14 @@ const { Option } = Select
 
 interface State {
   companyAll: Record<string, any>[]
+  showDetailDrawer: boolean,
+  detail: Record<string, any>
 }
 
 const initState: State = {
-  companyAll: []
+  companyAll: [],
+  showDetailDrawer: false,
+  detail: {}
 }
 
 const LogPage = () => {
@@ -32,6 +37,7 @@ const LogPage = () => {
   const [form] = Form.useForm()
   const [state, setState] = useKeepState(initState)
   const tableRef = useRef<any>()
+
   const tableColumns = [
     {
       title: '创建时间',
@@ -41,6 +47,7 @@ const LogPage = () => {
     {
       title: '日志类型',
       dataIndex: '__logType__',
+      width: 170,
     },
     {
       title: '所属单位',
@@ -53,8 +60,10 @@ const LogPage = () => {
       fixed: 'right',
       render: (row: Record<string, any>) => (
         <>
+          <Button onClick={() => handlePreview(row)}>详情</Button>
+
           <Link to={`/home/log/detail/${row.id}`}>
-            <Button>编辑</Button>
+            <Button className="ml10">编辑</Button>
           </Link>
 
           <Popconfirm
@@ -70,10 +79,19 @@ const LogPage = () => {
     }
   ]
 
+  function handlePreview(record: Record<string, any>) {
+    setState({ detail: record })
+    toggleDetailDrawer()
+  }
+
   function handleDelLog(logId: string) {
     serviceDeleteLog(logId).then(() => {
       getData()
     })
+  }
+
+  function toggleDetailDrawer() {
+    setState({ showDetailDrawer: !state.showDetailDrawer })
   }
 
   function getData() {
@@ -180,6 +198,12 @@ const LogPage = () => {
         columns={tableColumns}
         toolbar={toolbar}
         onDelete={serviceDeleteLog}
+      />
+
+      <DetailDrawer
+        visible={state.showDetailDrawer}
+        detail={state.detail}
+        onClose={toggleDetailDrawer}
       />
     </div>
   )

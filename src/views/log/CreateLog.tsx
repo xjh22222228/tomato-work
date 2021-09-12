@@ -9,9 +9,14 @@ import { Form, Input, Button, Select } from 'antd'
 import { serviceGetAllCompany } from '@/services'
 import { filterOption } from '@/utils'
 import { serviceCreateLog, serviceUpdateLog, serviceGetLogById } from '@/services/log'
+import { LOCAL_STORAGE } from '@/constants'
 
 const { TextArea } = Input
 const { Option } = Select
+
+const DEF_COMPANY_ID = window.localStorage.getItem(
+  LOCAL_STORAGE.COMPANY_ID
+) || '-1'
 
 const CreateLogPage: React.FC = function() {
   const [form] = Form.useForm()
@@ -44,6 +49,7 @@ const CreateLogPage: React.FC = function() {
       }
 
       setLoading(true)
+      window.localStorage.setItem(LOCAL_STORAGE.COMPANY_ID, params.companyId)
       const httpService = isEdit ? serviceUpdateLog : serviceCreateLog
 
       httpService(params).then(() => {
@@ -106,7 +112,7 @@ const CreateLogPage: React.FC = function() {
         <Form.Item
           name="companyId"
           label="所属单位"
-          initialValue={detail.companyId ?? '-1'}
+          initialValue={detail.companyId ?? DEF_COMPANY_ID}
           rules={[
             {
               required: true,

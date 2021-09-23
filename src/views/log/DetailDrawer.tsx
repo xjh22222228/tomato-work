@@ -37,6 +37,7 @@ const DetailDrawer: React.FC<Props> = function({
       onClose={onClose}
       destroyOnClose
     >
+      <p className="pl20 mb20">日期：{detail.__createdAt__}</p>
       <Collapse
         defaultActiveKey={defaultActiveKey}
         expandIconPosition="right"

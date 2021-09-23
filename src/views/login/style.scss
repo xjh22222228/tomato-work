@@ -15,7 +15,7 @@
 .login-page {
   display: flex;
   min-height: 100vh;
-  background: #f0f2f5 url("~@/assets/img/public/bg.svg") no-repeat center 110px;
+  background: #f0f2f5 url("https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg") no-repeat center 110px;
   background-size: 100%;
   flex-direction: column;
 
@@ -69,6 +69,12 @@
       margin-left: 15px;
       vertical-align: text-top;
     }
+  }
+
+  .login-bar {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 20px;
   }
 
   .captcha {

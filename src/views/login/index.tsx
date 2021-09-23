@@ -5,6 +5,7 @@ import Footer from '@/components/footer'
 import qs from 'query-string'
 import md5 from 'blueimp-md5'
 import config from '@/config'
+import classNames from 'classnames'
 import { isEmpty } from 'lodash'
 import { Button, Input, message, Popover, Form } from 'antd'
 import { useHistory, useLocation } from 'react-router-dom'
@@ -199,6 +200,12 @@ const LoginPage: React.FC<LoginProps> = function () {
             </Form.Item>
           </Form>
 
+          <div className={classNames('login-bar', {
+            'events-none': loading
+          })}>
+            <GithubOutlined onClick={githubHandler} />
+          </div>
+
           <Button
             type="primary"
             style={{ marginTop: '20px' }}
@@ -218,16 +225,6 @@ const LoginPage: React.FC<LoginProps> = function () {
               <span>注册账号</span>
             </Popover>
           </div>
-          <Button
-            style={{ marginTop: '20px' }}
-            size="large"
-            loading={loading}
-            block
-            icon={<GithubOutlined />}
-            onClick={githubHandler}
-          >
-            使用 Github 登录
-          </Button>
         </div>
       </div>
       <Footer />

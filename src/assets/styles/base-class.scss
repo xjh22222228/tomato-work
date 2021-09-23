@@ -46,10 +46,22 @@
   margin-left: 10px;
 }
 
+.mb20 {
+  margin-bottom: 20px;
+}
+
+.pl20 {
+  padding-left: 20px;
+}
+
 .w100 {
   width: 100% !important;
 }
 
 .w150px {
   width: 150px !important;
+}
+
+.events-none {
+  pointer-events: none;
 }

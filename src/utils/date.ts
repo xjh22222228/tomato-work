@@ -39,3 +39,8 @@ export function fromNow(
   const n = end - start
   return Math.ceil(n / (1000 * 60 * 60 * 24))
 }
+
+export function getWeek(date: moment.MomentInput): string {
+  const weeks = ['周日', '周一', '周二', '周三', '周四', '周五', '周六',]
+  return weeks[moment(date).day()]
+}

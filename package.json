@@ -23,6 +23,7 @@
     "axios": "^0.21.1",
     "blueimp-md5": "^2.18.0",
     "bytes": "^3.1.0",
+    "classnames": "^2.3.1",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "query-string": "^7.0.1",

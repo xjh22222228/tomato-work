@@ -9,7 +9,7 @@ import {
 
 type Props = {
   visible: boolean
-  rowData?: { [key: string]: any } | null
+  rowData?: Record<string, any> | null
   onSuccess: () => void
   onCancel: () => void
 }
@@ -77,7 +77,7 @@ const CreateTodoModal: React.FC<Props> = function ({
           ]}
         >
           <TextArea
-            rows={3}
+            rows={6}
             value={state.content}
             onChange={e => setState({ content: e.target.value })}
             maxLength={250}

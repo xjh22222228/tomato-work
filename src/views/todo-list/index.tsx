@@ -45,7 +45,7 @@ const TodoListPage = () => {
     {
       title: '活动内容',
       dataIndex: 'content',
-      className: 'wbba'
+      className: 'wbba wpr'
     },
     {
       title: '操作',

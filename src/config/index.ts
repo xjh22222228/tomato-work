@@ -10,7 +10,7 @@ const CONFIG = {
   // 网页标题
   title: 'Tomato Work',
   http: {
-    baseURL: VITE_HTTP_BASE
+    baseURL: VITE_HTTP_BASE as string
   },
   github: {
     clientId: PROD ? '789d87c19dd5ed1dc42e' : '489b39e1f91d934128c8',

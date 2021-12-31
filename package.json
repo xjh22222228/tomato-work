@@ -12,7 +12,8 @@
   "scripts": {
     "dev": "vite",
     "start": "vite",
-    "build": "tsc && vite build",
+    "start:prod": "vite --mode prod",
+    "build": "tsc && vite build --mode prod",
     "serve": "vite preview",
     "lint": "eslint --cache --ext .js,.jsx,.tsx,.ts ./src"
   },

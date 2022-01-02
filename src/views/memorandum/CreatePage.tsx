@@ -45,11 +45,12 @@ const CreatePage: React.FC<Props> = ({ computedMatch }) => {
     setLoading(true);
 
     (id ? serviceUpdateMemorandum(id, params) : serviceCreateMemorandum(params))
-    .then(res => {
-      if (res.data.success) {
+      .then(() => {
         history.replace(HOME.MEMORANDUM.path)
-      }
-    })
+      })
+      .catch(() => {
+        setLoading(false)
+      })
   }
 
   const init = useCallback(() => {
@@ -65,10 +66,8 @@ const CreatePage: React.FC<Props> = ({ computedMatch }) => {
     if (id) {
       serviceGetMemorandumById(id)
       .then(res => {
-        if (res.data.success) {
-          setTitle(res.data.data.title)
-          editor.setMarkdown(res.data.data.markdown)
-        }
+        setTitle(res.title)
+        editor.setMarkdown(res.markdown)
       })
     }
   }, [computedMatch])

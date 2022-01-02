@@ -43,14 +43,12 @@ const MemorandumPage: React.FC = () => {
   function getData() {
     serviceGetMemorandum()
     .then(res => {
-      if (res.data.success) {
-        const data = res.data.data.map((item: any) => {
-          item.createdAt = moment(item.createdAt).format('YYYY/M/D HH:mm')
-          item.title = item.title || defaultTitle
-          return item
-        })
-        setList(data)
-      }
+      const data = res.map((item: any) => {
+        item.createdAt = moment(item.createdAt).format('YYYY/M/D HH:mm')
+        item.title = item.title || defaultTitle
+        return item
+      })
+      setList(data)
     })
     .finally(() => setLoading(false))
   }

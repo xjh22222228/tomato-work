@@ -23,12 +23,10 @@ const DetailPage: FC<Props> = ({ computedMatch }) => {
 
     serviceGetMemorandumById(id)
     .then(res => {
-      if (res.data.success) {
-        const title = res.data.data.title || defaultTitle
-        document.title = `${title} - ${config.title}`
-        setTitle(title)
-        setContent(res.data.data.html)
-      }
+      const title = res.title || defaultTitle
+      document.title = `${title} - ${config.title}`
+      setTitle(title)
+      setContent(res.html)
     })
     .finally(() => setLoading(false))
   }, [id])

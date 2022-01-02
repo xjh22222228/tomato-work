@@ -4,7 +4,7 @@ import Avatar from '@/components/avatar'
 import moment from 'moment'
 import config from '@/config'
 import { Layout, Badge, Popover, Empty } from 'antd'
-import { withRouter, RouteComponentProps, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { HomeMainState } from '@/views/main/index'
 import { connect } from 'react-redux'
 import { StoreState } from '@/store'
@@ -30,14 +30,14 @@ const popoverList = [
   { name: SETTING.ACCOUNT.name, path: SETTING.ACCOUNT.path }
 ]
 
-type Props = ReturnType<typeof mapStateToProps> & HomeMainState & RouteComponentProps
+type Props = ReturnType<typeof mapStateToProps> & HomeMainState
 
 const PopoverContent = (
   <div className="popover-content">
   {popoverList.map(el => (
     <Link to={el.path} key={el.name} className="ls">{el.name}</Link>
   ))}
-    <div className="ls sign-out" onClick={() => logout()}>
+    <div className="ls sign-out" onClick={logout}>
       <PoweroffOutlined style={{ fontSize: '14px', marginRight: '5px' }} />
       退出
     </div>
@@ -56,18 +56,16 @@ const HomeHeader: React.FC<Props> = function ({
   useEffect(() => {
     serviceGetInnerMessage({ pageSize: 5 })
     .then(res => {
-      if (res.data.success) {
-        let count = 0
-        const data = res.data.data.rows.map((item: any) => {
-          item.createdAt = moment(item.createdAt).format('YYYY-MM-DD HH:mm')
-          if (!item.hasRead) {
-            count++
-          }
-          return item
-        })
-        setUnReadCount(count)
-        setMessageList(data)
-      }
+      let count = 0
+      const data = res.rows.map((item: any) => {
+        item.createdAt = moment(item.createdAt).format('YYYY-MM-DD HH:mm')
+        if (!item.hasRead) {
+          count++
+        }
+        return item
+      })
+      setUnReadCount(count)
+      setMessageList(data)
     })
   }, [])
 
@@ -154,4 +152,4 @@ const mapStateToProps = ({ user }: StoreState) => {
   return { userInfo: user.userInfo }
 }
 
-export default connect(mapStateToProps)(withRouter(HomeHeader))
+export default connect(mapStateToProps)(HomeHeader)

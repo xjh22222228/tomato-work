@@ -87,7 +87,7 @@ const TodoListPage = () => {
     }
 
     return serviceGetTodoList(params).then(res => {
-      res.data.data.rows.map((item: any) => {
+      res.rows.map((item: any) => {
         item.createdAt = formatDateMinute(item.createdAt)
         return item
       })
@@ -119,18 +119,14 @@ const TodoListPage = () => {
       case 1:
         serviceDeleteTodoList(row.id)
         .then(res => {
-          if (res.data.success) {
-            tableRef.current.getTableData()
-          }
+          tableRef.current.getTableData()
         })
         break
       // 状态
       case 2:
         serviceUpdateTodoList(row.id, { status: 2 })
         .then(res => {
-          if (res.data.success) {
-            tableRef.current.getTableData()
-          }
+          tableRef.current.getTableData()
         })
         break
       default:

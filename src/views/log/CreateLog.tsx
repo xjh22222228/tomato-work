@@ -66,14 +66,13 @@ const CreateLogPage: React.FC = function() {
   useEffect(() => {
     if (isEdit) {
       serviceGetLogById(id).then(res => {
-        const detail = res.data.data
         setDetail(detail)
         form.setFieldsValue({
-          companyId: detail.companyId,
-          doneContent: detail.doneContent,
-          undoneContent: detail.undoneContent,
-          planContent: detail.planContent,
-          summaryContent: detail.summaryContent
+          companyId: res.companyId,
+          doneContent: res.doneContent,
+          undoneContent: res.undoneContent,
+          planContent: res.planContent,
+          summaryContent: res.summaryContent
         })
       })
     }
@@ -91,7 +90,7 @@ const CreateLogPage: React.FC = function() {
 
   useEffect(() => {
     serviceGetAllCompany().then(res => {
-      const rows = res.data.data.rows
+      const rows = res.rows
       rows.unshift({
         companyName: '无',
         id: '-1'

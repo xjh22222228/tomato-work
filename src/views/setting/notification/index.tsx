@@ -7,18 +7,16 @@ import { Switch, Divider } from 'antd'
 import { serviceGetUserConfig, serviceUpdateUserConfig } from '@/services'
 
 const NotificationPage: React.FC = function () {
-  const [userConfig, setUserConfig] = useState({
+  const [userConfig, setUserConfig] = useState<Record<string, any>>({
     isMatterNotify: true,
     isTaskNotify: true
   })
 
   useEffect(() => {
     serviceGetUserConfig().then(res => {
-      if (res.data.success) {
-        setUserConfig({
-          ...res.data.data
-        })
-      }
+      setUserConfig({
+        ...res
+      })
     })
   }, [])
 
@@ -29,13 +27,11 @@ const NotificationPage: React.FC = function () {
     }
     serviceUpdateUserConfig({
       [fields[type]]: checked
-    }).then(res => {
-      if (res.data.success) {
-        setUserConfig({
-          ...userConfig,
-          [fields[type]]: checked
-        })
-      }
+    }).then(() => {
+      setUserConfig({
+        ...userConfig,
+        [fields[type]]: checked
+      })
     })
   }
 

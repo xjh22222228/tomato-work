@@ -16,15 +16,11 @@ export function getSystemInfo() {
     const { system: { info } } = getState()
 
     if (info.nodeVersion) {
-      return dispatch(setSystemInfo())
+      return
     }
 
-    return serviceGetSystemInfo().then((res: any) => {
-      if (res.data.success) {
-        const data = res.data.data
-        return dispatch(setSystemInfo(data))
-      }
-      return dispatch(setSystemInfo())
+    return serviceGetSystemInfo().then(res => {
+      return dispatch(setSystemInfo(res))
     })
   }
 }

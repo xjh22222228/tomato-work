@@ -22,7 +22,7 @@ import Toolbar from './Toolbar'
 import useDebounceFn from '@/hooks/useDebounceFn'
 
 interface Props extends TableProps {
-  getTableData: (data: any) => AxiosPromise
+  getTableData: (data: any) => Promise<Record<string, any>>
   onTableChange?: (pagination: any, filters: any, sorter: any) => void
   onDelete?: (id: string) => AxiosPromise
   onAdd?: () => void
@@ -83,16 +83,14 @@ const TableFC: FC<Props> = ({
       pageSize: pageSize
     })
       .then(res => {
-        if (res?.data?.success) {
-          setState({
-            pagination: {
-              ...state.pagination,
-              total: res.data.data.count,
-              pageSize
-            },
-            tableDataSource: res.data.data.rows
-          })
-        }
+        setState({
+          pagination: {
+            ...state.pagination,
+            total: res.count,
+            pageSize
+          },
+          tableDataSource: res.rows
+        })
       })
       .finally(() => {
         setState({ isLoading: false })
@@ -159,11 +157,9 @@ const TableFC: FC<Props> = ({
     if (!onDelete) return null
     const selectedRowKeys = state.selectedRowKeys.join(',')
     onDelete(selectedRowKeys)
-      .then(res => {
-        if (res.data.success) {
-          setState({ selectedRowKeys: [] })
-          getData()
-        }
+      .then(() => {
+        setState({ selectedRowKeys: [] })
+        getData()
       })
   }
 

@@ -64,9 +64,7 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
           : serviceUpdateCapitalFlow(rowData.id, params)
       )
         .then(res => {
-          if (res.data.success) {
-            onSuccess(res)
-          }
+          onSuccess(res)
         })
         .finally(() => {
           setState({ confirmLoading: false })

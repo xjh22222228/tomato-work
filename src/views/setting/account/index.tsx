@@ -6,7 +6,6 @@ import md5 from 'blueimp-md5'
 import { connect } from 'react-redux'
 import { StoreState } from '@/store'
 import { UserInfoProps } from '@/store/reducers/user'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { serviceUpdateUser, serviceGetUserConfig, serviceUpdateUserConfig } from '@/services'
 import { Form, Input, Button, Divider } from 'antd'
 
@@ -14,7 +13,7 @@ type Props = {
   userInfo: UserInfoProps
 }
 
-const AccountPage: React.FC<Props & RouteComponentProps> = function ({ userInfo }) {
+const AccountPage: React.FC<Props> = function ({ userInfo }) {
   const [form] = Form.useForm()
   const [form2] = Form.useForm()
 
@@ -39,11 +38,9 @@ const AccountPage: React.FC<Props & RouteComponentProps> = function ({ userInfo 
   useEffect(() => {
     serviceGetUserConfig()
     .then(res => {
-      if (res.data.success) {
-        form2.setFieldsValue({
-          sckey: res.data.data?.serverChanSckey || ''
-        })
-      }
+      form2.setFieldsValue({
+        sckey: res?.serverChanSckey || ''
+      })
     })
   }, [])
 
@@ -116,4 +113,4 @@ const mapStateToProps = ({ user }: StoreState): { userInfo: UserInfoProps } => {
   return { userInfo: user.userInfo }
 }
 
-export default connect(mapStateToProps)(withRouter(AccountPage))
+export default connect(mapStateToProps)(AccountPage)

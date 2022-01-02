@@ -48,14 +48,12 @@ const PanelGroup = () => {
 
     serviceGetPanelData()
     .then(res => {
-      if (res.data.success) {
-        const data = state.slice()
-        data[0].total = Number(res.data.data.consumption).toFixed(2)
-        data[1].total = res.data.data.todayTaskCount
-        data[2].total = res.data.data.unfinishedTodoListCount
-        data[3].total = res.data.data.reminderCount
-        setState(data)
-      }
+      const data = state.slice()
+      data[0].total = Number(res.consumption).toFixed(2)
+      data[1].total = res.todayTaskCount
+      data[2].total = res.unfinishedTodoListCount
+      data[3].total = res.reminderCount
+      setState(data)
     })
   }, [state])
 

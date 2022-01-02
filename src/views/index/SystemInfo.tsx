@@ -7,9 +7,7 @@ import { totalPercentage, formatDateTime } from '@/utils'
 import { serviceGetInnerMessage } from '@/services'
 
 interface Props {
-  systemInfo: {
-    [key: string]: any
-  }
+  systemInfo: Record<string, any>
 }
 
 const statusColor = (percentage: number) => {
@@ -50,10 +48,8 @@ const System: React.FC<Props> = ({ systemInfo }) => {
   useEffect(() => {
     serviceGetInnerMessage({ pageSize: 5 })
     .then(res => {
-      if (res.data.success) {
-        setLoading(false)
-        setMessageList(res.data.data.rows)
-      }
+      setLoading(false)
+      setMessageList(res.rows)
     })
   }, [])
 

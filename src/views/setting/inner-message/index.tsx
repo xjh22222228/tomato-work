@@ -24,11 +24,9 @@ const InnerMessagePage = () => {
   const getInnerMessage = useCallback((params?: object) => {
     return serviceGetInnerMessage(params)
             .then(res => {
-              if (res.data.success) {
-                res.data.data.rows.forEach((item: any) => {
-                  item.createdAt = formatDateMinute(item.createdAt)
-                })
-              }
+              res.rows.forEach((item: any) => {
+                item.createdAt = formatDateMinute(item.createdAt)
+              })
               return res
             })
   }, [])
@@ -37,11 +35,9 @@ const InnerMessagePage = () => {
     params ||= selectedRowKeys.join()
 
     serviceUpdateInnerMessageHasRead(params)
-      .then(res => {
-        if (res.data.success) {
-          setSelectedRowKeys([])
-          tableRef.current.getTableData()
-        }
+      .then(() => {
+        setSelectedRowKeys([])
+        tableRef.current.getTableData()
       })
   }
 

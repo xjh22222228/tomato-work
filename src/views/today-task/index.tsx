@@ -59,9 +59,7 @@ const TodayTaskPage = () => {
       endDate: date
     })
     .then(res => {
-      if (res.data.success) {
-        setState({ data: res.data.data })
-      }
+      setState({ data: res })
     })
   }
 

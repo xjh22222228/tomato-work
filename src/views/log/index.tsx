@@ -120,7 +120,7 @@ const LogPage = () => {
     initParams()
 
     serviceGetAllCompany().then(res => {
-      const rows = res.data.data.rows
+      const rows = res.rows
       rows.unshift({
         companyName: '全部',
         id: '-1'

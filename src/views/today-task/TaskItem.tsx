@@ -10,7 +10,7 @@ import {
 import { formatDateTime } from '@/utils'
 
 interface Props {
-  data: { [key: string]: any },
+  data: Record<string, any>,
   reloadData(): void
 }
 
@@ -20,19 +20,15 @@ const TaskItem: React.FC<Props> = ({ data, reloadData }) => {
   function handleAction(buttonType: number) {
     if (buttonType === 0) {
       serviceDeleteTask(data.id)
-      .then(res => {
-        if (res.data.success) {
-          reloadData()
-        }
+      .then(() => {
+        reloadData()
       })
     } else {
       serviceUpdateTask(data.id, {
         rollback: buttonType === 2 && true
       })
-      .then(res => {
-        if (res.data.success) {
-          reloadData()
-        }
+      .then(() => {
+        reloadData()
       })
     }
   }

@@ -34,27 +34,25 @@ const AmountChart = () => {
       ...params
     })
     .then(res => {
-      if (res.data.success) {
-        let price = 0
-        const data: DataProp[] = []
-        res.data.data.forEach((item: DataProp, idx: number) => {
-          const date = item.date.slice(5)
-          const amount = Number(item.price)
-          price += amount
+      let price = 0
+      const data: DataProp[] = []
+      res.forEach((item: DataProp, idx: number) => {
+        const date = item.date.slice(5)
+        const amount = Number(item.price)
+        price += amount
 
-          if (idx % 2 === 0) {
-            data.push({
-              date,
-              '收入': amount
-            })
-          } else {
-            data[data.length - 1]['支出'] = amount
-          }
-        })
+        if (idx % 2 === 0) {
+          data.push({
+            date,
+            '收入': amount
+          })
+        } else {
+          data[data.length - 1]['支出'] = amount
+        }
+      })
 
-        setData(data)
-        setTotalAmount(price)
-      }
+      setData(data)
+      setTotalAmount(price)
     })
 
     serviceGetCapitalFlowAmountGroup({
@@ -62,14 +60,12 @@ const AmountChart = () => {
       endDate: formatDate(DATE_WEEK[1]),
       ...params
     }).then(res => {
-      if (res.data.success) {
-        setGroup(
-          res.data.data.map((item: GroupProp) => {
-            item.name = item.type === 1 ? `+ ${item.name}` : `- ${item.name}`
-            return item
-          })
-        )
-      }
+      setGroup(
+        res.map((item: GroupProp) => {
+          item.name = item.type === 1 ? `+ ${item.name}` : `- ${item.name}`
+          return item
+        })
+      )
     })
   }
 

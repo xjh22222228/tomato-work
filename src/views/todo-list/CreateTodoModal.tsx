@@ -42,10 +42,8 @@ const CreateTodoModal: React.FC<Props> = function ({
           ? serviceCreateTodoList(params)
             : serviceUpdateTodoList(rowData.id, params)
       )
-        .then(res => {
-          if (res.data.success) {
-            onSuccess()
-          }
+        .then(() => {
+          onSuccess()
         })
         .finally(() => {
           setState({ confirmLoading: false })

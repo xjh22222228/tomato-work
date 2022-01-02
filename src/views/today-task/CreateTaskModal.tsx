@@ -13,8 +13,8 @@ import {
 type Props = {
   visible: boolean
   data?: object
-  onSuccess: () => void
-  onCancel: () => void
+  onSuccess(): void
+  onCancel(): void
 }
 
 const { TextArea } = Input
@@ -42,10 +42,8 @@ const CreateTaskModal: React.FC<Props> = function ({
       setState({ confirmLoading: true })
 
       serviceCreateTask(params)
-        .then(res => {
-          if (res.data.success) {
-            onSuccess()
-          }
+        .then(() => {
+          onSuccess()
         })
         .finally(() => {
           setState({ confirmLoading: false })

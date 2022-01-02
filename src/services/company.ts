@@ -4,7 +4,7 @@ import { formatDate, fromNow } from '@/utils'
 // 查询所有单位
 export async function serviceGetAllCompany() {
   const res = await http.get('/company')
-  res.data.data.rows = res.data.data.rows.map((item: any) => {
+  res.rows = res.rows.map((item: any) => {
     item.startDate = formatDate(item.startDate)
     item.__amount__ = `￥${item.amount}`
     item.__jobDay__ = fromNow(item.startDate, item.endDate) + ' 天'

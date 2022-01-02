@@ -19,15 +19,13 @@ export function serviceUpdateLog(data: Record<string, any>) {
 // 查询日志列表
 export async function serviceGetLogList(params?: object) {
   const res = await http.get('/log', { params })
-  if (res.data.success) {
-    res.data.data.rows = res.data.data.rows.map((item: Record<string, any>) => {
-      item.__createdAt__ = `${formatDate(item.createdAt)} ${getWeek(item.createdAt)}`
-      const lType = LOG_LIST.find(el => Number(el.key) === Number(item.logType))
-      item.__logType__ = lType?.name
-      item.companyName ||= '无'
-      return item
-    })
-  }
+  res.rows = res.rows.map((item: Record<string, any>) => {
+    item.__createdAt__ = `${formatDate(item.createdAt)} ${getWeek(item.createdAt)}`
+    const lType = LOG_LIST.find(el => Number(el.key) === Number(item.logType))
+    item.__logType__ = lType?.name
+    item.companyName ||= '无'
+    return item
+  })
   return res
 }
 

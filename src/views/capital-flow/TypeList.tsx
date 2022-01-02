@@ -47,15 +47,13 @@ const Type = () => {
   function getCapitalFlowType() {
     serviceGetCapitalFlowType()
       .then(res => {
-        if (res.data.success) {
-          const handleData = res.data.data.map((item: any) => {
-            item.typeName = TypeNames[item.type]
-            item.color = TypeColors[item.type]
-            item.createdAt = moment(item.createdAt).format(FORMAT_DATE_MINUTE)
-            return item
-          })
-          setState({ data: handleData })
-        }
+        const handleData = res.map((item: any) => {
+          item.typeName = TypeNames[item.type]
+          item.color = TypeColors[item.type]
+          item.createdAt = moment(item.createdAt).format(FORMAT_DATE_MINUTE)
+          return item
+        })
+        setState({ data: handleData })
       })
   }
 

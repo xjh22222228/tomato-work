@@ -153,26 +153,22 @@ const CapitalFlowPage: React.FC = function() {
       }
 
       return serviceGetCapitalFlow(params).then(res => {
-        if (res.data.success) {
-          const data = res.data.data
+        res.rows = res.rows.map((el: any, idx: number) => {
+          el.order = idx + 1
+          el.createdAt = moment(el.createdAt).format(FORMAT_DATE_MINUTE)
+          el.__price__ = TYPES[el.type - 1].symbol + el.price
+          el.__color__ = TYPES[el.type - 1].color
 
-          res.data.data.rows = res.data.data.rows.map((el: any, idx: number) => {
-            el.order = idx + 1
-            el.createdAt = moment(el.createdAt).format(FORMAT_DATE_MINUTE)
-            el.__price__ = TYPES[el.type - 1].symbol + el.price
-            el.__color__ = TYPES[el.type - 1].color
+          return el
+        })
 
-            return el
-          })
-
-          setState({
-            price: {
-              income: data.income,
-              consumption: data.consumption,
-              available: data.available
-            }
-          })
-        }
+        setState({
+          price: {
+            income: res.income,
+            consumption: res.consumption,
+            available: res.available
+          }
+        })
         return res
       })
     } catch (error) {
@@ -184,15 +180,13 @@ const CapitalFlowPage: React.FC = function() {
   function getCapitalFlowType() {
     serviceGetCapitalFlowType()
       .then(res => {
-        if (res.data.success) {
-          const data = res.data.data
-            .map((item: any) => {
-              item.optionName = `${TypeNames[item.type]} - ${item.name}`
-              return item
-            })
-            .sort((a: any, b: any) => a.type - b.type)
-          setState({ nameList: data })
-        }
+        const data = res
+          .map((item: any) => {
+            item.optionName = `${TypeNames[item.type]} - ${item.name}`
+            return item
+          })
+          .sort((a: any, b: any) => a.type - b.type)
+        setState({ nameList: data })
       })
   }
 
@@ -201,10 +195,8 @@ const CapitalFlowPage: React.FC = function() {
     if (type === 0) {
       setState({ showCreateCapitalFlowModal: true, currentRow: row })
     } else {
-      serviceDeleteCapitalFlow(row.id).then(res => {
-        if (res.data.success) {
-          tableRef.current.getTableData()
-        }
+      serviceDeleteCapitalFlow(row.id).then(() => {
+        tableRef.current.getTableData()
       })
     }
   }

@@ -47,9 +47,7 @@ const CreateTypeModal: React.FC<Props> = function ({
           : serviceCreateCapitalFlowType(params)
       )
       .then(res => {
-        if (res.data.success) {
-          onSuccess(res.data.data)
-        }
+        onSuccess(res.data)
       })
       .finally(() => {
         setState({ confirmLoading: false })

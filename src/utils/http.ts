@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios'
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios'
 import CONFIG from '@/config'
 import store from '@/store'
 import { message, notification } from 'antd'
@@ -15,18 +15,21 @@ interface RespData {
 let exiting = false
 
 function handleError(error: AxiosError) {
-  if (axios.isCancel(error)) {
-    console.log(error)
-  } else {
-    const response = error.response
-    notification.error({
-      message: `Error Code: ${response?.status ?? -1}`,
-      description: response?.statusText ?? '服务器出小差'
-    })
-  }
+  const response = error.response
+  notification.error({
+    message: `Error Code: ${response?.status ?? -1}`,
+    description: response?.statusText ?? '服务器出小差'
+  })
 }
 
-const httpInstance = axios.create({
+interface IAxiosInstance {
+  get(url: string, config?: AxiosRequestConfig): Promise<Record<string, any>>
+  delete(url: string, config?: AxiosRequestConfig): Promise<Record<string, any>>
+  post(url: string, data?: any, config?: AxiosRequestConfig): Promise<Record<string, any>>
+  put(url: string, data?: any, config?: AxiosRequestConfig): Promise<Record<string, any>>
+}
+
+const httpInstance: IAxiosInstance & AxiosInstance = axios.create({
   timeout: 60000,
   baseURL: CONFIG.http.baseURL
 })
@@ -65,15 +68,8 @@ httpInstance.interceptors.response.use(function (res) {
   const headers = res.config.headers
   const data: RespData = res.data
 
-  if (!data.success && headers.errorAlert) {
-    notification.error({
-      message: `错误码: ${data.errorCode ?? -1}`,
-      description: data.msg ?? '服务器出小差'
-    })
-  }
-
   if (data.success && headers.successAlert) {
-    message.success(data.msg ?? 'Success')
+    message.success(data.msg ?? '操作成功')
   }
 
   if (data.errorCode === 401 && !exiting) {
@@ -81,7 +77,17 @@ httpInstance.interceptors.response.use(function (res) {
     setTimeout(logout, 2000)
   }
 
-  return res
+  if (!data.success) {
+    if (headers.errorAlert) {
+      notification.error({
+        message: `Error Code: ${data.errorCode ?? -1}`,
+        description: data.msg ?? '服务器出小差'
+      })
+    }
+    throw res
+  }
+
+  return res.data?.data || res
 }, function (error) {
   handleError(error)
   return Promise.reject(error)

@@ -71,10 +71,8 @@ const LoginPage: React.FC<LoginProps> = function () {
       })
         .then(res => {
           setLoading(false)
-          if (res.data.success) {
-            dispatch(setUser(res.data.data.userInfo))
-            history.replace(redirectUrl)
-          }
+          dispatch(setUser(res.userInfo))
+          history.replace(redirectUrl)
         })
         .catch(() => {
           setLoading(false)

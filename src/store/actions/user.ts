@@ -23,12 +23,9 @@ export function setUser(userInfo: any = {}) {
  */
 export function loginByToken(token: string) {
   return function (dispatch: Dispatch) {
-    return serviceLoginByToken(token).then((res: any) => {
-      if (res.data.success) {
-        const userInfo = res.data.data.userInfo
-        return dispatch(setUser(userInfo))
-      }
-      return dispatch(setUser())
+    return serviceLoginByToken(token).then(res => {
+      const userInfo = res.userInfo
+      return dispatch(setUser(userInfo))
     })
   }
 }

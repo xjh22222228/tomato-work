@@ -99,13 +99,11 @@ const ReminderPage: React.FC<Props> = function({ userInfo }) {
     }
 
     return serviceGetReminder(params).then(res => {
-      if (res.data.success) {
-        res.data.data.rows = res.data.data.rows.map((el: any, idx: number) => {
-          el.order = idx + 1
-          el.createdAt = formatDateTime(el.createdAt)
-          return el
-        })
-      }
+      res.rows = res.rows.map((el: any, idx: number) => {
+        el.order = idx + 1
+        el.createdAt = formatDateTime(el.createdAt)
+        return el
+      })
       return res
     })
   }
@@ -119,10 +117,8 @@ const ReminderPage: React.FC<Props> = function({ userInfo }) {
 
   function handleDelete(record: any) {
     serviceDeleteReminder(record.id)
-      .then(res => {
-        if (res.data.success) {
-          tableRef.current.getTableData()
-        }
+      .then(() => {
+        tableRef.current.getTableData()
       })
   }
 

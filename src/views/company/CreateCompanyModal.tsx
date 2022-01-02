@@ -76,10 +76,8 @@ const CreateCompanyModal: React.FC<Props> = function ({
           ? serviceCreateCompany(params)
           : serviceUpdateCompany(detail.id, params)
       )
-      .then(res => {
-        if (res.data.success) {
-          onSuccess()
-        }
+      .then(() => {
+        onSuccess()
       })
       .finally(() => {
         setState({ confirmLoading: false })

@@ -6,10 +6,7 @@
   <br />
   <b>Tomato Work 个人事务管理系统</b>
   <p align="center">
-    <a href="https://github.com/xjh22222228/tomato-work-server">服务端 </a>
-    <a href="https://github.com/xjh22222228/tomato-work-weapp"> 小程序</a>
-  </p>
-  <p align="center">
+    <img alt="React" src="https://img.shields.io/static/v1.svg?label=&message=服务端&style=flat-square&color=e8883a">
     <a href="https://github.com/xjh22222228/tomato-work/stargazers"><img src="https://img.shields.io/github/stars/xjh22222228/tomato-work" alt="Stars Badge"/></a>
     <img alt="React" src="https://img.shields.io/static/v1.svg?label=&message=React&style=flat-square&color=61daeb">
     <img src="https://img.shields.io/github/package-json/v/xjh22222228/tomato-work" />
@@ -79,6 +76,3 @@ yarn build
 
 ## License
 [MIT](https://opensource.org/licenses/MIT)
-
-
-

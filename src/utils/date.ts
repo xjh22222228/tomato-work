@@ -44,3 +44,11 @@ export function getWeek(date: moment.MomentInput): string {
   const weeks = ['周日', '周一', '周二', '周三', '周四', '周五', '周六',]
   return weeks[moment(date).day()]
 }
+
+export function isToDay(date: moment.MomentInput): boolean {
+  const m = moment(date)
+  const n = new Date()
+  return m.year() === n.getFullYear() &&
+    m.month() === n.getMonth() &&
+    m.date() === n.getDate()
+}

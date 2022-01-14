@@ -14,7 +14,7 @@ import {
   serviceGetCapitalFlowType
 } from '@/services'
 import { OPTION_TYPES, TypeNames, TYPES } from './enum'
-import { filterOption, FORMAT_DATE, FORMAT_DATE_MINUTE } from '@/utils'
+import { filterOption, FORMAT_DATE, FORMAT_DATE_MINUTE, isToDay } from '@/utils'
 
 const { Search } = Input
 const { RangePicker } = DatePicker
@@ -154,8 +154,9 @@ const CapitalFlowPage: React.FC = function() {
 
       return serviceGetCapitalFlow(params).then(res => {
         res.rows = res.rows.map((el: any, idx: number) => {
+          const suffix = isToDay(el.createdAt) ? ' 今天' : ''
           el.order = idx + 1
-          el.createdAt = moment(el.createdAt).format(FORMAT_DATE_MINUTE)
+          el.createdAt = moment(el.createdAt).format(FORMAT_DATE_MINUTE) + suffix
           el.__price__ = TYPES[el.type - 1].symbol + el.price
           el.__color__ = TYPES[el.type - 1].color
 

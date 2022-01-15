@@ -66,7 +66,8 @@ const CapitalFlowPage: React.FC = function() {
       dataIndex: 'createdAt',
       width: 180,
       sorter: true,
-      sortOrder: state.sortedInfo?.field === 'createdAt' && state.sortedInfo.order
+      sortOrder: state.sortedInfo?.field === 'createdAt' && state.sortedInfo.order,
+      render: (text: string, rowData: any) => rowData.__createdAt__
     },
     {
       title: '账务类型',
@@ -156,7 +157,7 @@ const CapitalFlowPage: React.FC = function() {
         res.rows = res.rows.map((el: any, idx: number) => {
           const suffix = isToDay(el.createdAt) ? ' 今天' : ''
           el.order = idx + 1
-          el.createdAt = moment(el.createdAt).format(FORMAT_DATE_MINUTE) + suffix
+          el.__createdAt__ = moment(el.createdAt).format(FORMAT_DATE_MINUTE) + suffix
           el.__price__ = TYPES[el.type - 1].symbol + el.price
           el.__color__ = TYPES[el.type - 1].color
 

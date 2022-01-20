@@ -98,10 +98,17 @@ export function MainRoutes() {
           }} />
         },
         {
-          path: 'memorandum/update/:id',
+          path: 'memorandum/create',
           element: <PrivateRoute element={MemorandumCreate} meta={{
             requiresAuth: true,
             title: '备忘录创建'
+          }} />
+        },
+        {
+          path: 'memorandum/update/:id',
+          element: <PrivateRoute element={MemorandumCreate} meta={{
+            requiresAuth: true,
+            title: '备忘录更新'
           }} />
         },
         {

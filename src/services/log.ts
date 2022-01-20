@@ -5,14 +5,14 @@ import { LOG_LIST } from '@/views/log/constants'
 // 创建日志
 export function serviceCreateLog(data: object) {
   return http.post('/log', data, {
-    headers: { successAlert: true }
+    headers: { successAlert: 'true' }
   })
 }
 
 // 更新日志
 export function serviceUpdateLog(data: Record<string, any>) {
   return http.put(`/log/${data.id}`, data, {
-    headers: { successAlert: true }
+    headers: { successAlert: 'true' }
   })
 }
 
@@ -32,7 +32,7 @@ export async function serviceGetLogList(params?: object) {
 // 删除日志
 export function serviceDeleteLog(id: string) {
   return http.delete(`/log/${id}`, {
-    headers: { successAlert: true }
+    headers: { successAlert: 'true' }
   })
 }
 

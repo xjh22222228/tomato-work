@@ -20,7 +20,7 @@ export function serviceLogout() {
 // 更新用户信息
 export function serviceUpdateUser(data: object) {
   return http.post('/user/update', data, {
-    headers: { successAlert: true }
+    headers: { successAlert: 'true' }
   })
 }
 
@@ -32,6 +32,6 @@ export function serviceGetUserConfig() {
 // 更新用户配置信息
 export function serviceUpdateUserConfig(data: object) {
   return http.put('/userConfig', data, {
-    headers: { successAlert: true }
+    headers: { successAlert: 'true' }
   })
 }

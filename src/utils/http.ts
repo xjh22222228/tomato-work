@@ -1,4 +1,5 @@
-import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios'
+import axios from 'axios'
+import type { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios'
 import CONFIG from '@/config'
 import store from '@/store'
 import { message, notification } from 'antd'
@@ -34,16 +35,20 @@ const httpInstance: IAxiosInstance & AxiosInstance = axios.create({
   baseURL: CONFIG.http.baseURL
 })
 
-httpInstance.defaults.headers.common.isLoading = true
-httpInstance.defaults.headers.common.successAlert = false
-httpInstance.defaults.headers.common.errorAlert = true
+httpInstance.defaults.headers.common.isLoading = 'true'
+httpInstance.defaults.headers.common.errorAlert = 'true'
 Object.setPrototypeOf(httpInstance, axios)
+
 
 httpInstance.interceptors.request.use(function (config) {
   const method = config.method
   const userState = store.getState().user.userInfo
 
-  config.headers.token = userState.token
+  if (userState.token) {
+    if (config.headers) {
+      config.headers.token = userState.token as string
+    }
+  }
 
   const data: Record<string, any> = {}
 
@@ -68,17 +73,17 @@ httpInstance.interceptors.response.use(function (res) {
   const headers = res.config.headers
   const data: RespData = res.data
 
-  if (data.success && headers.successAlert) {
-    message.success(data.msg ?? '操作成功')
+  if (data.success && headers?.successAlert) {
+    message.success(data.msg || '操作成功')
   }
 
   if (data.errorCode === 401 && !exiting) {
     exiting = true
-    setTimeout(logout, 2000)
+    logout()
   }
 
   if (!data.success) {
-    if (headers.errorAlert) {
+    if (headers?.errorAlert) {
       notification.error({
         message: `Error Code: ${data.errorCode ?? -1}`,
         description: data.msg ?? '服务器出小差'

@@ -4,7 +4,7 @@ import http from '@/utils/http'
 export function serviceCreateTodoList(data: object) {
   return http.post('/todoList', data, {
     headers: {
-      successAlert: true
+      successAlert: 'true'
     }
   })
 }
@@ -17,7 +17,7 @@ export function serviceGetTodoList(params?: object) {
 // 删除
 export function serviceDeleteTodoList(id: unknown) {
   return http.delete(`/todoList/${id}`, {
-    headers: { successAlert: true }
+    headers: { successAlert: 'true' }
   })
 }
 

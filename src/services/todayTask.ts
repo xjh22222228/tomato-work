@@ -3,7 +3,7 @@ import http from '@/utils/http'
 // 创建
 export function serviceCreateTask(data: object) {
   return http.post('/task', data, {
-    headers: { successAlert: true }
+    headers: { successAlert: 'true' }
   })
 }
 

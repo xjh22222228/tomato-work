@@ -3,7 +3,6 @@ import './style.scss'
 import { Row, Col, Statistic } from 'antd'
 import { Link } from 'react-router-dom'
 import { serviceGetPanelData } from '@/services'
-import { HOME } from '@/router/constants'
 import {
   PropertySafetyFilled,
   ScheduleFilled,
@@ -19,25 +18,25 @@ const PanelGroup = () => {
       total: '0',
       Icon: <PropertySafetyFilled className="icon" />,
       suffix: '￥',
-      path: HOME.CAPITAL_FLOW.path
+      path: '/home/capitalFlow'
     },
     {
       title: '今日待办',
       total: '0',
       Icon: <ScheduleFilled className="icon" />,
-      path: HOME.TODAY_TASK.path
+      path: '/home/todayTask'
     },
     {
       title: '活动清单',
       total: '0',
       Icon: <FileTextFilled className="icon" />,
-      path: HOME.TODO_LIST.path
+      path: '/home/todoList'
     },
     {
       title: '提醒事项',
       total: '0',
       Icon: <AlertFilled className="icon" />,
-      path: HOME.REMINDER.path
+      path: '/home/reminder'
     },
   ])
 

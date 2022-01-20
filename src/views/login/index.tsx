@@ -1,5 +1,5 @@
 // https://007.qq.com/quick-start.html?ADTAG=acces.cfg
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import './style.scss'
 import Footer from '@/components/footer'
 import qs from 'query-string'
@@ -8,13 +8,10 @@ import config from '@/config'
 import classNames from 'classnames'
 import { isEmpty } from 'lodash'
 import { Button, Input, message, Popover, Form } from 'antd'
-import { useHistory, useLocation } from 'react-router-dom'
-import { DispatchProp, useDispatch } from 'react-redux'
-import { ThunkDispatch } from 'redux-thunk'
-import { AnyAction } from 'redux'
-import { githubAuthz, loginByToken, setUser } from '@/store/actions'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { loginByToken, setUser } from '@/store/actions'
 import { serviceLogin } from '@/services'
-import { HOME } from '@/router/constants'
 import { LOCAL_STORAGE } from '@/constants'
 import { randomCode } from '@/utils'
 import logo from '@/assets/img/common/logo.png'
@@ -24,11 +21,6 @@ import {
   UserOutlined,
   GithubOutlined
 } from '@ant-design/icons'
-
-type ThunkDispatchProps = ThunkDispatch<{}, {}, AnyAction>
-type LoginProps = {
-  dispatch: ThunkDispatchProps
-} & DispatchProp
 
 const PopoverContent = (
   <div style={{ padding: '10px 20px 10px 20px' }}>
@@ -48,16 +40,18 @@ function reloadCaptcha(e: any) {
   e.target.src = url
 }
 
-const LoginPage: React.FC<LoginProps> = function () {
-  const history = useHistory()
+
+export default function () {
+  const navigate = useNavigate()
   const location = useLocation()
   const dispatch = useDispatch<any>()
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(false)
-  const [redirectUrl] = useState(() => {
+
+  const redirectUrl = useMemo(() => {
     const url = qs.parse(location.search).redirectUrl as string
-    return url || HOME.HOME_INDEX.path
-  })
+    return url || '/home/index'
+  }, [])
 
   const handleSubmit = async () => {
     try {
@@ -72,7 +66,7 @@ const LoginPage: React.FC<LoginProps> = function () {
         .then(res => {
           setLoading(false)
           dispatch(setUser(res.userInfo))
-          history.replace(redirectUrl)
+          navigate(redirectUrl, { replace: true })
         })
         .catch(() => {
           setLoading(false)
@@ -82,9 +76,10 @@ const LoginPage: React.FC<LoginProps> = function () {
     }
   }
 
-  const githubHandler = () => {
+  const goGithubAuth = () => {
     setLoading(true)
-    githubAuthz()
+    const url = `https://github.com/login/oauth/authorize?response_type=code&redirect_uri=${config.github.callbackURL}&client_id=${config.github.clientId}&scope=repo%20repo_deployment%20read:user`
+    window.location.replace(url)
   }
 
   useEffect(() => {
@@ -100,11 +95,11 @@ const LoginPage: React.FC<LoginProps> = function () {
       dispatch(loginByToken(token as string))
       .then((res: any) => {
         if (!isEmpty(res.userInfo)) {
-          history.replace(redirectUrl)
+          navigate(redirectUrl, { replace: true })
         }
       })
     }
-  }, [history, location.search, dispatch, redirectUrl])
+  }, [history, location.search])
 
   useEffect(() => {
     if (config.isDevelopment) {
@@ -201,7 +196,7 @@ const LoginPage: React.FC<LoginProps> = function () {
           <div className={classNames('login-bar', {
             'events-none': loading
           })}>
-            <GithubOutlined onClick={githubHandler} />
+            <GithubOutlined onClick={goGithubAuth} />
           </div>
 
           <Button
@@ -229,5 +224,3 @@ const LoginPage: React.FC<LoginProps> = function () {
     </section>
   )
 }
-
-export default LoginPage

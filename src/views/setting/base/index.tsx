@@ -9,7 +9,6 @@ import { Card, Divider } from 'antd'
 import { connect } from 'react-redux'
 import { StoreState } from '@/store'
 import { UserInfoProps } from '@/store/reducers/user'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
 
 const { Meta } = Card
 
@@ -17,7 +16,7 @@ type Props = {
   userInfo: UserInfoProps
 }
 
-const BasePage: React.FC<Props & RouteComponentProps> = function ({ userInfo }) {
+const BasePage: React.FC<Props> = function ({ userInfo }) {
 
   const MetaDesc = (
     <div className="meta-desc">
@@ -57,4 +56,4 @@ const mapStateToProps = ({ user }: StoreState): { userInfo: UserInfoProps } => {
   return { userInfo: user.userInfo }
 }
 
-export default connect(mapStateToProps)(withRouter(BasePage))
+export default connect(mapStateToProps)(BasePage)

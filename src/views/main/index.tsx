@@ -6,9 +6,8 @@ import './style.scss'
 import Sidebar from '@/components/sidebar'
 import Header from '@/components/header'
 import { Layout } from 'antd'
-import { connect } from 'react-redux'
-import { StoreState } from '@/store'
 import { LOCAL_STORAGE } from '@/constants'
+import { Outlet } from 'react-router-dom'
 
 const { Content } = Layout
 const { SIDEBAR_COLLAPSED } = LOCAL_STORAGE
@@ -20,7 +19,7 @@ export interface HomeMainState {
 
 const storageCollapsed = Number(window.localStorage.getItem(SIDEBAR_COLLAPSED) || true)
 
-const HomeMainPage: React.FC = function (props) {
+const HomeMainPage: React.FC = function () {
   const [collapsed, setCollapsed] = useState(!storageCollapsed)
 
   function handleToggleCollapsed() {
@@ -38,7 +37,7 @@ const HomeMainPage: React.FC = function (props) {
         <Layout className="home-layout">
           <Header {...{ collapsed, setCollapsed: handleToggleCollapsed }} />
           <Content id="container">
-            {React.Children.map(props.children, child => child)}
+            <Outlet />
           </Content>
         </Layout>
       </Layout>
@@ -46,8 +45,4 @@ const HomeMainPage: React.FC = function (props) {
   )
 }
 
-const mapStateToProps = ({ user }: StoreState) => {
-  return { userInfo: user.userInfo }
-}
-
-export default connect(mapStateToProps)(HomeMainPage)
+export default HomeMainPage

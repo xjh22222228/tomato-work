@@ -5,8 +5,8 @@ export function serviceGetInnerMessage(params?: object) {
   return http.get('/innerMessage', {
     params,
     headers: {
-      errorAlert: false,
-      cancelRequest: false
+      errorAlert: 'false',
+      cancelRequest: 'false'
     }
   })
 }
@@ -14,6 +14,6 @@ export function serviceGetInnerMessage(params?: object) {
 // 标志已读
 export function serviceUpdateInnerMessageHasRead(id: unknown) {
   return http.put(`/innerMessage/${id}`, null, {
-    headers: { successAlert: true }
+    headers: { successAlert: 'true' }
   })
 }

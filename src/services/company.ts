@@ -23,20 +23,20 @@ export async function serviceGetAllCompany() {
 // 创建单位
 export function serviceCreateCompany(data: object) {
   return http.post('/company', data, {
-    headers: { successAlert: true }
+    headers: { successAlert: 'true' }
   })
 }
 
 // 更新单位
 export function serviceUpdateCompany(id: string, data: object) {
   return http.put(`/company/${id}`, data, {
-    headers: { successAlert: true }
+    headers: { successAlert: 'true' }
   })
 }
 
 // 删除单位
 export function serviceDelCompany(id: unknown) {
   return http.delete(`/company/${id}`, {
-    headers: { successAlert: true }
+    headers: { successAlert: 'true' }
   })
 }

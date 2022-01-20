@@ -3,7 +3,7 @@ import http from '@/utils/http'
 // 新增
 export function serviceCreateMemorandum(data: object) {
   return http.post('/memorandum', data, {
-    headers: { successAlert: true }
+    headers: { successAlert: 'true' }
   })
 }
 
@@ -27,6 +27,6 @@ export function serviceDeleteMemorandum(id: unknown) {
 // 更新
 export function serviceUpdateMemorandum(id: unknown, data: object) {
   return http.put(`/memorandum/${id}`, data, {
-    headers: { successAlert: true }
+    headers: { successAlert: 'true' }
   })
 }

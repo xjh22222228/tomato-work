@@ -6,10 +6,9 @@ import config from '@/config'
 import { Layout, Badge, Popover, Empty } from 'antd'
 import { Link } from 'react-router-dom'
 import { HomeMainState } from '@/views/main/index'
-import { connect } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { StoreState } from '@/store'
 import { logout } from '@/store/actions/user'
-import { SETTING } from '@/router/constants'
 import { serviceGetInnerMessage } from '@/services'
 import { fullscreen, exitFullscreen } from '@/utils'
 import {
@@ -25,12 +24,12 @@ import {
 
 const { Header } = Layout
 const popoverList = [
-  { name: SETTING.BASE.name, path: SETTING.BASE.path },
-  { name: SETTING.NOTIFICATION.name, path: SETTING.NOTIFICATION.path },
-  { name: SETTING.ACCOUNT.name, path: SETTING.ACCOUNT.path }
+  { name: '个人中心', path: '/home/setting/base' },
+  { name: '消息通知', path: '/home/setting/notification' },
+  { name: '账号设置', path: '/home/setting/account' }
 ]
 
-type Props = ReturnType<typeof mapStateToProps> & HomeMainState
+type Props = HomeMainState
 
 const PopoverContent = (
   <div className="popover-content">
@@ -47,11 +46,11 @@ const PopoverContent = (
 const HomeHeader: React.FC<Props> = function ({
   collapsed,
   setCollapsed,
-  userInfo
 }) {
   const [messageList, setMessageList] = useState([])
   const [unReadCount, setUnReadCount] = useState(0)
   const [isFullscreen, setIsFullscreen] = useState(false)
+  const { userInfo } = useSelector((state: StoreState) => state.user)
 
   useEffect(() => {
     serviceGetInnerMessage({ pageSize: 5 })
@@ -73,7 +72,7 @@ const HomeHeader: React.FC<Props> = function ({
     <div className="message-popover">
       <div className="msg-header item-block">
         <span className="left">站内消息通知</span>
-        <Link className="right" to={SETTING.NOTIFICATION.path}>消息接收管理</Link>
+        <Link className="right" to="/home/setting/notification">消息接收管理</Link>
       </div>
       {messageList.length > 0 ? (
         <>
@@ -83,7 +82,7 @@ const HomeHeader: React.FC<Props> = function ({
             <div className="date">{item.createdAt}</div>
           </div>
         ))}
-        <Link className="item-block ls" to={SETTING.INNER_MESSAGE.path}>查看更多</Link>
+        <Link className="item-block ls" to="/home/setting/innerMessage">查看更多</Link>
         </>
       ) : (
         <Empty style={{ padding: '20px 0' }} />
@@ -148,8 +147,4 @@ const HomeHeader: React.FC<Props> = function ({
   )
 }
 
-const mapStateToProps = ({ user }: StoreState) => {
-  return { userInfo: user.userInfo }
-}
-
-export default connect(mapStateToProps)(HomeHeader)
+export default HomeHeader

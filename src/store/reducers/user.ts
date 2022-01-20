@@ -1,5 +1,6 @@
 import { USER } from '../constants'
 import { LOCAL_STORAGE } from '@/constants'
+import { isPlainObject } from 'lodash'
 
 const { LOGIN } = USER
 
@@ -24,10 +25,18 @@ export interface UserState {
   userInfo: UserInfoProps
 }
 
+let localUser
+try {
+  const r = JSON.parse(localStorage.getItem(LOCAL_STORAGE.USER) as string)
+  if (isPlainObject(r)) {
+    localUser = r
+  }
+} catch {}
+
 const initialState: UserState = {
-  isLogin: false,
+  isLogin: !!localUser,
   isLockScreen: false,
-  userInfo: {
+  userInfo: localUser || {
     provider: '', // github ?
     uid: undefined, // 用户ID
     createdAt: '', // 注册时间

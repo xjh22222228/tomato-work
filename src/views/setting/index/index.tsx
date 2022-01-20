@@ -1,14 +1,13 @@
 import React, { Suspense, useEffect, useState } from 'react'
 import './style.scss'
-import PrivateRoute from '@/components/private-route/index'
 import { Layout, Menu } from 'antd'
-import { Switch, Link, RouteComponentProps } from 'react-router-dom'
+import { Link, useLocation, Outlet } from 'react-router-dom'
 import { SETTING_SIDER_MENU_LIST } from '@/constants'
-import { settingRoutes } from '@/router/routes'
 
 const { Content, Sider } = Layout
 
-const SettingIndexPage: React.FC<RouteComponentProps> = function ({ location }) {
+const SettingIndexPage: React.FC = function () {
+  const location = useLocation()
   const [selectedKeys, setSelectedKeys] = useState('')
 
   useEffect(() => {
@@ -37,11 +36,7 @@ const SettingIndexPage: React.FC<RouteComponentProps> = function ({ location }) 
       </Sider>
       <Content style={{ padding: '0 50px 0 30px' }}>
         <Suspense fallback={null}>
-          <Switch>
-            {settingRoutes.map((route, idx) => (
-              <PrivateRoute {...route} key={idx} />
-            ))}
-          </Switch>
+          <Outlet />
         </Suspense>
       </Content>
     </Layout>

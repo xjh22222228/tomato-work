@@ -1,7 +1,7 @@
 import React from 'react'
 import './style.scss'
 import { Result, Button } from 'antd'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { ExceptionStatusType } from 'antd/lib/result'
 
 interface Props {
@@ -26,12 +26,16 @@ const statusMap = {
 const NoMatch: React.FC<Props> = function ({
   status = '404'
 }) {
-  const history = useHistory()
+  const navigate = useNavigate()
+
+  function goBack() {
+    navigate(-1)
+  }
 
   return (
     <Result
       status={status}
-      extra={<Button type="primary" onClick={history.goBack}>Back</Button>}
+      extra={<Button type="primary" onClick={goBack}>Back</Button>}
       {...statusMap[status]}
     />
   )

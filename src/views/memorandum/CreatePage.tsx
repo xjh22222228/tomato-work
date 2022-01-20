@@ -1,10 +1,9 @@
 // https://ui.toast.com/tui-editor/
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import './style.scss'
 import Editor from '@toast-ui/editor'
 import { Input, Button, message } from 'antd'
-import { useHistory, match } from 'react-router-dom'
-import { HOME } from '@/router/constants'
+import { useNavigate, useParams } from 'react-router-dom'
 import { defaultTitle } from './constants'
 import {
   serviceCreateMemorandum,
@@ -12,25 +11,20 @@ import {
   serviceUpdateMemorandum
 } from '@/services'
 
-interface Props {
-  computedMatch: match<any>
-}
-
 let editor: Editor
 
-const CreatePage: React.FC<Props> = ({ computedMatch }) => {
-  const history = useHistory()
+const CreatePage: React.FC = () => {
+  const navigate = useNavigate()
+  const { id } = useParams()
   const [title, setTitle] = useState(defaultTitle)
   const [loading, setLoading] = useState(false)
 
   function goBack() {
-    history.replace(HOME.MEMORANDUM.path)
+    navigate('/home/memorandum', { replace: true })
   }
 
   function handleSubmit() {
     if (loading) return
-
-    const id = computedMatch.params.id
 
     // 创建或更新
     const params = {
@@ -46,16 +40,14 @@ const CreatePage: React.FC<Props> = ({ computedMatch }) => {
 
     (id ? serviceUpdateMemorandum(id, params) : serviceCreateMemorandum(params))
       .then(() => {
-        history.replace(HOME.MEMORANDUM.path)
+        navigate('/home/memorandum', { replace: true })
       })
       .catch(() => {
         setLoading(false)
       })
   }
 
-  const init = useCallback(() => {
-    const id = computedMatch.params.id
-
+  function init() {
     editor = new Editor({
       el: document.querySelector('#edit-section') as HTMLDivElement,
       initialEditType: 'markdown',
@@ -64,13 +56,17 @@ const CreatePage: React.FC<Props> = ({ computedMatch }) => {
     })
 
     if (id) {
+      setLoading(true)
       serviceGetMemorandumById(id)
-      .then(res => {
-        setTitle(res.title)
-        editor.setMarkdown(res.markdown)
-      })
+        .then(res => {
+          setTitle(res.title)
+          editor.setMarkdown(res.markdown)
+        })
+        .finally(() => {
+          setLoading(false)
+        })
     }
-  }, [computedMatch])
+  }
 
   useEffect(() => {
     init()
@@ -79,7 +75,7 @@ const CreatePage: React.FC<Props> = ({ computedMatch }) => {
       // 销毁实例
       editor?.destroy()
     }
-  }, [init])
+  }, [])
 
   return (
     <div className="editor-page">

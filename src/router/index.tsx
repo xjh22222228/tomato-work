@@ -1,27 +1,12 @@
-import React, { useEffect } from 'react'
-import PrivateRoute from '@/components/private-route'
+import React from 'react'
 import CONFIG from '@/config'
-import routesMap from './routes'
-import { BrowserRouter as Router, Switch } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { validateLocalStatus } from '@/store/actions/user'
+import { MainRoutes } from './routes'
+import { BrowserRouter as Router } from 'react-router-dom'
 
-const Routes: React.FC = function () {
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(validateLocalStatus())
-  }, [])
-
+export default function () {
   return (
     <Router basename={CONFIG.baseURL}>
-      <Switch>
-        {routesMap.map((route, idx) => (
-          <PrivateRoute {...route} key={idx} />
-        ))}
-      </Switch>
+      <MainRoutes />
     </Router>
   )
 }
-
-export default Routes

@@ -7,19 +7,19 @@ export function serviceGetCapitalFlowType() {
 
 export function serviceDeleteCapitalFlowType(id: string) {
   return http.delete(`/capitalFlowType/${id}`, {
-    headers: { successAlert: true }
+    headers: { successAlert: 'true' }
   })
 }
 
 export function serviceUpdateCapitalFlowType(id: string, data: object) {
   return http.put(`/capitalFlowType/${id}`, data, {
-    headers: { successAlert: true }
+    headers: { successAlert: 'true' }
   })
 }
 
 export function serviceCreateCapitalFlowType(data: object) {
   return http.post('/capitalFlowType', data, {
-    headers: { successAlert: true }
+    headers: { successAlert: 'true' }
   })
 }
 
@@ -31,13 +31,13 @@ export function serviceGetCapitalFlow(params?: object) {
 
 export function serviceDeleteCapitalFlow(id: string) {
   return http.delete(`/capitalFlow/${id}`, {
-    headers: { successAlert: true }
+    headers: { successAlert: 'true' }
   })
 }
 
 export function serviceUpdateCapitalFlow(id: string, data: object) {
   return http.put(`/capitalFlow/${id}`, data, {
-    headers: { successAlert: true }
+    headers: { successAlert: 'true' }
   })
 }
 

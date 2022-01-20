@@ -1,6 +1,10 @@
 @import "@/assets/styles/mixins.scss";
 
 // Index
+.memorandum-spin {
+  overflow: hidden;
+  overflow-y: auto !important;
+}
 .memorandum {
   .button-group {
     margin-top: 15px;
@@ -28,12 +32,14 @@
   .content {
     margin-top: 5px;
     @include lineClamp(1);
-
     & > * {
       display: inline;
       font-size: 14px;
       font-weight: normal;
       color: #333;
+    }
+    img {
+      max-width: 100%;
     }
   }
 }

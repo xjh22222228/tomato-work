@@ -5,14 +5,13 @@ import React, { useState, useEffect } from 'react'
 import './style.scss'
 import moment from 'moment'
 import NoData from '@/components/no-data/index'
-import { useHistory } from 'react-router-dom'
 import { Card, Col, Row, Button, Popconfirm, Spin } from 'antd'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { serviceGetMemorandum, serviceDeleteMemorandum } from '@/services'
 import { defaultTitle } from './constants'
 
 const MemorandumPage: React.FC = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const [list, setList] = useState([])
   const [loading, setLoading] = useState(true)
 
@@ -33,11 +32,11 @@ const MemorandumPage: React.FC = () => {
     }
 
     if (buttonType === 2) {
-      history.push('/home/memorandum/create')
+      navigate('/home/memorandum/create')
       return
     }
 
-    history.push(`/home/memorandum/update/${item.id}`)
+    navigate(`/home/memorandum/update/${item.id}`)
   }
 
   function getData() {
@@ -58,7 +57,7 @@ const MemorandumPage: React.FC = () => {
   }, [])
 
   return (
-    <Spin spinning={loading}>
+    <Spin spinning={loading} wrapperClassName="memorandum-spin">
       <div className="memorandum">
         {(list.length > 0) ? (
           <Row gutter={16} align="bottom">

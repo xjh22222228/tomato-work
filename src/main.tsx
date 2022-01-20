@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './assets/styles/global.scss'
 import 'antd/dist/antd.css'
-import Routes from './router'
+import AppRoute from './router'
 import { Provider } from 'react-redux'
 import { ConfigProvider } from 'antd'
 import zh_CN from 'antd/lib/locale-provider/zh_CN'
@@ -16,7 +16,7 @@ ReactDOM.render(
   // <React.StrictMode>
     <Provider store={store}>
       <ConfigProvider locale={zh_CN}>
-        <Routes />
+        <AppRoute />
       </ConfigProvider>
     </Provider>
   // </React.StrictMode>

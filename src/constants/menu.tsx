@@ -1,5 +1,4 @@
 import React from 'react'
-import { HOME, SETTING } from '@/router/constants'
 import {
   HomeOutlined,
   ClockCircleOutlined,
@@ -14,34 +13,34 @@ import {
 
 export const HOME_SIDER_MENU_LIST = [
   {
-    path: HOME.HOME_INDEX.path,
+    path: '/home/index',
     icon: <HomeOutlined />,
-    name: HOME.HOME_INDEX.name
+    name: '后台首页'
   },
   {
-    path: HOME.REMINDER.path,
+    path: '/home/reminder',
     icon: <ClockCircleOutlined />,
-    name: HOME.REMINDER.name
+    name: '提醒事项'
   },
   {
-    path: HOME.TODO_LIST.path,
+    path: '/home/todoList',
     icon: <FileDoneOutlined />,
-    name: HOME.TODO_LIST.name,
+    name: '活动清单',
   },
   {
-    path: HOME.TODAY_TASK.path,
+    path: '/home/todayTask',
     icon: <ScheduleOutlined />,
-    name: HOME.TODAY_TASK.name
+    name: '今日待办'
   },
   {
-    path: HOME.LOG.path,
+    path: '/home/log',
     icon: <SnippetsOutlined />,
-    name: HOME.LOG.name
+    name: '日志管理'
   },
   {
-    path: HOME.COMPANY.path,
+    path: '/home/company',
     icon: <InsertRowLeftOutlined />,
-    name: HOME.COMPANY.name
+    name: '公司单位'
   },
   {
     path: '',
@@ -49,52 +48,52 @@ export const HOME_SIDER_MENU_LIST = [
     name: '财务管理',
     children: [
       {
-        path: HOME.CAPITAL_FLOW.path,
-        name: HOME.CAPITAL_FLOW.name,
+        path: '/home/capitalFlow',
+        name: '资金流动',
       },
       {
-        path: HOME.CAPITAL_FLOW_TYPE.path,
-        name: HOME.CAPITAL_FLOW_TYPE.name,
+        path: '/home/capitalFlow/type',
+        name: '创建类别',
       }
     ]
   },
   {
-    path: HOME.MEMORANDUM.path,
+    path: '/home/memorandum',
     icon: <FormOutlined />,
     name: '我的备忘',
     children: [
       {
-        path: HOME.MEMORANDUM.path,
-        name: HOME.MEMORANDUM.name,
+        path: '/home/memorandum',
+        name: '备忘录列表',
       },
       {
-        path: HOME.MEMORANDUM_CREATE.path[0],
-        name: HOME.MEMORANDUM_CREATE.name,
+        path: '/home/memorandum/create',
+        name: '备忘录创建',
       }
     ]
   },
   {
-    path: SETTING.BASE.path,
+    path: '/home/setting/base',
     icon: <UserOutlined />,
-    name: SETTING.BASE.name
+    name: '个人中心'
   }
 ]
 
 export const SETTING_SIDER_MENU_LIST = [
   {
-    path: SETTING.BASE.path,
-    name: SETTING.BASE.name
+    path: '/home/setting/base',
+    name: '个人中心'
   },
   {
-    path: SETTING.INNER_MESSAGE.path,
-    name: SETTING.INNER_MESSAGE.name
+    path: '/home/setting/innerMessage',
+    name: '消息中心'
   },
   {
-    path: SETTING.NOTIFICATION.path,
-    name: SETTING.NOTIFICATION.name
+    path: '/home/setting/notification',
+    name: '消息通知'
   },
   {
-    path: SETTING.ACCOUNT.path,
-    name: SETTING.ACCOUNT.name
+    path: '/home/setting/account',
+    name: '账号设置'
   },
 ]

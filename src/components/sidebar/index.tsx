@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react'
 import './style.scss'
 import config from '@/config'
 import { Layout, Menu } from 'antd'
-import { withRouter, RouteComponentProps, Link } from 'react-router-dom'
+import { useLocation, Link } from 'react-router-dom'
 import { HomeMainState } from '@/views/main/index'
 import { HOME_SIDER_MENU_LIST } from '@/constants'
 import logoImage from '@/assets/img/common/logo.png'
@@ -10,9 +10,10 @@ import logoImage from '@/assets/img/common/logo.png'
 const { Sider } = Layout
 const { SubMenu } = Menu
 
-type Props = HomeMainState & RouteComponentProps
+type Props = HomeMainState
 
-const Sidebar: React.FC<Props> = function ({ location, collapsed }) {
+const Sidebar: React.FC<Props> = function ({ collapsed }) {
+  const location = useLocation()
   const [selectedKeys, setSelectedKeys] = useState('')
   const [openKeys, setOpenKeys] = useState<string[]>([])
 
@@ -103,4 +104,4 @@ const Sidebar: React.FC<Props> = function ({ location, collapsed }) {
   )
 }
 
-export default withRouter(Sidebar)
+export default Sidebar

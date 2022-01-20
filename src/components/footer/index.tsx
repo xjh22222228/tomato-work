@@ -4,7 +4,7 @@ import CONFIG from '@/config'
 
 const currentYear = new Date().getFullYear()
 
-const Footer = () => {
+export default () => {
   return (
     <footer className="global-footer">
       <div>
@@ -14,5 +14,3 @@ const Footer = () => {
     </footer>
   )
 }
-
-export default Footer

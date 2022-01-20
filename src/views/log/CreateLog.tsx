@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './style.scss'
 import config from '@/config'
 import { LeftOutlined } from '@ant-design/icons'
-import { useHistory, useRouteMatch } from 'react-router-dom'
-import { HOME } from '@/router/constants'
+import { useNavigate, useParams } from 'react-router-dom'
 import { LOG_LIST } from './constants'
 import { Form, Input, Button, Select } from 'antd'
 import { serviceGetAllCompany } from '@/services'
@@ -20,8 +19,8 @@ const DEF_COMPANY_ID = window.localStorage.getItem(
 
 const CreateLogPage: React.FC = function() {
   const [form] = Form.useForm()
-  const history = useHistory()
-  const params = useRouteMatch([HOME.LOG_CREATE.path, HOME.LOG_DETAIL.path])?.params as Record<string, any>
+  const navigate = useNavigate()
+  const params = useParams()
   const { id } = params
   const isEdit = !!id
 
@@ -32,7 +31,7 @@ const CreateLogPage: React.FC = function() {
   const type = params.type || detail.logType
 
   function goBack() {
-    history.replace(HOME.LOG.path)
+    navigate('/home/log', { replace: true })
   }
 
   async function handleSubmitForm() {

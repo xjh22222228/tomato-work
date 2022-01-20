@@ -15,7 +15,7 @@ import { FORMAT_DATE, filterOption } from '@/utils'
 import { DownOutlined } from '@ant-design/icons'
 import { MenuInfo } from 'antd/node_modules/rc-menu/lib/interface'
 import { LOG_LIST } from './constants'
-import { useHistory, Link } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 const { RangePicker } = DatePicker
 const { Option } = Select
@@ -33,7 +33,7 @@ const initState: State = {
 }
 
 const LogPage = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const [form] = Form.useForm()
   const [state, setState] = useKeepState(initState)
   const tableRef = useRef<any>()
@@ -130,7 +130,7 @@ const LogPage = () => {
   }, [])
 
   function handleClickMenu({ key }: MenuInfo) {
-    history.push(`/home/log/create/${key}`)
+    navigate(`/home/log/create/${key}`)
   }
 
   const menu = (

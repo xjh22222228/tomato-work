@@ -3,7 +3,7 @@ import http from '@/utils/http'
 // 新增
 export function serviceCreateReminder(data: object) {
   return http.post('/reminder', data, {
-    headers: { successAlert: true }
+    headers: { successAlert: 'true' }
   })
 }
 
@@ -15,7 +15,7 @@ export function serviceGetReminder(params?: object) {
 // 删除
 export function serviceDeleteReminder(id: unknown) {
   return http.delete(`/reminder/${id}`, {
-    headers: { successAlert: true }
+    headers: { successAlert: 'true' }
   })
 }
 
@@ -23,7 +23,7 @@ export function serviceDeleteReminder(id: unknown) {
 export function serviceUpdateReminder(id: unknown, data: object) {
   return http.put(`/reminder/${id}`, data, {
     headers: {
-      successAlert: true,
+      successAlert: 'true',
     }
   })
 }

@@ -1,8 +1,7 @@
 
-const { PROD, VITE_HTTP_BASE, DEV } = import.meta.env
+const { VITE_HTTP_BASE, VITE_DEV } = import.meta.env
+const PROD = VITE_DEV === 'true'
 const isDevelopment = !PROD
-
-console.log(PROD, DEV)
 
 const CONFIG = {
   isProduction: PROD,

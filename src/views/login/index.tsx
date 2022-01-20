@@ -79,6 +79,7 @@ export default function () {
   const goGithubAuth = () => {
     setLoading(true)
     const url = `https://github.com/login/oauth/authorize?response_type=code&redirect_uri=${config.github.callbackURL}&client_id=${config.github.clientId}&scope=repo%20repo_deployment%20read:user`
+    console.log(url)
     window.location.replace(url)
   }
 

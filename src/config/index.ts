@@ -1,6 +1,6 @@
 
 const { VITE_HTTP_BASE, VITE_DEV } = import.meta.env
-const PROD = VITE_DEV === 'true'
+const PROD = VITE_DEV === 'false'
 const isDevelopment = !PROD
 
 const CONFIG = {

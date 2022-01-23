@@ -1,3 +1,4 @@
+// Copyright 2018-2022 the xiejiahe. All rights reserved. MIT license.
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './assets/styles/global.scss'

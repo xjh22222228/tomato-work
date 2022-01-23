@@ -1,3 +1,4 @@
+// Copyright 2018-2022 the xiejiahe. All rights reserved. MIT license.
 import { USER } from '../constants'
 import { LOCAL_STORAGE } from '@/constants'
 import { isPlainObject } from 'lodash'
@@ -58,8 +59,8 @@ function user(state = initialState, action: any): UserState {
       const userInfo = action.userInfo
       if (userInfo?.token) {
         state.isLogin = true
-        window.localStorage.setItem(LOCAL_STORAGE.USER, JSON.stringify(userInfo))
-        window.localStorage.setItem(LOCAL_STORAGE.LOGIN_NAME, userInfo.loginName)
+        localStorage.setItem(LOCAL_STORAGE.USER, JSON.stringify(userInfo))
+        localStorage.setItem(LOCAL_STORAGE.LOGIN_NAME, userInfo.loginName)
       }
       return {
         ...state,

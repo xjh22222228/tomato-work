@@ -1,8 +1,4 @@
-/**
- * @file System reducers
- * @since 1.0.0
- * @author xiejiahe <xjh22222228@gmail.com>
- */
+// Copyright 2018-2022 the xiejiahe. All rights reserved. MIT license.
 import _ from 'lodash'
 import { SYSTEM } from '../constants'
 

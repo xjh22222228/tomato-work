@@ -1,12 +1,9 @@
+// Copyright 2018-2022 the xiejiahe. All rights reserved. MIT license.
 import { SYSTEM } from '../constants'
 import { serviceGetSystemInfo } from '@/services'
-import { Dispatch } from 'redux'
+import type { Dispatch } from 'redux'
 
 const { INFO } = SYSTEM
-
-export function setSystemInfo(data: any = {}) {
-  return { type: INFO, data }
-}
 
 /**
  * 获取系统信息
@@ -20,7 +17,7 @@ export function getSystemInfo() {
     }
 
     return serviceGetSystemInfo().then(res => {
-      return dispatch(setSystemInfo(res))
+      return dispatch({ type: INFO, data: res })
     })
   }
 }

@@ -1,8 +1,9 @@
+// Copyright 2018-2022 the xiejiahe. All rights reserved. MIT license.
 import moment from 'moment'
 import { USER } from '../constants'
 import { LOCAL_STORAGE } from '@/constants'
 import { serviceLoginByToken, serviceLogout } from '@/services'
-import { Dispatch } from 'redux'
+import type { Dispatch } from 'redux'
 
 const { LOGIN } = USER
 

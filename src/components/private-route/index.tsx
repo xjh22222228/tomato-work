@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 import { StoreState } from '@/store/index'
 
 type Props = {
-  element: React.FC
+  element: React.FC|React.ComponentClass
   meta?: Record<string, any>
 }
 

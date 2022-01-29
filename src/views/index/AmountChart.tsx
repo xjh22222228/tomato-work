@@ -139,7 +139,7 @@ const AmountChart = () => {
             <Tooltip />
             <Legend />
             <CartesianGrid strokeDasharray="3 3" />
-            <Bar dataKey="amount" fill="#8884d8" background={{ fill: '#f1f1f1' }} />
+            <Bar dataKey="amount" fill="#8884d8" />
           </BarChart>
         </ResponsiveContainer>
       )}

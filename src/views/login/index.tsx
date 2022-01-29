@@ -30,7 +30,7 @@ const PopoverContent = (
 )
 
 let captcha = randomCode()
-const LOGIN_NAME = window.localStorage.getItem(LOCAL_STORAGE.LOGIN_NAME) || ''
+const LOGIN_NAME = localStorage.getItem(LOCAL_STORAGE.LOGIN_NAME) || ''
 
 const captchaUrl = config.http.baseURL + '/captcha?code='
 

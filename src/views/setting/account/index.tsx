@@ -5,7 +5,7 @@ import React, { useEffect } from 'react'
 import md5 from 'blueimp-md5'
 import { connect } from 'react-redux'
 import { StoreState } from '@/store'
-import { UserInfoProps } from '@/store/reducers/user'
+import type { UserInfoProps } from '@/store/reducers/user'
 import { serviceUpdateUser, serviceGetUserConfig, serviceUpdateUserConfig } from '@/services'
 import { Form, Input, Button, Divider } from 'antd'
 
@@ -85,7 +85,7 @@ const AccountPage: React.FC<Props> = function ({ userInfo }) {
 
       <Divider orientation="left" plain>Server酱配置</Divider>
 
-      <Form layout="vertical" form={form2} style={{ width: '300px' }}>
+      <Form layout="vertical" form={form2} style={{ width: 300 }}>
         <Form.Item
           label="SCKEY"
           name="sckey"
@@ -96,9 +96,9 @@ const AccountPage: React.FC<Props> = function ({ userInfo }) {
             }
           ]}
         >
-          <Input maxLength={100} />
+          <Input.Password maxLength={100} />
         </Form.Item>
-        <div style={{ textAlign: 'right', marginTop: '5px' }}>
+        <div style={{ textAlign: 'right', marginTop: 5 }}>
           <a href="http://sc.ftqq.com" target="_blank" rel="noopener noreferrer">如何获取？</a>
         </div>
         <Form.Item>

@@ -17,14 +17,14 @@ export interface HomeMainState {
   setCollapsed?: () => void
 }
 
-const storageCollapsed = Number(window.localStorage.getItem(SIDEBAR_COLLAPSED) || true)
+const storageCollapsed = Number(localStorage.getItem(SIDEBAR_COLLAPSED) || true)
 
 const HomeMainPage: React.FC = function () {
   const [collapsed, setCollapsed] = useState(!storageCollapsed)
 
   function handleToggleCollapsed() {
     setCollapsed(!collapsed)
-    window.localStorage.setItem(
+    localStorage.setItem(
       SIDEBAR_COLLAPSED,
       Number(collapsed) + ''
     )

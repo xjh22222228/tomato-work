@@ -37,20 +37,20 @@ export function logout() {
 
   setTimeout(() => {
     const localStorageWhiteList = [LOCAL_STORAGE.LOGIN_NAME]
-    const localStorageLen = window.localStorage.length
+    const localStorageLen = localStorage.length
     const allLocalStorageKey: string[] = []
 
     for (let i = 0; i < localStorageLen; i++) {
-      const key = window.localStorage.key(i) as string
+      const key = localStorage.key(i) as string
       allLocalStorageKey.push(key)
     }
 
     allLocalStorageKey.forEach(keyName => {
       if (localStorageWhiteList.indexOf(keyName) === -1) {
-        window.localStorage.removeItem(keyName)
+        localStorage.removeItem(keyName)
       }
     })
-    window.sessionStorage.clear()
-    window.location.reload()
+    sessionStorage.clear()
+    location.reload()
   })
 }

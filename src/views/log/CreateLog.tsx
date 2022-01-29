@@ -13,7 +13,7 @@ import { LOCAL_STORAGE } from '@/constants'
 const { TextArea } = Input
 const { Option } = Select
 
-const DEF_COMPANY_ID = window.localStorage.getItem(
+const DEF_COMPANY_ID = localStorage.getItem(
   LOCAL_STORAGE.COMPANY_ID
 ) || '-1'
 
@@ -48,7 +48,7 @@ const CreateLogPage: React.FC = function() {
       }
 
       setLoading(true)
-      window.localStorage.setItem(LOCAL_STORAGE.COMPANY_ID, params.companyId)
+      localStorage.setItem(LOCAL_STORAGE.COMPANY_ID, params.companyId)
       const httpService = isEdit ? serviceUpdateLog : serviceCreateLog
 
       httpService(params).then(() => {

@@ -63,6 +63,7 @@ yarn
 # serve with hot reload at localhost:7000
 # user: test, password: 123456
 yarn start
+yarn start:prod # Connect to production environment
 
 # build for production with minification
 yarn build

@@ -6,11 +6,9 @@ import config from '@/config'
 import { Layout, Badge, Popover, Empty } from 'antd'
 import { Link } from 'react-router-dom'
 import { HomeMainState } from '@/views/main/index'
-import { useSelector } from 'react-redux'
-import { StoreState } from '@/store'
-import { logout } from '@/store/actions/user'
+import { useAppSelector } from '@/hooks'
 import { serviceGetInnerMessage } from '@/services'
-import { fullscreen, exitFullscreen } from '@/utils'
+import { fullscreen, exitFullscreen, logout } from '@/utils'
 import {
   PoweroffOutlined,
   MenuUnfoldOutlined,
@@ -50,7 +48,7 @@ const HomeHeader: React.FC<Props> = function ({
   const [messageList, setMessageList] = useState([])
   const [unReadCount, setUnReadCount] = useState(0)
   const [isFullscreen, setIsFullscreen] = useState(false)
-  const { userInfo } = useSelector((state: StoreState) => state.user)
+  const { userInfo } = useAppSelector(state => state.user)
 
   useEffect(() => {
     serviceGetInnerMessage({ pageSize: 5 })

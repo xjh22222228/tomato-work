@@ -3,19 +3,14 @@
  */
 import React, { useEffect } from 'react'
 import md5 from 'blueimp-md5'
-import { connect } from 'react-redux'
-import { StoreState } from '@/store'
-import type { UserInfoProps } from '@/store/reducers/user'
 import { serviceUpdateUser, serviceGetUserConfig, serviceUpdateUserConfig } from '@/services'
 import { Form, Input, Button, Divider } from 'antd'
+import { useAppSelector } from '@/hooks'
 
-type Props = {
-  userInfo: UserInfoProps
-}
-
-const AccountPage: React.FC<Props> = function ({ userInfo }) {
+const AccountPage: React.FC = function () {
   const [form] = Form.useForm()
   const [form2] = Form.useForm()
+  const userInfo = useAppSelector(state => state.user.userInfo)
 
   async function handleUpdateUser() {
     try {
@@ -109,8 +104,4 @@ const AccountPage: React.FC<Props> = function ({ userInfo }) {
   )
 }
 
-const mapStateToProps = ({ user }: StoreState): { userInfo: UserInfoProps } => {
-  return { userInfo: user.userInfo }
-}
-
-export default connect(mapStateToProps)(AccountPage)
+export default AccountPage

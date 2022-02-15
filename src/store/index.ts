@@ -1,22 +1,18 @@
-/**
- * @file Store main entry.
- * @since 1.0.0
- * @author xiejiahe <xjh22222228@gmail.com>
- */
-import thunk from 'redux-thunk'
-import rootReducer from './reducers'
-import { createStore, applyMiddleware } from 'redux'
-import { UserState } from './reducers/user'
-import { SystemState } from './reducers/system'
+// Copyright 2018-present the xiejiahe. All rights reserved. MIT license.
+import { configureStore } from '@reduxjs/toolkit'
+import userReducer from './userSlice'
+import systemReducer from './systemSlice'
 
-export interface StoreState {
-  user: UserState
-  system: SystemState
-}
-
-const store = createStore(
-  rootReducer,
-  applyMiddleware(thunk)
-)
+const store = configureStore({
+  reducer: {
+    user: userReducer,
+    system: systemReducer
+  },
+})
 
 export default store
+
+export type IStore = typeof store
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
+export type GetState = () => RootState

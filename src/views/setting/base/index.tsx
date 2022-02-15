@@ -6,17 +6,12 @@ import './style.scss'
 import Avatar from '@/components/avatar'
 import userPoster from '@/assets/img/common/user-poster.png'
 import { Card, Divider } from 'antd'
-import { connect } from 'react-redux'
-import { StoreState } from '@/store'
-import { UserInfoProps } from '@/store/reducers/user'
+import { useAppSelector } from '@/hooks'
 
 const { Meta } = Card
 
-type Props = {
-  userInfo: UserInfoProps
-}
-
-const BasePage: React.FC<Props> = function ({ userInfo }) {
+const BasePage: React.FC = function () {
+  const userInfo = useAppSelector(state => state.user.userInfo)
 
   const MetaDesc = (
     <div className="meta-desc">
@@ -33,7 +28,7 @@ const BasePage: React.FC<Props> = function ({ userInfo }) {
     <div className="setting-base">
       <Divider orientation="left" plain>个人中心</Divider>
       <Card
-        style={{ width: 350 }}
+        style={{ width: 370 }}
         cover={
           <img
             alt=""
@@ -52,8 +47,4 @@ const BasePage: React.FC<Props> = function ({ userInfo }) {
   )
 }
 
-const mapStateToProps = ({ user }: StoreState): { userInfo: UserInfoProps } => {
-  return { userInfo: user.userInfo }
-}
-
-export default connect(mapStateToProps)(BasePage)
+export default BasePage

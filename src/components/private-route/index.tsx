@@ -2,8 +2,7 @@ import React from 'react'
 import CONFIG from '@/config'
 import qs from 'query-string'
 import { useLocation, Navigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { StoreState } from '@/store/index'
+import { useAppSelector } from '@/hooks'
 
 type Props = {
   element: React.FC|React.ComponentClass
@@ -18,7 +17,7 @@ const PrivateRoute: React.FC<Props> = function ({
   ...rest
 }) {
   const { pathname, search } = useLocation()
-  const { isLogin } = useSelector((state: StoreState) => state.user)
+  const { isLogin } = useAppSelector(state => state.user)
   const isLoginPage = pathname === '/' || pathname === '/login'
 
   React.useEffect(() => {

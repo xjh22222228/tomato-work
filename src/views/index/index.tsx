@@ -3,19 +3,14 @@ import './style.scss'
 import PenelGroup from './PenelGroup'
 import SystemInfo from './SystemInfo'
 import MoneyAccessChart from './AmountChart'
-import { DispatchProp, connect } from 'react-redux'
-import { ThunkDispatch } from 'redux-thunk'
-import { AnyAction } from 'redux'
-import { getSystemInfo } from '@/store/actions'
-import { StoreState } from '@/store'
+import { getSystemInfo } from '@/store/systemSlice'
+import { useAppSelector, useAppDispatch } from '@/hooks'
 
-const mapStateToProps = ({ system }: StoreState) => ({ system })
 
-type ThunkDispatchProps = ThunkDispatch<{}, {}, AnyAction>
+const HomeIndexPage: React.FC = function () {
+  const systemInfo = useAppSelector(state => state.system.info)
+  const dispatch = useAppDispatch()
 
-type Props = DispatchProp & ReturnType<typeof mapStateToProps> & { dispatch: ThunkDispatchProps }
-
-const HomeIndexPage: React.FC<Props> = function ({ system, dispatch }) {
   useEffect(() => {
     dispatch(getSystemInfo())
   }, [])
@@ -23,10 +18,10 @@ const HomeIndexPage: React.FC<Props> = function ({ system, dispatch }) {
   return (
     <div className="home-index oya">
       <PenelGroup />
-      <SystemInfo systemInfo={system.info} />
+      <SystemInfo systemInfo={systemInfo} />
       <MoneyAccessChart />
     </div>
   )
 }
 
-export default connect(mapStateToProps)(HomeIndexPage)
+export default HomeIndexPage

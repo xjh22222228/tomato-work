@@ -1,9 +1,10 @@
-// Copyright 2018-2022 the xiejiahe. All rights reserved. MIT license.
-import { USER } from '../constants'
+// Copyright 2018-present the xiejiahe. All rights reserved. MIT license.
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { LOCAL_STORAGE } from '@/constants'
 import { isPlainObject } from 'lodash'
-
-const { LOGIN } = USER
+import { serviceLoginByToken } from '@/services'
+import type { AppDispatch } from '.'
+import { formatDate } from '@/utils'
 
 export interface UserInfoProps {
   provider: string
@@ -53,22 +54,30 @@ const initialState: UserState = {
   }
 }
 
-function user(state = initialState, action: any): UserState {
-  switch (action.type) {
-    case LOGIN:
-      const userInfo = action.userInfo
-      if (userInfo?.token) {
+export const userSlice = createSlice({
+  name: 'user',
+  initialState,
+  reducers: {
+    SET_USER_INFO: (state, action: PayloadAction<UserInfoProps>) => {
+      const userInfo = action.payload
+      userInfo.createdAt &&= formatDate(userInfo.createdAt)
+      if (userInfo.token) {
         state.isLogin = true
         localStorage.setItem(LOCAL_STORAGE.USER, JSON.stringify(userInfo))
         localStorage.setItem(LOCAL_STORAGE.LOGIN_NAME, userInfo.loginName)
       }
-      return {
-        ...state,
-        userInfo: action.userInfo
-      }
-    default:
-      return state
+      state.userInfo = userInfo
+    }
   }
+})
+
+export const { SET_USER_INFO } = userSlice.actions
+
+export const loginByToken = (token: string) => (dispatch: AppDispatch) => {
+  return serviceLoginByToken(token).then(res => {
+    const userInfo = res.userInfo
+    return dispatch(SET_USER_INFO(userInfo))
+  })
 }
 
-export default user
+export default userSlice.reducer

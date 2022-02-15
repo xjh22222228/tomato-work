@@ -9,11 +9,11 @@ import classNames from 'classnames'
 import { isEmpty } from 'lodash'
 import { Button, Input, message, Popover, Form } from 'antd'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { loginByToken, setUser } from '@/store/actions'
+import { loginByToken, SET_USER_INFO } from '@/store/userSlice'
 import { serviceLogin } from '@/services'
 import { LOCAL_STORAGE } from '@/constants'
 import { randomCode } from '@/utils'
+import { useAppDispatch } from '@/hooks'
 import logo from '@/assets/img/common/logo.png'
 import {
   PictureOutlined,
@@ -44,7 +44,7 @@ function reloadCaptcha(e: any) {
 export default function () {
   const navigate = useNavigate()
   const location = useLocation()
-  const dispatch = useDispatch<any>()
+  const dispatch = useAppDispatch()
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(false)
 
@@ -65,7 +65,7 @@ export default function () {
       })
         .then(res => {
           setLoading(false)
-          dispatch(setUser(res.userInfo))
+          dispatch(SET_USER_INFO(res.userInfo))
           navigate(redirectUrl, { replace: true })
         })
         .catch(() => {

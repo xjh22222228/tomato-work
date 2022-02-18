@@ -5,10 +5,11 @@ import { LeftOutlined } from '@ant-design/icons'
 import { useNavigate, useParams } from 'react-router-dom'
 import { LOG_LIST } from './constants'
 import { Form, Input, Button, Select } from 'antd'
-import { serviceGetAllCompany } from '@/services'
 import { filterOption } from '@/utils'
 import { serviceCreateLog, serviceUpdateLog, serviceGetLogById } from '@/services/log'
 import { LOCAL_STORAGE } from '@/constants'
+import { getAllCompany } from '@/store/companySlice'
+import { useAppDispatch, useAppSelector } from '@/hooks'
 
 const { TextArea } = Input
 const { Option } = Select
@@ -25,9 +26,16 @@ const CreateLogPage: React.FC = function() {
   const isEdit = !!id
 
   const [typeRecord, setTypeRecord] = useState<Record<string, any>>({})
-  const [companyAll, setCompanyAll] = useState<Record<string, any>[]>([])
+  const companyAll = useAppSelector(state => ([
+    {
+      companyName: '无',
+      id: '-1'
+    },
+    ...state.company.companyAll
+  ]))
   const [loading, setLoading] = useState(false)
   const [detail, setDetail] = useState<Record<string, any>>({})
+  const dispatch = useAppDispatch()
   const type = params.type || detail.logType
 
   function goBack() {
@@ -88,14 +96,7 @@ const CreateLogPage: React.FC = function() {
   }, [type])
 
   useEffect(() => {
-    serviceGetAllCompany().then(res => {
-      const rows = res.rows
-      rows.unshift({
-        companyName: '无',
-        id: '-1'
-      })
-      setCompanyAll(rows)
-    })
+    dispatch(getAllCompany())
   }, [])
 
   return (

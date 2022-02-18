@@ -2,11 +2,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import userReducer from './userSlice'
 import systemReducer from './systemSlice'
+import companyReducer from './companySlice'
 
 const store = configureStore({
   reducer: {
     user: userReducer,
-    system: systemReducer
+    system: systemReducer,
+    company: companyReducer
   },
 })
 

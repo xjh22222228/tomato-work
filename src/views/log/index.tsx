@@ -5,7 +5,6 @@ import React, { useEffect, useRef } from 'react'
 import useKeepState from 'use-keep-state'
 import Table from '@/components/table'
 import DetailDrawer from './DetailDrawer'
-import { serviceGetAllCompany } from '@/services'
 import {
   serviceDeleteLog,
   serviceGetLogList
@@ -16,6 +15,8 @@ import { DownOutlined } from '@ant-design/icons'
 import { MenuInfo } from 'antd/node_modules/rc-menu/lib/interface'
 import { LOG_LIST } from './constants'
 import { useNavigate, Link } from 'react-router-dom'
+import { getAllCompany } from '@/store/companySlice'
+import { useAppDispatch, useAppSelector } from '@/hooks'
 
 const { RangePicker } = DatePicker
 const { Option } = Select
@@ -37,6 +38,14 @@ const LogPage = () => {
   const [form] = Form.useForm()
   const [state, setState] = useKeepState(initState)
   const tableRef = useRef<any>()
+  const dispatch = useAppDispatch()
+  const companyAll = useAppSelector(state => ([
+    {
+      companyName: '全部',
+      id: '-1'
+    },
+    ...state.company.companyAll
+  ]))
 
   const tableColumns = [
     {
@@ -118,15 +127,7 @@ const LogPage = () => {
 
   useEffect(() => {
     initParams()
-
-    serviceGetAllCompany().then(res => {
-      const rows = res.rows
-      rows.unshift({
-        companyName: '全部',
-        id: '-1'
-      })
-      setState({ companyAll: rows })
-    })
+    dispatch(getAllCompany())
   }, [])
 
   function handleClickMenu({ key }: MenuInfo) {
@@ -162,7 +163,7 @@ const LogPage = () => {
             <div className="flex">
               <Form.Item name="company" label="所属单位" initialValue="-1">
                 <Select style={{ width: 200 }} showSearch filterOption={filterOption}>
-                  {state.companyAll.map((item: Record<string, any>) => (
+                  {companyAll.map((item: Record<string, any>) => (
                     <Option key={item.id} value={item.id}>{item.companyName}</Option>
                   ))}
                 </Select>

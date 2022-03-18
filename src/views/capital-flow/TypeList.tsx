@@ -45,6 +45,7 @@ const Type = () => {
   ]
 
   function getCapitalFlowType() {
+    setState({ loading: true })
     serviceGetCapitalFlowType()
       .then(res => {
         const handleData = res.map((item: any) => {
@@ -54,6 +55,9 @@ const Type = () => {
           return item
         })
         setState({ data: handleData })
+      })
+      .finally(() => {
+        setState({ loading: false })
       })
   }
 

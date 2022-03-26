@@ -73,7 +73,7 @@ const CreateLogPage: React.FC = function() {
   useEffect(() => {
     if (isEdit) {
       serviceGetLogById(id).then(res => {
-        setDetail(detail)
+        setDetail(res)
         form.setFieldsValue({
           companyId: res.companyId,
           doneContent: res.doneContent,

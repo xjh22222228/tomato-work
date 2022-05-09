@@ -144,9 +144,11 @@ const CapitalFlowPage: React.FC = function() {
         ...params,
         keyword: values.keyword,
         typeNameId: values.name,
-        type: values.type,
-        startDate: values.date[0].format(FORMAT_DATE),
-        endDate: values.date[1].format(FORMAT_DATE)
+        type: values.type
+      }
+      if (Array.isArray(values.date) && values.date.length > 1) {
+        params.startDate = values.date[0].format(FORMAT_DATE)
+        params.endDate = values.date[1].format(FORMAT_DATE)
       }
 
       if (state.sortedInfo?.order) {

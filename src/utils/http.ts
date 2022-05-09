@@ -34,6 +34,7 @@ const httpInstance: IAxiosInstance & AxiosInstance = axios.create({
   timeout: 60000,
   baseURL: CONFIG.http.baseURL
 })
+console.log(`HTTP BASE URL: ${CONFIG.http.baseURL}`)
 
 httpInstance.defaults.headers.common.isLoading = 'true'
 httpInstance.defaults.headers.common.errorAlert = 'true'

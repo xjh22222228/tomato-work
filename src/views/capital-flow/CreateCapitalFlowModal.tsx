@@ -75,13 +75,19 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
   }
 
   useEffect(() => {
-    if (visible && rowData) {
-      form.setFieldsValue({
-        date: moment(rowData.createdAt),
-        remark: rowData.remark,
-        typeId: rowData.typeId,
-        amount: rowData.price,
-      })
+    if (visible) {
+      if (rowData) {
+        form.setFieldsValue({
+          date: moment(rowData.createdAt),
+          remark: rowData.remark,
+          typeId: rowData.typeId,
+          amount: rowData.price,
+        })
+      } else {
+        form.setFieldsValue({
+          date: moment()
+        })
+      }
     }
   }, [visible, rowData])
 

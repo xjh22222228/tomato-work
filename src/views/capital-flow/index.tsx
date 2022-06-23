@@ -18,7 +18,7 @@ import { filterOption, FORMAT_DATE, FORMAT_DATE_MINUTE, isToDay } from '@/utils'
 
 const { Search } = Input
 const { RangePicker } = DatePicker
-const Option = Select.Option
+const { Option, OptGroup } = Select
 
 enum FilterType {
   Today = 1,
@@ -32,7 +32,9 @@ enum FilterType {
 interface State {
   showCreateCapitalFlowModal: boolean
   currentRow: null | { [key: string]: any }
-  nameList: any[]
+  amountTypes: any[]
+  enterTypes: any[]
+  outTypes: any[]
   price: {
     consumption: number
     income: number
@@ -45,7 +47,9 @@ interface State {
 const initialState: State = {
   showCreateCapitalFlowModal: false,
   currentRow: null,
-  nameList: [],
+  amountTypes: [],
+  enterTypes: [],
+  outTypes: [],
   price: {
     consumption: 0,
     income: 0,
@@ -184,13 +188,19 @@ const CapitalFlowPage: React.FC = function() {
   function getCapitalFlowType() {
     serviceGetCapitalFlowType()
       .then(res => {
-        const data = res
+        const amountTypes = res
           .map((item: any) => {
             item.optionName = `${TypeNames[item.type]} - ${item.name}`
             return item
           })
           .sort((a: any, b: any) => a.type - b.type)
-        setState({ nameList: data })
+        const enterTypes = amountTypes.filter((item: any) => item.type === 1)
+        const outTypes = amountTypes.filter((item: any) => item.type === 2)
+        setState({
+          amountTypes,
+          enterTypes,
+          outTypes
+        })
       })
   }
 
@@ -329,9 +339,16 @@ const CapitalFlowPage: React.FC = function() {
               filterOption={filterOption}
             >
               <Option value="">全部</Option>
-              {state.nameList.map((item: any) => (
-                <Option value={item.id} key={item.id}>{item.name}</Option>
-              ))}
+              <OptGroup label="收入">
+                {state.enterTypes.map((item: any) => (
+                  <Option value={item.id} key={item.id}>{item.name}</Option>
+                ))}
+              </OptGroup>
+              <OptGroup label="支出">
+                {state.outTypes.map((item: any) => (
+                  <Option value={item.id} key={item.id}>{item.name}</Option>
+                ))}
+              </OptGroup>
             </Select>
           </Form.Item>
 
@@ -420,7 +437,7 @@ const CapitalFlowPage: React.FC = function() {
       <CreateCapitalFlowModal
         visible={state.showCreateCapitalFlowModal}
         rowData={state.currentRow}
-        nameList={state.nameList}
+        amountTypes={state.amountTypes}
         onCancel={() => setState({ showCreateCapitalFlowModal: false })}
         onSuccess={handleModalOnSuccess}
       />

@@ -25,7 +25,7 @@ type Props = {
   onCancel: () => void
   onSuccess: (res?: any) => void
   rowData?: Record<string, any>
-  nameList: any[]
+  amountTypes: any[]
 }
 
 interface State {
@@ -41,7 +41,7 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
   onCancel,
   onSuccess,
   rowData,
-  nameList
+  amountTypes
 }) {
   const [form] = Form.useForm()
   const [state, setState] = useKeepState(initialState)
@@ -132,7 +132,7 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
             showSearch
             filterOption={filterOption}
           >
-            {nameList.map((item: any) => (
+            {amountTypes.map((item: any) => (
               <Option value={item.id} key={item.id}>{item.optionName}</Option>
             ))}
           </Select>

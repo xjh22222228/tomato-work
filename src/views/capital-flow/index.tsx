@@ -6,7 +6,7 @@ import './style.scss'
 import moment from 'moment'
 import useKeepState from 'use-keep-state'
 import Table from '@/components/table'
-import CreateCapitalFlowModal from './CreateCapitalFlowModal'
+import CreateAmountModal from './CreateAmountModal'
 import { DatePicker, Button, Select, Statistic, Input, Form, Popconfirm } from 'antd'
 import {
   serviceGetCapitalFlow,
@@ -30,7 +30,7 @@ enum FilterType {
 }
 
 interface State {
-  showCreateCapitalFlowModal: boolean
+  showCreateAmountModal: boolean
   currentRow: null | { [key: string]: any }
   amountTypes: any[]
   enterTypes: any[]
@@ -45,7 +45,7 @@ interface State {
 }
 
 const initialState: State = {
-  showCreateCapitalFlowModal: false,
+  showCreateAmountModal: false,
   currentRow: null,
   amountTypes: [],
   enterTypes: [],
@@ -207,7 +207,7 @@ const CapitalFlowPage: React.FC = function() {
   function handleActionButton(type: number, row: any) {
     // 编辑
     if (type === 0) {
-      setState({ showCreateCapitalFlowModal: true, currentRow: row })
+      setState({ showCreateAmountModal: true, currentRow: row })
     } else {
       serviceDeleteCapitalFlow(row.id).then(() => {
         tableRef.current.getTableData()
@@ -309,7 +309,7 @@ const CapitalFlowPage: React.FC = function() {
   }
 
   function handleModalOnSuccess() {
-    setState({ showCreateCapitalFlowModal: false })
+    setState({ showCreateAmountModal: false })
     tableRef.current.getTableData()
   }
 
@@ -431,14 +431,15 @@ const CapitalFlowPage: React.FC = function() {
         columns={tableColumns}
         onTableChange={onTableChange}
         onDelete={serviceDeleteCapitalFlow}
-        onAdd={() => setState({ showCreateCapitalFlowModal: true, currentRow: null })}
+        onAdd={() => setState({ showCreateAmountModal: true, currentRow: null })}
       />
 
-      <CreateCapitalFlowModal
-        visible={state.showCreateCapitalFlowModal}
+      <CreateAmountModal
+        visible={state.showCreateAmountModal}
         rowData={state.currentRow}
-        amountTypes={state.amountTypes}
-        onCancel={() => setState({ showCreateCapitalFlowModal: false })}
+        enterTypes={state.enterTypes}
+        outTypes={state.outTypes}
+        onCancel={() => setState({ showCreateAmountModal: false })}
         onSuccess={handleModalOnSuccess}
       />
     </div>

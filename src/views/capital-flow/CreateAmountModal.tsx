@@ -13,7 +13,7 @@ import useKeepState from 'use-keep-state'
 import { filterOption, FORMAT_DATETIME } from '@/utils'
 
 const { TextArea } = Input
-const { Option } = Select
+const { Option, OptGroup } = Select
 
 const formLayout = {
   labelCol: { span: 4 },
@@ -25,7 +25,8 @@ type Props = {
   onCancel: () => void
   onSuccess: (res?: any) => void
   rowData?: Record<string, any>
-  amountTypes: any[]
+  enterTypes: any[]
+  outTypes: any[]
 }
 
 interface State {
@@ -41,7 +42,8 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
   onCancel,
   onSuccess,
   rowData,
-  amountTypes
+  enterTypes,
+  outTypes
 }) {
   const [form] = Form.useForm()
   const [state, setState] = useKeepState(initialState)
@@ -132,9 +134,16 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
             showSearch
             filterOption={filterOption}
           >
-            {amountTypes.map((item: any) => (
-              <Option value={item.id} key={item.id}>{item.optionName}</Option>
-            ))}
+            <OptGroup label="收入">
+              {enterTypes.map((item: any) => (
+                <Option value={item.id} key={item.id}>{item.name}</Option>
+              ))}
+            </OptGroup>
+            <OptGroup label="支出">
+              {outTypes.map((item: any) => (
+                <Option value={item.id} key={item.id}>{item.name}</Option>
+              ))}
+            </OptGroup>
           </Select>
         </Form.Item>
 

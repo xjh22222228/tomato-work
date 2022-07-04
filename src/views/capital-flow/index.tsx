@@ -29,6 +29,15 @@ enum FilterType {
   NextMonth
 }
 
+const cycleTimes = [
+  { type: FilterType.Today, name: '今天' },
+  { type: FilterType.Yesterday, name: '昨天' },
+  { type: FilterType.LastWeek, name: '最近一周' },
+  { type: FilterType.ThisYear, name: '今年' },
+  { type: FilterType.PrevMonth, name: '上个月' },
+  { type: FilterType.NextMonth, name: '下个月' },
+]
+
 interface State {
   showCreateAmountModal: boolean
   currentRow: null | { [key: string]: any }
@@ -216,8 +225,9 @@ const CapitalFlowPage: React.FC = function() {
   }
 
   // 时间过滤
-  function onFilterDate(type: number) {
-    const [startDate] = form.getFieldValue('date')
+  function onFilterDate(type: FilterType) {
+    const formDate = form.getFieldValue('date')
+    const startDate = formDate ? formDate[0] : new Date()
     const date: moment.Moment[] = [
       moment(moment().format(FORMAT_DATE), FORMAT_DATE),
       moment(moment().format(FORMAT_DATE), FORMAT_DATE)
@@ -391,7 +401,6 @@ const CapitalFlowPage: React.FC = function() {
           form={form}
           layout="inline"
           className="mt10"
-          onValuesChange={() => tableRef?.current?.getTableData()}
         >
           <Form.Item
             label="日期"
@@ -401,12 +410,23 @@ const CapitalFlowPage: React.FC = function() {
             <RangePicker />
           </Form.Item>
 
-          <Button onClick={() => onFilterDate(FilterType.Today)}>今天</Button>
-          <Button onClick={() => onFilterDate(FilterType.Yesterday)}>昨天</Button>
-          <Button onClick={() => onFilterDate(FilterType.LastWeek)}>最近一周</Button>
-          <Button onClick={() => onFilterDate(FilterType.ThisYear)}>今年</Button>
-          <Button onClick={() => onFilterDate(FilterType.PrevMonth)}>上个月</Button>
-          <Button onClick={() => onFilterDate(FilterType.NextMonth)}>下个月</Button>
+          <Form.Item
+            label="时间段"
+            name="cycle"
+            initialValue={null}
+          >
+            <Select
+              className="w150px"
+              showSearch
+              filterOption={filterOption}
+              onSelect={onFilterDate}
+            >
+              <Option value={null}>全部</Option>
+              {cycleTimes.map((item) => (
+                <Option value={item.type} key={item.type}>{item.name}</Option>
+              ))}
+            </Select>
+          </Form.Item>
         </Form>
 
         <div className="poly">

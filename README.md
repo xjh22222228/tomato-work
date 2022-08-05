@@ -51,22 +51,21 @@
 
 ## Build Setup
 - Node.js >= 14
-- 确保已安装 [yarn](https://yarnpkg.com/)
 
 ``` bash
 # Clone
 git clone --depth=1 https://github.com/xjh22222228/tomato-work.git
 
 # install dependencies
-yarn
+npm i
 
 # serve with hot reload at localhost:7000
 # user: test, password: 123456
-yarn start
-yarn start:prod # Connect to production environment
+npm start
+npm run start:prod # Connect to production environment
 
 # build for production with minification
-yarn build
+npm run build
 ```
 
 

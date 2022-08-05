@@ -4,7 +4,12 @@ import { serviceLogout } from '@/services'
 import { LOCAL_STORAGE } from '@/constants'
 
 export function filterOption(input: string, option: any): boolean {
-  return option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+  if (Array.isArray(option.options)) {
+    return option.options
+      .some((item: any) => item.children.toLowerCase().indexOf(input.toLowerCase()) >= 0)
+  } else {
+    return option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+  }
 }
 
 export function sleep(delay?: number) {

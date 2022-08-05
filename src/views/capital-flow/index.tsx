@@ -228,12 +228,16 @@ const CapitalFlowPage: React.FC = function() {
   function onFilterDate(type: FilterType) {
     const formDate = form.getFieldValue('date')
     const startDate = formDate ? formDate[0] : new Date()
-    const date: moment.Moment[] = [
-      moment(moment().format(FORMAT_DATE), FORMAT_DATE),
-      moment(moment().format(FORMAT_DATE), FORMAT_DATE)
-    ]
+    let date: moment.Moment[] = []
 
     switch (type) {
+      case FilterType.Today:
+        date = [
+          moment(moment().format(FORMAT_DATE), FORMAT_DATE),
+          moment(moment().format(FORMAT_DATE), FORMAT_DATE)
+        ]
+        break
+
       case FilterType.Yesterday:
         const prevDay = moment(
           moment()
@@ -302,6 +306,9 @@ const CapitalFlowPage: React.FC = function() {
           FORMAT_DATE
         )
         break
+
+      default:
+        date = []
     }
 
     form.setFieldsValue({ date })
@@ -392,9 +399,6 @@ const CapitalFlowPage: React.FC = function() {
               style={{ width: 260 }}
             />
           </Form.Item>
-
-          <Button type="primary" onClick={tableRef.current?.getTableData}>查询</Button>
-          <Button onClick={() => initParams()}>重置</Button>
         </Form>
 
         <Form
@@ -417,8 +421,6 @@ const CapitalFlowPage: React.FC = function() {
           >
             <Select
               className="w150px"
-              showSearch
-              filterOption={filterOption}
               onSelect={onFilterDate}
             >
               <Option value={null}>全部</Option>
@@ -427,6 +429,9 @@ const CapitalFlowPage: React.FC = function() {
               ))}
             </Select>
           </Form.Item>
+
+          <Button type="primary" onClick={tableRef.current?.getTableData}>查询</Button>
+          <Button onClick={() => initParams()}>重置</Button>
         </Form>
 
         <div className="poly">

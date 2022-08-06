@@ -15,13 +15,13 @@
 import React, { FC, useEffect } from 'react'
 import './style.scss'
 import { Table } from 'antd'
-import { TableProps } from 'rc-table/lib/Table'
+import type { TableProps } from 'antd'
 import { AxiosPromise } from 'axios'
 import useKeepState from 'use-keep-state'
 import Toolbar from './Toolbar'
 import useDebounceFn from '@/hooks/useDebounceFn'
 
-interface Props extends TableProps {
+interface Props extends TableProps<any> {
   getTableData: (data: any) => Promise<Record<string, any>>
   onTableChange?: (pagination: any, filters: any, sorter: any) => void
   onDelete?: (id: string) => AxiosPromise

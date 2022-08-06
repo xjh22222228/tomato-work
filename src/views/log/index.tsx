@@ -12,7 +12,6 @@ import {
 import { DatePicker, Button, Select, Form, Popconfirm, Dropdown, Menu } from 'antd'
 import { FORMAT_DATE, filterOption } from '@/utils'
 import { DownOutlined } from '@ant-design/icons'
-import { MenuInfo } from 'antd/node_modules/rc-menu/lib/interface'
 import { LOG_LIST } from './constants'
 import { useNavigate, Link } from 'react-router-dom'
 import { getAllCompany } from '@/store/companySlice'
@@ -130,7 +129,7 @@ const LogPage = () => {
     dispatch(getAllCompany())
   }, [])
 
-  function handleClickMenu({ key }: MenuInfo) {
+  function handleClickMenu({ key }: any) {
     navigate(`/home/log/create/${key}`)
   }
 

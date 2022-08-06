@@ -141,7 +141,9 @@ const CapitalFlowPage: React.FC = function() {
     form.setFieldsValue({
       keyword: '',
       name: '',
-      date: [startDate, endDate]
+      type: '',
+      date: [startDate, endDate],
+      cycle: null,
     })
 
     if (isGetData !== false) {

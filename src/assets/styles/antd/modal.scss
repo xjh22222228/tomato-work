@@ -1,9 +1,6 @@
 .ant-modal-wrap {
   
   .ant-form-item {
-    display: flex;
-    margin-right: 0;
-
     &:not(:nth-last-child(1)) {
       margin-bottom: 10px;
     }

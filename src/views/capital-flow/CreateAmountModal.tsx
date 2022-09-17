@@ -6,11 +6,15 @@ import {
   Input,
   DatePicker,
   Select,
-  InputNumber
+  InputNumber,
+  Upload
 } from 'antd'
-import { serviceCreateCapitalFlow, serviceUpdateCapitalFlow } from '@/services'
+import type { UploadFile } from 'antd'
+import { PlusOutlined } from '@ant-design/icons'
+import { serviceCreateCapitalFlow, serviceUpdateCapitalFlow, serviceGetAmountById } from '@/services'
 import useKeepState from 'use-keep-state'
-import { filterOption, FORMAT_DATETIME } from '@/utils'
+import { filterOption, FORMAT_DATETIME, base64ToBlob } from '@/utils'
+import { cloneDeep } from 'lodash'
 
 const { TextArea } = Input
 const { Option, OptGroup } = Select
@@ -31,10 +35,12 @@ type Props = {
 
 interface State {
   confirmLoading: boolean
+  fileList: UploadFile[]
 }
 
 const initialState: State = {
   confirmLoading: false,
+  fileList: []
 }
 
 const CreateCapitalFlowModal: React.FC<Props> = function ({
@@ -55,7 +61,12 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
         date: values.date.format(FORMAT_DATETIME),
         remark: values.remark?.trim() ?? '',
         typeId: values.typeId,
-        price: Number(values.amount)
+        price: Number(values.amount),
+        imgs: ''
+      }
+
+      if (state.fileList.length > 0) {
+        params.imgs = state.fileList[0].thumbUrl
       }
 
       setState({ confirmLoading: true });
@@ -76,14 +87,38 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
     }
   }
 
+  function handleChange({ fileList }: any) {
+    fileList = cloneDeep(fileList)
+    if (fileList.length > 0) {
+      fileList[0].status = 'success'
+    }
+    setState({ fileList })
+  }
+
   useEffect(() => {
     if (visible) {
       if (rowData) {
-        form.setFieldsValue({
-          date: moment(rowData.createdAt),
-          remark: rowData.remark,
-          typeId: rowData.typeId,
-          amount: rowData.price,
+        setState({ confirmLoading: true })
+        serviceGetAmountById(rowData.id).then(res => {
+          form.setFieldsValue({
+            date: moment(res.createdAt),
+            remark: res.remark,
+            typeId: res.typeId,
+            amount: res.price,
+          })
+          const state: Record<string, any> = {
+            fileList: [],
+            confirmLoading: false
+          }
+          if (res.imgs) {
+            state.fileList = [{
+              url: res.imgs,
+              thumbUrl: res.imgs,
+              status: 'success',
+              uid: '-1'
+            }]
+          }
+          setState(state)
         })
       } else {
         form.setFieldsValue({
@@ -93,13 +128,33 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
     }
   }, [visible, rowData])
 
+  const uploadButton = (
+    <div>
+      <PlusOutlined />
+      <div style={{ marginTop: 8 }}>上传</div>
+    </div>
+  )
+
+  function requestUpload() {
+    // pass
+  }
+
+  function onPreview(file: UploadFile) {
+    const blob = base64ToBlob(file.thumbUrl as string)
+    const url = URL.createObjectURL(blob)
+    window.open(url)
+    setTimeout(() => {
+      URL.revokeObjectURL(url)
+    })
+  }
+
   return (
     <Modal
       title="新增"
       visible={visible}
       onOk={handleSubmit}
       onCancel={onCancel}
-      confirmLoading={state.confirmLoading}
+      confirmLoading={state.confirmLoading || state.loading}
       destroyOnClose
     >
       <Form form={form} preserve={false} {...formLayout}>
@@ -175,6 +230,21 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
             rows={5}
             maxLength={250}
           />
+        </Form.Item>
+
+        <Form.Item
+          label="附件"
+          name="imgs"
+        >
+          <Upload
+            listType="picture-card"
+            fileList={state.fileList}
+            onChange={handleChange}
+            customRequest={requestUpload}
+            onPreview={onPreview}
+          >
+            {state.fileList.length >= 1 ? null : uploadButton}
+          </Upload>
         </Form.Item>
       </Form>
     </Modal>

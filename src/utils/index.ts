@@ -2,6 +2,7 @@ export * from './helper'
 export * from './date'
 import { serviceLogout } from '@/services'
 import { LOCAL_STORAGE } from '@/constants'
+import type { RcFile } from 'antd/es/upload'
 
 export function filterOption(input: string, option: any): boolean {
   if (Array.isArray(option.options)) {
@@ -37,5 +38,28 @@ export function logout() {
     })
     sessionStorage.clear()
     location.reload()
+  })
+}
+
+export const getBase64 = (file: RcFile): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = () => resolve(reader.result as string)
+    reader.onerror = error => reject(error)
+  })
+
+export function base64ToBlob(base64Data: string) {
+  let arr = base64Data.split(',') as any,
+    fileType = arr[0].match(/:(.*?);/)[1],
+    bstr = atob(arr[1]),
+    l = bstr.length,
+    u8Arr = new Uint8Array(l)
+
+  while (l--) {
+    u8Arr[l] = bstr.charCodeAt(l)
+  }
+  return new Blob([u8Arr], {
+      type: fileType
   })
 }

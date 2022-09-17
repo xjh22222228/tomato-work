@@ -143,7 +143,7 @@ const CapitalFlowPage: React.FC = function() {
       name: '',
       type: '',
       date: [startDate, endDate],
-      cycle: null,
+      cycle: '',
     })
 
     if (isGetData !== false) {
@@ -419,13 +419,13 @@ const CapitalFlowPage: React.FC = function() {
           <Form.Item
             label="时间段"
             name="cycle"
-            initialValue={null}
+            initialValue=""
           >
             <Select
               className="w150px"
               onSelect={onFilterDate}
             >
-              <Option value={null}>全部</Option>
+              <Option value="">全部</Option>
               {cycleTimes.map((item) => (
                 <Option value={item.type} key={item.type}>{item.name}</Option>
               ))}

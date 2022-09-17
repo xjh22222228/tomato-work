@@ -52,3 +52,7 @@ export function serviceGetCapitalFlowAmount(params?: object) {
 export function serviceGetCapitalFlowAmountGroup(params: object) {
   return http.get('/capitalFlow/amount/group', { params })
 }
+
+export function serviceGetAmountById(id: string) {
+  return http.get(`/capitalFlow/${id}`)
+}

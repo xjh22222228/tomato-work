@@ -97,6 +97,7 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
 
   useEffect(() => {
     if (visible) {
+      setState({ fileLst: [] })
       if (rowData) {
         setState({ confirmLoading: true })
         serviceGetAmountById(rowData.id).then(res => {

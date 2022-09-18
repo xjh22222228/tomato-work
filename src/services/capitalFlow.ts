@@ -46,7 +46,7 @@ export function serviceCreateCapitalFlow(data: object) {
 }
 
 export function serviceGetCapitalFlowAmount(params?: object) {
-  return http.get('/capitalFlow/amount', { params })
+  return http.get('/capitalFlow/amount/statistics', { params })
 }
 
 export function serviceGetCapitalFlowAmountGroup(params: object) {

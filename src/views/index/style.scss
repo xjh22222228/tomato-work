@@ -129,18 +129,14 @@
     }
   }
 
-  .ant-empty {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -60%);
-  }
-
   .date-picker {
     margin-left: 20px;
   }
 
   .no-data {
     height: 399px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }

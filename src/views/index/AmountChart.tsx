@@ -9,6 +9,7 @@ import {
   Bar
 } from 'recharts'
 import { formatDate, FORMAT_DATE, DATE_WEEK } from '@/utils'
+import moment from 'moment'
 
 type DataProp = {
   date: string
@@ -26,6 +27,7 @@ const { RangePicker } = DatePicker
 
 const AmountChart = () => {
   const [data, setData] = useState<DataProp[]>([])
+  const [date, setDate] = useState<any>(DATE_WEEK)
   const [group, setGroup] = useState<GroupProp[]>([])
   const [totalAmount, setTotalAmount] = useState(0)
 
@@ -34,25 +36,27 @@ const AmountChart = () => {
       ...params
     })
     .then(res => {
-      let price = 0
-      const data: DataProp[] = []
-      res.forEach((item: DataProp, idx: number) => {
-        const date = item.date.slice(5)
-        const amount = Number(item.price)
-        price += amount
+      if (Array.isArray(res)) {
+        let price = 0
+        const data: DataProp[] = []
+        res.forEach((item: DataProp, idx: number) => {
+          const date = item.date.slice(5)
+          const amount = Number(item.price)
+          price += amount
 
-        if (idx % 2 === 0) {
-          data.push({
-            date,
-            '收入': amount
-          })
-        } else {
-          data[data.length - 1]['支出'] = amount
-        }
-      })
+          if (idx % 2 === 0) {
+            data.push({
+              date,
+              '收入': amount
+            })
+          } else {
+            data[data.length - 1]['支出'] = amount
+          }
+        })
 
-      setData(data)
-      setTotalAmount(price)
+        setData(data)
+        setTotalAmount(price)
+      }
     })
 
     serviceGetCapitalFlowAmountGroup({
@@ -70,6 +74,7 @@ const AmountChart = () => {
   }
 
   function handleChangeDate(_: unknown, formatString: [string, string]) {
+    setDate([moment(formatString[0]), moment(formatString[1])])
     getData({
       startDate: formatString[0],
       endDate: formatString[1]
@@ -86,7 +91,7 @@ const AmountChart = () => {
         资金流动
         <RangePicker
           format={FORMAT_DATE}
-          value={DATE_WEEK}
+          value={date}
           onChange={handleChangeDate}
           className="date-picker"
         />
@@ -139,7 +144,7 @@ const AmountChart = () => {
             <Tooltip />
             <Legend />
             <CartesianGrid strokeDasharray="3 3" />
-            <Bar dataKey="amount" fill="#8884d8" />
+            <Bar dataKey="amount" name="金额" fill="#8884d8" />
           </BarChart>
         </ResponsiveContainer>
       )}

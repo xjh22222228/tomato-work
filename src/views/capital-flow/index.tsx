@@ -164,6 +164,8 @@ const CapitalFlowPage: React.FC = function() {
       if (Array.isArray(values.date) && values.date.length > 1) {
         params.startDate = values.date[0].format(FORMAT_DATE)
         params.endDate = values.date[1].format(FORMAT_DATE)
+      } else {
+        form.setFieldsValue({ cycle: '' })
       }
 
       if (state.sortedInfo?.order) {

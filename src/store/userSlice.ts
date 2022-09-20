@@ -59,10 +59,10 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     SET_USER_INFO: (state, action: PayloadAction<UserInfoProps>) => {
-        const userInfo = action.payload;
-        userInfo.createdAt &&= formatDate(userInfo.createdAt);
-        state.isLogin = !!userInfo.token;
-        state.userInfo = userInfo;
+      const userInfo = action.payload
+      userInfo.createdAt &&= formatDate(userInfo.createdAt)
+      state.isLogin = !!userInfo.token
+      state.userInfo = userInfo
     }
   }
 })

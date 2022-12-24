@@ -1,7 +1,7 @@
 /**
  * 日志管理
  */
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useMemo } from 'react'
 import useKeepState from 'use-keep-state'
 import Table from '@/components/table'
 import DetailDrawer from './DetailDrawer'
@@ -10,6 +10,7 @@ import {
   serviceGetLogList
 } from '@/services/log'
 import { DatePicker, Button, Select, Form, Popconfirm, Dropdown, Menu } from 'antd'
+import type { MenuProps } from 'antd'
 import { FORMAT_DATE, filterOption } from '@/utils'
 import { DownOutlined } from '@ant-design/icons'
 import { LOG_LIST } from './constants'
@@ -141,8 +142,17 @@ const LogPage = () => {
     </Menu>
   )
 
+  const items: MenuProps['items'] = useMemo(() => {
+    return LOG_LIST.map(item => (
+      {
+        key: item.key,
+        label: item.name
+      }
+    ))
+  }, [LOG_LIST])
+
   const toolbar = (
-    <Dropdown overlay={menu}>
+    <Dropdown menu={{ items }}>
       <Button type="primary">
         新增
         <DownOutlined />

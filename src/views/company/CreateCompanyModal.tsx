@@ -12,7 +12,7 @@ import {
 } from 'antd'
 import { serviceCreateCompany, serviceUpdateCompany } from '@/services'
 import { formatDate } from '@/utils'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 const { TextArea } = Input
 
@@ -90,7 +90,7 @@ const CreateCompanyModal: React.FC<Props> = function ({
   return (
     <Modal
       title={title}
-      visible={visible}
+      open={visible}
       onOk={handleSubmitForm}
       onCancel={onCancel}
       confirmLoading={state.confirmLoading}
@@ -117,7 +117,7 @@ const CreateCompanyModal: React.FC<Props> = function ({
         <Form.Item
           name="startDate"
           label="入职日期"
-          initialValue={detail.startDate && moment(detail.startDate)}
+          initialValue={detail.startDate && dayjs(detail.startDate)}
           rules={[
             {
               required: true,
@@ -131,7 +131,7 @@ const CreateCompanyModal: React.FC<Props> = function ({
         <Form.Item
           name="endDate"
           label="离职日期"
-          initialValue={detail.endDate && moment(detail.endDate)}
+          initialValue={detail.endDate && dayjs(detail.endDate)}
         >
           <DatePicker className="w100" />
         </Form.Item>
@@ -139,7 +139,7 @@ const CreateCompanyModal: React.FC<Props> = function ({
         <Form.Item
           name="expectLeaveDate"
           label="期望离开"
-          initialValue={detail.expectLeaveDate && moment(detail.expectLeaveDate)}
+          initialValue={detail.expectLeaveDate && dayjs(detail.expectLeaveDate)}
         >
           <DatePicker className="w100" />
         </Form.Item>

@@ -1,26 +1,25 @@
 // Copyright 2018-present the xiejiahe. All rights reserved. MIT license.
 import React from 'react'
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom/client'
 import './assets/styles/global.scss'
-import 'antd/dist/antd.css'
 import AppRoute from './router'
+import 'antd/dist/reset.css'
 import { Provider } from 'react-redux'
 import { ConfigProvider } from 'antd'
-import zh_CN from 'antd/lib/locale-provider/zh_CN'
-import moment from 'moment'
-import 'moment/dist/locale/zh-cn'
+import zhCN from 'antd/locale/zh_CN'
+import dayjs from 'dayjs'
 import store from '@/store'
 
-moment.locale('zh-cn')
+dayjs.locale('zh-cn')
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById("tomato-work-root") as HTMLElement)
+
+root.render(
   // <React.StrictMode>
     <Provider store={store}>
-      <ConfigProvider locale={zh_CN}>
+      <ConfigProvider locale={zhCN}>
         <AppRoute />
       </ConfigProvider>
     </Provider>
   // </React.StrictMode>
-  ,
-  document.getElementById('tomato-work-root')
 )

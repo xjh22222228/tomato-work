@@ -1,4 +1,9 @@
+@import "@/assets/styles/variables.scss";
 .global-footer {
   align-self: center;
   padding: 15px 5px;
+  font-size: 14px;
+  a {
+    color: $theme-color;
+  }
 }

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import './style.scss'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import useKeepState from 'use-keep-state'
 import CreateTypeModal from './CreateTypeModal'
 import { Table, Button, Tag, Popconfirm } from 'antd'
@@ -51,7 +51,7 @@ const Type = () => {
         const handleData = res.map((item: any) => {
           item.typeName = TypeNames[item.type]
           item.color = TypeColors[item.type]
-          item.createdAt = moment(item.createdAt).format(FORMAT_DATE_MINUTE)
+          item.createdAt = dayjs(item.createdAt).format(FORMAT_DATE_MINUTE)
           return item
         })
         setState({ data: handleData })

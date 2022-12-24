@@ -1,6 +1,6 @@
 $bg-color: #304156;
 .sidebar {
-  background: $bg-color;
+  background: $bg-color !important;
   user-select: none;
 
   .ant-menu-dark {

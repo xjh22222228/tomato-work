@@ -1,52 +1,52 @@
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 export const FORMAT_DATETIME = 'YYYY-MM-DD HH:mm:ss'
 export const FORMAT_DATE_MINUTE = 'YYYY-MM-DD HH:mm'
 export const FORMAT_DATE = 'YYYY-MM-DD'
 export const DATE_WEEK: any = [
-  moment().subtract(7, 'day'),
-  moment()
+  dayjs().subtract(7, 'day'),
+  dayjs()
 ]
 export const DATE_YEAR: any = [
-  moment().startOf('year'),
-  moment().endOf('year')
+  dayjs().startOf('year'),
+  dayjs().endOf('year')
 ]
 
 // 判断传入时间是否小于今天时间戳
-export function isBefore(current: moment.MomentInput | null): boolean {
+export function isBefore(current: dayjs.Dayjs | null): boolean {
   const today = new Date().setHours(0, 0, 0, 0)
-  return moment(current).isBefore(today)
+  return dayjs(current).isBefore(today)
 }
 
-export function formatDate(date: moment.MomentInput): string {
-  return moment(date).format(FORMAT_DATE)
+export function formatDate(date: dayjs.Dayjs): string {
+  return dayjs(date).format(FORMAT_DATE)
 }
 
-export function formatDateTime(date: moment.MomentInput): string {
-  return moment(date).format(FORMAT_DATETIME)
+export function formatDateTime(date: dayjs.Dayjs): string {
+  return dayjs(date).format(FORMAT_DATETIME)
 }
 
-export function formatDateMinute(date: moment.MomentInput): string {
-  return moment(date).format(FORMAT_DATE_MINUTE)
+export function formatDateMinute(date: dayjs.Dayjs): string {
+  return dayjs(date).format(FORMAT_DATE_MINUTE)
 }
 
 export function fromNow(
-  startDate: moment.MomentInput,
-  endDate: moment.MomentInput
+  startDate: dayjs.Dayjs,
+  endDate: dayjs.Dayjs
 ): number {
-  const start = moment(startDate).valueOf()
-  const end = moment(endDate || Date.now()).valueOf()
+  const start = dayjs(startDate).valueOf()
+  const end = dayjs(endDate || Date.now()).valueOf()
   const n = end - start
   return Math.ceil(n / (1000 * 60 * 60 * 24))
 }
 
-export function getWeek(date: moment.MomentInput): string {
+export function getWeek(date: dayjs.Dayjs): string {
   const weeks = ['周日', '周一', '周二', '周三', '周四', '周五', '周六',]
-  return weeks[moment(date).day()]
+  return weeks[dayjs(date).day()]
 }
 
-export function isToDay(date: moment.MomentInput): boolean {
-  const m = moment(date)
+export function isToDay(date: dayjs.Dayjs): boolean {
+  const m = dayjs(date)
   const n = new Date()
   return m.year() === n.getFullYear() &&
     m.month() === n.getMonth() &&

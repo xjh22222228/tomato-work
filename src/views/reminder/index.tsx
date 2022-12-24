@@ -3,7 +3,7 @@
  */
 import React, { useEffect, useRef } from 'react'
 import Table from '@/components/table'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import CreateReminder from './CreateReminder'
 import useKeepState from 'use-keep-state'
 import { connect } from 'react-redux'
@@ -77,8 +77,8 @@ const ReminderPage: React.FC<Props> = function({ userInfo }) {
   ]
 
   const initParams = function() {
-    const startDate = moment().startOf('year')
-    const endDate = moment().endOf('year')
+    const startDate = dayjs().startOf('year')
+    const endDate = dayjs().endOf('year')
     form.setFieldsValue({
       queryType: '',
       date: [startDate, endDate]

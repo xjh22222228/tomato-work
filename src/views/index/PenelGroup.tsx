@@ -17,7 +17,7 @@ const PanelGroup = () => {
       title: '今日支出',
       total: '0',
       Icon: <PropertySafetyFilled className="icon" />,
-      suffix: '￥',
+      prefix: '￥',
       path: '/home/capitalFlow'
     },
     {
@@ -63,7 +63,7 @@ const PanelGroup = () => {
           <Link to={item.path} className="block-item">
             {item.Icon}
             <div className="data">
-              <Statistic title={item.title} value={item.total} suffix={item.suffix} />
+              <Statistic title={item.title} value={item.total} prefix={item.prefix} />
             </div>
           </Link>
         </Col>

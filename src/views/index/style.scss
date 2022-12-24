@@ -95,12 +95,21 @@
         font-size: 16px;
         font-weight: bold;
         color: #00000073;
+        text-align: center;
       }
-
+      .ant-statistic-content-prefix {
+        font-size: 18px;
+        font-weight: bold;
+        margin-inline-end: 0;
+      }
+      .ant-statistic-content-value {
+        font-weight: bold;
+        color: #666;
+      }
       .ant-statistic-content-value-int {
         color: #666;
         font-weight: bold;
-        font-size: 20px;
+        font-size: 28px;
       }
     }
   }

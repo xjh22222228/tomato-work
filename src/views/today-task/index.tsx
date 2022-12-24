@@ -8,7 +8,7 @@ import useKeepState from 'use-keep-state'
 import NoData from '@/components/no-data/index'
 import TaskItem from './TaskItem'
 import CreateTaskModal from './CreateTaskModal'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { DatePicker, Button, Tag, Row, Col, Form } from 'antd'
 import { serviceGetTask } from '@/services'
 import { FORMAT_DATE } from '@/utils'
@@ -65,7 +65,7 @@ const TodayTaskPage = () => {
 
   function initParams() {
     form.setFieldsValue({
-      startDate: moment()
+      startDate: dayjs()
     })
     getTask()
   }
@@ -80,9 +80,9 @@ const TodayTaskPage = () => {
   }
 
   function handlePrevDay() {
-    const startDate: moment.Moment = form.getFieldValue('startDate')
+    const startDate: dayjs.Dayjs = form.getFieldValue('startDate')
     form.setFieldsValue({
-      startDate: moment(
+      startDate: dayjs(
         startDate.subtract(1, 'day').format(FORMAT_DATE)
       )
     })
@@ -90,9 +90,9 @@ const TodayTaskPage = () => {
   }
 
   function handleNextDay() {
-    const startDate: moment.Moment = form.getFieldValue('startDate')
+    const startDate: dayjs.Dayjs = form.getFieldValue('startDate')
     form.setFieldsValue({
-      startDate: moment(
+      startDate: dayjs(
         startDate.add(1, 'day').format(FORMAT_DATE)
       )
     })

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import {
   Modal,
   Form,
@@ -102,7 +102,7 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
         setState({ confirmLoading: true })
         serviceGetAmountById(rowData.id).then(res => {
           form.setFieldsValue({
-            date: moment(res.createdAt),
+            date: dayjs(res.createdAt),
             remark: res.remark,
             typeId: res.typeId,
             amount: res.price,
@@ -123,7 +123,7 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
         })
       } else {
         form.setFieldsValue({
-          date: moment()
+          date: dayjs()
         })
       }
     }
@@ -152,7 +152,7 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
   return (
     <Modal
       title="新增"
-      visible={visible}
+      open={visible}
       onOk={handleSubmit}
       onCancel={onCancel}
       confirmLoading={state.confirmLoading || state.loading}

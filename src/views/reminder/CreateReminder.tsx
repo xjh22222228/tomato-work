@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import useKeepState from 'use-keep-state'
 import {
   Modal,
@@ -65,7 +65,7 @@ const CreateReminder: React.FC<Props> = function ({
   useEffect(() => {
     if (visible && rowData) {
       form.setFieldsValue({
-        date: moment(rowData.createdAt),
+        date: dayjs(rowData.createdAt),
         content: rowData.content
       })
     }
@@ -74,7 +74,7 @@ const CreateReminder: React.FC<Props> = function ({
   return (
     <Modal
       title="新增"
-      visible={visible}
+      open={visible}
       onOk={handleSubmitForm}
       onCancel={onCancel}
       confirmLoading={state.confirmLoading}

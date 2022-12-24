@@ -5,10 +5,11 @@
   z-index: 1;
   height: 60px;
   line-height: 60px;
-  padding-left: 20px;
-  padding-right: 20px;
-  background: #fff;
+  padding: 0 20px !important;
+  background: #fff !important;
   box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+  height: 60px !important;
+  overflow: hidden;
 
   .left {
     float: left;
@@ -22,6 +23,7 @@
   .right {
     float: right;
     overflow: hidden;
+    font-size: 14px;
 
     li {
       float: left;

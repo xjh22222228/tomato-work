@@ -69,7 +69,7 @@ const CreateTypeModal: React.FC<Props> = function ({
   return (
     <Modal
       title="新增类别"
-      visible={visible}
+      open={visible}
       onOk={handleSubmitForm}
       onCancel={onCancel}
       confirmLoading={state.confirmLoading}

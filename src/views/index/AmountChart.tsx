@@ -9,7 +9,7 @@ import {
   Bar
 } from 'recharts'
 import { formatDate, FORMAT_DATE, DATE_WEEK } from '@/utils'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 type DataProp = {
   date: string
@@ -74,7 +74,7 @@ const AmountChart = () => {
   }
 
   function handleChangeDate(_: unknown, formatString: [string, string]) {
-    setDate([moment(formatString[0]), moment(formatString[1])])
+    setDate([dayjs(formatString[0]), dayjs(formatString[1])])
     getData({
       startDate: formatString[0],
       endDate: formatString[1]

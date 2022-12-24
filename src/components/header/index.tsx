@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import './style.scss'
 import Avatar from '@/components/avatar'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import config from '@/config'
 import { Layout, Badge, Popover, Empty } from 'antd'
 import { Link } from 'react-router-dom'
@@ -55,7 +55,7 @@ const HomeHeader: React.FC<Props> = function ({
     .then(res => {
       let count = 0
       const data = res.rows.map((item: any) => {
-        item.createdAt = moment(item.createdAt).format('YYYY-MM-DD HH:mm')
+        item.createdAt = dayjs(item.createdAt).format('YYYY-MM-DD HH:mm')
         if (!item.hasRead) {
           count++
         }

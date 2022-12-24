@@ -3,7 +3,7 @@
  */
 import React, { useEffect, useRef } from 'react'
 import './style.scss'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import useKeepState from 'use-keep-state'
 import Table from '@/components/table'
 import CreateAmountModal from './CreateAmountModal'
@@ -135,8 +135,8 @@ const CapitalFlowPage: React.FC = function() {
   ]
 
   function initParams(isGetData?: boolean) {
-    const startDate = moment().startOf('month')
-    const endDate = moment().endOf('month')
+    const startDate = dayjs().startOf('month')
+    const endDate = dayjs().endOf('month')
     setState({ sortedInfo: null })
     form.setFieldsValue({
       keyword: '',
@@ -176,7 +176,7 @@ const CapitalFlowPage: React.FC = function() {
         res.rows = res.rows.map((el: any, idx: number) => {
           const suffix = isToDay(el.createdAt) ? ' 今天' : ''
           el.order = idx + 1
-          el.__createdAt__ = moment(el.createdAt).format(FORMAT_DATE_MINUTE) + suffix
+          el.__createdAt__ = dayjs(el.createdAt).format(FORMAT_DATE_MINUTE) + suffix
           el.__price__ = TYPES[el.type - 1].symbol + el.price
           el.__color__ = TYPES[el.type - 1].color
 
@@ -232,19 +232,19 @@ const CapitalFlowPage: React.FC = function() {
   function onFilterDate(type: FilterType) {
     const formDate = form.getFieldValue('date')
     const startDate = formDate ? formDate[0] : new Date()
-    let date: moment.Moment[] = []
+    let date: dayjs.Dayjs[] = []
 
     switch (type) {
       case FilterType.Today:
         date = [
-          moment(moment().format(FORMAT_DATE), FORMAT_DATE),
-          moment(moment().format(FORMAT_DATE), FORMAT_DATE)
+          dayjs(dayjs().format(FORMAT_DATE), FORMAT_DATE),
+          dayjs(dayjs().format(FORMAT_DATE), FORMAT_DATE)
         ]
         break
 
       case FilterType.Yesterday:
-        const prevDay = moment(
-          moment()
+        const prevDay = dayjs(
+          dayjs()
             .subtract(1, 'days')
             .format(FORMAT_DATE), FORMAT_DATE
         )
@@ -253,25 +253,25 @@ const CapitalFlowPage: React.FC = function() {
         break
 
       case FilterType.LastWeek:
-        date[0] = moment(
-          moment()
+        date[0] = dayjs(
+          dayjs()
             .subtract(7, 'days')
             .format(FORMAT_DATE),
           FORMAT_DATE
         )
-        date[1] = moment(new Date(), FORMAT_DATE)
+        date[1] = dayjs(new Date(), FORMAT_DATE)
         break
 
       case FilterType.PrevMonth:
-        date[0] = moment(
-          moment(startDate)
+        date[0] = dayjs(
+          dayjs(startDate)
             .subtract(1, 'month')
             .startOf('month')
             .format(FORMAT_DATE),
           FORMAT_DATE
         )
-        date[1] = moment(
-          moment(startDate)
+        date[1] = dayjs(
+          dayjs(startDate)
             .subtract(1, 'month')
             .endOf('month')
             .format(FORMAT_DATE),
@@ -280,15 +280,15 @@ const CapitalFlowPage: React.FC = function() {
         break
 
       case FilterType.NextMonth:
-        date[0] = moment(
-          moment(startDate)
+        date[0] = dayjs(
+          dayjs(startDate)
             .add(1, 'month')
             .startOf('month')
             .format(FORMAT_DATE),
           FORMAT_DATE
         )
-        date[1] = moment(
-          moment(startDate)
+        date[1] = dayjs(
+          dayjs(startDate)
             .add(1, 'month')
             .endOf('month')
             .format(FORMAT_DATE),
@@ -297,14 +297,14 @@ const CapitalFlowPage: React.FC = function() {
         break
 
       case FilterType.ThisYear:
-        date[0] = moment(
-          moment(startDate)
+        date[0] = dayjs(
+          dayjs(startDate)
             .startOf('year')
             .format(FORMAT_DATE),
           FORMAT_DATE
         )
-        date[1] = moment(
-          moment(startDate)
+        date[1] = dayjs(
+          dayjs(startDate)
             .endOf('year')
             .format(FORMAT_DATE),
           FORMAT_DATE

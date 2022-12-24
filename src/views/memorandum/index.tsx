@@ -3,7 +3,7 @@
  */
 import React, { useState, useEffect } from 'react'
 import './style.scss'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import NoData from '@/components/no-data/index'
 import { Card, Col, Row, Button, Popconfirm, Spin } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
@@ -43,7 +43,7 @@ const MemorandumPage: React.FC = () => {
     serviceGetMemorandum()
     .then(res => {
       const data = res.map((item: any) => {
-        item.createdAt = moment(item.createdAt).format('YYYY/M/D HH:mm')
+        item.createdAt = dayjs(item.createdAt).format('YYYY/M/D HH:mm')
         item.title = item.title || defaultTitle
         return item
       })

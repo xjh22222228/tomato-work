@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import './style.scss'
 import PenelGroup from './PenelGroup'
 import SystemInfo from './SystemInfo'
-import MoneyAccessChart from './AmountChart'
+import AmountChart from './AmountChart'
 import { getSystemInfo } from '@/store/systemSlice'
 import { useAppSelector, useAppDispatch } from '@/hooks'
 
@@ -19,7 +19,7 @@ const HomeIndexPage: React.FC = function () {
     <div className="home-index oya">
       <PenelGroup />
       <SystemInfo systemInfo={systemInfo} />
-      <MoneyAccessChart />
+      <AmountChart />
     </div>
   )
 }

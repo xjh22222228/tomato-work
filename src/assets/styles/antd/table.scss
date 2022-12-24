@@ -4,9 +4,12 @@
   overflow: hidden;
   background: #fff;
   border: 1px solid #E1E6EB;
+  .ant-table-container {
+    height: 100%;
+    min-height: 100%;
+  }
 
   .ant-spin-nested-loading {
-    
     // loading 设为居中对齐
     & > div > .ant-spin {
       max-height: none;

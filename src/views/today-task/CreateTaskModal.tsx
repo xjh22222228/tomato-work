@@ -56,7 +56,7 @@ const CreateTaskModal: React.FC<Props> = function ({
   return (
     <Modal
       title="新增"
-      visible={visible}
+      open={visible}
       onOk={handleSubmitForm}
       onCancel={onCancel}
       confirmLoading={state.confirmLoading}

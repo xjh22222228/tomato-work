@@ -23,7 +23,7 @@ export function fullscreen() {
       docElm.msRequestFullscreen()
     }
   } catch {
-    message.warn('您所使用的浏览器不支持全屏')
+    message.warning('您所使用的浏览器不支持全屏')
   }
 }
 
@@ -41,7 +41,7 @@ export function exitFullscreen() {
       doc.msExitFullscreen()
     }
   } catch {
-    message.warn('您所使用的浏览器不支持退出全屏, 请按ESC')
+    message.warning('您所使用的浏览器不支持退出全屏, 请按ESC')
   }
 }
 

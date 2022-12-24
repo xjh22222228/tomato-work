@@ -32,7 +32,7 @@ const CreatePage: React.FC = () => {
       title
     }
     if (!params.markdown) {
-      message.warn('实体内容不能为空')
+      message.warning('实体内容不能为空')
       return
     }
 

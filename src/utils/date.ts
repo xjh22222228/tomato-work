@@ -13,26 +13,26 @@ export const DATE_YEAR: any = [
 ]
 
 // 判断传入时间是否小于今天时间戳
-export function isBefore(current: dayjs.Dayjs | null): boolean {
+export function isBefore(current: dayjs.ConfigType): boolean {
   const today = new Date().setHours(0, 0, 0, 0)
   return dayjs(current).isBefore(today)
 }
 
-export function formatDate(date: dayjs.Dayjs): string {
+export function formatDate(date: dayjs.ConfigType): string {
   return dayjs(date).format(FORMAT_DATE)
 }
 
-export function formatDateTime(date: dayjs.Dayjs): string {
+export function formatDateTime(date: dayjs.ConfigType): string {
   return dayjs(date).format(FORMAT_DATETIME)
 }
 
-export function formatDateMinute(date: dayjs.Dayjs): string {
+export function formatDateMinute(date: dayjs.ConfigType): string {
   return dayjs(date).format(FORMAT_DATE_MINUTE)
 }
 
 export function fromNow(
-  startDate: dayjs.Dayjs,
-  endDate: dayjs.Dayjs
+  startDate: dayjs.ConfigType,
+  endDate: dayjs.ConfigType
 ): number {
   const start = dayjs(startDate).valueOf()
   const end = dayjs(endDate || Date.now()).valueOf()
@@ -40,12 +40,12 @@ export function fromNow(
   return Math.ceil(n / (1000 * 60 * 60 * 24))
 }
 
-export function getWeek(date: dayjs.Dayjs): string {
+export function getWeek(date: dayjs.ConfigType): string {
   const weeks = ['周日', '周一', '周二', '周三', '周四', '周五', '周六',]
   return weeks[dayjs(date).day()]
 }
 
-export function isToDay(date: dayjs.Dayjs): boolean {
+export function isToDay(date: dayjs.ConfigType): boolean {
   const m = dayjs(date)
   const n = new Date()
   return m.year() === n.getFullYear() &&

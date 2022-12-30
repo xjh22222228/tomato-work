@@ -130,7 +130,7 @@ const LogPage = () => {
     dispatch(getAllCompany())
   }, [])
 
-  function handleClickMenu({ key }: any) {
+  function handleClickMenu(key: string) {
     navigate(`/home/log/create/${key}`)
   }
 
@@ -139,7 +139,7 @@ const LogPage = () => {
       {
         key: item.key,
         label: (
-          <div onClick={handleClickMenu}>{item.name}</div>
+          <div onClick={() => handleClickMenu(item.key)}>{item.name}</div>
         )
       }
     ))

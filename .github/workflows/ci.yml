@@ -8,16 +8,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v2 # If you're using actions/checkout@v2 you must set persist-credentials to false in most cases for the deployment to work correctly.
+      uses: actions/checkout@v3 # If you're using actions/checkout@v2 you must set persist-credentials to false in most cases for the deployment to work correctly.
       with:
         persist-credentials: false
     - name: Install
       uses: pnpm/action-setup@v2
       with:
         version: 6.0.2
+    - name: Install
+      run: |
+        pnpm install
     - name: Lint
       run: |
-        npm run lint
+        pnpm run lint
     - name: Build
       run: |
-        npm run build
+        pnpm run build

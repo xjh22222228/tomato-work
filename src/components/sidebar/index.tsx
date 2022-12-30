@@ -2,18 +2,19 @@ import React, { useEffect, useState, useMemo } from 'react'
 import './style.scss'
 import config from '@/config'
 import { Layout, Menu } from 'antd'
-import { useLocation, Link } from 'react-router-dom'
+import type { MenuProps } from 'antd'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { HomeMainState } from '@/views/main/index'
 import { HOME_SIDER_MENU_LIST } from '@/constants'
 import logoImage from '@/assets/img/common/logo.png'
 
 const { Sider } = Layout
-const { SubMenu } = Menu
 
 type Props = HomeMainState
 
 const Sidebar: React.FC<Props> = function ({ collapsed }) {
   const location = useLocation()
+  const navigate = useNavigate()
   const [selectedKeys, setSelectedKeys] = useState('')
   const [openKeys, setOpenKeys] = useState<string[]>([])
 
@@ -44,38 +45,26 @@ const Sidebar: React.FC<Props> = function ({ collapsed }) {
     }
   }, [location.pathname])
 
-  const menuItems = useMemo(() => {
-    return HOME_SIDER_MENU_LIST.map(menu => {
-      if (Array.isArray(menu.children)) {
-        return (
-          <SubMenu
-            key={menu.name}
-            title={
-              <>
-                {menu.icon}
-                <span>{menu.name}</span>
-              </>
-            }
-          >
-            {menu.children.map(subItem => (
-              <Menu.Item key={subItem.path}>
-                <Link to={subItem.path}>{subItem.name}</Link>
-              </Menu.Item>
-            ))}
-          </SubMenu>
-        )
+  const items: MenuProps['items'] = useMemo(() => {
+    return HOME_SIDER_MENU_LIST.map(item => {
+      const data: any = {
+        key: item.path || item.name,
+        icon: item.icon,
+        label: item.name
       }
-
-      return (
-        <Menu.Item key={menu.path}>
-          <Link to={menu.path}>
-            {menu.icon}
-            <span>{menu.name}</span>
-          </Link>
-        </Menu.Item>
-      )
+      if (Array.isArray(item.children)) {
+        data.children = item.children.map(menu => ({
+          key: menu.path,
+          label: menu.name
+        }))
+      }
+      return data
     })
-  }, [])
+  }, [HOME_SIDER_MENU_LIST])
+
+  const onClick: MenuProps['onClick'] = (e) => {
+    navigate(e.key)
+  }
 
   return (
     <Sider
@@ -95,11 +84,11 @@ const Sidebar: React.FC<Props> = function ({ collapsed }) {
         selectedKeys={[selectedKeys]}
         openKeys={openKeys}
         onOpenChange={handleOpenChange}
+        onClick={onClick}
         mode="inline"
         theme="dark"
-      >
-        {menuItems}
-      </Menu>
+        items={items}
+      />
     </Sider>
   )
 }

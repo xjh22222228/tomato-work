@@ -58,7 +58,7 @@ export const HOME_SIDER_MENU_LIST = [
     ]
   },
   {
-    path: '/home/memorandum',
+    path: '',
     icon: <FormOutlined />,
     name: '我的备忘',
     children: [

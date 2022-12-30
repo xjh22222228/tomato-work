@@ -9,7 +9,7 @@ import {
   serviceDeleteLog,
   serviceGetLogList
 } from '@/services/log'
-import { DatePicker, Button, Select, Form, Popconfirm, Dropdown, Menu } from 'antd'
+import { DatePicker, Button, Select, Form, Popconfirm, Dropdown } from 'antd'
 import type { MenuProps } from 'antd'
 import { FORMAT_DATE, filterOption } from '@/utils'
 import { DownOutlined } from '@ant-design/icons'
@@ -134,19 +134,13 @@ const LogPage = () => {
     navigate(`/home/log/create/${key}`)
   }
 
-  const menu = (
-    <Menu onClick={handleClickMenu}>
-      {LOG_LIST.map(item => (
-        <Menu.Item key={item.key}>{item.name}</Menu.Item>
-      ))}
-    </Menu>
-  )
-
   const items: MenuProps['items'] = useMemo(() => {
     return LOG_LIST.map(item => (
       {
         key: item.key,
-        label: item.name
+        label: (
+          <div onClick={handleClickMenu}>{item.name}</div>
+        )
       }
     ))
   }, [LOG_LIST])

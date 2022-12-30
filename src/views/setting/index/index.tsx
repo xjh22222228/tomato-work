@@ -1,13 +1,15 @@
-import React, { Suspense, useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState, useMemo } from 'react'
 import './style.scss'
 import { Layout, Menu } from 'antd'
-import { Link, useLocation, Outlet } from 'react-router-dom'
+import { useLocation, Outlet, useNavigate } from 'react-router-dom'
 import { SETTING_SIDER_MENU_LIST } from '@/constants'
+import type { MenuProps } from 'antd'
 
 const { Content, Sider } = Layout
 
 const SettingIndexPage: React.FC = function () {
   const location = useLocation()
+  const navigate = useNavigate()
   const [selectedKeys, setSelectedKeys] = useState('')
 
   useEffect(() => {
@@ -19,6 +21,20 @@ const SettingIndexPage: React.FC = function () {
     }
   }, [location.pathname])
 
+  const onClick: MenuProps['onClick'] = (e) => {
+    navigate(e.key)
+  }
+
+  const items: MenuProps['items'] = useMemo(() => {
+    return SETTING_SIDER_MENU_LIST.map(item => {
+      const data: any = {
+        key: item.path || item.name,
+        label: item.name
+      }
+      return data
+    })
+  }, [SETTING_SIDER_MENU_LIST])
+
   return (
     <Layout className="setting-page">
       <Sider width={170}>
@@ -26,12 +42,9 @@ const SettingIndexPage: React.FC = function () {
           mode="inline"
           selectedKeys={[selectedKeys]}
           style={{ height: '100%' }}
+          items={items}
+          onClick={onClick}
         >
-          {SETTING_SIDER_MENU_LIST.map(menu => (
-            <Menu.Item key={menu.path}>
-              <Link to={menu.path}>{menu.name}</Link>
-            </Menu.Item>
-          ))}
         </Menu>
       </Sider>
       <Content style={{ padding: '0 50px 0 30px' }}>

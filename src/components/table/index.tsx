@@ -135,7 +135,7 @@ const TableFC: FC<Props> = ({
       if (tableEl) {
         setState({ tableHeight: tableEl.clientHeight - 120 })
       }
-    }, 0)
+    }, 100)
   }, [])
 
   useEffect(() => {

@@ -8,11 +8,14 @@ import { Provider } from 'react-redux'
 import { ConfigProvider } from 'antd'
 import zhCN from 'antd/locale/zh_CN'
 import dayjs from 'dayjs'
+import zh from 'dayjs/locale/zh-cn'
 import store from '@/store'
 
-dayjs.locale('zh-cn')
+dayjs.locale(zh)
 
-const root = ReactDOM.createRoot(document.getElementById("tomato-work-root") as HTMLElement)
+const root = ReactDOM.createRoot(
+  document.getElementById("tomato-work-root") as HTMLElement
+)
 
 root.render(
   // <React.StrictMode>

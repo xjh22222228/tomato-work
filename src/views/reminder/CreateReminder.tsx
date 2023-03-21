@@ -41,7 +41,8 @@ const CreateReminder: React.FC<Props> = function ({
       const values = await form.validateFields()
       const params = {
         date: formatDateTime(values.date),
-        content: values.content.trim()
+        content: values.content.trim(),
+        type: 1 // 未提醒
       }
 
       setState({ confirmLoading: true });

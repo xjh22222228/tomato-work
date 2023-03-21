@@ -78,7 +78,7 @@ const MemorandumPage: React.FC = () => {
                           e?.stopPropagation()
                           handleButton(0, item)
                         }}
-                        placement="bottomLeft"
+                        placement="bottomRight"
                         okType="danger"
                       >
                         <Button size="small">删除</Button>

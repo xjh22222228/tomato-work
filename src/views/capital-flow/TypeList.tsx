@@ -111,7 +111,7 @@ const Type = () => {
         <Popconfirm
           title="您确定要删除吗？"
           onConfirm={deleteCapitalFlowType}
-          placement="bottomLeft"
+          placement="bottomRight"
           okType="danger"
         >
           <Button type="primary" danger>删除</Button>

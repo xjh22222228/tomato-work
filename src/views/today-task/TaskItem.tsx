@@ -52,7 +52,7 @@ const TaskItem: React.FC<Props> = ({ data, reloadData }) => {
         <Popconfirm
           title="您确定要删除吗？"
           onConfirm={handleAction.bind(null, 0)}
-          placement="bottomLeft"
+          placement="bottomRight"
           okType="danger"
         >
           <Button

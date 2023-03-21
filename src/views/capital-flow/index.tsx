@@ -124,7 +124,7 @@ const CapitalFlowPage: React.FC = function() {
           <Popconfirm
             title="您确定要删除吗？"
             onConfirm={handleActionButton.bind(null, 1, row)}
-            placement="bottomLeft"
+            placement="bottomRight"
             okType="danger"
           >
             <Button>删除</Button>

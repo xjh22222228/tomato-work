@@ -66,7 +66,7 @@ const ReminderPage: React.FC<Props> = function({ userInfo }) {
           <Popconfirm
             title="您确定要删除吗？"
             onConfirm={() => handleDelete(record)}
-            placement="bottomLeft"
+            placement="bottomRight"
             okType="danger"
           >
             <Button>删除</Button>

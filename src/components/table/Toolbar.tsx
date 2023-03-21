@@ -36,7 +36,7 @@ const Toolbar: React.FC<Props> = function({
           <Popconfirm
             title={`确定要删除选中 ${selectedLen} 条记录吗？`}
             onConfirm={onDelete}
-            placement="bottomLeft"
+            placement="bottomRight"
             okType="danger"
             disabled={disabled}
           >

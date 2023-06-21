@@ -232,13 +232,14 @@ const CapitalFlowPage: React.FC = function() {
   function onFilterDate(type: FilterType) {
     const formDate = form.getFieldValue('date')
     const startDate = formDate ? formDate[0] : new Date()
+    const today = dayjs().format(FORMAT_DATE)
     let date: dayjs.Dayjs[] = []
 
     switch (type) {
       case FilterType.Today:
         date = [
-          dayjs(dayjs().format(FORMAT_DATE), FORMAT_DATE),
-          dayjs(dayjs().format(FORMAT_DATE), FORMAT_DATE)
+          dayjs(today, FORMAT_DATE),
+          dayjs(today, FORMAT_DATE)
         ]
         break
 
@@ -259,7 +260,7 @@ const CapitalFlowPage: React.FC = function() {
             .format(FORMAT_DATE),
           FORMAT_DATE
         )
-        date[1] = dayjs(new Date(), FORMAT_DATE)
+        date[1] = dayjs(today, FORMAT_DATE)
         break
 
       case FilterType.PrevMonth:

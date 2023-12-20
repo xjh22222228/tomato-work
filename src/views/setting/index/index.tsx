@@ -47,7 +47,8 @@ const SettingIndexPage: React.FC = function () {
         >
         </Menu>
       </Sider>
-      <Content style={{ padding: '0 50px 0 30px' }}>
+
+      <Content>
         <Suspense fallback={null}>
           <Outlet />
         </Suspense>

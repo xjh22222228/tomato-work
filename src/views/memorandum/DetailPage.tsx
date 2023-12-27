@@ -32,15 +32,16 @@ const DetailPage: FC = () => {
   }
 
   return (
-    <Spin spinning={loading}>
+    <Spin spinning={loading} wrapperClassName="detail-spin">
       <div className="memorandum-detail">
         <div className="tool-bar">
           <LeftOutlined className="icon-left" onClick={goBack} />
+          <h1 className="title">{ title }</h1>
           <Link className="edit" to={`/home/memorandum/update/${id}`}>
             <EditOutlined title="编辑" />
           </Link>
         </div>
-        <h1 className="title">{ title }</h1>
+
         <div
           className="markdown-body tui-editor-contents"
           dangerouslySetInnerHTML={{ __html: content }}

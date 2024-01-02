@@ -20,11 +20,12 @@ const { Search } = Input
 const { RangePicker } = DatePicker
 const { Option, OptGroup } = Select
 
-enum FilterType {
+const enum FilterType {
   Today = 1,
   Yesterday,
   LastWeek,
   ThisYear,
+  PrevYear,
   PrevMonth,
   NextMonth
 }
@@ -34,6 +35,7 @@ const cycleTimes = [
   { type: FilterType.Yesterday, name: '昨天' },
   { type: FilterType.LastWeek, name: '最近一周' },
   { type: FilterType.ThisYear, name: '今年' },
+  { type: FilterType.PrevYear, name: '上一年' },
   { type: FilterType.PrevMonth, name: '上个月' },
   { type: FilterType.NextMonth, name: '下个月' },
 ]
@@ -306,6 +308,23 @@ const CapitalFlowPage: React.FC = function() {
         )
         date[1] = dayjs(
           dayjs(startDate)
+            .endOf('year')
+            .format(FORMAT_DATE),
+          FORMAT_DATE
+        )
+        break
+
+      case FilterType.PrevYear:
+        date[0] = dayjs(
+          dayjs(startDate)
+            .subtract(1, 'y')
+            .startOf('year')
+            .format(FORMAT_DATE),
+          FORMAT_DATE
+        )
+        date[1] = dayjs(
+          dayjs(startDate)
+            .subtract(1, 'y')
             .endOf('year')
             .format(FORMAT_DATE),
           FORMAT_DATE

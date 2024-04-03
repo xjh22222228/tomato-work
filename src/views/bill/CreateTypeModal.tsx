@@ -1,12 +1,7 @@
 import React, { useEffect } from 'react'
 import useKeepState from 'use-keep-state'
-import {
-  Modal,
-  Form,
-  Input,
-  Select
-} from 'antd'
-import { serviceCreateCapitalFlowType, serviceUpdateCapitalFlowType } from '@/services'
+import { Modal, Form, Input, Select } from 'antd'
+import { serviceCreateBillType, serviceUpdateBillType } from '@/services'
 import { TYPES } from './enum'
 import { filterOption } from '@/utils'
 
@@ -26,7 +21,7 @@ const CreateTypeModal: React.FC<Props> = function ({
   visible,
   rowData,
   onCancel,
-  onSuccess
+  onSuccess,
 }) {
   const [form] = Form.useForm()
   const [state, setState] = useKeepState(initialState)
@@ -37,21 +32,21 @@ const CreateTypeModal: React.FC<Props> = function ({
 
       const params = {
         type: values.type,
-        name: values.name.trim()
+        name: values.name.trim(),
       }
 
-      setState({ confirmLoading: true });
+      setState({ confirmLoading: true })
 
-      (rowData
-        ? serviceUpdateCapitalFlowType(rowData.id, params)
-          : serviceCreateCapitalFlowType(params)
+      ;(rowData
+        ? serviceUpdateBillType(rowData.id, params)
+        : serviceCreateBillType(params)
       )
-      .then(res => {
-        onSuccess(res.data)
-      })
-      .finally(() => {
-        setState({ confirmLoading: false })
-      })
+        .then((res) => {
+          onSuccess(res.data)
+        })
+        .finally(() => {
+          setState({ confirmLoading: false })
+        })
     } catch (err) {
       console.log(err)
     }
@@ -61,7 +56,7 @@ const CreateTypeModal: React.FC<Props> = function ({
     if (visible && rowData) {
       form.setFieldsValue({
         name: rowData.name,
-        type: rowData.type
+        type: rowData.type,
       })
     }
   }, [visible, rowData])
@@ -82,14 +77,11 @@ const CreateTypeModal: React.FC<Props> = function ({
           rules={[
             {
               required: true,
-              message: "请输入类别名称"
-            }
+              message: '请输入类别名称',
+            },
           ]}
         >
-          <Input
-            maxLength={20}
-            placeholder="请输入类别名称"
-          />
+          <Input maxLength={20} placeholder="请输入类别名称" />
         </Form.Item>
 
         <Form.Item
@@ -98,16 +90,15 @@ const CreateTypeModal: React.FC<Props> = function ({
           rules={[
             {
               required: true,
-              message: "请选择类型"
-            }
+              message: '请选择类型',
+            },
           ]}
         >
-          <Select
-            showSearch
-            filterOption={filterOption}
-          >
-            {TYPES.map(item => (
-              <Option value={item.value} key={item.value}>{item.name}</Option>
+          <Select showSearch filterOption={filterOption}>
+            {TYPES.map((item) => (
+              <Option value={item.value} key={item.value}>
+                {item.name}
+              </Option>
             ))}
           </Select>
         </Form.Item>

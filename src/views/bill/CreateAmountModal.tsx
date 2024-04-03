@@ -7,11 +7,15 @@ import {
   DatePicker,
   Select,
   InputNumber,
-  Upload
+  Upload,
 } from 'antd'
 import type { UploadFile } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
-import { serviceCreateCapitalFlow, serviceUpdateCapitalFlow, serviceGetAmountById } from '@/services'
+import {
+  serviceCreateBill,
+  serviceUpdateBill,
+  serviceGetAmountById,
+} from '@/services'
 import useKeepState from 'use-keep-state'
 import { filterOption, FORMAT_DATETIME, base64ToBlob } from '@/utils'
 import { cloneDeep } from 'lodash'
@@ -40,16 +44,16 @@ interface State {
 
 const initialState: State = {
   confirmLoading: false,
-  fileList: []
+  fileList: [],
 }
 
-const CreateCapitalFlowModal: React.FC<Props> = function ({
+const CreateBillModal: React.FC<Props> = function ({
   visible,
   onCancel,
   onSuccess,
   rowData,
   enterTypes,
-  outTypes
+  outTypes,
 }) {
   const [form] = Form.useForm()
   const [state, setState] = useKeepState(initialState)
@@ -62,21 +66,20 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
         remark: values.remark?.trim() ?? '',
         typeId: values.typeId,
         price: Number(values.amount),
-        imgs: ''
+        imgs: '',
       }
 
       if (state.fileList.length > 0) {
         params.imgs = state.fileList[0].thumbUrl
       }
 
-      setState({ confirmLoading: true });
+      setState({ confirmLoading: true })
 
-      (
-        !rowData
-          ? serviceCreateCapitalFlow(params)
-          : serviceUpdateCapitalFlow(rowData.id, params)
+      ;(!rowData
+        ? serviceCreateBill(params)
+        : serviceUpdateBill(rowData.id, params)
       )
-        .then(res => {
+        .then((res) => {
           onSuccess(res)
         })
         .finally(() => {
@@ -100,7 +103,7 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
       setState({ fileLst: [] })
       if (rowData) {
         setState({ confirmLoading: true })
-        serviceGetAmountById(rowData.id).then(res => {
+        serviceGetAmountById(rowData.id).then((res) => {
           form.setFieldsValue({
             date: dayjs(res.createdAt),
             remark: res.remark,
@@ -109,21 +112,23 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
           })
           const state: Record<string, any> = {
             fileList: [],
-            confirmLoading: false
+            confirmLoading: false,
           }
           if (res.imgs) {
-            state.fileList = [{
-              url: res.imgs,
-              thumbUrl: res.imgs,
-              status: 'success',
-              uid: '-1'
-            }]
+            state.fileList = [
+              {
+                url: res.imgs,
+                thumbUrl: res.imgs,
+                status: 'success',
+                uid: '-1',
+              },
+            ]
           }
           setState(state)
         })
       } else {
         form.setFieldsValue({
-          date: dayjs()
+          date: dayjs(),
         })
       }
     }
@@ -165,15 +170,11 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
           rules={[
             {
               required: true,
-              message: "请选择时间"
-            }
+              message: '请选择时间',
+            },
           ]}
         >
-          <DatePicker
-            showTime
-            allowClear={false}
-            className="w100"
-          />
+          <DatePicker showTime allowClear={false} className="w100" />
         </Form.Item>
 
         <Form.Item
@@ -182,22 +183,23 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
           rules={[
             {
               required: true,
-              message: "请选择类别"
-            }
+              message: '请选择类别',
+            },
           ]}
         >
-          <Select
-            showSearch
-            filterOption={filterOption}
-          >
+          <Select showSearch filterOption={filterOption}>
             <OptGroup label="收入">
               {enterTypes.map((item: any) => (
-                <Option value={item.id} key={item.id}>{item.name}</Option>
+                <Option value={item.id} key={item.id}>
+                  {item.name}
+                </Option>
               ))}
             </OptGroup>
             <OptGroup label="支出">
               {outTypes.map((item: any) => (
-                <Option value={item.id} key={item.id}>{item.name}</Option>
+                <Option value={item.id} key={item.id}>
+                  {item.name}
+                </Option>
               ))}
             </OptGroup>
           </Select>
@@ -209,34 +211,25 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
           rules={[
             {
               required: true,
-              message: "请输入金额"
-            }
+              message: '请输入金额',
+            },
           ]}
         >
           <InputNumber
             className="w100"
             placeholder="请输入金额"
-            formatter={value => `￥ ${value}`}
+            formatter={(value) => `￥ ${value}`}
             max={9999999}
             min={0}
             precision={2}
           />
         </Form.Item>
 
-        <Form.Item
-          label="备注信息"
-          name="remark"
-        >
-          <TextArea
-            rows={5}
-            maxLength={250}
-          />
+        <Form.Item label="备注信息" name="remark">
+          <TextArea rows={5} maxLength={250} />
         </Form.Item>
 
-        <Form.Item
-          label="附件"
-          name="imgs"
-        >
+        <Form.Item label="附件" name="imgs">
           <Upload
             listType="picture-card"
             fileList={state.fileList}
@@ -252,4 +245,4 @@ const CreateCapitalFlowModal: React.FC<Props> = function ({
   )
 }
 
-export default React.memo(CreateCapitalFlowModal)
+export default React.memo(CreateBillModal)

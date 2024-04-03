@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import './style.scss'
 import { Empty, DatePicker } from 'antd'
-import { serviceGetCapitalFlowAmount, serviceGetCapitalFlowAmountGroup } from '@/services'
+import { serviceGetBillAmount, serviceGetBillAmountGroup } from '@/services'
 import {
-  LineChart, Line, XAxis,
-  YAxis, CartesianGrid, Tooltip,
-  Legend, ResponsiveContainer, BarChart,
-  Bar
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
 } from 'recharts'
 import { formatDate, FORMAT_DATE, DATE_WEEK } from '@/utils'
 import dayjs from 'dayjs'
@@ -32,10 +38,9 @@ const AmountChart = () => {
   const [totalAmount, setTotalAmount] = useState(0)
 
   function getData(params?: object) {
-    serviceGetCapitalFlowAmount({
-      ...params
-    })
-    .then(res => {
+    serviceGetBillAmount({
+      ...params,
+    }).then((res) => {
       if (Array.isArray(res)) {
         let price = 0
         const data: DataProp[] = []
@@ -47,7 +52,7 @@ const AmountChart = () => {
           if (idx % 2 === 0) {
             data.push({
               date,
-              '收入': amount
+              收入: amount,
             })
           } else {
             data[data.length - 1]['支出'] = amount
@@ -59,11 +64,11 @@ const AmountChart = () => {
       }
     })
 
-    serviceGetCapitalFlowAmountGroup({
+    serviceGetBillAmountGroup({
       startDate: formatDate(DATE_WEEK[0]),
       endDate: formatDate(DATE_WEEK[1]),
-      ...params
-    }).then(res => {
+      ...params,
+    }).then((res) => {
       setGroup(
         res.map((item: GroupProp) => {
           item.name = item.type === 1 ? `+ ${item.name}` : `- ${item.name}`
@@ -77,7 +82,7 @@ const AmountChart = () => {
     setDate([dayjs(formatString[0]), dayjs(formatString[1])])
     getData({
       startDate: formatString[0],
-      endDate: formatString[1]
+      endDate: formatString[1],
     })
   }
 
@@ -97,7 +102,7 @@ const AmountChart = () => {
         />
       </h2>
 
-      {(totalAmount > 0) ? (
+      {totalAmount > 0 ? (
         <ResponsiveContainer width="100%" height={350}>
           <LineChart
             width={500}
@@ -115,7 +120,12 @@ const AmountChart = () => {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Line type="monotone" dataKey="收入" stroke="#82ca9d" activeDot={{ r: 8 }} />
+            <Line
+              type="monotone"
+              dataKey="收入"
+              stroke="#82ca9d"
+              activeDot={{ r: 8 }}
+            />
             <Line type="monotone" dataKey="支出" stroke="#ff5000" />
           </LineChart>
         </ResponsiveContainer>
@@ -139,7 +149,11 @@ const AmountChart = () => {
             }}
             barSize={20}
           >
-            <XAxis dataKey="name" scale="point" padding={{ left: 10, right: 10 }} />
+            <XAxis
+              dataKey="name"
+              scale="point"
+              padding={{ left: 10, right: 10 }}
+            />
             <YAxis />
             <Tooltip />
             <Legend />

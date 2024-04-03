@@ -7,11 +7,19 @@ import dayjs from 'dayjs'
 import useKeepState from 'use-keep-state'
 import Table from '@/components/table'
 import CreateAmountModal from './CreateAmountModal'
-import { DatePicker, Button, Select, Statistic, Input, Form, Popconfirm } from 'antd'
 import {
-  serviceGetCapitalFlow,
-  serviceDeleteCapitalFlow,
-  serviceGetCapitalFlowType
+  DatePicker,
+  Button,
+  Select,
+  Statistic,
+  Input,
+  Form,
+  Popconfirm,
+} from 'antd'
+import {
+  serviceGetBill,
+  serviceDeleteBill,
+  serviceGetBillType,
 } from '@/services'
 import { OPTION_TYPES, TypeNames, TYPES } from './enum'
 import { filterOption, FORMAT_DATE, FORMAT_DATE_MINUTE, isToDay } from '@/utils'
@@ -27,7 +35,7 @@ const enum FilterType {
   ThisYear,
   PrevYear,
   PrevMonth,
-  NextMonth
+  NextMonth,
 }
 
 const cycleTimes = [
@@ -64,13 +72,13 @@ const initialState: State = {
   price: {
     consumption: 0,
     income: 0,
-    available: 0
+    available: 0,
   },
   sortedInfo: null,
-  filters: {}
+  filters: {},
 }
 
-const CapitalFlowPage: React.FC = function() {
+const BillPage: React.FC = function () {
   const [form] = Form.useForm()
   const [state, setState] = useKeepState(initialState)
   const tableRef = useRef<any>()
@@ -81,13 +89,14 @@ const CapitalFlowPage: React.FC = function() {
       dataIndex: 'createdAt',
       width: 180,
       sorter: true,
-      sortOrder: state.sortedInfo?.field === 'createdAt' && state.sortedInfo.order,
-      render: (text: string, rowData: any) => rowData.__createdAt__
+      sortOrder:
+        state.sortedInfo?.field === 'createdAt' && state.sortedInfo.order,
+      render: (text: string, rowData: any) => rowData.__createdAt__,
     },
     {
       title: '账务类型',
       dataIndex: 'name',
-      width: 120
+      width: 120,
     },
     {
       title: '收支金额（元）',
@@ -98,8 +107,8 @@ const CapitalFlowPage: React.FC = function() {
       filters: [
         {
           text: '隐藏金额',
-          value: false
-        }
+          value: false,
+        },
       ],
       render: (text: string, rowData: any) => (
         <span style={{ color: rowData.__color__ }}>
@@ -107,13 +116,11 @@ const CapitalFlowPage: React.FC = function() {
             ? '******'
             : rowData.__price__}
         </span>
-      )
+      ),
     },
     {
       title: '备注信息',
-      render: (rowData: any) => (
-        <p className="wspw">{rowData.remark}</p>
-      )
+      render: (rowData: any) => <p className="wspw">{rowData.remark}</p>,
     },
     {
       title: '操作',
@@ -132,8 +139,8 @@ const CapitalFlowPage: React.FC = function() {
             <Button>删除</Button>
           </Popconfirm>
         </>
-      )
-    }
+      ),
+    },
   ]
 
   function initParams(isGetData?: boolean) {
@@ -154,14 +161,14 @@ const CapitalFlowPage: React.FC = function() {
   }
 
   // 获取数据
-  async function getCapitalFlow(params: Record<string, any>) {
+  async function getBill(params: Record<string, any>) {
     try {
       const values = await form.validateFields()
       params = {
         ...params,
         keyword: values.keyword,
         typeNameId: values.name,
-        type: values.type
+        type: values.type,
       }
       if (Array.isArray(values.date) && values.date.length > 1) {
         params.startDate = values.date[0].format(FORMAT_DATE)
@@ -171,14 +178,17 @@ const CapitalFlowPage: React.FC = function() {
       }
 
       if (state.sortedInfo?.order) {
-        params.sort = `${state.sortedInfo.field}-${state.sortedInfo.order.replace('end', '')}`
+        params.sort = `${
+          state.sortedInfo.field
+        }-${state.sortedInfo.order.replace('end', '')}`
       }
 
-      return serviceGetCapitalFlow(params).then(res => {
+      return serviceGetBill(params).then((res) => {
         res.rows = res.rows.map((el: any, idx: number) => {
           const suffix = isToDay(el.createdAt) ? ' 今天' : ''
           el.order = idx + 1
-          el.__createdAt__ = dayjs(el.createdAt).format(FORMAT_DATE_MINUTE) + suffix
+          el.__createdAt__ =
+            dayjs(el.createdAt).format(FORMAT_DATE_MINUTE) + suffix
           el.__price__ = TYPES[el.type - 1].symbol + el.price
           el.__color__ = TYPES[el.type - 1].color
 
@@ -189,8 +199,8 @@ const CapitalFlowPage: React.FC = function() {
           price: {
             income: res.income,
             consumption: res.consumption,
-            available: res.available
-          }
+            available: res.available,
+          },
         })
         return res
       })
@@ -200,23 +210,22 @@ const CapitalFlowPage: React.FC = function() {
   }
 
   // 获取所有类型
-  function getCapitalFlowType() {
-    serviceGetCapitalFlowType()
-      .then(res => {
-        const amountTypes = res
-          .map((item: any) => {
-            item.optionName = `${TypeNames[item.type]} - ${item.name}`
-            return item
-          })
-          .sort((a: any, b: any) => a.type - b.type)
-        const enterTypes = amountTypes.filter((item: any) => item.type === 1)
-        const outTypes = amountTypes.filter((item: any) => item.type === 2)
-        setState({
-          amountTypes,
-          enterTypes,
-          outTypes
+  function getBillType() {
+    serviceGetBillType().then((res) => {
+      const amountTypes = res
+        .map((item: any) => {
+          item.optionName = `${TypeNames[item.type]} - ${item.name}`
+          return item
         })
+        .sort((a: any, b: any) => a.type - b.type)
+      const enterTypes = amountTypes.filter((item: any) => item.type === 1)
+      const outTypes = amountTypes.filter((item: any) => item.type === 2)
+      setState({
+        amountTypes,
+        enterTypes,
+        outTypes,
       })
+    })
   }
 
   function handleActionButton(type: number, row: any) {
@@ -224,7 +233,7 @@ const CapitalFlowPage: React.FC = function() {
     if (type === 0) {
       setState({ showCreateAmountModal: true, currentRow: row })
     } else {
-      serviceDeleteCapitalFlow(row.id).then(() => {
+      serviceDeleteBill(row.id).then(() => {
         tableRef.current.getTableData()
       })
     }
@@ -239,17 +248,13 @@ const CapitalFlowPage: React.FC = function() {
 
     switch (type) {
       case FilterType.Today:
-        date = [
-          dayjs(today, FORMAT_DATE),
-          dayjs(today, FORMAT_DATE)
-        ]
+        date = [dayjs(today, FORMAT_DATE), dayjs(today, FORMAT_DATE)]
         break
 
       case FilterType.Yesterday:
         const prevDay = dayjs(
-          dayjs()
-            .subtract(1, 'days')
-            .format(FORMAT_DATE), FORMAT_DATE
+          dayjs().subtract(1, 'days').format(FORMAT_DATE),
+          FORMAT_DATE
         )
         date[0] = prevDay
         date[1] = prevDay
@@ -257,9 +262,7 @@ const CapitalFlowPage: React.FC = function() {
 
       case FilterType.LastWeek:
         date[0] = dayjs(
-          dayjs()
-            .subtract(7, 'days')
-            .format(FORMAT_DATE),
+          dayjs().subtract(7, 'days').format(FORMAT_DATE),
           FORMAT_DATE
         )
         date[1] = dayjs(today, FORMAT_DATE)
@@ -284,49 +287,33 @@ const CapitalFlowPage: React.FC = function() {
 
       case FilterType.NextMonth:
         date[0] = dayjs(
-          dayjs(startDate)
-            .add(1, 'month')
-            .startOf('month')
-            .format(FORMAT_DATE),
+          dayjs(startDate).add(1, 'month').startOf('month').format(FORMAT_DATE),
           FORMAT_DATE
         )
         date[1] = dayjs(
-          dayjs(startDate)
-            .add(1, 'month')
-            .endOf('month')
-            .format(FORMAT_DATE),
+          dayjs(startDate).add(1, 'month').endOf('month').format(FORMAT_DATE),
           FORMAT_DATE
         )
         break
 
       case FilterType.ThisYear:
         date[0] = dayjs(
-          dayjs(startDate)
-            .startOf('year')
-            .format(FORMAT_DATE),
+          dayjs(startDate).startOf('year').format(FORMAT_DATE),
           FORMAT_DATE
         )
         date[1] = dayjs(
-          dayjs(startDate)
-            .endOf('year')
-            .format(FORMAT_DATE),
+          dayjs(startDate).endOf('year').format(FORMAT_DATE),
           FORMAT_DATE
         )
         break
 
       case FilterType.PrevYear:
         date[0] = dayjs(
-          dayjs(startDate)
-            .subtract(1, 'y')
-            .startOf('year')
-            .format(FORMAT_DATE),
+          dayjs(startDate).subtract(1, 'y').startOf('year').format(FORMAT_DATE),
           FORMAT_DATE
         )
         date[1] = dayjs(
-          dayjs(startDate)
-            .subtract(1, 'y')
-            .endOf('year')
-            .format(FORMAT_DATE),
+          dayjs(startDate).subtract(1, 'y').endOf('year').format(FORMAT_DATE),
           FORMAT_DATE
         )
         break
@@ -343,9 +330,9 @@ const CapitalFlowPage: React.FC = function() {
     setState({
       sortedInfo: {
         field: sorter.field,
-        order: sorter.order
+        order: sorter.order,
       },
-      filters
+      filters,
     })
   }
 
@@ -356,7 +343,7 @@ const CapitalFlowPage: React.FC = function() {
 
   useEffect(() => {
     initParams(false)
-    getCapitalFlowType()
+    getBillType()
   }, [])
 
   useEffect(() => {
@@ -369,53 +356,39 @@ const CapitalFlowPage: React.FC = function() {
     <div className="capital-flow">
       <div className="query-panel">
         <Form form={form} layout="inline">
-          <Form.Item
-            label="账务类型"
-            name="name"
-            initialValue=""
-          >
-            <Select
-              className="w150px"
-              showSearch
-              filterOption={filterOption}
-            >
+          <Form.Item label="账务类型" name="name" initialValue="">
+            <Select className="w150px" showSearch filterOption={filterOption}>
               <Option value="">全部</Option>
               <OptGroup label="收入">
                 {state.enterTypes.map((item: any) => (
-                  <Option value={item.id} key={item.id}>{item.name}</Option>
+                  <Option value={item.id} key={item.id}>
+                    {item.name}
+                  </Option>
                 ))}
               </OptGroup>
               <OptGroup label="支出">
                 {state.outTypes.map((item: any) => (
-                  <Option value={item.id} key={item.id}>{item.name}</Option>
+                  <Option value={item.id} key={item.id}>
+                    {item.name}
+                  </Option>
                 ))}
               </OptGroup>
             </Select>
           </Form.Item>
 
           {!form.getFieldValue('name') && (
-            <Form.Item
-              label="收支类别"
-              name="type"
-              initialValue=""
-            >
-              <Select
-                className="w150px"
-                showSearch
-                filterOption={filterOption}
-              >
-                {OPTION_TYPES.map(item => (
-                  <Option value={item.value} key={item.value}>{item.name}</Option>
+            <Form.Item label="收支类别" name="type" initialValue="">
+              <Select className="w150px" showSearch filterOption={filterOption}>
+                {OPTION_TYPES.map((item) => (
+                  <Option value={item.value} key={item.value}>
+                    {item.name}
+                  </Option>
                 ))}
               </Select>
             </Form.Item>
           )}
 
-          <Form.Item
-            label=""
-            name="keyword"
-            initialValue=""
-          >
+          <Form.Item label="" name="keyword" initialValue="">
             <Search
               placeholder="试试搜索备注"
               maxLength={300}
@@ -425,36 +398,25 @@ const CapitalFlowPage: React.FC = function() {
           </Form.Item>
         </Form>
 
-        <Form
-          form={form}
-          layout="inline"
-          className="mt10"
-        >
-          <Form.Item
-            label="日期"
-            name="date"
-            initialValue={[]}
-          >
+        <Form form={form} layout="inline" className="mt10">
+          <Form.Item label="日期" name="date" initialValue={[]}>
             <RangePicker />
           </Form.Item>
 
-          <Form.Item
-            label="时间段"
-            name="cycle"
-            initialValue=""
-          >
-            <Select
-              className="w150px"
-              onSelect={onFilterDate}
-            >
+          <Form.Item label="时间段" name="cycle" initialValue="">
+            <Select className="w150px" onSelect={onFilterDate}>
               <Option value="">全部</Option>
               {cycleTimes.map((item) => (
-                <Option value={item.type} key={item.type}>{item.name}</Option>
+                <Option value={item.type} key={item.type}>
+                  {item.name}
+                </Option>
               ))}
             </Select>
           </Form.Item>
 
-          <Button type="primary" onClick={tableRef.current?.getTableData}>查询</Button>
+          <Button type="primary" onClick={tableRef.current?.getTableData}>
+            查询
+          </Button>
           <Button onClick={() => initParams()}>重置</Button>
         </Form>
 
@@ -476,11 +438,13 @@ const CapitalFlowPage: React.FC = function() {
 
       <Table
         ref={tableRef}
-        getTableData={getCapitalFlow}
+        getTableData={getBill}
         columns={tableColumns}
         onTableChange={onTableChange}
-        onDelete={serviceDeleteCapitalFlow}
-        onAdd={() => setState({ showCreateAmountModal: true, currentRow: null })}
+        onDelete={serviceDeleteBill}
+        onAdd={() =>
+          setState({ showCreateAmountModal: true, currentRow: null })
+        }
       />
 
       <CreateAmountModal
@@ -495,4 +459,4 @@ const CapitalFlowPage: React.FC = function() {
   )
 }
 
-export default CapitalFlowPage
+export default BillPage

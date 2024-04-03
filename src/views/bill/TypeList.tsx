@@ -4,10 +4,7 @@ import dayjs from 'dayjs'
 import useKeepState from 'use-keep-state'
 import CreateTypeModal from './CreateTypeModal'
 import { Table, Button, Tag, Popconfirm } from 'antd'
-import {
-  serviceGetCapitalFlowType,
-  serviceDeleteCapitalFlowType
-} from '@/services'
+import { serviceGetBillType, serviceDeleteBillType } from '@/services'
 import { TypeNames, TypeColors } from './enum'
 import { FORMAT_DATE_MINUTE } from '@/utils'
 
@@ -16,7 +13,7 @@ const initialState = {
   selectedRowKeys: [],
   loading: false,
   data: [],
-  rowData: null
+  rowData: null,
 }
 
 const Type = () => {
@@ -24,30 +21,30 @@ const Type = () => {
   const tableColumns = [
     {
       title: '账务类型',
-      dataIndex: 'name'
+      dataIndex: 'name',
     },
     {
       title: '收支类别',
       render: (rowData: any) => (
         <Tag color={rowData.color}>{rowData.typeName}</Tag>
-      )
+      ),
     },
     {
       title: '创建时间',
-      dataIndex: 'createdAt'
+      dataIndex: 'createdAt',
     },
     {
       title: '操作',
       render: (rowData: any) => (
         <Button onClick={handleEdit.bind(null, rowData)}>编辑</Button>
-      )
+      ),
     },
   ]
 
-  function getCapitalFlowType() {
+  function getBillType() {
     setState({ loading: true })
-    serviceGetCapitalFlowType()
-      .then(res => {
+    serviceGetBillType()
+      .then((res) => {
         const handleData = res.map((item: any) => {
           item.typeName = TypeNames[item.type]
           item.color = TypeColors[item.type]
@@ -61,14 +58,14 @@ const Type = () => {
       })
   }
 
-  function deleteCapitalFlowType() {
+  function deleteBillType() {
     const ids = state.selectedRowKeys.join()
     if (!ids) return
 
     setState({ loading: true })
-    serviceDeleteCapitalFlowType(ids)
+    serviceDeleteBillType(ids)
       .then(() => {
-        getCapitalFlowType()
+        getBillType()
       })
       .finally(() => {
         setState({ loading: false })
@@ -77,32 +74,32 @@ const Type = () => {
 
   function handleOnSuccess() {
     setState({ showCreateTypeModal: false })
-    getCapitalFlowType()
+    getBillType()
   }
 
   function handleAdd() {
     setState({
       showCreateTypeModal: true,
-      rowData: null
+      rowData: null,
     })
   }
 
   function handleEdit(rowData: any) {
     setState({
       showCreateTypeModal: true,
-      rowData
+      rowData,
     })
   }
 
   useEffect(() => {
-    getCapitalFlowType()
+    getBillType()
   }, [])
 
   const rowSelection = {
     selectedRowKeys: state.selectedRowKeys,
     onChange: (selectedRowKeys: any) => {
       setState({ selectedRowKeys })
-    }
+    },
   }
 
   return (
@@ -110,13 +107,17 @@ const Type = () => {
       <div className="button-group">
         <Popconfirm
           title="您确定要删除吗？"
-          onConfirm={deleteCapitalFlowType}
+          onConfirm={deleteBillType}
           placement="bottomRight"
           okType="danger"
         >
-          <Button type="primary" danger>删除</Button>
+          <Button type="primary" danger>
+            删除
+          </Button>
         </Popconfirm>
-        <Button type="primary" onClick={handleAdd}>新增</Button>
+        <Button type="primary" onClick={handleAdd}>
+          新增
+        </Button>
       </div>
       <Table
         rowSelection={rowSelection}

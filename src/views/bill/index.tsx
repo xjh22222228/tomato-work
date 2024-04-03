@@ -94,7 +94,7 @@ const BillPage: React.FC = function () {
       render: (text: string, rowData: any) => rowData.__createdAt__,
     },
     {
-      title: '账务类型',
+      title: '账单类型',
       dataIndex: 'name',
       width: 120,
     },

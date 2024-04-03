@@ -53,7 +53,7 @@ export const HOME_SIDER_MENU_LIST = [
       },
       {
         path: '/home/bill/type',
-        name: '创建类别',
+        name: '账单类别',
       },
     ],
   },

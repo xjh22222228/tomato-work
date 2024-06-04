@@ -45,15 +45,15 @@ const MemorandumPage: React.FC = () => {
 
   function getData() {
     serviceGetMemorandum()
-    .then(res => {
-      const data = res.map((item: any) => {
-        item.createdAt = dayjs(item.createdAt).format('YYYY/M/D HH:mm')
-        item.title = item.title || defaultTitle
-        return item
+      .then((res) => {
+        const data = res.map((item: any) => {
+          item.createdAt = dayjs(item.createdAt).format('YYYY/M/D HH:mm')
+          item.title = item.title || defaultTitle
+          return item
+        })
+        setList(data)
       })
-      setList(data)
-    })
-    .finally(() => setLoading(false))
+      .finally(() => setLoading(false))
   }
 
   function goDetail(id: string) {
@@ -67,31 +67,46 @@ const MemorandumPage: React.FC = () => {
   return (
     <Spin spinning={loading} wrapperClassName="memorandum-spin">
       <div className="memorandum">
-        {(list.length > 0) ? (
+        {list.length > 0 ? (
           <Row gutter={16} align="bottom">
             {list.map((item: any) => (
               <Col span={8} key={item.id}>
-                <Card onClick={() => goDetail(item.id)} title={item.title} hoverable>
+                <Card
+                  onClick={() => goDetail(item.id)}
+                  title={item.title}
+                  hoverable
+                >
                   {item.createdAt}
                   <div
                     className="content"
                     dangerouslySetInnerHTML={{ __html: item.html }}
-                  >
-                  </div>
+                  ></div>
                   <div className="button-group">
                     <Popconfirm
                       title="您确定要删除吗？"
-                      onConfirm={e => {
+                      onConfirm={(e) => {
                         e?.stopPropagation()
                         handleButton(0, item)
                       }}
-                      onCancel={e => { e?.stopPropagation()}}
+                      onCancel={(e) => {
+                        e?.stopPropagation()
+                      }}
                       placement="bottomRight"
                       okType="danger"
                     >
-                      <Button size="small" onClick={(e) => e?.stopPropagation()}>删除</Button>
+                      <Button
+                        size="small"
+                        onClick={(e) => e?.stopPropagation()}
+                      >
+                        删除
+                      </Button>
                     </Popconfirm>
-                    <Button size="small" onClick={handleButton.bind(null, 1, item)}>编辑</Button>
+                    <Button
+                      size="small"
+                      onClick={handleButton.bind(null, 1, item)}
+                    >
+                      编辑
+                    </Button>
                   </div>
                 </Card>
               </Col>

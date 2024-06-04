@@ -5,10 +5,7 @@ import React, { useEffect, useRef, useMemo } from 'react'
 import useKeepState from 'use-keep-state'
 import Table from '@/components/table'
 import DetailDrawer from './DetailDrawer'
-import {
-  serviceDeleteLog,
-  serviceGetLogList
-} from '@/services/log'
+import { serviceDeleteLog, serviceGetLogList } from '@/services/log'
 import { DatePicker, Button, Select, Form, Popconfirm, Dropdown } from 'antd'
 import type { MenuProps } from 'antd'
 import { FORMAT_DATE, filterOption } from '@/utils'
@@ -23,14 +20,14 @@ const { Option } = Select
 
 interface State {
   companyAll: Record<string, any>[]
-  showDetailDrawer: boolean,
+  showDetailDrawer: boolean
   detail: Record<string, any>
 }
 
 const initState: State = {
   companyAll: [],
   showDetailDrawer: false,
-  detail: {}
+  detail: {},
 }
 
 const LogPage = () => {
@@ -39,19 +36,13 @@ const LogPage = () => {
   const [state, setState] = useKeepState(initState)
   const tableRef = useRef<any>()
   const dispatch = useAppDispatch()
-  const companyAll = useAppSelector(state => ([
-    {
-      companyName: '全部',
-      id: '-1'
-    },
-    ...state.company.companyAll
-  ]))
+  const companyAll = useAppSelector((state) => state.company.companyAll)
 
   const tableColumns = [
     {
       title: '创建时间',
       dataIndex: '__createdAt__',
-      width: 170
+      width: 170,
     },
     {
       title: '日志类型',
@@ -84,8 +75,8 @@ const LogPage = () => {
             <Button>删除</Button>
           </Popconfirm>
         </>
-      )
-    }
+      ),
+    },
   ]
 
   function handlePreview(record: Record<string, any>) {
@@ -135,18 +126,14 @@ const LogPage = () => {
   }
 
   const items: MenuProps['items'] = useMemo(() => {
-    return LOG_LIST.map(item => (
-      {
-        key: item.key,
-        label: (
-          <div onClick={() => handleClickMenu(item.key)}>{item.name}</div>
-        )
-      }
-    ))
+    return LOG_LIST.map((item) => ({
+      key: item.key,
+      label: <div onClick={() => handleClickMenu(item.key)}>{item.name}</div>,
+    }))
   }, [LOG_LIST])
 
   const toolbar = (
-    <Dropdown menu={{ items }}>
+    <Dropdown menu={{}}>
       <Button type="primary">
         新增
         <DownOutlined />
@@ -165,9 +152,18 @@ const LogPage = () => {
           <div className="w100">
             <div className="flex">
               <Form.Item name="company" label="所属单位" initialValue="-1">
-                <Select style={{ width: 200 }} showSearch filterOption={filterOption}>
+                <Select
+                  style={{ width: 200 }}
+                  showSearch
+                  filterOption={filterOption}
+                >
+                  <Option key="-1" value="-1">
+                    全部
+                  </Option>
                   {companyAll.map((item: Record<string, any>) => (
-                    <Option key={item.id} value={item.id}>{item.companyName}</Option>
+                    <Option key={item.id} value={item.id}>
+                      {item.companyName}
+                    </Option>
                   ))}
                 </Select>
               </Form.Item>
@@ -177,7 +173,9 @@ const LogPage = () => {
               </Form.Item>
 
               <Form.Item>
-                <Button type="primary" onClick={getData}>查询</Button>
+                <Button type="primary" onClick={getData}>
+                  查询
+                </Button>
                 <Button onClick={initParams}>重置</Button>
               </Form.Item>
             </div>
@@ -185,10 +183,16 @@ const LogPage = () => {
 
           <div className="flex mt10">
             <Form.Item name="logType" label="日志类型" initialValue="-1">
-              <Select style={{ width: 200 }} showSearch filterOption={filterOption}>
+              <Select
+                style={{ width: 200 }}
+                showSearch
+                filterOption={filterOption}
+              >
                 <Option value="-1">全部</Option>
                 {LOG_LIST.map((item: Record<string, any>) => (
-                  <Option key={item.key} value={item.key}>{item.name}</Option>
+                  <Option key={item.key} value={item.key}>
+                    {item.name}
+                  </Option>
                 ))}
               </Select>
             </Form.Item>

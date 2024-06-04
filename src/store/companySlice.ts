@@ -3,11 +3,11 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { serviceGetAllCompany } from '@/services'
 
 export interface CompanyProps {
-  amount: number|string
+  amount: number | string
   companyName: string
   createdAt: string
-  endDate: string|null
-  expectLeaveDate: string|null
+  endDate: string | null
+  expectLeaveDate: string | null
   id: string
   remark: string
   startDate: string
@@ -23,19 +23,21 @@ export interface SystemState {
 
 const initialState: SystemState = {
   loading: false,
-  companyAll: []
+  companyAll: [],
 }
 
-export const getAllCompany = createAsyncThunk('company/getAllCompany', async () => {
-  const response = await serviceGetAllCompany()
-  return response.rows
-})
+export const getAllCompany = createAsyncThunk(
+  'company/getAllCompany',
+  async () => {
+    const response = await serviceGetAllCompany()
+    return response.rows
+  }
+)
 
 export const companySlice = createSlice({
   name: 'company',
   initialState,
-  reducers: {
-  },
+  reducers: {},
 
   extraReducers(builder) {
     builder
@@ -48,7 +50,7 @@ export const companySlice = createSlice({
       .addCase(getAllCompany.rejected, (state) => {
         state.loading = false
       })
-  }
+  },
 })
 
 export default companySlice.reducer

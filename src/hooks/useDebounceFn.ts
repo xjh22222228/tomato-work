@@ -3,9 +3,9 @@ import { useRef } from 'react'
 import useCreation from './useCreation'
 
 interface DebounceOptions {
-  wait?: number;
-  leading?: boolean;
-  trailing?: boolean;
+  wait?: number
+  leading?: boolean
+  trailing?: boolean
 }
 
 type Fn = (...args: any) => any
@@ -23,13 +23,13 @@ function useDebounceFn<T extends Fn>(fn: T, options?: DebounceOptions) {
           return fnRef.current(...args)
         }) as T,
         wait,
-        options,
+        options
       ),
-    [],
+    []
   )
 
   return {
-    run: (debounced as unknown) as T,
+    run: debounced as unknown as T,
     cancel: debounced.cancel,
     flush: debounced.flush,
   }

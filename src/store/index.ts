@@ -8,12 +8,13 @@ import { authMiddleware } from '@/store/middlewares'
 const rootReducer = combineReducers({
   user: userReducer,
   system: systemReducer,
-  company: companyReducer
+  company: companyReducer,
 })
 
 const store = configureStore({
   reducer: rootReducer,
-  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(authMiddleware)
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(authMiddleware),
 })
 
 export default store

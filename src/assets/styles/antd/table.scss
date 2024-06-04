@@ -3,7 +3,7 @@
   height: 100%;
   overflow: hidden;
   background: #fff;
-  border: 1px solid #E1E6EB;
+  border: 1px solid #e1e6eb;
   .ant-table-container {
     height: 100%;
     min-height: 100%;
@@ -39,10 +39,10 @@
   }
 
   // 暂无数据居中对齐
-  .ant-table-placeholder {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
+  // .ant-table-placeholder {
+  //   position: absolute;
+  //   top: 50%;
+  //   left: 50%;
+  //   transform: translate(-50%, -50%);
+  // }
 }

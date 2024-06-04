@@ -26,7 +26,7 @@ interface Props extends TableProps<any> {
   onTableChange?: (pagination: any, filters: any, sorter: any) => void
   onDelete?: (id: string) => AxiosPromise
   onAdd?: () => void
-  toolbar?: React.ReactChild
+  toolbar?: React.ReactNode
   [key: string]: any
 }
 
@@ -34,7 +34,7 @@ interface State {
   tableHeight: number
   tableDataSource: any[]
   isLoading: boolean
-  pagination: Record<string, any>,
+  pagination: Record<string, any>
   selectedRowKeys: string[]
   columns: any[]
 }
@@ -50,10 +50,10 @@ const initialState: State = {
     pageSize: DEFAULT_PAGE_SIZE,
     showSizeChanger: true,
     total: 0,
-    pageSizeOptions: ['30', '50', '70', '100', '200']
+    pageSizeOptions: ['30', '50', '70', '100', '200'],
   },
   selectedRowKeys: [],
-  columns: []
+  columns: [],
 }
 
 function showTotal(total: number) {
@@ -74,28 +74,31 @@ const TableFC: FC<Props> = ({
   const showRowSelection = onDelete
   const [state, setState] = useKeepState(initialState)
 
-  const { run: getData } = useDebounceFn(() => {
-    setState({ isLoading: true })
-    const { pageNo, pageSize } = tableRef.current
-    // 调用父组件函数获取数据
-    getTableData({
-      pageNo: pageNo - 1,
-      pageSize: pageSize
-    })
-      .then(res => {
-        setState({
-          pagination: {
-            ...state.pagination,
-            total: res.count,
-            pageSize
-          },
-          tableDataSource: res.rows
+  const { run: getData } = useDebounceFn(
+    () => {
+      setState({ isLoading: true })
+      const { pageNo, pageSize } = tableRef.current
+      // 调用父组件函数获取数据
+      getTableData({
+        pageNo: pageNo - 1,
+        pageSize: pageSize,
+      })
+        .then((res) => {
+          setState({
+            pagination: {
+              ...state.pagination,
+              total: res.count,
+              pageSize,
+            },
+            tableDataSource: res.rows,
+          })
         })
-      })
-      .finally(() => {
-        setState({ isLoading: false })
-      })
-  }, { wait: 500, leading: true })
+        .finally(() => {
+          setState({ isLoading: false })
+        })
+    },
+    { wait: 500, leading: true }
+  )
 
   function onChange(pagination: any, filters: any, sorter: any) {
     const pageNo = pagination.current
@@ -104,8 +107,8 @@ const TableFC: FC<Props> = ({
       pagination: {
         ...state.pagination,
         pageNo,
-        pageSize
-      }
+        pageSize,
+      },
     })
     tableRef.current.pageNo = pageNo
     tableRef.current.pageSize = pageSize
@@ -146,9 +149,9 @@ const TableFC: FC<Props> = ({
             title: '序号',
             width: 60,
             render: (_: any, $: any, i: number) => i + 1,
-            align: 'center'
-          }
-        ].concat(columns as [])
+            align: 'center',
+          },
+        ].concat(columns as []),
       })
     }
   }, [columns])
@@ -156,18 +159,17 @@ const TableFC: FC<Props> = ({
   function handleDelete() {
     if (!onDelete) return null
     const selectedRowKeys = state.selectedRowKeys.join(',')
-    onDelete(selectedRowKeys)
-      .then(() => {
-        setState({ selectedRowKeys: [] })
-        getData()
-      })
+    onDelete(selectedRowKeys).then(() => {
+      setState({ selectedRowKeys: [] })
+      getData()
+    })
   }
 
   if (showRowSelection) {
     rowSelection = {
       onChange(selectedRowKeys: string[]) {
         setState({ selectedRowKeys })
-      }
+      },
     }
   }
 
@@ -181,7 +183,7 @@ const TableFC: FC<Props> = ({
       />
 
       <Table
-        {...props as any}
+        {...(props as any)}
         rowKey="id"
         loading={state.isLoading}
         columns={state.columns}
@@ -193,7 +195,7 @@ const TableFC: FC<Props> = ({
         pagination={{
           ...state.pagination,
           size: 'small',
-          showTotal
+          showTotal,
         }}
       />
     </React.Fragment>

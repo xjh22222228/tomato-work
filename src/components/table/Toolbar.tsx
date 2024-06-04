@@ -4,16 +4,16 @@ import { DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 
 interface Props {
   onDelete?: () => void
-  onAdd?: () => void,
-  toolbar?: React.ReactChild
+  onAdd?: () => void
+  toolbar?: React.ReactNode
   selectedRowKeys: string[]
 }
 
-const Toolbar: React.FC<Props> = function({
+const Toolbar: React.FC<Props> = function ({
   selectedRowKeys,
   toolbar,
   onDelete,
-  onAdd
+  onAdd,
 }) {
   const showToolbar = onDelete || onAdd
   const selectedLen = selectedRowKeys.length
@@ -23,11 +23,7 @@ const Toolbar: React.FC<Props> = function({
     <div className="table-action-panel">
       <div>
         {onAdd && (
-          <Button
-            type="primary"
-            onClick={onAdd}
-            icon={<PlusOutlined />}
-          >
+          <Button type="primary" onClick={onAdd} icon={<PlusOutlined />}>
             新增
           </Button>
         )}

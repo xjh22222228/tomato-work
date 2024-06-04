@@ -1,4 +1,3 @@
-
 <p align="center">
   <a href="https://work.xiejiahe.com">
     <img src="public/poster.png" width="150" />
@@ -16,43 +15,38 @@
   </p>
 </p>
 
-
-
-
-
 ## Screenshot
+
 ![](media/screenshot.png)
 
-
 ## Built with
+
 - [Hooks](https://zh-hans.reactjs.org/docs/hooks-intro.html)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Redux](https://redux.js.org/tutorials/fundamentals/part-5-ui-react)
 - [Ant Design](https://ant.design/docs/react/introduce-cn)
 - [Vite](https://vitejs.dev)
 
-
-
-
 ## Todo list
-- [x] github登录
+
+- [x] github 登录
 - [x] 提醒事项
 - [x] 活动清单
 - [x] 今日待办
 - [x] 财务管理
 - [x] 公司单位
 - [x] 个人中心
-- [x] 我的备忘 - 支持Markdown & WYSIWYG
+- [x] 我的备忘 - 支持 Markdown & WYSIWYG
 - [x] 站内消息
-- [x] 邮件推送 - (github邮箱必须设为公开)
-- [x] 微信推送 - 感谢Server酱 (需要在个人中心设置sckey)
+- [x] 邮件推送 - (github 邮箱必须设为公开)
+- [x] 微信推送 - 感谢 Server 酱 (需要在个人中心设置 sckey)
 - [x] 日志管理
 
-
 ## Build Setup
-- Node.js >= 14
 
-``` bash
+- Node.js >= 18
+
+```bash
 # Clone
 git clone --depth=1 https://github.com/xjh22222228/tomato-work.git
 
@@ -68,13 +62,8 @@ npm run start:prod # Connect to production environment
 npm run build
 ```
 
-
-
-
-
-
-
 ---
 
 ## License
+
 [MIT](https://opensource.org/licenses/MIT)

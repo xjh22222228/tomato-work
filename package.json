@@ -15,7 +15,7 @@
     "start:prod": "vite --mode prod",
     "build": "tsc && vite build --mode prod",
     "serve": "vite preview",
-    "lint": "eslint --cache --ext .js,.jsx,.tsx,.ts ./src"
+    "lint": "eslint"
   },
   "dependencies": {
     "@ant-design/icons": "^5.3.7",

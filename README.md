@@ -8,7 +8,9 @@
     <a href="https://github.com/xjh22222228/tomato-work-server">
       <img alt="Server" src="https://img.shields.io/static/v1.svg?label=&message=Server&style=flat-square&color=e8883a">
     </a>
-    <a href="https://github.com/xjh22222228/tomato-work/stargazers"><img src="https://img.shields.io/github/stars/xjh22222228/tomato-work" alt="Stars Badge"/></a>
+    <a href="https://github.com/xjh22222228/tomato-work-mini">
+      <img alt="Server" src="https://img.shields.io/static/v1.svg?label=&message=Mini&style=flat-square&color=07c160">
+    </a>
     <img alt="React" src="https://img.shields.io/static/v1.svg?label=&message=React&style=flat-square&color=61daeb">
     <img src="https://img.shields.io/github/package-json/v/xjh22222228/tomato-work" />
     <img src="https://img.shields.io/github/license/xjh22222228/tomato-work" />

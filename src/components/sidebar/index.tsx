@@ -6,7 +6,6 @@ import type { MenuProps } from 'antd'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { HomeMainState } from '@/views/main/index'
 import { HOME_SIDER_MENU_LIST } from '@/constants'
-import logoImage from '@/assets/img/common/logo.png'
 
 const { Sider } = Layout
 
@@ -30,7 +29,9 @@ const Sidebar: React.FC<Props> = function ({ collapsed }) {
       for (let i = 0; i < HOME_SIDER_MENU_LIST.length; i++) {
         const menu = HOME_SIDER_MENU_LIST[i]
         if (Array.isArray(menu.children)) {
-          const findIdx = menu.children.findIndex(menu => pathname === menu.path)
+          const findIdx = menu.children.findIndex(
+            (menu) => pathname === menu.path
+          )
           if (findIdx !== -1) {
             setSelectedKeys(menu.children[findIdx].path)
             setOpenKeys([menu.name])
@@ -46,16 +47,16 @@ const Sidebar: React.FC<Props> = function ({ collapsed }) {
   }, [location.pathname])
 
   const items: MenuProps['items'] = useMemo(() => {
-    return HOME_SIDER_MENU_LIST.map(item => {
+    return HOME_SIDER_MENU_LIST.map((item) => {
       const data: any = {
         key: item.path || item.name,
         icon: item.icon,
-        label: item.name
+        label: item.name,
       }
       if (Array.isArray(item.children)) {
-        data.children = item.children.map(menu => ({
+        data.children = item.children.map((menu) => ({
           key: menu.path,
-          label: menu.name
+          label: menu.name,
         }))
       }
       return data
@@ -75,9 +76,7 @@ const Sidebar: React.FC<Props> = function ({ collapsed }) {
       className="sidebar"
     >
       <div className="sider-menu-logo">
-        {collapsed ? (
-          <img src={logoImage} />
-        ) : config.title}
+        {collapsed ? <img src="/logo.svg" /> : config.title}
       </div>
 
       <Menu

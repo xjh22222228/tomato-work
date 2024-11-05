@@ -24,8 +24,8 @@ export function serviceCreateBillType(data: object) {
 }
 
 // 资金流动
-export function serviceGetBill(params?: object) {
-  return http.get('/bill', { params })
+export function serviceGetBill(data?: object) {
+  return http.post('/bill/get', data)
 }
 
 export function serviceDeleteBill(id: string) {

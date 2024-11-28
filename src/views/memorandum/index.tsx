@@ -6,7 +6,7 @@ import './style.scss'
 import dayjs from 'dayjs'
 import NoData from '@/components/no-data/index'
 import { Card, Col, Row, Button, Popconfirm, Spin } from 'antd'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { serviceGetMemorandum, serviceDeleteMemorandum } from '@/services'
 import { defaultTitle } from './constants'
 
@@ -47,7 +47,9 @@ const MemorandumPage: React.FC = () => {
     serviceGetMemorandum()
       .then((res) => {
         const data = res.map((item: any) => {
-          item.createdAt = dayjs(item.createdAt).format('YYYY/M/D HH:mm')
+          const format = 'YYYY.M.D HH:mm'
+          item.createdAt = dayjs(item.createdAt).format(format)
+          item.updatedAt = dayjs(item.updatedAt).format(format)
           item.title = item.title || defaultTitle
           return item
         })
@@ -76,7 +78,7 @@ const MemorandumPage: React.FC = () => {
                   title={item.title}
                   hoverable
                 >
-                  {item.createdAt}
+                  {item.updatedAt}
                   <div
                     className="content"
                     dangerouslySetInnerHTML={{ __html: item.html }}

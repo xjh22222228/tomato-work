@@ -81,7 +81,7 @@ const initialState: State = {
 const BillPage: React.FC = function () {
   const [form] = Form.useForm()
   const [state, setState] = useKeepState(initialState)
-  const tableRef = useRef<any>()
+  const tableRef = useRef<any>(null)
 
   const tableColumns = [
     {

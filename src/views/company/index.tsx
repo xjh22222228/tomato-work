@@ -16,22 +16,22 @@ interface State {
 
 const initialState: State = {
   showCreateCompanyModal: false,
-  detail: {}
+  detail: {},
 }
 
 const CompanyPage = () => {
   const [state, setState] = useKeepState(initialState)
-  const tableRef = useRef<any>()
+  const tableRef = useRef<any>(null)
   const tableColumns = [
     {
       title: '单位名称',
       dataIndex: 'companyName',
-      width: 170
+      width: 170,
     },
     {
       title: '入职日期',
       dataIndex: 'startDate',
-      width: 130
+      width: 130,
     },
     {
       title: '离职日期',
@@ -42,14 +42,13 @@ const CompanyPage = () => {
       title: '计划离职日期',
       dataIndex: 'expectLeaveDate',
       width: 130,
-      render: (expectLeaveDate: any) => (
+      render: (expectLeaveDate: any) =>
         expectLeaveDate > 0 ? (
           <div>
             {expectLeaveDate}
             <div>还有 {fromNow(Date.now(), expectLeaveDate)} 天</div>
           </div>
-        ) : null
-      )
+        ) : null,
     },
     {
       title: '在职天数',
@@ -63,7 +62,7 @@ const CompanyPage = () => {
     {
       title: '备注',
       dataIndex: 'remark',
-      className: 'wbba'
+      className: 'wbba',
     },
     {
       title: '操作',
@@ -82,8 +81,8 @@ const CompanyPage = () => {
             <Button>删除</Button>
           </Popconfirm>
         </>
-      )
-    }
+      ),
+    },
   ]
 
   function handleEditCompany(record: any) {
@@ -104,7 +103,7 @@ const CompanyPage = () => {
     setState({ showCreateCompanyModal: !state.showCreateCompanyModal })
   }
 
-  const handleSuccess = function() {
+  const handleSuccess = function () {
     toggleCreateCompanyModal()
     tableRef.current.getTableData()
   }
@@ -120,10 +119,12 @@ const CompanyPage = () => {
         getTableData={getAllCompany}
         columns={tableColumns}
         onDelete={serviceDelCompany}
-        onAdd={() => setState({
-          showCreateCompanyModal: true,
-          detail: {}
-        })}
+        onAdd={() =>
+          setState({
+            showCreateCompanyModal: true,
+            detail: {},
+          })
+        }
       />
 
       <CreateCompanyModal

@@ -1,6 +1,6 @@
-@import "style.scss";
-@import "base-class.scss";
-@import "antd/index.scss";
-@import "query-panel.scss";
+@use 'style.scss' as *;
+@use 'base-class.scss' as *;
+@use 'antd/index.scss' as *;
+@use 'query-panel.scss' as *;
 // 编辑器
-@import "@toast-ui/editor/dist/toastui-editor.css";
+@use '@toast-ui/editor/dist/toastui-editor.css' as *;

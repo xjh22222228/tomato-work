@@ -1,6 +1,6 @@
 // 全局覆盖antd默认样式
-@import "menu.scss";
-@import "table.scss";
-@import "modal.scss";
-@import "card.scss";
-@import "drawer.scss";
+@use 'menu.scss' as *;
+@use 'table.scss' as *;
+@use 'modal.scss' as *;
+@use 'card.scss' as *;
+@use 'drawer.scss' as *;

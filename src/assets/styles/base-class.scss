@@ -1,5 +1,5 @@
-@import "./variables.scss";
-@import "@/assets/styles/mixins.scss";
+@use './variables.scss' as *;
+@use '@/assets/styles/mixins.scss' as *;
 
 // 主题字体颜色
 .theme-font-color {
@@ -7,7 +7,7 @@
 }
 
 .flex {
-  display: flex
+  display: flex;
 }
 
 .flex-center {

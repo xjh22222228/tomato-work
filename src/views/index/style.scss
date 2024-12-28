@@ -1,4 +1,5 @@
-@import "../../assets/styles/variables.scss";
+@use '../../assets/styles/variables.scss' as *;
+@use 'sass:list';
 
 .home-index {
   display: block !important;
@@ -10,7 +11,7 @@
     height: 250px;
     margin-bottom: 25px;
   }
-  
+
   .item-text {
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -45,17 +46,16 @@
   .ant-col {
     margin-bottom: 20px;
     @for $i from 1 through 4 {
-
       &:nth-child(#{$i}) {
         .anticon {
-          color: nth($colors, $i);
+          color: list.nth($colors, $i);
         }
 
         &:hover {
           .anticon {
             color: #fff;
             & > svg {
-              background: nth($colors, $i);
+              background: list.nth($colors, $i);
             }
           }
         }
@@ -81,7 +81,7 @@
       & > svg {
         padding: 15px;
         border-radius: 5px;
-        transition: .1s linear;
+        transition: 0.1s linear;
       }
     }
 
@@ -128,7 +128,7 @@
     padding: 15px 0 15px 30px;
 
     &:after {
-      content: "";
+      content: '';
       position: absolute;
       top: 17px;
       left: 16px;

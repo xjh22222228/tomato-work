@@ -1,4 +1,4 @@
-@import "@/assets/styles/mixins.scss";
+@use '@/assets/styles/mixins.scss' as *;
 
 // Index
 .memorandum-spin {
@@ -17,7 +17,7 @@
   .ant-card-body {
     padding: 10px 20px;
   }
-  
+
   .ant-col {
     margin-bottom: 15px;
   }
@@ -84,7 +84,7 @@
     justify-content: space-between;
     margin-bottom: 15px;
     align-items: center;
-    border-bottom: .5px solid #e6e6e6;
+    border-bottom: 0.5px solid #e6e6e6;
     padding-bottom: 12px;
   }
   .markdown-body {

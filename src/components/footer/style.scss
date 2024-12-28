@@ -1,4 +1,4 @@
-@import "@/assets/styles/variables.scss";
+@use '@/assets/styles/variables.scss' as *;
 .global-footer {
   align-self: center;
   padding: 15px 5px;

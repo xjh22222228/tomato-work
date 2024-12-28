@@ -1,5 +1,5 @@
-@import "@/assets/styles/mixins.scss";
-@import "@/assets/styles/variables.scss";
+@use '@/assets/styles/mixins.scss' as *;
+@use '@/assets/styles/variables.scss' as *;
 
 .ant-layout-header {
   z-index: 1;
@@ -7,7 +7,7 @@
   line-height: 60px;
   padding: 0 20px !important;
   background: #fff !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   height: 60px !important;
   overflow: hidden;
 
@@ -30,7 +30,7 @@
       height: 100%;
       cursor: pointer;
       padding: 0 10px;
-      
+
       &:hover {
         background: #f7f7f7;
         color: #333;

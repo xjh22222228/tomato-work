@@ -1,4 +1,4 @@
-@import "@/assets/styles/mixins.scss";
+@use '@/assets/styles/mixins.scss' as *;
 
 .exception-wrapper {
   height: 100vh;

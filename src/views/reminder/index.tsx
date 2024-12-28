@@ -15,7 +15,7 @@ const { RangePicker } = DatePicker
 const Option = Select.Option
 const STATUS_TYPE: Record<string, any> = {
   1: { color: '#f50', text: '待提醒' },
-  2: { color: '#87d068', text: '已提醒' }
+  2: { color: '#87d068', text: '已提醒' },
 }
 
 interface State {
@@ -27,33 +27,31 @@ type Props = ReturnType<typeof mapStateToProps>
 
 const initialState: State = {
   showCreateModal: false,
-  currentRow: null
+  currentRow: null,
 }
 
-const ReminderPage: React.FC<Props> = function({ userInfo }) {
+const ReminderPage: React.FC<Props> = function ({ userInfo }) {
   const [form] = Form.useForm()
   const [state, setState] = useKeepState(initialState)
-  const tableRef = useRef<any>()
+  const tableRef = useRef<any>(null)
   const tableColumns = [
     {
       title: '状态',
       dataIndex: 'type',
       width: 100,
       render: (row: any) => (
-        <Tag color={STATUS_TYPE[row].color}>
-          {STATUS_TYPE[row].text}
-        </Tag>
-      )
+        <Tag color={STATUS_TYPE[row].color}>{STATUS_TYPE[row].text}</Tag>
+      ),
     },
     {
       title: '提醒时间',
       dataIndex: 'createdAt',
-      width: 220
+      width: 220,
     },
     {
       title: '提醒内容',
       dataIndex: 'content',
-      className: 'wbba wpr'
+      className: 'wbba wpr',
     },
     {
       title: '操作',
@@ -72,16 +70,16 @@ const ReminderPage: React.FC<Props> = function({ userInfo }) {
             <Button>删除</Button>
           </Popconfirm>
         </>
-      )
-    }
+      ),
+    },
   ]
 
-  const initParams = function() {
+  const initParams = function () {
     const startDate = dayjs().startOf('year')
     const endDate = dayjs().endOf('year')
     form.setFieldsValue({
       queryType: '',
-      date: [startDate, endDate]
+      date: [startDate, endDate],
     })
     tableRef?.current?.getTableData()
   }
@@ -98,7 +96,7 @@ const ReminderPage: React.FC<Props> = function({ userInfo }) {
       params.type = values.queryType
     }
 
-    return serviceGetReminder(params).then(res => {
+    return serviceGetReminder(params).then((res) => {
       res.rows = res.rows.map((el: any, idx: number) => {
         el.order = idx + 1
         el.createdAt = formatDateTime(el.createdAt)
@@ -111,15 +109,14 @@ const ReminderPage: React.FC<Props> = function({ userInfo }) {
   function handleEdit(record: any) {
     setState({
       showCreateModal: true,
-      currentRow: record
+      currentRow: record,
     })
   }
 
   function handleDelete(record: any) {
-    serviceDeleteReminder(record.id)
-      .then(() => {
-        tableRef.current.getTableData()
-      })
+    serviceDeleteReminder(record.id).then(() => {
+      tableRef.current.getTableData()
+    })
   }
 
   // modal成功新增回调函数
@@ -158,11 +155,7 @@ const ReminderPage: React.FC<Props> = function({ userInfo }) {
           layout="inline"
           onValuesChange={() => tableRef?.current?.getTableData()}
         >
-          <Form.Item
-            name="queryType"
-            label="查询类型"
-            initialValue=""
-          >
+          <Form.Item name="queryType" label="查询类型" initialValue="">
             <Select>
               <Option value="">全部</Option>
               <Option value="1">待提醒</Option>
@@ -175,7 +168,12 @@ const ReminderPage: React.FC<Props> = function({ userInfo }) {
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" onClick={() => tableRef.current.getTableData()}>查询</Button>
+            <Button
+              type="primary"
+              onClick={() => tableRef.current.getTableData()}
+            >
+              查询
+            </Button>
             <Button onClick={initParams}>重置</Button>
           </Form.Item>
         </Form>
@@ -200,7 +198,7 @@ const ReminderPage: React.FC<Props> = function({ userInfo }) {
 }
 
 const mapStateToProps = (store: any) => ({
-  userInfo: store.user.userInfo
+  userInfo: store.user.userInfo,
 })
 
 export default connect(mapStateToProps)(ReminderPage)

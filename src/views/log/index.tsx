@@ -34,7 +34,7 @@ const LogPage = () => {
   const navigate = useNavigate()
   const [form] = Form.useForm()
   const [state, setState] = useKeepState(initState)
-  const tableRef = useRef<any>()
+  const tableRef = useRef<any>(null)
   const dispatch = useAppDispatch()
   const companyAll = useAppSelector((state) => state.company.companyAll)
 

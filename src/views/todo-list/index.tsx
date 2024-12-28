@@ -5,7 +5,11 @@ import React, { useEffect, useRef } from 'react'
 import useKeepState from 'use-keep-state'
 import Table from '@/components/table'
 import CreateTodoModal from './CreateTodoModal'
-import { serviceGetTodoList, serviceDeleteTodoList, serviceUpdateTodoList } from '@/services'
+import {
+  serviceGetTodoList,
+  serviceDeleteTodoList,
+  serviceUpdateTodoList,
+} from '@/services'
 import { STATUS } from './constants'
 import { DatePicker, Button, Tag, Form, Popconfirm } from 'antd'
 import { FORMAT_DATE, formatDateMinute, DATE_YEAR } from '@/utils'
@@ -19,33 +23,31 @@ interface State {
 
 const initState: State = {
   showCreateTodoModal: false,
-  currentRowData: null
+  currentRowData: null,
 }
 
 const TodoListPage = () => {
   const [form] = Form.useForm()
   const [state, setState] = useKeepState(initState)
-  const tableRef = useRef<any>()
+  const tableRef = useRef<any>(null)
   const tableColumns = [
     {
       title: '状态',
       dataIndex: 'status',
       width: 90,
       render: (status: number) => (
-        <Tag color={STATUS[status].color}>
-          {STATUS[status].text}
-        </Tag>
-      )
+        <Tag color={STATUS[status].color}>{STATUS[status].text}</Tag>
+      ),
     },
     {
       title: '创建时间',
       dataIndex: 'createdAt',
-      width: 170
+      width: 170,
     },
     {
       title: '活动内容',
       dataIndex: 'content',
-      className: 'wbba wpr'
+      className: 'wbba wpr',
     },
     {
       title: '操作',
@@ -70,8 +72,8 @@ const TodoListPage = () => {
             完成
           </Button>
         </>
-      )
-    }
+      ),
+    },
   ]
 
   function getData() {
@@ -86,7 +88,7 @@ const TodoListPage = () => {
       params.endDate = values.date[1].format(FORMAT_DATE)
     }
 
-    return serviceGetTodoList(params).then(res => {
+    return serviceGetTodoList(params).then((res) => {
       res.rows.map((item: any) => {
         item.createdAt = formatDateMinute(item.createdAt)
         return item
@@ -104,7 +106,7 @@ const TodoListPage = () => {
     setState({ showCreateTodoModal: !state.showCreateTodoModal })
   }
 
-  const handleSuccess = function() {
+  const handleSuccess = function () {
     toggleCreateTodoModal()
     tableRef.current.getTableData()
   }
@@ -117,15 +119,13 @@ const TodoListPage = () => {
         break
       // 删除
       case 1:
-        serviceDeleteTodoList(row.id)
-        .then(res => {
+        serviceDeleteTodoList(row.id).then((res) => {
           tableRef.current.getTableData()
         })
         break
       // 状态
       case 2:
-        serviceUpdateTodoList(row.id, { status: 2 })
-        .then(res => {
+        serviceUpdateTodoList(row.id, { status: 2 }).then((res) => {
           tableRef.current.getTableData()
         })
         break
@@ -150,7 +150,9 @@ const TodoListPage = () => {
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" onClick={getData}>查询</Button>
+            <Button type="primary" onClick={getData}>
+              查询
+            </Button>
             <Button onClick={initParams}>重置</Button>
           </Form.Item>
         </Form>
@@ -161,10 +163,12 @@ const TodoListPage = () => {
         getTableData={getTodoList}
         columns={tableColumns}
         onDelete={serviceDeleteTodoList}
-        onAdd={() => setState({
-          showCreateTodoModal: true,
-          currentRowData: null
-        })}
+        onAdd={() =>
+          setState({
+            showCreateTodoModal: true,
+            currentRowData: null,
+          })
+        }
       />
 
       <CreateTodoModal

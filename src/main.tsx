@@ -11,18 +11,19 @@ import dayjs from 'dayjs'
 import zh from 'dayjs/locale/zh-cn'
 import store from '@/store'
 
+// https://ant.design/docs/react/v5-for-19-cn antd@v6 移除
+import '@ant-design/v5-patch-for-react-19'
+
 dayjs.locale(zh)
 
 const root = ReactDOM.createRoot(
-  document.getElementById("tomato-work-root") as HTMLElement
+  document.getElementById('tomato-work-root') as HTMLElement
 )
 
 root.render(
-  // <React.StrictMode>
-    <Provider store={store}>
-      <ConfigProvider locale={zhCN}>
-        <AppRoute />
-      </ConfigProvider>
-    </Provider>
-  // </React.StrictMode>
+  <Provider store={store}>
+    <ConfigProvider locale={zhCN}>
+      <AppRoute />
+    </ConfigProvider>
+  </Provider>
 )

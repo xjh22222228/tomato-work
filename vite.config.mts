@@ -1,15 +1,13 @@
 import { defineConfig } from 'vite'
 import reactRefresh from '@vitejs/plugin-react-refresh'
-import path from 'path'
+import path from 'node:path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [reactRefresh()],
 
   resolve: {
-    alias: [
-      { find: '@', replacement: path.resolve(__dirname, 'src') }
-    ]
+    alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }],
   },
 
   server: {
@@ -19,7 +17,7 @@ export default defineConfig({
         target: 'http://localhost:7003',
         changeOrigin: true,
       },
-    }
+    },
   },
 
   build: {

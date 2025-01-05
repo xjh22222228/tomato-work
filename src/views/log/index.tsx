@@ -38,7 +38,7 @@ const LogPage = () => {
   const dispatch = useAppDispatch()
   const companyAll = useAppSelector((state) => state.company.companyAll)
 
-  const tableColumns = [
+  const tableColumns: any[] = [
     {
       title: '创建时间',
       dataIndex: '__createdAt__',

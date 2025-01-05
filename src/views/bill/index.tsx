@@ -7,15 +7,8 @@ import dayjs from 'dayjs'
 import useKeepState from 'use-keep-state'
 import Table from '@/components/table'
 import CreateAmountModal from './CreateAmountModal'
-import {
-  DatePicker,
-  Button,
-  Select,
-  Statistic,
-  Input,
-  Form,
-  Popconfirm,
-} from 'antd'
+import NumberFlow from '@number-flow/react'
+import { DatePicker, Button, Select, Input, Form, Popconfirm } from 'antd'
 import {
   serviceGetBill,
   serviceDeleteBill,
@@ -61,6 +54,7 @@ interface State {
   }
   sortedInfo: any
   filters: object
+  selectedAmount: null | number
 }
 
 const initialState: State = {
@@ -76,6 +70,7 @@ const initialState: State = {
   },
   sortedInfo: null,
   filters: {},
+  selectedAmount: null,
 }
 
 const BillPage: React.FC = function () {
@@ -83,7 +78,7 @@ const BillPage: React.FC = function () {
   const [state, setState] = useKeepState(initialState)
   const tableRef = useRef<any>(null)
 
-  const tableColumns = [
+  const tableColumns: any[] = [
     {
       title: '入账时间',
       dataIndex: 'createdAt',
@@ -156,12 +151,13 @@ const BillPage: React.FC = function () {
     })
 
     if (isGetData !== false) {
+      tableRef.current.reset()
       tableRef.current.getTableData()
     }
   }
 
   // 获取数据
-  async function getBill(params: Record<string, any>) {
+  async function getBill(params: Record<string, any>): Promise<any> {
     try {
       const values = await form.validateFields()
       params = {
@@ -341,6 +337,26 @@ const BillPage: React.FC = function () {
     tableRef.current.getTableData()
   }
 
+  function onRowSelectionChange(selectedRowKeys: string[], rows: any[]) {
+    if (selectedRowKeys.length <= 0) {
+      setState({ selectedAmount: null })
+      return
+    }
+    let amount = 0
+    selectedRowKeys.forEach((key) => {
+      const data = rows.find((item) => item.id === key)
+      if (data) {
+        if (data.type === 1) {
+          amount += Number(data.price)
+        } else {
+          amount -= Number(data.price)
+        }
+      }
+    })
+    amount = Number(amount.toFixed(2))
+    setState({ selectedAmount: amount })
+  }
+
   useEffect(() => {
     initParams(false)
     getBillType()
@@ -390,7 +406,7 @@ const BillPage: React.FC = function () {
 
           <Form.Item label="" name="keyword" initialValue="">
             <Search
-              placeholder="试试搜索备注"
+              placeholder="搜索备注"
               maxLength={300}
               onSearch={() => tableRef.current.getTableData()}
               style={{ width: 260 }}
@@ -421,18 +437,20 @@ const BillPage: React.FC = function () {
         </Form>
 
         <div className="poly">
-          <div className="item-price">
-            <em>收入：￥</em>
-            <Statistic value={state.price.income} precision={2} />
+          <div className="item-amount">
+            <NumberFlow prefix="收入：￥" value={state.price.income} />
           </div>
-          <div className="item-price">
-            <em>支出：￥</em>
-            <Statistic value={state.price.consumption} precision={2} />
+          <div className="item-amount">
+            <NumberFlow prefix="支出：￥" value={state.price.consumption} />
           </div>
-          <div className="item-price">
-            <em>实际收入：￥</em>
-            <Statistic value={state.price.available} precision={2} />
+          <div className="item-amount">
+            <NumberFlow prefix="实际收入：￥" value={state.price.available} />
           </div>
+          {state.selectedAmount !== null && (
+            <div className="item-amount">
+              <NumberFlow prefix="已选择：￥" value={state.selectedAmount} />
+            </div>
+          )}
         </div>
       </div>
 
@@ -442,6 +460,7 @@ const BillPage: React.FC = function () {
         columns={tableColumns}
         onTableChange={onTableChange}
         onDelete={serviceDeleteBill}
+        onRowSelectionChange={onRowSelectionChange}
         onAdd={() =>
           setState({ showCreateAmountModal: true, currentRow: null })
         }

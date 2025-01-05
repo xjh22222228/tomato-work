@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import './style.scss'
-import { Row, Col, Statistic } from 'antd'
+import NumberFlow from '@number-flow/react'
+import { Row, Col } from 'antd'
 import { Link } from 'react-router-dom'
 import { serviceGetPanelData } from '@/services'
 import {
@@ -15,26 +16,26 @@ const PanelGroup = () => {
   const [state, setState] = useState([
     {
       title: '今日支出',
-      total: '0',
+      total: 0,
       Icon: <PropertySafetyFilled className="icon" />,
       prefix: '￥',
       path: '/home/bill',
     },
     {
       title: '今日待办',
-      total: '0',
+      total: 0,
       Icon: <ScheduleFilled className="icon" />,
       path: '/home/todayTask',
     },
     {
       title: '活动清单',
-      total: '0',
+      total: 0,
       Icon: <FileTextFilled className="icon" />,
       path: '/home/todoList',
     },
     {
       title: '提醒事项',
-      total: '0',
+      total: 0,
       Icon: <AlertFilled className="icon" />,
       path: '/home/reminder',
     },
@@ -47,7 +48,7 @@ const PanelGroup = () => {
 
     serviceGetPanelData().then((res) => {
       const data = state.slice()
-      data[0].total = Number(res.consumption).toFixed(2)
+      data[0].total = Number(res.consumption)
       data[1].total = res.todayTaskCount
       data[2].total = res.unfinishedTodoListCount
       data[3].total = res.reminderCount
@@ -62,11 +63,8 @@ const PanelGroup = () => {
           <Link to={item.path} className="block-item">
             {item.Icon}
             <div className="data">
-              <Statistic
-                title={item.title}
-                value={item.total}
-                prefix={item.prefix}
-              />
+              <div className="title">{item.title}</div>
+              <NumberFlow value={item.total} prefix={item.prefix} />
             </div>
           </Link>
         </Col>

@@ -12,20 +12,20 @@
  * />
  */
 
-import React, { FC, useEffect } from 'react'
+import React, { FC, useEffect, useImperativeHandle } from 'react'
 import './style.scss'
 import { Table } from 'antd'
 import type { TableProps } from 'antd'
-import { AxiosPromise } from 'axios'
 import useKeepState from 'use-keep-state'
 import Toolbar from './Toolbar'
 import useDebounceFn from '@/hooks/useDebounceFn'
 
 interface Props extends TableProps<any> {
-  getTableData: (data: any) => Promise<Record<string, any>>
+  getTableData: (data: any) => Promise<any>
   onTableChange?: (pagination: any, filters: any, sorter: any) => void
-  onDelete?: (id: string) => AxiosPromise
+  onDelete?: (id: string) => Promise<any>
   onAdd?: () => void
+  onRowSelectionChange?: (selectedRowKeys: string[], rows: any[]) => void
   toolbar?: React.ReactNode
   [key: string]: any
 }
@@ -50,7 +50,7 @@ const initialState: State = {
     pageSize: DEFAULT_PAGE_SIZE,
     showSizeChanger: true,
     total: 0,
-    pageSizeOptions: ['30', '50', '70', '100', '200'],
+    pageSizeOptions: ['30', '50', '70', '100', '200', '1000'],
   },
   selectedRowKeys: [],
   columns: [],
@@ -65,7 +65,8 @@ const TableFC: FC<Props> = ({
   onTableChange,
   onDelete,
   onAdd,
-  forwardedRef: tableRef,
+  onRowSelectionChange,
+  ref: tableRef,
   columns,
   toolbar,
   ...props
@@ -118,18 +119,17 @@ const TableFC: FC<Props> = ({
     })
   }
 
-  useEffect(() => {
-    if (!tableRef.current) {
-      tableRef.current = {}
-    }
-    // 新增方法给父组件调用
-    tableRef.current.getTableData = getData
-  })
+  function reset() {
+    setState({ selectedRowKeys: [] })
+    onRowSelectionChange?.([], [])
+  }
 
-  useEffect(() => {
-    tableRef.current.pageNo = 1
-    tableRef.current.pageSize = DEFAULT_PAGE_SIZE
-  }, [tableRef])
+  useImperativeHandle(tableRef, () => ({
+    getTableData: getData,
+    reset,
+    pageNo: 1,
+    pageSize: DEFAULT_PAGE_SIZE,
+  }))
 
   useEffect(() => {
     // 设置表格的高度
@@ -167,8 +167,10 @@ const TableFC: FC<Props> = ({
 
   if (showRowSelection) {
     rowSelection = {
+      selectedRowKeys: state.selectedRowKeys,
       onChange(selectedRowKeys: string[]) {
         setState({ selectedRowKeys })
+        onRowSelectionChange?.(selectedRowKeys, state.tableDataSource)
       },
     }
   }
@@ -202,8 +204,4 @@ const TableFC: FC<Props> = ({
   )
 }
 
-const forwardedTable = React.forwardRef((props: any, ref) => (
-  <TableFC {...props} forwardedRef={ref} />
-))
-
-export default React.memo(forwardedTable)
+export default React.memo(TableFC)

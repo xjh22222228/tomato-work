@@ -30,7 +30,7 @@ const TodoListPage = () => {
   const [form] = Form.useForm()
   const [state, setState] = useKeepState(initState)
   const tableRef = useRef<any>(null)
-  const tableColumns = [
+  const tableColumns: any[] = [
     {
       title: '状态',
       dataIndex: 'status',

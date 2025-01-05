@@ -22,7 +22,7 @@ const initialState: State = {
 const CompanyPage = () => {
   const [state, setState] = useKeepState(initialState)
   const tableRef = useRef<any>(null)
-  const tableColumns = [
+  const tableColumns: any[] = [
     {
       title: '单位名称',
       dataIndex: 'companyName',

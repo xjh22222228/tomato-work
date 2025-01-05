@@ -87,29 +87,15 @@
 
     .data {
       padding-top: 10px;
-      text-align: left;
+      text-align: right;
       align-self: center;
-
-      .ant-statistic-title {
-        margin-bottom: 5px;
-        font-size: 16px;
-        font-weight: bold;
-        color: #00000073;
-        text-align: center;
-      }
-      .ant-statistic-content-prefix {
+      font-size: 26px;
+      color: #000;
+      font-weight: bold;
+      .title {
         font-size: 18px;
-        font-weight: bold;
-        margin-inline-end: 0;
-      }
-      .ant-statistic-content-value {
-        font-weight: bold;
         color: #666;
-      }
-      .ant-statistic-content-value-int {
-        color: #666;
-        font-weight: bold;
-        font-size: 28px;
+        margin-bottom: 5px;
       }
     }
   }

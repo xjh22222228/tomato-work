@@ -41,7 +41,7 @@
 - [x] 我的备忘 - 支持 Markdown & WYSIWYG
 - [x] 站内消息
 - [x] 邮件推送 - (github 邮箱必须设为公开)
-- [x] 微信推送 - 感谢 Server 酱 (需要在个人中心设置 sckey)
+- [x] 微信推送
 - [x] 日志管理
 
 ## Build Setup

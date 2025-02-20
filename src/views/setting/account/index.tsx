@@ -3,14 +3,18 @@
  */
 import React, { useEffect } from 'react'
 import md5 from 'blueimp-md5'
-import { serviceUpdateUser, serviceGetUserConfig, serviceUpdateUserConfig } from '@/services'
+import {
+  serviceUpdateUser,
+  serviceGetUserConfig,
+  serviceUpdateUserConfig,
+} from '@/services'
 import { Form, Input, Button, Divider } from 'antd'
 import { useAppSelector } from '@/hooks'
 
 const AccountPage: React.FC = function () {
   const [form] = Form.useForm()
   const [form2] = Form.useForm()
-  const userInfo = useAppSelector(state => state.user.userInfo)
+  const userInfo = useAppSelector((state) => state.user.userInfo)
 
   async function handleUpdateUser() {
     try {
@@ -31,25 +35,24 @@ const AccountPage: React.FC = function () {
   }
 
   useEffect(() => {
-    serviceGetUserConfig()
-    .then(res => {
+    serviceGetUserConfig().then((res) => {
       form2.setFieldsValue({
-        sckey: res?.serverChanSckey || ''
+        sckey: res?.serverChanSckey || '',
       })
     })
   }, [])
 
   return (
     <div className="account-setting">
-      <Divider orientation="left" plain>修改密码</Divider>
+      <Divider orientation="left" plain>
+        修改密码
+      </Divider>
       <Form layout="vertical" form={form} style={{ width: 300 }}>
         <Form.Item
           label="登录名"
           name="name"
           initialValue={userInfo.loginName}
-          rules={[
-            { required: true }
-          ]}
+          rules={[{ required: true }]}
         >
           <Input readOnly disabled />
         </Form.Item>
@@ -60,12 +63,12 @@ const AccountPage: React.FC = function () {
           rules={[
             {
               required: true,
-              message: "请输入新密码"
+              message: '请输入新密码',
             },
             {
               pattern: /.{6,}/,
-              message: "新密码至少6位"
-            }
+              message: '新密码至少6位',
+            },
           ]}
         >
           <Input type="password" maxLength={32} />
@@ -74,30 +77,42 @@ const AccountPage: React.FC = function () {
         <br />
 
         <Form.Item>
-          <Button type="primary" onClick={handleUpdateUser}>提交</Button>
+          <Button type="primary" onClick={handleUpdateUser}>
+            提交
+          </Button>
         </Form.Item>
       </Form>
 
-      <Divider orientation="left" plain>Server酱配置</Divider>
+      <Divider orientation="left" plain>
+        企业微信机器人
+      </Divider>
 
       <Form layout="vertical" form={form2} style={{ width: 300 }}>
         <Form.Item
-          label="SCKEY"
+          label="Webhook Key"
           name="sckey"
           rules={[
             {
               required: true,
-              message: '请正确填写SCKEY'
-            }
+              message: '请正确填写 KEY',
+            },
           ]}
         >
           <Input.Password maxLength={100} />
         </Form.Item>
         <div style={{ textAlign: 'right', marginTop: 5 }}>
-          <a href="http://sc.ftqq.com" target="_blank" rel="noopener noreferrer">如何获取？</a>
+          <a
+            href="https://open.work.weixin.qq.com/help2/pc/14931"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            如何获取？
+          </a>
         </div>
         <Form.Item>
-          <Button type="primary" onClick={handleSckey}>提交</Button>
+          <Button type="primary" onClick={handleSckey}>
+            提交
+          </Button>
         </Form.Item>
       </Form>
     </div>

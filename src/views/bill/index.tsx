@@ -52,8 +52,6 @@ interface State {
     income: number
     available: number
   }
-  sortedInfo: any
-  filters: object
   selectedAmount: null | number
 }
 
@@ -68,8 +66,6 @@ const initialState: State = {
     income: 0,
     available: 0,
   },
-  sortedInfo: null,
-  filters: {},
   selectedAmount: null,
 }
 
@@ -77,6 +73,7 @@ const BillPage: React.FC = function () {
   const [form] = Form.useForm()
   const [state, setState] = useKeepState(initialState)
   const tableRef = useRef<any>(null)
+  const current = tableRef.current
 
   const tableColumns: any[] = [
     {
@@ -85,7 +82,7 @@ const BillPage: React.FC = function () {
       width: 180,
       sorter: true,
       sortOrder:
-        state.sortedInfo?.field === 'createdAt' && state.sortedInfo.order,
+        current?.sorter?.field === 'createdAt' && current?.sorter?.order,
       render: (text: string, rowData: any) => rowData.__createdAt__,
     },
     {
@@ -98,7 +95,7 @@ const BillPage: React.FC = function () {
       width: 140,
       sorter: true,
       dataIndex: 'price',
-      sortOrder: state.sortedInfo?.field === 'price' && state.sortedInfo.order,
+      sortOrder: current?.sorter?.field === 'price' && current?.sorter?.order,
       filters: [
         {
           text: '隐藏金额',
@@ -107,7 +104,7 @@ const BillPage: React.FC = function () {
       ],
       render: (text: string, rowData: any) => (
         <span style={{ color: rowData.__color__ }}>
-          {state.filters.price && !state.filters.price[0]
+          {current?.filters?.price && !current.filters.price[0]
             ? '******'
             : rowData.__price__}
         </span>
@@ -141,7 +138,6 @@ const BillPage: React.FC = function () {
   function initParams(isGetData?: boolean) {
     const startDate = dayjs().startOf('month')
     const endDate = dayjs().endOf('month')
-    setState({ sortedInfo: null })
     form.setFieldsValue({
       keyword: '',
       name: '',
@@ -171,12 +167,6 @@ const BillPage: React.FC = function () {
         params.endDate = values.date[1].format(FORMAT_DATE)
       } else {
         form.setFieldsValue({ cycle: '' })
-      }
-
-      if (state.sortedInfo?.order) {
-        params.sort = `${
-          state.sortedInfo.field
-        }-${state.sortedInfo.order.replace('end', '')}`
       }
 
       return serviceGetBill(params).then((res) => {
@@ -322,16 +312,6 @@ const BillPage: React.FC = function () {
     tableRef.current?.getTableData()
   }
 
-  function onTableChange(_: unknown, filters: any, sorter: any) {
-    setState({
-      sortedInfo: {
-        field: sorter.field,
-        order: sorter.order,
-      },
-      filters,
-    })
-  }
-
   function handleModalOnSuccess() {
     setState({ showCreateAmountModal: false })
     tableRef.current.getTableData()
@@ -458,7 +438,6 @@ const BillPage: React.FC = function () {
         ref={tableRef}
         getTableData={getBill}
         columns={tableColumns}
-        onTableChange={onTableChange}
         onDelete={serviceDeleteBill}
         onRowSelectionChange={onRowSelectionChange}
         onAdd={() =>

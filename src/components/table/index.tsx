@@ -12,17 +12,15 @@
  * />
  */
 
-import React, { FC, useEffect, useImperativeHandle } from 'react'
+import React, { FC, useEffect, useImperativeHandle, useState } from 'react'
 import './style.scss'
 import { Table } from 'antd'
 import type { TableProps } from 'antd'
-import useKeepState from 'use-keep-state'
 import Toolbar from './Toolbar'
 import useDebounceFn from '@/hooks/useDebounceFn'
 
 interface Props extends TableProps<any> {
   getTableData: (data: any) => Promise<any>
-  onTableChange?: (pagination: any, filters: any, sorter: any) => void
   onDelete?: (id: string) => Promise<any>
   onAdd?: () => void
   onRowSelectionChange?: (selectedRowKeys: string[], rows: any[]) => void
@@ -37,6 +35,8 @@ interface State {
   pagination: Record<string, any>
   selectedRowKeys: string[]
   columns: any[]
+  filters: Record<string, any> | null
+  sorter: Record<string, any> | null
 }
 
 const DEFAULT_PAGE_SIZE = 50
@@ -54,6 +54,8 @@ const initialState: State = {
   },
   selectedRowKeys: [],
   columns: [],
+  filters: null,
+  sorter: null,
 }
 
 function showTotal(total: number) {
@@ -62,7 +64,6 @@ function showTotal(total: number) {
 
 const TableFC: FC<Props> = ({
   getTableData,
-  onTableChange,
   onDelete,
   onAdd,
   onRowSelectionChange,
@@ -73,29 +74,42 @@ const TableFC: FC<Props> = ({
 }) => {
   let rowSelection
   const showRowSelection = onDelete
-  const [state, setState] = useKeepState(initialState)
+  const [state, setState] = useState<State>(initialState)
 
   const { run: getData } = useDebounceFn(
-    () => {
-      setState({ isLoading: true })
-      const { pageNo, pageSize } = tableRef.current
+    (params?: any) => {
+      params = {
+        ...state,
+        ...params,
+      }
+      setState((state) => ({ ...state, isLoading: true }))
+
+      const sortMap: any = {
+        descend: 'desc',
+        ascend: 'asc',
+      }
+
+      const payload: Record<string, any> = {
+        pageNo: params.pagination.pageNo - 1,
+        pageSize: params.pagination.pageSize,
+      }
+      if (params?.sorter?.order) {
+        payload.sort = `${params.sorter.field}-${sortMap[params.sorter.order]}`
+      }
       // 调用父组件函数获取数据
-      getTableData({
-        pageNo: pageNo - 1,
-        pageSize: pageSize,
-      })
+      getTableData(payload)
         .then((res) => {
-          setState({
+          setState((state) => ({
+            ...state,
             pagination: {
               ...state.pagination,
               total: res.count,
-              pageSize,
             },
             tableDataSource: res.rows,
-          })
+          }))
         })
         .finally(() => {
-          setState({ isLoading: false })
+          setState((state) => ({ ...state, isLoading: false }))
         })
     },
     { wait: 500, leading: true }
@@ -104,29 +118,41 @@ const TableFC: FC<Props> = ({
   function onChange(pagination: any, filters: any, sorter: any) {
     const pageNo = pagination.current
     const pageSize = pagination.pageSize
-    setState({
+    setState((state) => ({
+      ...state,
       pagination: {
         ...state.pagination,
         pageNo,
         pageSize,
       },
+      filters,
+      sorter,
+    }))
+    getData({
+      pagination: {
+        ...pagination,
+      },
+      filters: {
+        ...filters,
+      },
+      sorter: {
+        ...sorter,
+      },
     })
-    tableRef.current.pageNo = pageNo
-    tableRef.current.pageSize = pageSize
-    onTableChange?.(pagination, filters, sorter)
-    getData()
   }
 
   function reset() {
-    setState({ selectedRowKeys: [] })
+    setState({ ...state, selectedRowKeys: [] })
     onRowSelectionChange?.([], [])
   }
 
   useImperativeHandle(tableRef, () => ({
     getTableData: getData,
     reset,
-    pageNo: 1,
-    pageSize: DEFAULT_PAGE_SIZE,
+    pageNo: state.pagination.pageNo,
+    pageSize: state.pagination.pageSize,
+    filters: state.filters,
+    sorter: state.sorter,
   }))
 
   useEffect(() => {
@@ -134,14 +160,18 @@ const TableFC: FC<Props> = ({
     setTimeout(() => {
       const tableEl = document.querySelector('.ant-table-wrapper')
       if (tableEl) {
-        setState({ tableHeight: tableEl.clientHeight - 120 })
+        setState((state) => ({
+          ...state,
+          tableHeight: tableEl.clientHeight - 120,
+        }))
       }
     }, 100)
   }, [])
 
   useEffect(() => {
     if (Array.isArray(columns)) {
-      setState({
+      setState((state) => ({
+        ...state,
         columns: [
           {
             title: '序号',
@@ -150,7 +180,7 @@ const TableFC: FC<Props> = ({
             align: 'center',
           },
         ].concat(columns as []),
-      })
+      }))
     }
   }, [columns])
 
@@ -158,7 +188,7 @@ const TableFC: FC<Props> = ({
     if (!onDelete) return null
     const selectedRowKeys = state.selectedRowKeys.join(',')
     onDelete(selectedRowKeys).then(() => {
-      setState({ selectedRowKeys: [] })
+      setState({ ...state, selectedRowKeys: [] })
       getData()
     })
   }
@@ -167,7 +197,7 @@ const TableFC: FC<Props> = ({
     rowSelection = {
       selectedRowKeys: state.selectedRowKeys,
       onChange(selectedRowKeys: string[]) {
-        setState({ selectedRowKeys })
+        setState((state) => ({ ...state, selectedRowKeys }))
         onRowSelectionChange?.(selectedRowKeys, state.tableDataSource)
       },
     }

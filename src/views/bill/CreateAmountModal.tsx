@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import dayjs from 'dayjs'
 import {
   Modal,
@@ -16,7 +16,6 @@ import {
   serviceUpdateBill,
   serviceGetAmountById,
 } from '@/services'
-import useKeepState from 'use-keep-state'
 import { filterOption, FORMAT_DATETIME, base64ToBlob } from '@/utils'
 import { cloneDeep } from 'lodash'
 
@@ -56,7 +55,7 @@ const CreateBillModal: React.FC<Props> = function ({
   outTypes,
 }) {
   const [form] = Form.useForm()
-  const [state, setState] = useKeepState(initialState)
+  const [state, setState] = useState<State>(initialState)
 
   async function handleSubmit() {
     try {
@@ -70,11 +69,10 @@ const CreateBillModal: React.FC<Props> = function ({
       }
 
       if (state.fileList.length > 0) {
-        params.imgs = state.fileList[0].thumbUrl
+        params.imgs = state.fileList[0].thumbUrl ?? ''
       }
 
-      setState({ confirmLoading: true })
-
+      setState((prev) => ({ ...prev, confirmLoading: true }))
       ;(!rowData
         ? serviceCreateBill(params)
         : serviceUpdateBill(rowData.id, params)
@@ -83,7 +81,7 @@ const CreateBillModal: React.FC<Props> = function ({
           onSuccess(res)
         })
         .finally(() => {
-          setState({ confirmLoading: false })
+          setState((prev) => ({ ...prev, confirmLoading: false }))
         })
     } catch (err) {
       console.log(err)
@@ -93,16 +91,16 @@ const CreateBillModal: React.FC<Props> = function ({
   function handleChange({ fileList }: any) {
     fileList = cloneDeep(fileList)
     if (fileList.length > 0) {
-      fileList[0].status = 'success'
+      fileList[0].status = 'done'
     }
-    setState({ fileList })
+    setState((prev) => ({ ...prev, fileList }))
   }
 
   useEffect(() => {
     if (visible) {
-      setState({ fileLst: [] })
+      setState((prev) => ({ ...prev, fileLst: [] }))
       if (rowData) {
-        setState({ confirmLoading: true })
+        setState((prev) => ({ ...prev, confirmLoading: true }))
         serviceGetAmountById(rowData.id).then((res) => {
           form.setFieldsValue({
             date: dayjs(res.createdAt),
@@ -110,16 +108,17 @@ const CreateBillModal: React.FC<Props> = function ({
             typeId: res.typeId,
             amount: res.price,
           })
-          const state: Record<string, any> = {
+          const state: State = {
             fileList: [],
             confirmLoading: false,
           }
           if (res.imgs) {
             state.fileList = [
               {
+                name: 'image.png',
                 url: res.imgs,
                 thumbUrl: res.imgs,
-                status: 'success',
+                status: 'done',
                 uid: '-1',
               },
             ]
@@ -160,7 +159,7 @@ const CreateBillModal: React.FC<Props> = function ({
       open={visible}
       onOk={handleSubmit}
       onCancel={onCancel}
-      confirmLoading={state.confirmLoading || state.loading}
+      confirmLoading={state.confirmLoading}
       destroyOnClose
     >
       <Form form={form} preserve={false} {...formLayout}>

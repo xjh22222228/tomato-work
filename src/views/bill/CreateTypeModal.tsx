@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import useKeepState from 'use-keep-state'
+import React, { useEffect, useState } from 'react'
 import { Modal, Form, Input, Select } from 'antd'
 import { serviceCreateBillType, serviceUpdateBillType } from '@/services'
 import { TYPES } from './enum'
@@ -13,9 +12,6 @@ type Props = {
 }
 
 const { Option } = Select
-const initialState = {
-  confirmLoading: false,
-}
 
 const CreateTypeModal: React.FC<Props> = function ({
   visible,
@@ -24,7 +20,7 @@ const CreateTypeModal: React.FC<Props> = function ({
   onSuccess,
 }) {
   const [form] = Form.useForm()
-  const [state, setState] = useKeepState(initialState)
+  const [submitting, setSubmitting] = useState(false)
 
   async function handleSubmitForm() {
     try {
@@ -35,8 +31,7 @@ const CreateTypeModal: React.FC<Props> = function ({
         name: values.name.trim(),
       }
 
-      setState({ confirmLoading: true })
-
+      setSubmitting(true)
       ;(rowData
         ? serviceUpdateBillType(rowData.id, params)
         : serviceCreateBillType(params)
@@ -45,7 +40,7 @@ const CreateTypeModal: React.FC<Props> = function ({
           onSuccess(res.data)
         })
         .finally(() => {
-          setState({ confirmLoading: false })
+          setSubmitting(false)
         })
     } catch (err) {
       console.log(err)
@@ -67,7 +62,7 @@ const CreateTypeModal: React.FC<Props> = function ({
       open={visible}
       onOk={handleSubmitForm}
       onCancel={onCancel}
-      confirmLoading={state.confirmLoading}
+      confirmLoading={submitting}
       destroyOnClose
     >
       <Form form={form} preserve={false}>

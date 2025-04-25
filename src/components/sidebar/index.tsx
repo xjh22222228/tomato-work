@@ -76,7 +76,7 @@ const Sidebar: React.FC<Props> = function ({ collapsed }) {
       className="sidebar"
     >
       <div className="sider-menu-logo">
-        {collapsed ? <img src="/logo.svg" /> : config.title}
+        {collapsed ? <img src="/logo.svg" className="inline" /> : config.title}
       </div>
 
       <Menu

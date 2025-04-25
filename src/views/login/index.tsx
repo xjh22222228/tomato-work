@@ -137,7 +137,7 @@ export default function () {
       <div className="wrap">
         <div>
           <div className="logo-wrap">
-            <img src="/logo.svg" className="logo" alt="" />
+            <img src="/logo.svg" className="logo inline" alt="" />
             <em>{config.title}</em>
           </div>
 

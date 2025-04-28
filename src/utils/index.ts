@@ -26,6 +26,8 @@ export function logout() {
   const localStorageWhiteList = [LOCAL_STORAGE.LOGIN_NAME]
   Array.from({ length: localStorage.length }, (_, i) => {
     const key = localStorage.key(i)
+    return key
+  }).forEach((key) => {
     if (key && !localStorageWhiteList.includes(key)) {
       localStorage.removeItem(key)
     }

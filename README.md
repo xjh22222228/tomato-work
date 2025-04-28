@@ -5,8 +5,8 @@
   <br />
   <b>Tomato Work 个人事务管理系统</b>
   <p align="center">
-    <a href="https://github.com/xjh22222228/tomato-work-server">
-      <img alt="Server" src="https://img.shields.io/static/v1.svg?label=&message=Server&style=flat-square&color=e8883a" />
+    <a href="https://github.com/xjh22222228/tomato-work-server/tree/egg">
+      <img alt="ServerEgg" src="https://img.shields.io/static/v1.svg?label=&message=ServerEgg&style=flat-square&color=e8883a" />
     </a>
     <a href="https://github.com/xjh22222228/tomato-work-mini">
       <img alt="Server" src="https://img.shields.io/static/v1.svg?label=&message=Mini&style=flat-square&color=07c160" />

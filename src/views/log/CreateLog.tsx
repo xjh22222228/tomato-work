@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import './style.scss'
 import config from '@/config'
 import { LeftOutlined } from '@ant-design/icons'
@@ -6,7 +6,11 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { LOG_LIST } from './constants'
 import { Form, Input, Button, Select } from 'antd'
 import { filterOption } from '@/utils'
-import { serviceCreateLog, serviceUpdateLog, serviceGetLogById } from '@/services/log'
+import {
+  serviceCreateLog,
+  serviceUpdateLog,
+  serviceGetLogById,
+} from '@/services/log'
 import { LOCAL_STORAGE } from '@/constants'
 import { getAllCompany } from '@/store/companySlice'
 import { useAppDispatch, useAppSelector } from '@/hooks'
@@ -14,11 +18,9 @@ import { useAppDispatch, useAppSelector } from '@/hooks'
 const { TextArea } = Input
 const { Option } = Select
 
-const DEF_COMPANY_ID = localStorage.getItem(
-  LOCAL_STORAGE.COMPANY_ID
-) || '-1'
+const DEF_COMPANY_ID = localStorage.getItem(LOCAL_STORAGE.COMPANY_ID) || '-1'
 
-const CreateLogPage: React.FC = function() {
+const CreateLogPage: React.FC = function () {
   const [form] = Form.useForm()
   const navigate = useNavigate()
   const params = useParams()
@@ -26,17 +28,21 @@ const CreateLogPage: React.FC = function() {
   const isEdit = !!id
 
   const [typeRecord, setTypeRecord] = useState<Record<string, any>>({})
-  const companyAll = useAppSelector(state => ([
-    {
-      companyName: '无',
-      id: '-1'
-    },
-    ...state.company.companyAll
-  ]))
+  const companyAll = useAppSelector((state) => state.company.companyAll)
   const [loading, setLoading] = useState(false)
   const [detail, setDetail] = useState<Record<string, any>>({})
   const dispatch = useAppDispatch()
   const type = params.type || detail.logType
+
+  const memoizedCompanyAll = useMemo(() => {
+    return [
+      {
+        companyName: '无',
+        id: '-1',
+      },
+      ...companyAll,
+    ]
+  }, [companyAll])
 
   function goBack() {
     navigate('/home/log', { replace: true })
@@ -52,18 +58,20 @@ const CreateLogPage: React.FC = function() {
         undoneContent: values.undoneContent,
         planContent: values.planContent,
         summaryContent: values.summaryContent,
-        companyId: values.companyId
+        companyId: values.companyId,
       }
 
       setLoading(true)
       localStorage.setItem(LOCAL_STORAGE.COMPANY_ID, params.companyId)
       const httpService = isEdit ? serviceUpdateLog : serviceCreateLog
 
-      httpService(params).then(() => {
-        goBack()
-      }).finally(() => {
-        setLoading(false)
-      })
+      httpService(params)
+        .then(() => {
+          goBack()
+        })
+        .finally(() => {
+          setLoading(false)
+        })
     } catch (err) {
       console.log(err)
     }
@@ -72,14 +80,14 @@ const CreateLogPage: React.FC = function() {
   // 查询详情
   useEffect(() => {
     if (isEdit) {
-      serviceGetLogById(id).then(res => {
+      serviceGetLogById(id).then((res) => {
         setDetail(res)
         form.setFieldsValue({
           companyId: res.companyId,
           doneContent: res.doneContent,
           undoneContent: res.undoneContent,
           planContent: res.planContent,
-          summaryContent: res.summaryContent
+          summaryContent: res.summaryContent,
         })
       })
     }
@@ -87,7 +95,7 @@ const CreateLogPage: React.FC = function() {
 
   useEffect(() => {
     if (type) {
-      const res = LOG_LIST.find(item => Number(item.key) === Number(type))
+      const res = LOG_LIST.find((item) => Number(item.key) === Number(type))
       if (res) {
         setTypeRecord(res!)
         document.title = `创建${res!.name} - ${config.title}`
@@ -115,13 +123,15 @@ const CreateLogPage: React.FC = function() {
           rules={[
             {
               required: true,
-              message: "请选择"
-            }
+              message: '请选择',
+            },
           ]}
         >
           <Select filterOption={filterOption} showSearch>
-            {companyAll.map(item => (
-              <Option key={item.id} value={item.id}>{item.companyName}</Option>
+            {memoizedCompanyAll.map((item) => (
+              <Option key={item.id} value={item.id}>
+                {item.companyName}
+              </Option>
             ))}
           </Select>
         </Form.Item>
@@ -132,28 +142,15 @@ const CreateLogPage: React.FC = function() {
           rules={[
             {
               required: true,
-              message: "请输入"
-            }
+              message: '请输入',
+            },
           ]}
         >
-          <TextArea
-            rows={4}
-            maxLength={1200}
-            placeholder="请输入"
-            showCount
-          />
+          <TextArea rows={4} maxLength={1200} placeholder="请输入" showCount />
         </Form.Item>
 
-        <Form.Item
-          name="undoneContent"
-          label={typeRecord.undoneTitle}
-        >
-          <TextArea
-            rows={4}
-            maxLength={1200}
-            placeholder="请输入"
-            showCount
-          />
+        <Form.Item name="undoneContent" label={typeRecord.undoneTitle}>
+          <TextArea rows={4} maxLength={1200} placeholder="请输入" showCount />
         </Form.Item>
 
         <Form.Item
@@ -162,34 +159,23 @@ const CreateLogPage: React.FC = function() {
           rules={[
             {
               required: true,
-              message: "请输入"
-            }
+              message: '请输入',
+            },
           ]}
         >
-          <TextArea
-            rows={4}
-            maxLength={1200}
-            placeholder="请输入"
-            showCount
-          />
+          <TextArea rows={4} maxLength={1200} placeholder="请输入" showCount />
         </Form.Item>
 
-        <Form.Item
-          name="summaryContent"
-          label={typeRecord.summaryTitle}
-        >
-          <TextArea
-            rows={4}
-            maxLength={1200}
-            placeholder="请输入"
-            showCount
-          />
+        <Form.Item name="summaryContent" label={typeRecord.summaryTitle}>
+          <TextArea rows={4} maxLength={1200} placeholder="请输入" showCount />
         </Form.Item>
       </Form>
 
       <div className="footbar">
         <Button onClick={goBack}>取消</Button>
-        <Button onClick={handleSubmitForm} type="primary" loading={loading}>提交</Button>
+        <Button onClick={handleSubmitForm} type="primary" loading={loading}>
+          提交
+        </Button>
       </div>
     </section>
   )

@@ -1,8 +1,7 @@
 import React, { useMemo } from 'react'
 import { Drawer, Collapse } from 'antd'
+import type { CollapseProps } from 'antd/es/collapse'
 import { LOG_LIST } from './constants'
-
-const { Panel } = Collapse
 
 interface Props {
   visible: boolean
@@ -12,22 +11,43 @@ interface Props {
 
 const defaultActiveKey = ['1', '2', '3', '5']
 
-const DetailDrawer: React.FC<Props> = function({
-  visible,
-  onClose,
-  detail
-}) {
+const DetailDrawer: React.FC<Props> = function ({ visible, onClose, detail }) {
   const record: Record<string, any> = useMemo(() => {
-    const data = LOG_LIST.find(item => Number(item.key) === Number(detail.logType))
+    const data = LOG_LIST.find(
+      (item) => Number(item.key) === Number(detail.logType)
+    )
     if (!data) {
       return {}
     }
 
     return {
       ...data,
-      title: `${data.name} - ${detail.companyName}`
+      title: `${data.name} - ${detail.companyName}`,
     }
   }, [detail])
+
+  const items: CollapseProps['items'] = [
+    {
+      key: '1',
+      label: record.doneTitle,
+      children: <p>{detail.doneContent || '无'}</p>,
+    },
+    {
+      key: '2',
+      label: record.undoneTitle,
+      children: <p>{detail.undoneContent || '无'}</p>,
+    },
+    {
+      key: '3',
+      label: record.planTitle,
+      children: <p>{detail.planContent || '无'}</p>,
+    },
+    {
+      key: '5',
+      label: record.summaryTitle,
+      children: <p>{detail.summaryContent || '无'}</p>,
+    },
+  ]
 
   return (
     <Drawer
@@ -39,22 +59,10 @@ const DetailDrawer: React.FC<Props> = function({
     >
       <p className="pl20 mb20">日期：{detail.__createdAt__}</p>
       <Collapse
+        items={items}
         defaultActiveKey={defaultActiveKey}
-        expandIconPosition="right"
-      >
-        <Panel header={record.doneTitle} key="1">
-          <pre>{detail.doneContent || '无'}</pre>
-        </Panel>
-        <Panel header={record.undoneTitle} key="2">
-          <pre>{detail.undoneContent || '无'}</pre>
-        </Panel>
-        <Panel header={record.planTitle} key="3">
-          <pre>{detail.planContent || '无'}</pre>
-        </Panel>
-        <Panel header={record.summaryTitle} key="5">
-          <pre>{detail.summaryContent || '无'}</pre>
-        </Panel>
-      </Collapse>
+        expandIconPosition="start"
+      ></Collapse>
     </Drawer>
   )
 }

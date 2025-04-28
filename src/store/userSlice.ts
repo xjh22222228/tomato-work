@@ -2,20 +2,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { LOCAL_STORAGE } from '@/constants'
 import { isPlainObject } from 'lodash'
-import { serviceLoginByToken } from '@/services'
+import { serviceLoginByToken, serviceLoginByCode } from '@/services'
 import type { AppDispatch } from '.'
 import { formatDate } from '@/utils'
 
-export interface UserInfoProps {
+export interface UserProps {
   provider: string
-  uid: number | undefined
+  uid?: number
   username: string
-  password: string
   loginName: string
   avatarUrl: string
   email: string
   role: string
-  token: string | undefined
+  token?: string
   bio: string
   location: string
   createdAt: string
@@ -24,7 +23,7 @@ export interface UserInfoProps {
 export interface UserState {
   isLogin: boolean
   isLockScreen: boolean
-  userInfo: UserInfoProps
+  userInfo: UserProps
 }
 
 let localUser
@@ -44,35 +43,39 @@ const initialState: UserState = {
     createdAt: '', // 注册时间
     bio: '', // 简介
     username: '', // 昵称
-    password: '', // 经过MD5加密后的密码
     loginName: '', // 登录名
     avatarUrl: '', // 头像
     email: '',
     role: '',
     token: undefined, // 登录凭证
-    location: ''
-  }
+    location: '',
+  },
 }
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    SET_USER_INFO: (state, action: PayloadAction<UserInfoProps>) => {
+    SET_USER_INFO: (state, action: PayloadAction<UserProps>) => {
       const userInfo = action.payload
       userInfo.createdAt &&= formatDate(userInfo.createdAt)
       state.isLogin = !!userInfo.token
       state.userInfo = userInfo
-    }
-  }
+    },
+  },
 })
 
 export const { SET_USER_INFO } = userSlice.actions
 
 export const loginByToken = (token: string) => (dispatch: AppDispatch) => {
-  return serviceLoginByToken(token).then(res => {
-    const userInfo = res.userInfo
-    return dispatch(SET_USER_INFO(userInfo))
+  return serviceLoginByToken(token).then((res) => {
+    return dispatch(SET_USER_INFO(res.user))
+  })
+}
+
+export const loginByCode = (code: string) => (dispatch: AppDispatch) => {
+  return serviceLoginByCode(code).then((res) => {
+    return dispatch(SET_USER_INFO(res.user))
   })
 }
 

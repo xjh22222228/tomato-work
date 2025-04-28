@@ -45,7 +45,7 @@ const ReminderPage: React.FC<Props> = function ({ userInfo }) {
     },
     {
       title: '提醒时间',
-      dataIndex: 'createdAt',
+      dataIndex: 'date',
       width: 220,
     },
     {
@@ -78,7 +78,7 @@ const ReminderPage: React.FC<Props> = function ({ userInfo }) {
     const startDate = dayjs().startOf('year')
     const endDate = dayjs().endOf('year')
     form.setFieldsValue({
-      queryType: '',
+      queryType: 0,
       date: [startDate, endDate],
     })
     tableRef?.current?.getTableData()
@@ -92,7 +92,7 @@ const ReminderPage: React.FC<Props> = function ({ userInfo }) {
       params.endDate = values.date[1].format(FORMAT_DATE)
     }
 
-    if (values.queryType !== '') {
+    if (values.queryType !== 0) {
       params.type = values.queryType
     }
 
@@ -155,11 +155,11 @@ const ReminderPage: React.FC<Props> = function ({ userInfo }) {
           layout="inline"
           onValuesChange={() => tableRef?.current?.getTableData()}
         >
-          <Form.Item name="queryType" label="查询类型" initialValue="">
+          <Form.Item name="queryType" label="查询类型" initialValue={0}>
             <Select>
-              <Option value="">全部</Option>
-              <Option value="1">待提醒</Option>
-              <Option value="2">已提醒</Option>
+              <Option value={0}>全部</Option>
+              <Option value={1}>待提醒</Option>
+              <Option value={2}>已提醒</Option>
             </Select>
           </Form.Item>
 

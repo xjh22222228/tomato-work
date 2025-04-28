@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react'
+import '@/assets/styles/markdown.css'
 import './style.scss'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { serviceGetMemorandumById } from '@/services'
@@ -18,13 +19,13 @@ const DetailPage: FC = () => {
     if (!id) return
 
     serviceGetMemorandumById(id)
-    .then(res => {
-      const title = res.title || defaultTitle
-      document.title = `${title} - ${config.title}`
-      setTitle(title)
-      setContent(res.html)
-    })
-    .finally(() => setLoading(false))
+      .then((res) => {
+        const title = res.title || defaultTitle
+        document.title = `${title} - ${config.title}`
+        setTitle(title)
+        setContent(res.html)
+      })
+      .finally(() => setLoading(false))
   }, [id])
 
   function goBack() {
@@ -36,7 +37,7 @@ const DetailPage: FC = () => {
       <div className="memorandum-detail">
         <div className="tool-bar">
           <LeftOutlined className="icon-left" onClick={goBack} />
-          <h1 className="title">{ title }</h1>
+          <h1 className="title">{title}</h1>
           <Link className="edit" to={`/home/memorandum/update/${id}`}>
             <EditOutlined title="编辑" />
           </Link>
@@ -45,8 +46,7 @@ const DetailPage: FC = () => {
         <div
           className="markdown-body tui-editor-contents"
           dangerouslySetInnerHTML={{ __html: content }}
-        >
-        </div>
+        ></div>
       </div>
     </Spin>
   )

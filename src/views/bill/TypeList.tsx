@@ -59,8 +59,8 @@ const Type = () => {
   }
 
   function deleteBillType() {
-    const ids = state.selectedRowKeys.join()
-    if (!ids) return
+    const ids = state.selectedRowKeys
+    if (!ids.length) return
 
     setState({ loading: true })
     serviceDeleteBillType(ids)

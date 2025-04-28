@@ -48,9 +48,9 @@ interface State {
   enterTypes: any[]
   outTypes: any[]
   price: {
-    consumption: number
-    income: number
-    available: number
+    consumptionAmount: number
+    incomeAmount: number
+    availableAmount: number
   }
   selectedAmount: null | number
 }
@@ -62,9 +62,9 @@ const initialState: State = {
   enterTypes: [],
   outTypes: [],
   price: {
-    consumption: 0,
-    income: 0,
-    available: 0,
+    consumptionAmount: 0,
+    incomeAmount: 0,
+    availableAmount: 0,
   },
   selectedAmount: null,
 }
@@ -87,8 +87,9 @@ const BillPage: React.FC = function () {
     },
     {
       title: '账单类型',
-      dataIndex: 'name',
+      dataIndex: 'billType.name',
       width: 120,
+      render: (text: string, rowData: any) => rowData.billType?.name,
     },
     {
       title: '收支金额（元）',
@@ -140,8 +141,8 @@ const BillPage: React.FC = function () {
     const endDate = dayjs().endOf('month')
     form.setFieldsValue({
       keyword: '',
-      name: '',
-      type: '',
+      typeId: 0,
+      type: 0,
       date: [startDate, endDate],
       cycle: '',
     })
@@ -159,8 +160,8 @@ const BillPage: React.FC = function () {
       params = {
         ...params,
         keyword: values.keyword,
-        typeNameId: values.name,
-        type: values.type,
+        typeId: values.typeId || null,
+        type: values.type || null,
       }
       if (Array.isArray(values.date) && values.date.length > 1) {
         params.startDate = values.date[0].format(FORMAT_DATE)
@@ -171,21 +172,22 @@ const BillPage: React.FC = function () {
 
       return serviceGetBill(params).then((res) => {
         res.rows = res.rows.map((el: any, idx: number) => {
-          const suffix = isToDay(el.createdAt) ? ' 今天' : ''
+          const suffix = isToDay(el.date) ? ' 今天' : ''
           el.order = idx + 1
-          el.__createdAt__ =
-            dayjs(el.createdAt).format(FORMAT_DATE_MINUTE) + suffix
-          el.__price__ = TYPES[el.type - 1].symbol + el.price
-          el.__color__ = TYPES[el.type - 1].color
+          el.__createdAt__ = dayjs(el.date).format(FORMAT_DATE_MINUTE) + suffix
+          if (el.billType) {
+            el.__price__ = TYPES[el.billType.type - 1].symbol + el.price
+            el.__color__ = TYPES[el.billType.type - 1].color
+          }
 
           return el
         })
 
         setState({
           price: {
-            income: res.income,
-            consumption: res.consumption,
-            available: res.available,
+            incomeAmount: res.incomeAmount,
+            consumptionAmount: res.consumptionAmount,
+            availableAmount: res.availableAmount,
           },
         })
         return res
@@ -352,9 +354,9 @@ const BillPage: React.FC = function () {
     <div className="capital-flow">
       <div className="query-panel">
         <Form form={form} layout="inline">
-          <Form.Item label="账务类型" name="name" initialValue="">
+          <Form.Item label="账务类型" name="typeId">
             <Select className="w150px" showSearch filterOption={filterOption}>
-              <Option value="">全部</Option>
+              <Option value={0}>全部</Option>
               <OptGroup label="收入">
                 {state.enterTypes.map((item: any) => (
                   <Option value={item.id} key={item.id}>
@@ -373,7 +375,7 @@ const BillPage: React.FC = function () {
           </Form.Item>
 
           {!form.getFieldValue('name') && (
-            <Form.Item label="收支类别" name="type" initialValue="">
+            <Form.Item label="收支类别" name="type">
               <Select className="w150px" showSearch filterOption={filterOption}>
                 {OPTION_TYPES.map((item) => (
                   <Option value={item.value} key={item.value}>
@@ -384,7 +386,7 @@ const BillPage: React.FC = function () {
             </Form.Item>
           )}
 
-          <Form.Item label="" name="keyword" initialValue="">
+          <Form.Item label="" name="keyword">
             <Search
               placeholder="搜索备注"
               maxLength={300}
@@ -395,11 +397,11 @@ const BillPage: React.FC = function () {
         </Form>
 
         <Form form={form} layout="inline" className="mt10">
-          <Form.Item label="日期" name="date" initialValue={[]}>
+          <Form.Item label="日期" name="date">
             <RangePicker />
           </Form.Item>
 
-          <Form.Item label="时间段" name="cycle" initialValue="">
+          <Form.Item label="时间段" name="cycle">
             <Select className="w150px" onSelect={onFilterDate}>
               <Option value="">全部</Option>
               {cycleTimes.map((item) => (
@@ -418,13 +420,19 @@ const BillPage: React.FC = function () {
 
         <div className="poly">
           <div className="item-amount">
-            <NumberFlow prefix="收入：￥" value={state.price.income} />
+            <NumberFlow prefix="收入：￥" value={state.price.incomeAmount} />
           </div>
           <div className="item-amount">
-            <NumberFlow prefix="支出：￥" value={state.price.consumption} />
+            <NumberFlow
+              prefix="支出：￥"
+              value={state.price.consumptionAmount}
+            />
           </div>
           <div className="item-amount">
-            <NumberFlow prefix="实际收入：￥" value={state.price.available} />
+            <NumberFlow
+              prefix="实际收入：￥"
+              value={state.price.availableAmount}
+            />
           </div>
           {state.selectedAmount !== null && (
             <div className="item-amount">

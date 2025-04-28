@@ -1,52 +1,42 @@
-import React from 'react'
-import useKeepState from 'use-keep-state'
-import { isBefore, formatDateTime } from '@/utils'
+import React, { useState } from 'react'
+import { isBefore } from '@/utils'
 import { serviceCreateTask } from '@/services'
-import {
-  Modal,
-  Form,
-  Input,
-  DatePicker,
-  Rate
-} from 'antd'
+import { Modal, Form, Input, DatePicker, Rate } from 'antd'
+import dayjs from 'dayjs'
 
 type Props = {
   visible: boolean
-  data?: object
-  onSuccess(): void
+  onOk(): void
   onCancel(): void
 }
 
 const { TextArea } = Input
-const initialState = {
-  confirmLoading: false,
-}
 
 const CreateTaskModal: React.FC<Props> = function ({
   visible,
-  onSuccess,
+  onOk,
   onCancel,
 }) {
   const [form] = Form.useForm()
-  const [state, setState] = useKeepState(initialState)
+  const [submitting, setSubmitting] = useState(false)
 
   async function handleSubmitForm() {
     try {
       const values = await form.validateFields()
       const params = {
-        date: formatDateTime(values.date),
+        date: dayjs(values.date).valueOf(),
         content: values.content.trim(),
-        count: values.count
+        count: values.count,
       }
 
-      setState({ confirmLoading: true })
+      setSubmitting(true)
 
       serviceCreateTask(params)
         .then(() => {
-          onSuccess()
+          onOk()
         })
         .finally(() => {
-          setState({ confirmLoading: false })
+          setSubmitting(false)
         })
     } catch (err) {
       console.log(err)
@@ -59,7 +49,7 @@ const CreateTaskModal: React.FC<Props> = function ({
       open={visible}
       onOk={handleSubmitForm}
       onCancel={onCancel}
-      confirmLoading={state.confirmLoading}
+      confirmLoading={submitting}
       destroyOnClose
     >
       <Form form={form} preserve={false}>
@@ -69,8 +59,8 @@ const CreateTaskModal: React.FC<Props> = function ({
           rules={[
             {
               required: true,
-              message: "请选择日期"
-            }
+              message: '请选择日期',
+            },
           ]}
         >
           <DatePicker
@@ -86,15 +76,11 @@ const CreateTaskModal: React.FC<Props> = function ({
           rules={[
             {
               required: true,
-              message: "请输入内容"
-            }
+              message: '请输入内容',
+            },
           ]}
         >
-          <TextArea
-            rows={3}
-            maxLength={200}
-            placeholder="请输入内容"
-          />
+          <TextArea rows={3} maxLength={200} placeholder="请输入内容" />
         </Form.Item>
 
         <Form.Item
@@ -104,8 +90,8 @@ const CreateTaskModal: React.FC<Props> = function ({
           rules={[
             {
               required: true,
-              message: "请选择优先级"
-            }
+              message: '请选择优先级',
+            },
           ]}
         >
           <Rate />

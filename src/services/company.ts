@@ -2,8 +2,8 @@ import http from '@/utils/http'
 import { formatDate, fromNow } from '@/utils'
 
 // 查询所有单位
-export async function serviceGetAllCompany() {
-  const res = await http.get('/company')
+export async function serviceGetAllCompany(data?: object) {
+  const res = await http.post('/company/getAll', data)
   res.rows = res.rows.map((item: any) => {
     item.startDate = formatDate(item.startDate)
     item.__amount__ = `￥${item.amount}`
@@ -13,6 +13,7 @@ export async function serviceGetAllCompany() {
     }
     if (item.expectLeaveDate) {
       item.expectLeaveDate = formatDate(item.expectLeaveDate)
+      item.__leaveDay__ = fromNow(Date.now(), item.expectLeaveDate)
     }
     item.__endDate__ = item.endDate ?? '至今'
     return item
@@ -22,21 +23,29 @@ export async function serviceGetAllCompany() {
 
 // 创建单位
 export function serviceCreateCompany(data: object) {
-  return http.post('/company', data, {
-    headers: { successAlert: 'true' }
+  return http.post('/company/add', data, {
+    headers: { successAlert: 'true' },
   })
 }
 
 // 更新单位
 export function serviceUpdateCompany(id: string, data: object) {
-  return http.put(`/company/${id}`, data, {
-    headers: { successAlert: 'true' }
-  })
+  return http.post(
+    `/company/update`,
+    { id, ...data },
+    {
+      headers: { successAlert: 'true' },
+    }
+  )
 }
 
 // 删除单位
 export function serviceDelCompany(id: unknown) {
-  return http.delete(`/company/${id}`, {
-    headers: { successAlert: 'true' }
-  })
+  return http.post(
+    `/company/delete`,
+    { id },
+    {
+      headers: { successAlert: 'true' },
+    }
+  )
 }

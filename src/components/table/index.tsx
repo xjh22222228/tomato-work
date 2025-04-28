@@ -50,7 +50,7 @@ const initialState: State = {
     pageSize: DEFAULT_PAGE_SIZE,
     showSizeChanger: true,
     total: 0,
-    pageSizeOptions: ['30', '50', '70', '100', '200', '1000'],
+    pageSizeOptions: ['5', '30', '50', '70', '100', '200', '1000'],
   },
   selectedRowKeys: [],
   columns: [],

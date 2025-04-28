@@ -1,15 +1,9 @@
 /**
  * 创建单位
  */
-import React from 'react'
+import React, { useState } from 'react'
 import useKeepState from 'use-keep-state'
-import {
-  Modal,
-  Form,
-  Input,
-  DatePicker,
-  InputNumber
-} from 'antd'
+import { Modal, Form, Input, DatePicker, InputNumber } from 'antd'
 import { serviceCreateCompany, serviceUpdateCompany } from '@/services'
 import { formatDate } from '@/utils'
 import dayjs from 'dayjs'
@@ -18,10 +12,10 @@ const { TextArea } = Input
 
 const formLayoutItem = {
   labelCol: {
-    span: 4
+    span: 4,
   },
   wrapperCol: {
-    span: 20
+    span: 20,
   },
 }
 
@@ -37,7 +31,7 @@ interface State {
 }
 
 const initialState: State = {
-  confirmLoading: false
+  confirmLoading: false,
 }
 
 const CreateCompanyModal: React.FC<Props> = function ({
@@ -69,19 +63,17 @@ const CreateCompanyModal: React.FC<Props> = function ({
         params.expectLeaveDate = formatDate(values.expectLeaveDate)
       }
 
-      setState({ confirmLoading: true });
-
-      (
-        !isEdit
-          ? serviceCreateCompany(params)
-          : serviceUpdateCompany(detail.id, params)
+      setState({ confirmLoading: true })
+      ;(!isEdit
+        ? serviceCreateCompany(params)
+        : serviceUpdateCompany(detail.id, params)
       )
-      .then(() => {
-        onSuccess()
-      })
-      .finally(() => {
-        setState({ confirmLoading: false })
-      })
+        .then(() => {
+          onSuccess()
+        })
+        .finally(() => {
+          setState({ confirmLoading: false })
+        })
     } catch (err) {
       console.log(err)
     }
@@ -104,14 +96,11 @@ const CreateCompanyModal: React.FC<Props> = function ({
           rules={[
             {
               required: true,
-              message: "请输入单位名称"
-            }
+              message: '请输入单位名称',
+            },
           ]}
         >
-          <Input
-            maxLength={200}
-            placeholder="请输入"
-          />
+          <Input maxLength={200} placeholder="请输入" />
         </Form.Item>
 
         <Form.Item
@@ -121,8 +110,8 @@ const CreateCompanyModal: React.FC<Props> = function ({
           rules={[
             {
               required: true,
-              message: "请选择日期"
-            }
+              message: '请选择日期',
+            },
           ]}
         >
           <DatePicker allowClear={false} className="w100" />
@@ -151,11 +140,17 @@ const CreateCompanyModal: React.FC<Props> = function ({
           rules={[
             {
               required: true,
-              message: "请输入薪资"
-            }
+              message: '请输入薪资',
+            },
           ]}
         >
-          <InputNumber min={1} max={99999999} className="w100" placeholder="请输入" />
+          <InputNumber
+            min={1}
+            max={99999999}
+            className="w100"
+            placeholder="请输入"
+            precision={2}
+          />
         </Form.Item>
 
         <Form.Item
@@ -163,11 +158,7 @@ const CreateCompanyModal: React.FC<Props> = function ({
           label="备注"
           initialValue={detail.remark ?? ''}
         >
-          <TextArea
-            rows={3}
-            maxLength={200}
-            placeholder="请输入"
-          />
+          <TextArea rows={3} maxLength={200} placeholder="请输入" />
         </Form.Item>
       </Form>
     </Modal>

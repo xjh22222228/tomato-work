@@ -40,13 +40,13 @@ const CompanyPage = () => {
     },
     {
       title: '计划离职日期',
-      dataIndex: 'expectLeaveDate',
+      dataIndex: '__leaveDay__',
       width: 130,
-      render: (expectLeaveDate: any) =>
-        expectLeaveDate > 0 ? (
+      render: (__leaveDay__: any, record: any) =>
+        __leaveDay__ > 0 ? (
           <div>
-            {expectLeaveDate}
-            <div>还有 {fromNow(Date.now(), expectLeaveDate)} 天</div>
+            {record.expectLeaveDate}
+            <div>还有 {__leaveDay__} 天</div>
           </div>
         ) : null,
     },

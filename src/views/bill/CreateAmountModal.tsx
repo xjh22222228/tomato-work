@@ -98,7 +98,7 @@ const CreateBillModal: React.FC<Props> = function ({
 
   useEffect(() => {
     if (visible) {
-      setState((prev) => ({ ...prev, fileLst: [] }))
+      setState((prev) => ({ ...prev, fileList: [] }))
       if (rowData) {
         setState((prev) => ({ ...prev, confirmLoading: true }))
         serviceGetAmountById(rowData.id).then((res) => {

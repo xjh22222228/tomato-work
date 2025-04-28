@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react'
 import './style.scss'
 import dayjs from 'dayjs'
 import NoData from '@/components/no-data/index'
-import { Card, Col, Row, Button, Popconfirm, Spin } from 'antd'
+import { Card, Button, Popconfirm, Spin } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { serviceGetMemorandum, serviceDeleteMemorandum } from '@/services'
 import { defaultTitle } from './constants'
@@ -46,7 +46,7 @@ const MemorandumPage: React.FC = () => {
   function getData() {
     serviceGetMemorandum()
       .then((res) => {
-        const data = res.map((item: any) => {
+        const data = res.rows.map((item: any) => {
           const format = 'YYYY.M.D HH:mm'
           item.createdAt = dayjs(item.createdAt).format(format)
           item.updatedAt = dayjs(item.updatedAt).format(format)
@@ -70,50 +70,46 @@ const MemorandumPage: React.FC = () => {
     <Spin spinning={loading} wrapperClassName="memorandum-spin">
       <div className="memorandum">
         {list.length > 0 ? (
-          <Row gutter={16} align="bottom">
+          <div className="grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {list.map((item: any) => (
-              <Col span={8} key={item.id}>
-                <Card
-                  onClick={() => goDetail(item.id)}
-                  title={item.title}
-                  hoverable
-                >
-                  {item.updatedAt}
-                  <div
-                    className="content"
-                    dangerouslySetInnerHTML={{ __html: item.html }}
-                  ></div>
-                  <div className="button-group">
-                    <Popconfirm
-                      title="您确定要删除吗？"
-                      onConfirm={(e) => {
-                        e?.stopPropagation()
-                        handleButton(0, item)
-                      }}
-                      onCancel={(e) => {
-                        e?.stopPropagation()
-                      }}
-                      placement="bottomRight"
-                      okType="danger"
-                    >
-                      <Button
-                        size="small"
-                        onClick={(e) => e?.stopPropagation()}
-                      >
-                        删除
-                      </Button>
-                    </Popconfirm>
-                    <Button
-                      size="small"
-                      onClick={handleButton.bind(null, 1, item)}
-                    >
-                      编辑
+              <Card
+                onClick={() => goDetail(item.id)}
+                title={item.title}
+                hoverable
+                key={item.id}
+              >
+                {item.updatedAt}
+                <div
+                  className="content"
+                  dangerouslySetInnerHTML={{ __html: item.html }}
+                ></div>
+                <div className="button-group">
+                  <Popconfirm
+                    title="您确定要删除吗？"
+                    onConfirm={(e) => {
+                      e?.stopPropagation()
+                      handleButton(0, item)
+                    }}
+                    onCancel={(e) => {
+                      e?.stopPropagation()
+                    }}
+                    placement="bottomRight"
+                    okType="danger"
+                  >
+                    <Button size="small" onClick={(e) => e?.stopPropagation()}>
+                      删除
                     </Button>
-                  </div>
-                </Card>
-              </Col>
+                  </Popconfirm>
+                  <Button
+                    size="small"
+                    onClick={handleButton.bind(null, 1, item)}
+                  >
+                    编辑
+                  </Button>
+                </div>
+              </Card>
             ))}
-          </Row>
+          </div>
         ) : (
           <NoData
             message="还没有备忘录，是否马上创建？"

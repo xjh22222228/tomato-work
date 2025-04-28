@@ -105,8 +105,8 @@ const LogPage = () => {
       params.startDate = values.date[0].format(FORMAT_DATE)
       params.endDate = values.date[1].format(FORMAT_DATE)
     }
-    params.companyId = values.company
-    params.logType = values.logType
+    params.companyId = values.company || undefined
+    params.logType = values.logType || undefined
 
     return serviceGetLogList(params)
   }
@@ -121,7 +121,7 @@ const LogPage = () => {
     dispatch(getAllCompany())
   }, [])
 
-  function handleClickMenu(key: string) {
+  function handleClickMenu(key: number) {
     navigate(`/home/log/create/${key}`)
   }
 
@@ -151,13 +151,13 @@ const LogPage = () => {
         >
           <div className="w100">
             <div className="flex">
-              <Form.Item name="company" label="所属单位" initialValue="-1">
+              <Form.Item name="company" label="所属单位" initialValue={0}>
                 <Select
                   style={{ width: 200 }}
                   showSearch
                   filterOption={filterOption}
                 >
-                  <Option key="-1" value="-1">
+                  <Option key={0} value={0}>
                     全部
                   </Option>
                   {companyAll.map((item: Record<string, any>) => (
@@ -182,13 +182,15 @@ const LogPage = () => {
           </div>
 
           <div className="flex mt10">
-            <Form.Item name="logType" label="日志类型" initialValue="-1">
+            <Form.Item name="logType" label="日志类型" initialValue={0}>
               <Select
                 style={{ width: 200 }}
                 showSearch
                 filterOption={filterOption}
               >
-                <Option value="-1">全部</Option>
+                <Option key={0} value={0}>
+                  全部
+                </Option>
                 {LOG_LIST.map((item: Record<string, any>) => (
                   <Option key={item.key} value={item.key}>
                     {item.name}

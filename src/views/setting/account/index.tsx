@@ -1,7 +1,7 @@
 /**
  * 账号设置
  */
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import md5 from 'blueimp-md5'
 import {
   serviceUpdateUser,
@@ -12,6 +12,7 @@ import { Form, Input, Button, Divider } from 'antd'
 import { useAppSelector } from '@/hooks'
 
 const AccountPage: React.FC = function () {
+  const [submitting, setSubmitting] = useState(false)
   const [form] = Form.useForm()
   const [form2] = Form.useForm()
   const userInfo = useAppSelector((state) => state.user.userInfo)
@@ -19,18 +20,24 @@ const AccountPage: React.FC = function () {
   async function handleUpdateUser() {
     try {
       const values = await form.validateFields()
-      serviceUpdateUser({ password: md5(values.password) })
+      setSubmitting(true)
+      await serviceUpdateUser({ password: md5(values.password) })
     } catch (err) {
       console.log(err)
+    } finally {
+      setSubmitting(false)
     }
   }
 
   async function handleSckey() {
     try {
       const values = await form2.validateFields()
-      serviceUpdateUserConfig({ sckey: values.sckey })
+      setSubmitting(true)
+      await serviceUpdateUserConfig({ serverChanSckey: values.sckey })
     } catch (err) {
       console.log(err)
+    } finally {
+      setSubmitting(false)
     }
   }
 
@@ -77,7 +84,11 @@ const AccountPage: React.FC = function () {
         <br />
 
         <Form.Item>
-          <Button type="primary" onClick={handleUpdateUser}>
+          <Button
+            type="primary"
+            onClick={handleUpdateUser}
+            loading={submitting}
+          >
             提交
           </Button>
         </Form.Item>
@@ -110,7 +121,7 @@ const AccountPage: React.FC = function () {
           </a>
         </div>
         <Form.Item>
-          <Button type="primary" onClick={handleSckey}>
+          <Button type="primary" onClick={handleSckey} loading={submitting}>
             提交
           </Button>
         </Form.Item>

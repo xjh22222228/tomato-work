@@ -9,7 +9,7 @@ import classNames from 'classnames'
 import { isEmpty } from 'lodash'
 import { Button, Input, message, Popover, Form } from 'antd'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { loginByToken, SET_USER_INFO } from '@/store/userSlice'
+import { loginByCode, SET_USER_INFO } from '@/store/userSlice'
 import { serviceLogin } from '@/services'
 import { LOCAL_STORAGE } from '@/constants'
 import { randomCode } from '@/utils'
@@ -63,7 +63,7 @@ export default function () {
       })
         .then((res) => {
           setLoading(false)
-          dispatch(SET_USER_INFO(res.userInfo))
+          dispatch(SET_USER_INFO(res.user))
           navigate(redirectUrl, { replace: true })
         })
         .catch(() => {
@@ -76,25 +76,30 @@ export default function () {
 
   const goGithubAuth = () => {
     setLoading(true)
-    const url = `https://github.com/login/oauth/authorize?response_type=code&redirect_uri=${config.github.callbackURL}&client_id=${config.github.clientId}&scope=read:user`
+    const url = `https://github.com/login/oauth/authorize?response_type=code&redirect_uri=${config.github.redirectUri}&client_id=${config.github.clientId}&scope=read:user`
     window.location.replace(url)
   }
 
   useEffect(() => {
     const query = qs.parse(location.search)
-    const { token, state } = query
+    const { code, state } = query
 
     if (Number(state) === 0) {
       message.error('授权失败，请重新登录')
       return
     }
 
-    if (token) {
-      dispatch(loginByToken(token as string)).then((res: any) => {
-        if (!isEmpty(res.userInfo)) {
-          navigate(redirectUrl, { replace: true })
-        }
-      })
+    if (code) {
+      setLoading(true)
+      dispatch(loginByCode(code as string))
+        .then((res: any) => {
+          if (!isEmpty(res.user)) {
+            navigate(redirectUrl, { replace: true })
+          }
+        })
+        .finally(() => {
+          setLoading(false)
+        })
     }
   }, [history, location.search])
 

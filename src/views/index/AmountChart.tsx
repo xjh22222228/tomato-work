@@ -37,15 +37,21 @@ const AmountChart = () => {
   const [group, setGroup] = useState<GroupProp[]>([])
   const [totalAmount, setTotalAmount] = useState(0)
 
-  function getData(params?: object) {
+  function getData(params: Record<string, any> = {}) {
+    params.startDate ||= dayjs()
+      .startOf('hour')
+      .subtract(7, 'd')
+      .format('YYYY-MM-DD')
+    params.endDate ||= dayjs().format('YYYY-MM-DD')
+
     serviceGetBillAmount({
       ...params,
     }).then((res) => {
-      if (Array.isArray(res)) {
+      if (Array.isArray(res.data)) {
         let price = 0
         const data: DataProp[] = []
-        res.forEach((item: DataProp, idx: number) => {
-          const date = item.date.slice(5)
+        res.data.forEach((item: DataProp, idx: number) => {
+          const date = dayjs(item.date).format('MM-DD')
           const amount = Number(item.price)
           price += amount
 
@@ -60,7 +66,7 @@ const AmountChart = () => {
         })
 
         setData(data)
-        setTotalAmount(price)
+        setTotalAmount(Number(price.toFixed(2)))
       }
     })
 
@@ -99,6 +105,7 @@ const AmountChart = () => {
           value={date}
           onChange={handleChangeDate}
           className="date-picker"
+          allowClear={false}
         />
       </h2>
 

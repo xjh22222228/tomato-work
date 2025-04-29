@@ -15,7 +15,15 @@ import {
   serviceGetBillType,
 } from '@/services'
 import { OPTION_TYPES, TypeNames, TYPES } from './enum'
-import { filterOption, FORMAT_DATE, FORMAT_DATE_MINUTE, isToDay } from '@/utils'
+import {
+  filterOption,
+  FORMAT_DATE,
+  FORMAT_DATE_MINUTE,
+  isToDay,
+  isMobile,
+} from '@/utils'
+
+const noMobile = !isMobile()
 
 const { Search } = Input
 const { RangePicker } = DatePicker
@@ -122,7 +130,7 @@ const BillPage: React.FC = function () {
       title: '操作',
       width: 180,
       align: 'right',
-      fixed: 'right',
+      fixed: noMobile && 'right',
       render: (row: any) => (
         <>
           <Button onClick={handleActionButton.bind(null, 0, row)}>编辑</Button>

@@ -7,11 +7,6 @@
 
 // SystemInfo
 .system-data {
-  .ant-card {
-    height: 250px;
-    margin-bottom: 25px;
-  }
-
   .item-text {
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -104,8 +99,8 @@
 // AmountChart
 .amount-chart {
   position: relative;
-  margin: 0 20px;
   background: #fff;
+  margin-top: 15px;
 
   .title {
     display: flex;

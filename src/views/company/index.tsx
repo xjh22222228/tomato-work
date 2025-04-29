@@ -7,7 +7,9 @@ import Table from '@/components/table'
 import CreateCompanyModal from './CreateCompanyModal'
 import { serviceGetAllCompany, serviceDelCompany } from '@/services'
 import { Button, Popconfirm } from 'antd'
-import { fromNow } from '@/utils'
+import { isMobile } from '@/utils'
+
+const noMobile = !isMobile()
 
 interface State {
   showCreateCompanyModal: boolean
@@ -68,7 +70,7 @@ const CompanyPage = () => {
       title: '操作',
       width: 170,
       align: 'right',
-      fixed: 'right',
+      fixed: noMobile && 'right',
       render: (record: any) => (
         <>
           <Button onClick={() => handleEditCompany(record)}>编辑</Button>

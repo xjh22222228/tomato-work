@@ -12,7 +12,9 @@ import {
 } from '@/services'
 import { STATUS } from './constants'
 import { DatePicker, Button, Tag, Form, Popconfirm } from 'antd'
-import { FORMAT_DATE, formatDateMinute, DATE_YEAR } from '@/utils'
+import { FORMAT_DATE, formatDateMinute, DATE_YEAR, isMobile } from '@/utils'
+
+const noMobile = !isMobile()
 
 const { RangePicker } = DatePicker
 
@@ -53,7 +55,7 @@ const TodoListPage = () => {
       title: '操作',
       width: 250,
       align: 'right',
-      fixed: 'right',
+      fixed: noMobile && 'right',
       render: (row: any) => (
         <>
           <Button onClick={handleActionButton.bind(null, 0, row)}>编辑</Button>

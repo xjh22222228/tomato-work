@@ -2,6 +2,9 @@ $bg-color: #304156;
 .sidebar {
   background: $bg-color !important;
   user-select: none;
+  position: sticky;
+  top: 0;
+  height: 100vh;
 
   .ant-menu-dark {
     background: $bg-color;

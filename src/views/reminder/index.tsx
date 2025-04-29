@@ -9,7 +9,9 @@ import useKeepState from 'use-keep-state'
 import { connect } from 'react-redux'
 import { DatePicker, Button, Select, Tag, Modal, Form, Popconfirm } from 'antd'
 import { serviceGetReminder, serviceDeleteReminder } from '@/services'
-import { FORMAT_DATE, formatDateTime } from '@/utils'
+import { FORMAT_DATE, formatDateTime, isMobile } from '@/utils'
+
+const noMobile = !isMobile()
 
 const { RangePicker } = DatePicker
 const Option = Select.Option
@@ -57,7 +59,7 @@ const ReminderPage: React.FC<Props> = function ({ userInfo }) {
       title: '操作',
       width: 180,
       align: 'right',
-      fixed: 'right',
+      fixed: noMobile && 'right',
       render: (record: any) => (
         <>
           <Button onClick={() => handleEdit(record)}>编辑</Button>

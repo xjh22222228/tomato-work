@@ -8,13 +8,14 @@ import DetailDrawer from './DetailDrawer'
 import { serviceDeleteLog, serviceGetLogList } from '@/services/log'
 import { DatePicker, Button, Select, Form, Popconfirm, Dropdown } from 'antd'
 import type { MenuProps } from 'antd'
-import { FORMAT_DATE, filterOption } from '@/utils'
+import { FORMAT_DATE, filterOption, isMobile } from '@/utils'
 import { DownOutlined } from '@ant-design/icons'
 import { LOG_LIST } from './constants'
 import { useNavigate, Link } from 'react-router-dom'
 import { getAllCompany } from '@/store/companySlice'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 
+const notMobile = !isMobile()
 const { RangePicker } = DatePicker
 const { Option } = Select
 
@@ -57,7 +58,7 @@ const LogPage = () => {
       title: '操作',
       width: 250,
       align: 'right',
-      fixed: 'right',
+      fixed: notMobile && 'right',
       render: (row: Record<string, any>) => (
         <>
           <Button onClick={() => handlePreview(row)}>详情</Button>

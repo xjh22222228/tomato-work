@@ -157,15 +157,15 @@ const TableFC: FC<Props> = ({
 
   useEffect(() => {
     // 设置表格的高度
-    setTimeout(() => {
-      const tableEl = document.querySelector('.ant-table-wrapper')
-      if (tableEl) {
-        setState((state) => ({
-          ...state,
-          tableHeight: tableEl.clientHeight - 120,
-        }))
-      }
-    }, 100)
+    // setTimeout(() => {
+    //   const tableEl = document.querySelector('.ant-table-wrapper')
+    //   if (tableEl) {
+    //     setState((state) => ({
+    //       ...state,
+    //       tableHeight: tableEl.clientHeight - 120,
+    //     }))
+    //   }
+    // }, 100)
   }, [])
 
   useEffect(() => {
@@ -218,7 +218,7 @@ const TableFC: FC<Props> = ({
         loading={state.isLoading}
         columns={state.columns}
         dataSource={state.tableDataSource}
-        scroll={{ y: state.tableHeight + 'px', x: 1200 }}
+        scroll={{ x: 1200 }}
         showHeader={state.tableDataSource.length}
         onChange={onChange}
         rowSelection={rowSelection}

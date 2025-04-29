@@ -54,61 +54,55 @@ const System: React.FC<Props> = ({ systemInfo }) => {
   }, [])
 
   return (
-    <Row gutter={{ xs: 8, sm: 16, md: 24 }} className="system-data">
-      <Col xl={8} lg={12} md={12} sm={24} xs={24}>
-        <Card title="系统参数" hoverable loading={!systemInfo.nodeVersion}>
-          <p className="item-text">
-            <em>系统类型：</em>
-            {systemInfo.platform}
-            {systemInfo.arch}
-          </p>
-          <p className="item-text">
-            <em>Node版本：</em>
-            {systemInfo.nodeVersion}
-          </p>
-          <p className="item-text">
-            <em>MySQL版本：</em>
-            {systemInfo.mysqlVersion}
-          </p>
-          <p className="item-text">
-            <em>当前环境：</em>
-            {CONFIG.isProduction ? '生产环境' : '开发环境'}
-          </p>
-          <p className="item-text">
-            <em>系统时间：</em>
-            {curSystemTime}
-          </p>
-        </Card>
-      </Col>
-      <Col xl={8} lg={12} md={12} sm={24} xs={24}>
-        <Card title="我的消息" hoverable loading={loading}>
-          {messageList.length > 0 ? (
-            messageList.map((msg: any) => (
-              <p className="item-text" key={msg.id}>
-                <em>{msg.content}</em>
-              </p>
-            ))
-          ) : (
-            <Empty />
-          )}
-        </Card>
-      </Col>
-      <Col xl={8} lg={12} md={12} sm={24} xs={24}>
-        <Card
-          title={`内存使用率(${bytes(systemInfo.totalmem)})`}
-          hoverable
-          className="mem"
-        >
-          <Progress
-            type="circle"
-            percent={memPercentage}
-            strokeColor={statusColor(memPercentage)}
-            format={(percent) => percent + '%'}
-          />
-          <div className="surplus">剩余{bytes(systemInfo.freemem)}</div>
-        </Card>
-      </Col>
-    </Row>
+    <div className="system-data grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
+      <Card title="系统参数" hoverable loading={!systemInfo.nodeVersion}>
+        <p className="item-text">
+          <em>系统类型：</em>
+          {systemInfo.platform}
+          {systemInfo.arch}
+        </p>
+        <p className="item-text">
+          <em>Node版本：</em>
+          {systemInfo.nodeVersion}
+        </p>
+        <p className="item-text">
+          <em>MySQL版本：</em>
+          {systemInfo.mysqlVersion}
+        </p>
+        <p className="item-text">
+          <em>当前环境：</em>
+          {CONFIG.isProduction ? '生产环境' : '开发环境'}
+        </p>
+        <p className="item-text">
+          <em>系统时间：</em>
+          {curSystemTime}
+        </p>
+      </Card>
+      <Card title="我的消息" hoverable loading={loading}>
+        {messageList.length > 0 ? (
+          messageList.map((msg: any) => (
+            <p className="item-text" key={msg.id}>
+              <em>{msg.content}</em>
+            </p>
+          ))
+        ) : (
+          <Empty />
+        )}
+      </Card>
+      <Card
+        title={`内存使用率(${bytes(systemInfo.totalmem)})`}
+        hoverable
+        className="mem"
+      >
+        <Progress
+          type="circle"
+          percent={memPercentage}
+          strokeColor={statusColor(memPercentage)}
+          format={(percent) => percent + '%'}
+        />
+        <div className="surplus">剩余{bytes(systemInfo.freemem)}</div>
+      </Card>
+    </div>
   )
 }
 

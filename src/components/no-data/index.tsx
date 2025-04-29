@@ -12,7 +12,12 @@ const NoData: React.FC<Props> = ({ onClick, message = '暂无数据' }) => {
   return (
     <Result
       className="no-data"
-      icon={<img src={NoDataSvg} className="udn" alt="" />}
+      icon={
+        <img
+          src={NoDataSvg}
+          className="inline-block pointer-events-none select-none"
+        />
+      }
       title={message}
       extra={
         <Button type="primary" onClick={onClick}>

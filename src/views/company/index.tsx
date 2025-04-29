@@ -62,7 +62,7 @@ const CompanyPage = () => {
     {
       title: '备注',
       dataIndex: 'remark',
-      className: 'wbba',
+      className: 'break-all',
     },
     {
       title: '操作',

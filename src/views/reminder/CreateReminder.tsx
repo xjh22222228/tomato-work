@@ -41,7 +41,6 @@ const CreateReminder: React.FC<Props> = function ({
       }
 
       setState({ confirmLoading: true })
-
       ;(!rowData
         ? serviceCreateReminder(params)
         : serviceUpdateReminder(rowData.id, params)
@@ -90,7 +89,7 @@ const CreateReminder: React.FC<Props> = function ({
             showTime
             allowClear={false}
             disabledDate={isBefore}
-            className="w100"
+            className="!w-full"
           />
         </Form.Item>
 

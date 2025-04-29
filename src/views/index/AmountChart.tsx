@@ -143,7 +143,7 @@ const AmountChart = () => {
       )}
 
       {group.length > 0 && (
-        <ResponsiveContainer width="100%" height={350} className="mt10">
+        <ResponsiveContainer width="100%" height={350} className="!mt-2.5">
           <BarChart
             width={500}
             height={300}

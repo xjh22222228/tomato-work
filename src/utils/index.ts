@@ -59,3 +59,9 @@ export function base64ToBlob(base64Data: string) {
     type: fileType,
   })
 }
+
+export function isMobile() {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent,
+  )
+}

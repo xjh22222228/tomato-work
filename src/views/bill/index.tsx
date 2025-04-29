@@ -114,7 +114,9 @@ const BillPage: React.FC = function () {
     },
     {
       title: '备注信息',
-      render: (rowData: any) => <p className="wspw">{rowData.remark}</p>,
+      render: (rowData: any) => (
+        <p className="whitespace-pre-wrap">{rowData.remark}</p>
+      ),
     },
     {
       title: '操作',
@@ -356,7 +358,11 @@ const BillPage: React.FC = function () {
       <div className="query-panel">
         <Form form={form} layout="inline">
           <Form.Item label="账务类型" name="typeId">
-            <Select className="w150px" showSearch filterOption={filterOption}>
+            <Select
+              className="!w-[150px]"
+              showSearch
+              filterOption={filterOption}
+            >
               <Option value={0}>全部</Option>
               <OptGroup label="收入">
                 {state.enterTypes.map((item: any) => (
@@ -377,7 +383,11 @@ const BillPage: React.FC = function () {
 
           {!form.getFieldValue('name') && (
             <Form.Item label="收支类别" name="type">
-              <Select className="w150px" showSearch filterOption={filterOption}>
+              <Select
+                className="!w-[150px]"
+                showSearch
+                filterOption={filterOption}
+              >
                 {OPTION_TYPES.map((item) => (
                   <Option value={item.value} key={item.value}>
                     {item.name}
@@ -397,13 +407,13 @@ const BillPage: React.FC = function () {
           </Form.Item>
         </Form>
 
-        <Form form={form} layout="inline" className="mt10">
+        <Form form={form} layout="inline" className="!mt-2.5">
           <Form.Item label="日期" name="date">
             <RangePicker />
           </Form.Item>
 
           <Form.Item label="时间段" name="cycle">
-            <Select className="w150px" onSelect={onFilterDate}>
+            <Select className="!w-[150px]" onSelect={onFilterDate}>
               <Option value="">全部</Option>
               {cycleTimes.map((item) => (
                 <Option value={item.type} key={item.type}>

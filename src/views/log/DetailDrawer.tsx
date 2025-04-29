@@ -57,7 +57,7 @@ const DetailDrawer: React.FC<Props> = function ({ visible, onClose, detail }) {
       onClose={onClose}
       destroyOnClose
     >
-      <p className="pl20 mb20">日期：{detail.__createdAt__}</p>
+      <p className="pl-5 mb-5">日期：{detail.__createdAt__}</p>
       <Collapse
         items={items}
         defaultActiveKey={defaultActiveKey}

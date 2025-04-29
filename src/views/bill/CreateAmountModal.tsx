@@ -182,7 +182,7 @@ const CreateBillModal: React.FC<Props> = function ({
             },
           ]}
         >
-          <DatePicker showTime allowClear={false} className="w100" />
+          <DatePicker showTime allowClear={false} className="!w-full" />
         </Form.Item>
 
         <Form.Item
@@ -224,7 +224,7 @@ const CreateBillModal: React.FC<Props> = function ({
           ]}
         >
           <InputNumber
-            className="w100"
+            className="!w-full"
             placeholder="请输入金额"
             formatter={(value) => `￥ ${value}`}
             max={9999999}

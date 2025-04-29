@@ -218,7 +218,7 @@ export default function () {
 
           <div
             className={classNames('login-bar', {
-              'events-none': loading,
+              'pointer-events-none': loading,
             })}
           >
             <GithubOutlined onClick={goGithubAuth} />

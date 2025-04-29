@@ -6,6 +6,8 @@ import type { MenuProps } from 'antd'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { HomeMainState } from '@/views/main/index'
 import { HOME_SIDER_MENU_LIST } from '@/constants'
+import classNames from 'classnames'
+import { isMobile } from '@/utils/index'
 
 const { Sider } = Layout
 
@@ -73,7 +75,9 @@ const Sidebar: React.FC<Props> = function ({ collapsed }) {
       collapsible
       collapsed={collapsed}
       width={190}
-      className="sidebar"
+      className={classNames('sidebar md:block', {
+        hidden: isMobile() && collapsed,
+      })}
     >
       <div className="sider-menu-logo">
         {collapsed ? <img src="/logo.svg" className="inline" /> : config.title}

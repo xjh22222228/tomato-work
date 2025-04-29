@@ -37,14 +37,14 @@
 
 // PanelGroup
 .panel-group {
+  margin-bottom: 15px;
   $colors: #f50 #34bfa3 #36a3f7 #40c9c6;
   .icon svg {
     width: 75px;
     height: 75px;
   }
 
-  .ant-col {
-    margin-bottom: 20px;
+  .item {
     @for $i from 1 through 4 {
       &:nth-child(#{$i}) {
         .anticon {

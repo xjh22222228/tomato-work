@@ -66,7 +66,7 @@ const CreateTaskModal: React.FC<Props> = function ({
           <DatePicker
             allowClear={false}
             disabledDate={isBefore}
-            className="w100"
+            className="!w-full"
           />
         </Form.Item>
 

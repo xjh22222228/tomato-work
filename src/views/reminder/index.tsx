@@ -51,7 +51,7 @@ const ReminderPage: React.FC<Props> = function ({ userInfo }) {
     {
       title: '提醒内容',
       dataIndex: 'content',
-      className: 'wbba wpr',
+      className: 'break-all whitespace-pre',
     },
     {
       title: '操作',

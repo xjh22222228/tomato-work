@@ -47,7 +47,7 @@ const TodoListPage = () => {
     {
       title: '活动内容',
       dataIndex: 'content',
-      className: 'wbba wpr',
+      className: 'break-all whitespace-pre',
     },
     {
       title: '操作',

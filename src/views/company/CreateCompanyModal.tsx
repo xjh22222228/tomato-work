@@ -114,7 +114,7 @@ const CreateCompanyModal: React.FC<Props> = function ({
             },
           ]}
         >
-          <DatePicker allowClear={false} className="w100" />
+          <DatePicker allowClear={false} className="!w-full" />
         </Form.Item>
 
         <Form.Item
@@ -122,7 +122,7 @@ const CreateCompanyModal: React.FC<Props> = function ({
           label="离职日期"
           initialValue={detail.endDate && dayjs(detail.endDate)}
         >
-          <DatePicker className="w100" />
+          <DatePicker className="!w-full" />
         </Form.Item>
 
         <Form.Item
@@ -130,7 +130,7 @@ const CreateCompanyModal: React.FC<Props> = function ({
           label="期望离开"
           initialValue={detail.expectLeaveDate && dayjs(detail.expectLeaveDate)}
         >
-          <DatePicker className="w100" />
+          <DatePicker className="!w-full" />
         </Form.Item>
 
         <Form.Item
@@ -147,7 +147,7 @@ const CreateCompanyModal: React.FC<Props> = function ({
           <InputNumber
             min={1}
             max={99999999}
-            className="w100"
+            className="!w-full"
             placeholder="请输入"
             precision={2}
           />

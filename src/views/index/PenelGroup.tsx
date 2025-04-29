@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import './style.scss'
 import NumberFlow from '@number-flow/react'
-import { Row, Col } from 'antd'
 import { Link } from 'react-router-dom'
 import { serviceGetPanelData } from '@/services'
 import {
@@ -57,9 +56,9 @@ const PanelGroup = () => {
   }, [state])
 
   return (
-    <Row gutter={{ xs: 8, sm: 16, md: 24 }} className="panel-group">
+    <div className="panel-group grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {state.map((item) => (
-        <Col xl={6} lg={12} md={12} sm={24} xs={24} key={item.title}>
+        <div className="item" key={item.title}>
           <Link to={item.path} className="block-item">
             {item.Icon}
             <div className="data">
@@ -67,9 +66,9 @@ const PanelGroup = () => {
               <NumberFlow value={item.total} prefix={item.prefix} />
             </div>
           </Link>
-        </Col>
+        </div>
       ))}
-    </Row>
+    </div>
   )
 }
 

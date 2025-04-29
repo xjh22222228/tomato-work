@@ -63,7 +63,7 @@ const LogPage = () => {
           <Button onClick={() => handlePreview(row)}>详情</Button>
 
           <Link to={`/home/log/detail/${row.id}`}>
-            <Button className="ml10">编辑</Button>
+            <Button className="ml-2.5">编辑</Button>
           </Link>
 
           <Popconfirm
@@ -133,7 +133,7 @@ const LogPage = () => {
   }, [LOG_LIST])
 
   const toolbar = (
-    <Dropdown menu={{}}>
+    <Dropdown menu={{ items }}>
       <Button type="primary">
         新增
         <DownOutlined />
@@ -149,7 +149,7 @@ const LogPage = () => {
           layout="inline"
           onValuesChange={() => tableRef?.current?.getTableData()}
         >
-          <div className="w100">
+          <div className="!w-full">
             <div className="flex">
               <Form.Item name="company" label="所属单位" initialValue={0}>
                 <Select
@@ -181,7 +181,7 @@ const LogPage = () => {
             </div>
           </div>
 
-          <div className="flex mt10">
+          <div className="flex !mt-2.5">
             <Form.Item name="logType" label="日志类型" initialValue={0}>
               <Select
                 style={{ width: 200 }}

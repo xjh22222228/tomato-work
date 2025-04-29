@@ -15,7 +15,7 @@ const HomeIndexPage: React.FC = function () {
   }, [])
 
   return (
-    <div className="home-index oya">
+    <div className="home-index !overflow-y-auto">
       <PenelGroup />
       <SystemInfo systemInfo={systemInfo} />
       <AmountChart />

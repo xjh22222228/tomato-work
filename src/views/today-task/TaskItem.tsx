@@ -38,7 +38,7 @@ const TaskItem: React.FC<Props> = ({ data, onOk }) => {
       <div className="level">
         <span>优先级别：</span>
         <Rate value={data.count} disabled></Rate>
-        <p className="mt10">创建时间: {formatDateTime(data.date)}</p>
+        <p className="!mt-2.5">创建时间: {formatDateTime(data.date)}</p>
       </div>
 
       <div className="button-wrapper">

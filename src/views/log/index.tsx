@@ -63,7 +63,7 @@ const LogPage = () => {
           <Button onClick={() => handlePreview(row)}>详情</Button>
 
           <Link to={`/home/log/detail/${row.id}`}>
-            <Button className="ml-2.5">编辑</Button>
+            <Button className="!ml-2.5">编辑</Button>
           </Link>
 
           <Popconfirm

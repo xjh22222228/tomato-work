@@ -24,10 +24,7 @@ const HomeMainPage: React.FC = function () {
 
   function handleToggleCollapsed() {
     setCollapsed(!collapsed)
-    localStorage.setItem(
-      SIDEBAR_COLLAPSED,
-      Number(collapsed) + ''
-    )
+    localStorage.setItem(SIDEBAR_COLLAPSED, Number(collapsed) + '')
   }
 
   return (

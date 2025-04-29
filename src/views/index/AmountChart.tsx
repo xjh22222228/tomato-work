@@ -79,7 +79,7 @@ const AmountChart = () => {
         res.map((item: GroupProp) => {
           item.name = item.type === 1 ? `+ ${item.name}` : `- ${item.name}`
           return item
-        })
+        }),
       )
     })
   }

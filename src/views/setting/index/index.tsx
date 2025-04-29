@@ -26,10 +26,10 @@ const SettingIndexPage: React.FC = function () {
   }
 
   const items: MenuProps['items'] = useMemo(() => {
-    return SETTING_SIDER_MENU_LIST.map(item => {
+    return SETTING_SIDER_MENU_LIST.map((item) => {
       const data: any = {
         key: item.path || item.name,
-        label: item.name
+        label: item.name,
       }
       return data
     })
@@ -44,8 +44,7 @@ const SettingIndexPage: React.FC = function () {
           style={{ height: '100%' }}
           items={items}
           onClick={onClick}
-        >
-        </Menu>
+        ></Menu>
       </Sider>
 
       <Content>

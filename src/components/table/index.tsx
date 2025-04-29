@@ -112,7 +112,7 @@ const TableFC: FC<Props> = ({
           setState((state) => ({ ...state, isLoading: false }))
         })
     },
-    { wait: 500, leading: true }
+    { wait: 500, leading: true },
   )
 
   function onChange(pagination: any, filters: any, sorter: any) {

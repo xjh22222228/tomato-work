@@ -30,7 +30,7 @@ const Sidebar: React.FC<Props> = function ({ collapsed }) {
         const menu = HOME_SIDER_MENU_LIST[i]
         if (Array.isArray(menu.children)) {
           const findIdx = menu.children.findIndex(
-            (menu) => pathname === menu.path
+            (menu) => pathname === menu.path,
           )
           if (findIdx !== -1) {
             setSelectedKeys(menu.children[findIdx].path)

@@ -9,7 +9,14 @@ export default () => {
     <footer className="global-footer">
       <div>
         Copyright &copy; 2019-{currentYear} {CONFIG.title} -
-        <a href="https://github.com/xjh22222228" target="_blank" rel="noopener noreferrer"> xiejiahe</a>
+        <a
+          href="https://github.com/xjh22222228"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {' '}
+          xiejiahe
+        </a>
       </div>
     </footer>
   )

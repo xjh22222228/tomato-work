@@ -18,7 +18,7 @@ const MemorandumPage: React.FC = () => {
   function handleButton(
     buttonType: 0 | 1 | 2,
     item: any,
-    e?: React.MouseEvent
+    e?: React.MouseEvent,
   ) {
     e?.stopPropagation()
     e?.preventDefault()

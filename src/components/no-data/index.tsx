@@ -14,7 +14,11 @@ const NoData: React.FC<Props> = ({ onClick, message = '暂无数据' }) => {
       className="no-data"
       icon={<img src={NoDataSvg} className="udn" alt="" />}
       title={message}
-      extra={<Button type="primary" onClick={onClick}>现在创建</Button>}
+      extra={
+        <Button type="primary" onClick={onClick}>
+          现在创建
+        </Button>
+      }
       status="info"
       style={{ marginTop: '50px' }}
     />

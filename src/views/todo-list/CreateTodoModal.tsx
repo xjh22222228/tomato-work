@@ -1,11 +1,7 @@
 import React from 'react'
 import useKeepState from 'use-keep-state'
 import { serviceCreateTodoList, serviceUpdateTodoList } from '@/services'
-import {
-  Modal,
-  Form,
-  Input
-} from 'antd'
+import { Modal, Form, Input } from 'antd'
 
 type Props = {
   visible: boolean
@@ -24,7 +20,7 @@ const CreateTodoModal: React.FC<Props> = function ({
   visible,
   onSuccess,
   onCancel,
-  rowData
+  rowData,
 }) {
   const [form] = Form.useForm()
   const [state, setState] = useKeepState(initialState)
@@ -35,12 +31,11 @@ const CreateTodoModal: React.FC<Props> = function ({
       const values = await form.validateFields()
       const params = {
         content: values.content.trim(),
-      };
+      }
 
-      (
-        !rowData
-          ? serviceCreateTodoList(params)
-            : serviceUpdateTodoList(rowData.id, params)
+      ;(!rowData
+        ? serviceCreateTodoList(params)
+        : serviceUpdateTodoList(rowData.id, params)
       )
         .then(() => {
           onSuccess()
@@ -70,14 +65,14 @@ const CreateTodoModal: React.FC<Props> = function ({
           rules={[
             {
               required: true,
-              message: "请输入内容"
-            }
+              message: '请输入内容',
+            },
           ]}
         >
           <TextArea
             rows={6}
             value={state.content}
-            onChange={e => setState({ content: e.target.value })}
+            onChange={(e) => setState({ content: e.target.value })}
             maxLength={250}
             placeholder="请输入内容"
           />

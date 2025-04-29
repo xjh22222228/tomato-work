@@ -9,13 +9,13 @@ import { serviceGetUserConfig, serviceUpdateUserConfig } from '@/services'
 const NotificationPage: React.FC = function () {
   const [userConfig, setUserConfig] = useState<Record<string, any>>({
     isMatterNotify: true,
-    isTaskNotify: true
+    isTaskNotify: true,
   })
 
   useEffect(() => {
-    serviceGetUserConfig().then(res => {
+    serviceGetUserConfig().then((res) => {
       setUserConfig({
-        ...res
+        ...res,
       })
     })
   }, [])
@@ -23,25 +23,29 @@ const NotificationPage: React.FC = function () {
   function handleUpdateUserConfig(type: number, checked: boolean) {
     const fields: any = {
       0: 'isTaskNotify',
-      1: 'isMatterNotify'
+      1: 'isMatterNotify',
     }
     serviceUpdateUserConfig({
-      [fields[type]]: checked
+      [fields[type]]: checked,
     }).then(() => {
       setUserConfig({
         ...userConfig,
-        [fields[type]]: checked
+        [fields[type]]: checked,
       })
     })
   }
 
   return (
     <div className="notification">
-      <Divider orientation="left" plain>消息通知</Divider>
+      <Divider orientation="left" plain>
+        消息通知
+      </Divider>
       <div className="list">
         <div className="left">
           <h4 className="title">待办任务</h4>
-          <p className="description">开通后将以站内信的形式通知并且通知到邮箱， 否则只会站内信通知</p>
+          <p className="description">
+            开通后将以站内信的形式通知并且通知到邮箱， 否则只会站内信通知
+          </p>
         </div>
         <Switch
           checked={userConfig.isTaskNotify}
@@ -51,7 +55,9 @@ const NotificationPage: React.FC = function () {
       <div className="list">
         <div className="left">
           <h4 className="title">提醒事项</h4>
-          <p className="description">开通后将以站内信的形式通知并且通知到邮箱， 否则只会站内信通知</p>
+          <p className="description">
+            开通后将以站内信的形式通知并且通知到邮箱， 否则只会站内信通知
+          </p>
         </div>
         <Switch
           checked={userConfig.isMatterNotify}

@@ -20,12 +20,10 @@ const statusMap = {
   500: {
     title: '500',
     subTitle: 'Sorry, the server is wrong.',
-  }
+  },
 }
 
-const NoMatch: React.FC<Props> = function ({
-  status = '404'
-}) {
+const NoMatch: React.FC<Props> = function ({ status = '404' }) {
   const navigate = useNavigate()
 
   function goBack() {
@@ -35,7 +33,11 @@ const NoMatch: React.FC<Props> = function ({
   return (
     <Result
       status={status}
-      extra={<Button type="primary" onClick={goBack}>Back</Button>}
+      extra={
+        <Button type="primary" onClick={goBack}>
+          Back
+        </Button>
+      }
       {...statusMap[status]}
     />
   )

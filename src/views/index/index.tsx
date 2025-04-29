@@ -6,9 +6,8 @@ import AmountChart from './AmountChart'
 import { getSystemInfo } from '@/store/systemSlice'
 import { useAppSelector, useAppDispatch } from '@/hooks'
 
-
 const HomeIndexPage: React.FC = function () {
-  const systemInfo = useAppSelector(state => state.system.info)
+  const systemInfo = useAppSelector((state) => state.system.info)
   const dispatch = useAppDispatch()
 
   useEffect(() => {

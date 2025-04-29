@@ -1,5 +1,4 @@
 .notification {
-
   .list {
     margin-bottom: 10px;
     display: flex;
@@ -10,11 +9,11 @@
     }
 
     .title {
-      color: rgba(0, 0, 0, .65);
+      color: rgba(0, 0, 0, 0.65);
     }
 
     .description {
-      color: rgba(0, 0, 0, .45);
+      color: rgba(0, 0, 0, 0.45);
     }
 
     .ant-switch {

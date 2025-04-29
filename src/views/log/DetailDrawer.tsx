@@ -14,7 +14,7 @@ const defaultActiveKey = ['1', '2', '3', '5']
 const DetailDrawer: React.FC<Props> = function ({ visible, onClose, detail }) {
   const record: Record<string, any> = useMemo(() => {
     const data = LOG_LIST.find(
-      (item) => Number(item.key) === Number(detail.logType)
+      (item) => Number(item.key) === Number(detail.logType),
     )
     if (!data) {
       return {}

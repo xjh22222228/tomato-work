@@ -17,7 +17,7 @@ import '@ant-design/v5-patch-for-react-19'
 dayjs.locale(zh)
 
 const root = ReactDOM.createRoot(
-  document.getElementById('tomato-work-root') as HTMLElement
+  document.getElementById('tomato-work-root') as HTMLElement,
 )
 
 root.render(
@@ -25,5 +25,5 @@ root.render(
     <ConfigProvider locale={zhCN}>
       <AppRoute />
     </ConfigProvider>
-  </Provider>
+  </Provider>,
 )

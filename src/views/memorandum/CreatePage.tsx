@@ -8,7 +8,7 @@ import { defaultTitle } from './constants'
 import {
   serviceCreateMemorandum,
   serviceGetMemorandumById,
-  serviceUpdateMemorandum
+  serviceUpdateMemorandum,
 } from '@/services'
 
 let editor: Editor
@@ -29,16 +29,19 @@ const CreatePage: React.FC = () => {
     // 创建或更新
     const params = {
       markdown: editor.getMarkdown(),
-      title
+      title,
     }
     if (!params.markdown) {
       message.warning('实体内容不能为空')
       return
     }
 
-    setLoading(true);
+    setLoading(true)
 
-    (id ? serviceUpdateMemorandum(id, params) : serviceCreateMemorandum(params))
+    ;(id
+      ? serviceUpdateMemorandum(id, params)
+      : serviceCreateMemorandum(params)
+    )
       .then(() => {
         navigate('/home/memorandum', { replace: true })
       })
@@ -52,13 +55,13 @@ const CreatePage: React.FC = () => {
       el: document.querySelector('#edit-section') as HTMLDivElement,
       initialEditType: 'markdown',
       previewStyle: 'vertical',
-      usageStatistics: false
+      usageStatistics: false,
     })
 
     if (id) {
       setLoading(true)
       serviceGetMemorandumById(id)
-        .then(res => {
+        .then((res) => {
           setTitle(res.title)
           editor.setMarkdown(res.markdown)
         })
@@ -85,17 +88,13 @@ const CreatePage: React.FC = () => {
         maxLength={50}
         size="large"
         value={title}
-        onChange={e => setTitle(e.target.value)}
-        onBlur={() => (!title && setTitle(defaultTitle))}
+        onChange={(e) => setTitle(e.target.value)}
+        onBlur={() => !title && setTitle(defaultTitle)}
       />
       <div id="edit-section"></div>
       <div className="button-group">
         <Button onClick={goBack}>取消</Button>
-        <Button
-          type="primary"
-          onClick={handleSubmit}
-          loading={loading}
-        >
+        <Button type="primary" onClick={handleSubmit} loading={loading}>
           提交
         </Button>
       </div>

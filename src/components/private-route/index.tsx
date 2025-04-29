@@ -5,7 +5,7 @@ import { useLocation, Navigate } from 'react-router-dom'
 import { useAppSelector } from '@/hooks'
 
 type Props = {
-  element: React.FC|React.ComponentClass
+  element: React.FC | React.ComponentClass
   meta?: Record<string, any>
 }
 
@@ -17,7 +17,7 @@ const PrivateRoute: React.FC<Props> = function ({
   ...rest
 }) {
   const { pathname, search } = useLocation()
-  const { isLogin } = useAppSelector(state => state.user)
+  const { isLogin } = useAppSelector((state) => state.user)
   const isLoginPage = pathname === '/' || pathname === '/login'
 
   React.useEffect(() => {
@@ -30,7 +30,7 @@ const PrivateRoute: React.FC<Props> = function ({
 
   if (isLoginPage && isLogin) {
     const redirectUrl = qs.parse(search).redirectUrl as string
-    const url = redirectUrl || ('/home/index' + search)
+    const url = redirectUrl || '/home/index' + search
     return <Navigate to={url} replace />
   }
 

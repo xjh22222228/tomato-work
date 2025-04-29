@@ -6,10 +6,8 @@ function handleError() {
   return true
 }
 
-const Avatar: React.FC<AvatarProps> = props => {
-  return (
-    <AvatarComponent {...props} onError={handleError} />
-  )
+const Avatar: React.FC<AvatarProps> = (props) => {
+  return <AvatarComponent {...props} onError={handleError} />
 }
 
 export default Avatar

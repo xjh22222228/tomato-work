@@ -243,7 +243,7 @@ const BillPage: React.FC = function () {
       case FilterType.Yesterday:
         const prevDay = dayjs(
           dayjs().subtract(1, 'days').format(FORMAT_DATE),
-          FORMAT_DATE
+          FORMAT_DATE,
         )
         date[0] = prevDay
         date[1] = prevDay
@@ -252,7 +252,7 @@ const BillPage: React.FC = function () {
       case FilterType.LastWeek:
         date[0] = dayjs(
           dayjs().subtract(7, 'days').format(FORMAT_DATE),
-          FORMAT_DATE
+          FORMAT_DATE,
         )
         date[1] = dayjs(today, FORMAT_DATE)
         break
@@ -263,47 +263,47 @@ const BillPage: React.FC = function () {
             .subtract(1, 'month')
             .startOf('month')
             .format(FORMAT_DATE),
-          FORMAT_DATE
+          FORMAT_DATE,
         )
         date[1] = dayjs(
           dayjs(startDate)
             .subtract(1, 'month')
             .endOf('month')
             .format(FORMAT_DATE),
-          FORMAT_DATE
+          FORMAT_DATE,
         )
         break
 
       case FilterType.NextMonth:
         date[0] = dayjs(
           dayjs(startDate).add(1, 'month').startOf('month').format(FORMAT_DATE),
-          FORMAT_DATE
+          FORMAT_DATE,
         )
         date[1] = dayjs(
           dayjs(startDate).add(1, 'month').endOf('month').format(FORMAT_DATE),
-          FORMAT_DATE
+          FORMAT_DATE,
         )
         break
 
       case FilterType.ThisYear:
         date[0] = dayjs(
           dayjs(startDate).startOf('year').format(FORMAT_DATE),
-          FORMAT_DATE
+          FORMAT_DATE,
         )
         date[1] = dayjs(
           dayjs(startDate).endOf('year').format(FORMAT_DATE),
-          FORMAT_DATE
+          FORMAT_DATE,
         )
         break
 
       case FilterType.PrevYear:
         date[0] = dayjs(
           dayjs(startDate).subtract(1, 'y').startOf('year').format(FORMAT_DATE),
-          FORMAT_DATE
+          FORMAT_DATE,
         )
         date[1] = dayjs(
           dayjs(startDate).subtract(1, 'y').endOf('year').format(FORMAT_DATE),
-          FORMAT_DATE
+          FORMAT_DATE,
         )
         break
 

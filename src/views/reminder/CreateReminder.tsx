@@ -1,12 +1,7 @@
 import React, { useEffect } from 'react'
 import dayjs from 'dayjs'
 import useKeepState from 'use-keep-state'
-import {
-  Modal,
-  Form,
-  Input,
-  DatePicker
-} from 'antd'
+import { Modal, Form, Input, DatePicker } from 'antd'
 import { serviceCreateReminder, serviceUpdateReminder } from '@/services'
 import { isBefore, formatDateTime } from '@/utils'
 
@@ -24,7 +19,7 @@ interface State {
 }
 
 const initialState: State = {
-  confirmLoading: false
+  confirmLoading: false,
 }
 
 const CreateReminder: React.FC<Props> = function ({
@@ -42,22 +37,21 @@ const CreateReminder: React.FC<Props> = function ({
       const params = {
         date: formatDateTime(values.date),
         content: values.content.trim(),
-        type: 1 // 未提醒
+        type: 1, // 未提醒
       }
 
-      setState({ confirmLoading: true });
+      setState({ confirmLoading: true })
 
-      (
-        !rowData
-          ? serviceCreateReminder(params)
-          : serviceUpdateReminder(rowData.id, params)
+      ;(!rowData
+        ? serviceCreateReminder(params)
+        : serviceUpdateReminder(rowData.id, params)
       )
-      .then(res => {
-        onSuccess(res)
-      })
-      .finally(() => {
-        setState({ confirmLoading: false })
-      })
+        .then((res) => {
+          onSuccess(res)
+        })
+        .finally(() => {
+          setState({ confirmLoading: false })
+        })
     } catch (err) {
       console.log(err)
     }
@@ -67,7 +61,7 @@ const CreateReminder: React.FC<Props> = function ({
     if (visible && rowData) {
       form.setFieldsValue({
         date: dayjs(rowData.createdAt),
-        content: rowData.content
+        content: rowData.content,
       })
     }
   }, [visible, rowData])
@@ -88,8 +82,8 @@ const CreateReminder: React.FC<Props> = function ({
           rules={[
             {
               required: true,
-              message: "请选择时间"
-            }
+              message: '请选择时间',
+            },
           ]}
         >
           <DatePicker
@@ -106,15 +100,11 @@ const CreateReminder: React.FC<Props> = function ({
           rules={[
             {
               required: true,
-              message: "请输入提醒内容"
-            }
+              message: '请输入提醒内容',
+            },
           ]}
         >
-          <TextArea
-            rows={3}
-            maxLength={200}
-            placeholder="请输入"
-          />
+          <TextArea rows={3} maxLength={200} placeholder="请输入" />
         </Form.Item>
       </Form>
     </Modal>

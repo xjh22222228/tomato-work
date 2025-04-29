@@ -29,7 +29,8 @@ const System: React.FC<Props> = ({ systemInfo }) => {
   // 倒计时
   const countdown = useCallback(() => {
     clearTimeout(timer)
-    const timeDiff = systemInfo.currentSystemTime + (Date.now() - systemInfo.currentSystemTime)
+    const timeDiff =
+      systemInfo.currentSystemTime + (Date.now() - systemInfo.currentSystemTime)
     setCurSystemTime(formatDateTime(timeDiff))
 
     timer = setTimeout(() => {
@@ -46,24 +47,20 @@ const System: React.FC<Props> = ({ systemInfo }) => {
   }, [countdown])
 
   useEffect(() => {
-    serviceGetInnerMessage({ pageSize: 5 })
-    .then(res => {
+    serviceGetInnerMessage({ pageSize: 5 }).then((res) => {
       setLoading(false)
       setMessageList(res.rows)
     })
   }, [])
 
   return (
-    <Row gutter={{ xs: 8, sm: 16, md: 24}} className="system-data">
+    <Row gutter={{ xs: 8, sm: 16, md: 24 }} className="system-data">
       <Col xl={8} lg={12} md={12} sm={24} xs={24}>
-        <Card
-          title="系统参数"
-          hoverable
-          loading={!systemInfo.nodeVersion}
-        >
+        <Card title="系统参数" hoverable loading={!systemInfo.nodeVersion}>
           <p className="item-text">
             <em>系统类型：</em>
-            {systemInfo.platform}{systemInfo.arch}
+            {systemInfo.platform}
+            {systemInfo.arch}
           </p>
           <p className="item-text">
             <em>Node版本：</em>
@@ -84,11 +81,7 @@ const System: React.FC<Props> = ({ systemInfo }) => {
         </Card>
       </Col>
       <Col xl={8} lg={12} md={12} sm={24} xs={24}>
-        <Card
-          title="我的消息"
-          hoverable
-          loading={loading}
-        >
+        <Card title="我的消息" hoverable loading={loading}>
           {messageList.length > 0 ? (
             messageList.map((msg: any) => (
               <p className="item-text" key={msg.id}>
@@ -110,7 +103,7 @@ const System: React.FC<Props> = ({ systemInfo }) => {
             type="circle"
             percent={memPercentage}
             strokeColor={statusColor(memPercentage)}
-            format={percent => percent + '%'}
+            format={(percent) => percent + '%'}
           />
           <div className="surplus">剩余{bytes(systemInfo.freemem)}</div>
         </Card>

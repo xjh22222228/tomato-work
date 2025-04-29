@@ -11,7 +11,7 @@ import { useAppSelector } from '@/hooks'
 const { Meta } = Card
 
 const BasePage: React.FC = function () {
-  const userInfo = useAppSelector(state => state.user.userInfo)
+  const userInfo = useAppSelector((state) => state.user.userInfo)
 
   const MetaDesc = (
     <div className="meta-desc">
@@ -26,16 +26,12 @@ const BasePage: React.FC = function () {
 
   return (
     <div className="setting-base">
-      <Divider orientation="left" plain>个人中心</Divider>
+      <Divider orientation="left" plain>
+        个人中心
+      </Divider>
       <Card
         style={{ width: 370 }}
-        cover={
-          <img
-            alt=""
-            src={userPoster}
-            className="poster"
-          />
-        }
+        cover={<img alt="" src={userPoster} className="poster" />}
       >
         <Meta
           avatar={<Avatar src={userInfo.avatarUrl} size="large" />}

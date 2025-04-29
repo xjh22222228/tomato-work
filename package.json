@@ -10,7 +10,7 @@
     "url": "git+https://github.com/xjh22222228/tomato-work.git"
   },
   "scripts": {
-    "format": "prettier --write .",
+    "format": "prettier --write \"**/*.{ts,tsx,scss,css,jsx}\"",
     "dev": "vite",
     "start": "vite",
     "start:prod": "vite --mode prod",
@@ -19,7 +19,7 @@
     "lint": "eslint"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,css,scss,md}": "npm run format"
+    "*.{ts,tsx,scss,css,jsx}": "npm run format"
   },
   "dependencies": {
     "@ant-design/icons": "^6.0.0",

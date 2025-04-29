@@ -6,7 +6,7 @@ import { message } from 'antd'
  * totalPercentage(8589934592, 225492992)  // => 98
  */
 export function totalPercentage(totalmem: number, freemem: number) {
-  return Math.floor((totalmem - freemem) / totalmem * 100)
+  return Math.floor(((totalmem - freemem) / totalmem) * 100)
 }
 
 // 全屏浏览器

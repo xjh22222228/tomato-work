@@ -23,9 +23,9 @@ function useDebounceFn<T extends Fn>(fn: T, options?: DebounceOptions) {
           return fnRef.current(...args)
         }) as T,
         wait,
-        options
+        options,
       ),
-    []
+    [],
   )
 
   return {

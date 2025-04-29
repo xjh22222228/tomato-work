@@ -11,7 +11,7 @@ export function serviceDeleteBillType(ids: string[]) {
     { ids },
     {
       headers: { successAlert: 'true' },
-    }
+    },
   )
 }
 
@@ -21,7 +21,7 @@ export function serviceUpdateBillType(id: string, data: object) {
     { id, ...data },
     {
       headers: { successAlert: 'true' },
-    }
+    },
   )
 }
 
@@ -42,7 +42,7 @@ export function serviceDeleteBill(id: string) {
     { id },
     {
       headers: { successAlert: 'true' },
-    }
+    },
   )
 }
 
@@ -52,7 +52,7 @@ export function serviceUpdateBill(id: string, data: object) {
     { id, ...data },
     {
       headers: { successAlert: 'true' },
-    }
+    },
   )
 }
 

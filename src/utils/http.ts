@@ -30,12 +30,12 @@ interface IAxiosInstance {
   post(
     url: string,
     data?: any,
-    config?: AxiosRequestConfig
+    config?: AxiosRequestConfig,
   ): Promise<Record<string, any>>
   put(
     url: string,
     data?: any,
-    config?: AxiosRequestConfig
+    config?: AxiosRequestConfig,
   ): Promise<Record<string, any>>
 }
 
@@ -77,7 +77,7 @@ export function setupInterceptor(store: IStore) {
     function (error) {
       handleError(error)
       return Promise.reject(error)
-    }
+    },
   )
 
   httpInstance.interceptors.response.use(
@@ -97,7 +97,7 @@ export function setupInterceptor(store: IStore) {
 
       handleError(error)
       return Promise.reject(error)
-    }
+    },
   )
 }
 

@@ -21,7 +21,7 @@ export async function serviceGetLogList(params?: object) {
   const res = await http.post('/log/getAll', { ...params })
   res.rows = res.rows.map((item: Record<string, any>) => {
     item.__createdAt__ = `${formatDate(item.createdAt)} ${getWeek(
-      item.createdAt
+      item.createdAt,
     )}`
     const lType = LOG_LIST.find((el) => Number(el.key) === Number(item.logType))
     item.__logType__ = lType?.name
@@ -38,7 +38,7 @@ export function serviceDeleteLog(id: string) {
     { id },
     {
       headers: { successAlert: 'true' },
-    }
+    },
   )
 }
 

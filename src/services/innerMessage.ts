@@ -11,7 +11,7 @@ export function serviceGetInnerMessage(params?: object) {
       headers: {
         errorAlert: 'false',
       },
-    }
+    },
   )
 }
 

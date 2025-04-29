@@ -35,7 +35,7 @@ export function serviceUpdateCompany(id: string, data: object) {
     { id, ...data },
     {
       headers: { successAlert: 'true' },
-    }
+    },
   )
 }
 
@@ -46,6 +46,6 @@ export function serviceDelCompany(id: unknown) {
     { id },
     {
       headers: { successAlert: 'true' },
-    }
+    },
   )
 }

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useImperativeHandle } from 'react'
+import type { Ref } from 'react'
 import dayjs from 'dayjs'
 import {
   Modal,
@@ -28,9 +29,10 @@ const formLayout = {
 }
 
 type Props = {
+  ref: Ref<any>
   visible: boolean
   onCancel: () => void
-  onSuccess: (res?: any) => void
+  onOk: (res?: any) => void
   rowData?: Record<string, any>
   enterTypes: any[]
   outTypes: any[]
@@ -47,9 +49,10 @@ const initialState: State = {
 }
 
 const CreateBillModal: React.FC<Props> = function ({
+  ref,
   visible,
   onCancel,
-  onSuccess,
+  onOk,
   rowData,
   enterTypes,
   outTypes,
@@ -78,7 +81,7 @@ const CreateBillModal: React.FC<Props> = function ({
         : serviceUpdateBill(rowData.id, params)
       )
         .then((res) => {
-          onSuccess(res)
+          onOk(res)
         })
         .finally(() => {
           setState((prev) => ({ ...prev, confirmLoading: false }))
@@ -95,6 +98,12 @@ const CreateBillModal: React.FC<Props> = function ({
     }
     setState((prev) => ({ ...prev, fileList }))
   }
+
+  function handleOpen() {}
+
+  useImperativeHandle(ref, () => ({
+    open: handleOpen,
+  }))
 
   useEffect(() => {
     if (visible) {

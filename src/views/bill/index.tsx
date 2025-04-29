@@ -73,6 +73,7 @@ const BillPage: React.FC = function () {
   const [form] = Form.useForm()
   const [state, setState] = useKeepState(initialState)
   const tableRef = useRef<any>(null)
+  const createRef = useRef<any>(null)
   const current = tableRef.current
 
   const tableColumns: any[] = [
@@ -328,7 +329,7 @@ const BillPage: React.FC = function () {
     selectedRowKeys.forEach((key) => {
       const data = rows.find((item) => item.id === key)
       if (data) {
-        if (data.type === 1) {
+        if (data.billType.type === 1) {
           amount += Number(data.price)
         } else {
           amount -= Number(data.price)
@@ -454,12 +455,13 @@ const BillPage: React.FC = function () {
       />
 
       <CreateAmountModal
+        ref={createRef}
         visible={state.showCreateAmountModal}
         rowData={state.currentRow}
         enterTypes={state.enterTypes}
         outTypes={state.outTypes}
         onCancel={() => setState({ showCreateAmountModal: false })}
-        onSuccess={handleModalOnSuccess}
+        onOk={handleModalOnSuccess}
       />
     </div>
   )

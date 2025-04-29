@@ -19,7 +19,7 @@ export function serviceDeleteReminder(id: unknown) {
     { id },
     {
       headers: { successAlert: 'true' },
-    }
+    },
   )
 }
 
@@ -32,6 +32,6 @@ export function serviceUpdateReminder(id: unknown, data: object) {
       headers: {
         successAlert: 'true',
       },
-    }
+    },
   )
 }

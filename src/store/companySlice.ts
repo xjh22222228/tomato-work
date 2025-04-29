@@ -31,7 +31,7 @@ export const getAllCompany = createAsyncThunk(
   async () => {
     const response = await serviceGetAllCompany()
     return response.rows
-  }
+  },
 )
 
 export const companySlice = createSlice({

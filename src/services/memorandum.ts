@@ -31,6 +31,6 @@ export function serviceUpdateMemorandum(id: unknown, data: object) {
     { id, ...data },
     {
       headers: { successAlert: 'true' },
-    }
+    },
   )
 }

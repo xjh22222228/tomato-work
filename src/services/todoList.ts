@@ -21,7 +21,7 @@ export function serviceDeleteTodoList(id: unknown) {
     { id },
     {
       headers: { successAlert: 'true' },
-    }
+    },
   )
 }
 

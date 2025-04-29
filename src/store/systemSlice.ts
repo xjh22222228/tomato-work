@@ -31,8 +31,8 @@ const initialState: SystemState = {
     hostname: '',
     arch: '',
     nodeVersion: '',
-    cpus: []
-  }
+    cpus: [],
+  },
 }
 
 export const systemSlice = createSlice({
@@ -42,26 +42,24 @@ export const systemSlice = createSlice({
     SET_INFO: (state, action: PayloadAction<InfoProps>) => {
       state.info = {
         ...action.payload,
-        arch: action.payload.arch.slice(1)
+        arch: action.payload.arch.slice(1),
       }
-    }
-  }
+    },
+  },
 })
 
 export const { SET_INFO } = systemSlice.actions
 
+export const getSystemInfo =
+  () => (dispatch: AppDispatch, getState: GetState) => {
+    const rootState = getState()
+    if (rootState.system.info.nodeVersion) {
+      return
+    }
 
-export const getSystemInfo = () => (dispatch: AppDispatch, getState: GetState) => {
-  const rootState = getState()
-  if (rootState.system.info.nodeVersion) {
-    return
+    serviceGetSystemInfo().then((res) => {
+      dispatch(SET_INFO(res as InfoProps))
+    })
   }
-
-  serviceGetSystemInfo().then((res) => {
-    dispatch(SET_INFO(res as InfoProps))
-  })
-}
-
-
 
 export default systemSlice.reducer

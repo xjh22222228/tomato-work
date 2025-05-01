@@ -56,9 +56,14 @@
   }
 
   #edit-section {
+    display: flex;
+    flex-direction: column;
     margin: 20px 0;
     flex: 1;
     background: #fff;
+    .toastui-editor-defaultUI {
+      flex: 1;
+    }
   }
 
   .button-group {

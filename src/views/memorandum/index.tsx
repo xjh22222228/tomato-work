@@ -111,10 +111,12 @@ const MemorandumPage: React.FC = () => {
             ))}
           </div>
         ) : (
-          <NoData
-            message="还没有备忘录，是否马上创建？"
-            onClick={handleButton.bind(null, 2, null)}
-          />
+          !loading && (
+            <NoData
+              message="还没有备忘录，是否马上创建？"
+              onClick={handleButton.bind(null, 2, null)}
+            />
+          )
         )}
       </div>
     </Spin>

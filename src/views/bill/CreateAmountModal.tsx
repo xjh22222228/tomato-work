@@ -17,7 +17,7 @@ import {
   serviceUpdateBill,
   serviceGetAmountById,
 } from '@/services'
-import { filterOption, FORMAT_DATETIME, base64ToBlob } from '@/utils'
+import { FORMAT_DATETIME, base64ToBlob } from '@/utils'
 import { cloneDeep } from 'lodash'
 
 const { TextArea } = Input
@@ -195,7 +195,7 @@ const CreateBillModal: React.FC<Props> = function ({
             },
           ]}
         >
-          <Select showSearch filterOption={filterOption}>
+          <Select>
             <OptGroup label="收入">
               {enterTypes.map((item: any) => (
                 <Option value={item.id} key={item.id}>

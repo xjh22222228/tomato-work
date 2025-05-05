@@ -366,11 +366,7 @@ const BillPage: React.FC = function () {
       <div className="query-panel">
         <Form form={form} layout="inline">
           <Form.Item label="账务类型" name="typeId">
-            <Select
-              className="!w-[150px]"
-              showSearch
-              filterOption={filterOption}
-            >
+            <Select className="!w-[150px]" filterOption={filterOption}>
               <Option value={0}>全部</Option>
               <OptGroup label="收入">
                 {state.enterTypes.map((item: any) => (
@@ -391,11 +387,7 @@ const BillPage: React.FC = function () {
 
           {!form.getFieldValue('name') && (
             <Form.Item label="收支类别" name="type">
-              <Select
-                className="!w-[150px]"
-                showSearch
-                filterOption={filterOption}
-              >
+              <Select className="!w-[150px]" filterOption={filterOption}>
                 {OPTION_TYPES.map((item) => (
                   <Option value={item.value} key={item.value}>
                     {item.name}

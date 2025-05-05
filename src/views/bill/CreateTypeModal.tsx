@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { Modal, Form, Input, Select } from 'antd'
 import { serviceCreateBillType, serviceUpdateBillType } from '@/services'
 import { TYPES } from './enum'
-import { filterOption } from '@/utils'
 
 type Props = {
   visible: boolean
@@ -89,7 +88,7 @@ const CreateTypeModal: React.FC<Props> = function ({
             },
           ]}
         >
-          <Select showSearch filterOption={filterOption}>
+          <Select>
             {TYPES.map((item) => (
               <Option value={item.value} key={item.value}>
                 {item.name}

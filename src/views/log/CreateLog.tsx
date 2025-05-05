@@ -5,7 +5,6 @@ import { LeftOutlined } from '@ant-design/icons'
 import { useNavigate, useParams } from 'react-router-dom'
 import { LOG_LIST } from './constants'
 import { Form, Input, Button, Select } from 'antd'
-import { filterOption } from '@/utils'
 import {
   serviceCreateLog,
   serviceUpdateLog,
@@ -127,7 +126,7 @@ const CreateLogPage: React.FC = function () {
             },
           ]}
         >
-          <Select filterOption={filterOption} showSearch>
+          <Select>
             {memoizedCompanyAll.map((item) => (
               <Option key={item.id} value={item.id}>
                 {item.companyName}

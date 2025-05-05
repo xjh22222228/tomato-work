@@ -153,11 +153,7 @@ const LogPage = () => {
           <div className="!w-full">
             <div className="flex">
               <Form.Item name="company" label="所属单位" initialValue={0}>
-                <Select
-                  style={{ width: 200 }}
-                  showSearch
-                  filterOption={filterOption}
-                >
+                <Select style={{ width: 200 }} filterOption={filterOption}>
                   <Option key={0} value={0}>
                     全部
                   </Option>
@@ -184,11 +180,7 @@ const LogPage = () => {
 
           <div className="flex !mt-2.5">
             <Form.Item name="logType" label="日志类型" initialValue={0}>
-              <Select
-                style={{ width: 200 }}
-                showSearch
-                filterOption={filterOption}
-              >
+              <Select style={{ width: 200 }} filterOption={filterOption}>
                 <Option key={0} value={0}>
                   全部
                 </Option>

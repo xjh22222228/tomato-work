@@ -2,7 +2,6 @@
  * 创建单位
  */
 import React, { useState } from 'react'
-import useKeepState from 'use-keep-state'
 import { Modal, Form, Input, DatePicker, InputNumber } from 'antd'
 import { serviceCreateCompany, serviceUpdateCompany } from '@/services'
 import { formatDate } from '@/utils'
@@ -26,14 +25,6 @@ type Props = {
   detail: { [key: string]: any }
 }
 
-interface State {
-  confirmLoading: boolean
-}
-
-const initialState: State = {
-  confirmLoading: false,
-}
-
 const CreateCompanyModal: React.FC<Props> = function ({
   visible,
   detail,
@@ -41,7 +32,7 @@ const CreateCompanyModal: React.FC<Props> = function ({
   onSuccess,
 }) {
   const [form] = Form.useForm()
-  const [state, setState] = useKeepState(initialState)
+  const [submitting, setSubmitting] = useState(false)
 
   const isEdit = detail.id
   const title = isEdit ? '编辑单位' : '新增单位'
@@ -63,7 +54,7 @@ const CreateCompanyModal: React.FC<Props> = function ({
         params.expectLeaveDate = formatDate(values.expectLeaveDate)
       }
 
-      setState({ confirmLoading: true })
+      setSubmitting(true)
       ;(!isEdit
         ? serviceCreateCompany(params)
         : serviceUpdateCompany(detail.id, params)
@@ -72,7 +63,7 @@ const CreateCompanyModal: React.FC<Props> = function ({
           onSuccess()
         })
         .finally(() => {
-          setState({ confirmLoading: false })
+          setSubmitting(false)
         })
     } catch (err) {
       console.log(err)
@@ -85,7 +76,7 @@ const CreateCompanyModal: React.FC<Props> = function ({
       open={visible}
       onOk={handleSubmitForm}
       onCancel={onCancel}
-      confirmLoading={state.confirmLoading}
+      confirmLoading={submitting}
       destroyOnClose
     >
       <Form form={form} preserve={false} {...formLayoutItem}>

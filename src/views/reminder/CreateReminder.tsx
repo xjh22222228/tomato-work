@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import dayjs from 'dayjs'
-import useKeepState from 'use-keep-state'
 import { Modal, Form, Input, DatePicker } from 'antd'
 import { serviceCreateReminder, serviceUpdateReminder } from '@/services'
 import { isBefore, formatDateTime } from '@/utils'
@@ -14,14 +13,6 @@ type Props = {
   rowData?: Record<string, any>
 }
 
-interface State {
-  confirmLoading: boolean
-}
-
-const initialState: State = {
-  confirmLoading: false,
-}
-
 const CreateReminder: React.FC<Props> = function ({
   visible,
   rowData,
@@ -29,7 +20,7 @@ const CreateReminder: React.FC<Props> = function ({
   onSuccess,
 }) {
   const [form] = Form.useForm()
-  const [state, setState] = useKeepState(initialState)
+  const [submitting, setSubmitting] = useState(false)
 
   async function handleSubmitForm() {
     try {
@@ -40,7 +31,7 @@ const CreateReminder: React.FC<Props> = function ({
         type: 1, // 未提醒
       }
 
-      setState({ confirmLoading: true })
+      setSubmitting(true)
       ;(!rowData
         ? serviceCreateReminder(params)
         : serviceUpdateReminder(rowData.id, params)
@@ -49,7 +40,7 @@ const CreateReminder: React.FC<Props> = function ({
           onSuccess(res)
         })
         .finally(() => {
-          setState({ confirmLoading: false })
+          setSubmitting(false)
         })
     } catch (err) {
       console.log(err)
@@ -71,7 +62,7 @@ const CreateReminder: React.FC<Props> = function ({
       open={visible}
       onOk={handleSubmitForm}
       onCancel={onCancel}
-      confirmLoading={state.confirmLoading}
+      confirmLoading={submitting}
       destroyOnClose
     >
       <Form form={form} preserve={false}>

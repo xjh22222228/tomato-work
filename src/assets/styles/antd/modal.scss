@@ -17,3 +17,9 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .ant-modal {
+    top: 0 !important;
+  }
+}

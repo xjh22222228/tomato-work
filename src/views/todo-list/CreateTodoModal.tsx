@@ -1,5 +1,4 @@
-import React from 'react'
-import useKeepState from 'use-keep-state'
+import React, { useState } from 'react'
 import { serviceCreateTodoList, serviceUpdateTodoList } from '@/services'
 import { Modal, Form, Input } from 'antd'
 
@@ -11,10 +10,6 @@ type Props = {
 }
 
 const { TextArea } = Input
-const initialState = {
-  confirmLoading: false,
-  content: '',
-}
 
 const CreateTodoModal: React.FC<Props> = function ({
   visible,
@@ -23,11 +18,11 @@ const CreateTodoModal: React.FC<Props> = function ({
   rowData,
 }) {
   const [form] = Form.useForm()
-  const [state, setState] = useKeepState(initialState)
+  const [submitting, setSubmitting] = useState(false)
 
   async function handleSubmitForm() {
     try {
-      setState({ confirmLoading: true })
+      setSubmitting(true)
       const values = await form.validateFields()
       const params = {
         content: values.content.trim(),
@@ -41,7 +36,7 @@ const CreateTodoModal: React.FC<Props> = function ({
           onSuccess()
         })
         .finally(() => {
-          setState({ confirmLoading: false })
+          setSubmitting(false)
         })
     } catch (error) {
       console.log(error)
@@ -54,14 +49,14 @@ const CreateTodoModal: React.FC<Props> = function ({
       open={visible}
       onOk={handleSubmitForm}
       onCancel={onCancel}
-      confirmLoading={state.confirmLoading}
+      confirmLoading={submitting}
       destroyOnClose
     >
       <Form form={form} preserve={false}>
         <Form.Item
           label="活动内容"
           name="content"
-          initialValue={rowData?.content}
+          initialValue={rowData?.content || ''}
           rules={[
             {
               required: true,
@@ -69,13 +64,7 @@ const CreateTodoModal: React.FC<Props> = function ({
             },
           ]}
         >
-          <TextArea
-            rows={6}
-            value={state.content}
-            onChange={(e) => setState({ content: e.target.value })}
-            maxLength={250}
-            placeholder="请输入内容"
-          />
+          <TextArea rows={6} maxLength={250} placeholder="请输入内容" />
         </Form.Item>
       </Form>
     </Modal>

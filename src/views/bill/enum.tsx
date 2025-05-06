@@ -9,8 +9,8 @@ export enum TypeColors {
 }
 
 export const TYPES = [
-  { name: '收入', value: 1, symbol: '+', color: '#666' },
-  { name: '支出', value: 2, symbol: '-', color: '#f50' },
+  { label: '收入', value: 1, symbol: '+', color: '#666' },
+  { label: '支出', value: 2, symbol: '-', color: '#f50' },
 ]
 
-export const OPTION_TYPES = [{ name: '全部', value: 0 }, ...TYPES]
+export const OPTION_TYPES = [{ label: '全部', value: 0 }, ...TYPES]

@@ -39,14 +39,15 @@ const enum FilterType {
   NextMonth,
 }
 
-const cycleTimes = [
-  { type: FilterType.Today, name: '今天' },
-  { type: FilterType.Yesterday, name: '昨天' },
-  { type: FilterType.LastWeek, name: '最近一周' },
-  { type: FilterType.ThisYear, name: '今年' },
-  { type: FilterType.PrevYear, name: '上一年' },
-  { type: FilterType.PrevMonth, name: '上个月' },
-  { type: FilterType.NextMonth, name: '下个月' },
+const cycleOptions = [
+  { value: 0, label: '全部' },
+  { value: FilterType.Today, label: '今天' },
+  { value: FilterType.Yesterday, label: '昨天' },
+  { value: FilterType.LastWeek, label: '最近一周' },
+  { value: FilterType.ThisYear, label: '今年' },
+  { value: FilterType.PrevYear, label: '上一年' },
+  { value: FilterType.PrevMonth, label: '上个月' },
+  { value: FilterType.NextMonth, label: '下个月' },
 ]
 
 interface State {
@@ -155,7 +156,7 @@ const BillPage: React.FC = function () {
       typeId: 0,
       type: 0,
       date: [startDate, endDate],
-      cycle: '',
+      cycle: 0,
     })
 
     if (isGetData !== false) {
@@ -178,7 +179,7 @@ const BillPage: React.FC = function () {
         params.startDate = values.date[0].format(FORMAT_DATE)
         params.endDate = values.date[1].format(FORMAT_DATE)
       } else {
-        form.setFieldsValue({ cycle: '' })
+        form.setFieldsValue({ cycle: 0 })
       }
 
       return serviceGetBill(params).then((res) => {
@@ -361,39 +362,57 @@ const BillPage: React.FC = function () {
     tableRef?.current?.getTableData()
   }, [])
 
+  const billOptions = React.useMemo(() => {
+    const options: any[] = [
+      {
+        label: '全部',
+        value: 0,
+      },
+      {
+        label: '收入',
+        title: '收入',
+        options: [],
+      },
+      {
+        label: '支出',
+        title: '支出',
+        options: [],
+      },
+    ]
+    state.enterTypes.forEach((item: any) => {
+      options[1].options.push({
+        label: item.name,
+        value: item.id,
+      })
+    })
+    state.outTypes.forEach((item: any) => {
+      options[2].options.push({
+        label: item.name,
+        value: item.id,
+      })
+    })
+    return options
+  }, [state.enterTypes, state.outTypes])
+
   return (
     <div className="capital-flow">
       <div className="query-panel">
         <Form form={form} layout="inline">
           <Form.Item label="账务类型" name="typeId">
-            <Select className="!w-[150px]" filterOption={filterOption}>
-              <Option value={0}>全部</Option>
-              <OptGroup label="收入">
-                {state.enterTypes.map((item: any) => (
-                  <Option value={item.id} key={item.id}>
-                    {item.name}
-                  </Option>
-                ))}
-              </OptGroup>
-              <OptGroup label="支出">
-                {state.outTypes.map((item: any) => (
-                  <Option value={item.id} key={item.id}>
-                    {item.name}
-                  </Option>
-                ))}
-              </OptGroup>
-            </Select>
+            <Select
+              className="!w-[150px]"
+              filterOption={filterOption}
+              options={billOptions}
+            ></Select>
           </Form.Item>
 
           {!form.getFieldValue('name') && (
             <Form.Item label="收支类别" name="type">
-              <Select className="!w-[150px]" filterOption={filterOption}>
-                {OPTION_TYPES.map((item) => (
-                  <Option value={item.value} key={item.value}>
-                    {item.name}
-                  </Option>
-                ))}
-              </Select>
+              <Select
+                className="!w-[150px]"
+                filterOption={filterOption}
+                options={OPTION_TYPES}
+              ></Select>
             </Form.Item>
           )}
 
@@ -413,14 +432,11 @@ const BillPage: React.FC = function () {
           </Form.Item>
 
           <Form.Item label="时间段" name="cycle">
-            <Select className="!w-[150px]" onSelect={onFilterDate}>
-              <Option value="">全部</Option>
-              {cycleTimes.map((item) => (
-                <Option value={item.type} key={item.type}>
-                  {item.name}
-                </Option>
-              ))}
-            </Select>
+            <Select
+              className="!w-[150px]"
+              onSelect={onFilterDate}
+              options={cycleOptions}
+            ></Select>
           </Form.Item>
 
           <Button type="primary" onClick={tableRef.current?.getTableData}>

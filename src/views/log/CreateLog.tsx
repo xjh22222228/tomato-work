@@ -15,7 +15,6 @@ import { getAllCompany } from '@/store/companySlice'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 
 const { TextArea } = Input
-const { Option } = Select
 
 const DEF_COMPANY_ID = localStorage.getItem(LOCAL_STORAGE.COMPANY_ID) || '-1'
 
@@ -36,10 +35,13 @@ const CreateLogPage: React.FC = function () {
   const memoizedCompanyAll = useMemo(() => {
     return [
       {
-        companyName: '无',
-        id: '-1',
+        label: '无',
+        value: '-1',
       },
-      ...companyAll,
+      ...companyAll.map((item) => ({
+        label: item.companyName,
+        value: item.id,
+      })),
     ]
   }, [companyAll])
 
@@ -126,13 +128,7 @@ const CreateLogPage: React.FC = function () {
             },
           ]}
         >
-          <Select>
-            {memoizedCompanyAll.map((item) => (
-              <Option key={item.id} value={item.id}>
-                {item.companyName}
-              </Option>
-            ))}
-          </Select>
+          <Select options={memoizedCompanyAll}></Select>
         </Form.Item>
 
         <Form.Item

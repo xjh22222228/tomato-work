@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useImperativeHandle } from 'react'
+import React, { useEffect, useState, useMemo, useImperativeHandle } from 'react'
 import type { Ref } from 'react'
 import dayjs from 'dayjs'
 import {
@@ -21,7 +21,6 @@ import { FORMAT_DATETIME, base64ToBlob } from '@/utils'
 import { cloneDeep } from 'lodash'
 
 const { TextArea } = Input
-const { Option, OptGroup } = Select
 
 const formLayout = {
   labelCol: { span: 4 },
@@ -162,6 +161,28 @@ const CreateBillModal: React.FC<Props> = function ({
     })
   }
 
+  const selectOptions = useMemo(() => {
+    const options = [
+      {
+        title: '收入',
+        label: '收入',
+        options: enterTypes.map((item: any) => ({
+          label: item.name,
+          value: item.id,
+        })),
+      },
+      {
+        title: '支出',
+        label: '支出',
+        options: outTypes.map((item: any) => ({
+          label: item.name,
+          value: item.id,
+        })),
+      },
+    ]
+    return options
+  }, [enterTypes, outTypes])
+
   return (
     <Modal
       title="新增"
@@ -195,22 +216,7 @@ const CreateBillModal: React.FC<Props> = function ({
             },
           ]}
         >
-          <Select>
-            <OptGroup label="收入">
-              {enterTypes.map((item: any) => (
-                <Option value={item.id} key={item.id}>
-                  {item.name}
-                </Option>
-              ))}
-            </OptGroup>
-            <OptGroup label="支出">
-              {outTypes.map((item: any) => (
-                <Option value={item.id} key={item.id}>
-                  {item.name}
-                </Option>
-              ))}
-            </OptGroup>
-          </Select>
+          <Select options={selectOptions}></Select>
         </Form.Item>
 
         <Form.Item

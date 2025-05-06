@@ -17,7 +17,6 @@ import { useAppDispatch, useAppSelector } from '@/hooks'
 
 const notMobile = !isMobile()
 const { RangePicker } = DatePicker
-const { Option } = Select
 
 interface State {
   companyAll: Record<string, any>[]
@@ -38,6 +37,19 @@ const LogPage = () => {
   const tableRef = useRef<any>(null)
   const dispatch = useAppDispatch()
   const companyAll = useAppSelector((state) => state.company.companyAll)
+
+  const memoizedCompanyAll = useMemo(() => {
+    return [
+      {
+        label: '全部',
+        value: 0,
+      },
+      ...companyAll.map((item) => ({
+        label: item.companyName,
+        value: item.id,
+      })),
+    ]
+  }, [companyAll])
 
   const tableColumns: any[] = [
     {
@@ -133,6 +145,19 @@ const LogPage = () => {
     }))
   }, [LOG_LIST])
 
+  const logOptions = useMemo(() => {
+    return [
+      {
+        label: '全部',
+        value: 0,
+      },
+      ...LOG_LIST.map((item) => ({
+        label: item.name,
+        value: item.key,
+      })),
+    ]
+  }, [LOG_LIST])
+
   const toolbar = (
     <Dropdown menu={{ items }}>
       <Button type="primary">
@@ -153,16 +178,11 @@ const LogPage = () => {
           <div className="!w-full">
             <div className="flex">
               <Form.Item name="company" label="所属单位" initialValue={0}>
-                <Select style={{ width: 200 }} filterOption={filterOption}>
-                  <Option key={0} value={0}>
-                    全部
-                  </Option>
-                  {companyAll.map((item: Record<string, any>) => (
-                    <Option key={item.id} value={item.id}>
-                      {item.companyName}
-                    </Option>
-                  ))}
-                </Select>
+                <Select
+                  style={{ width: 200 }}
+                  filterOption={filterOption}
+                  options={memoizedCompanyAll}
+                ></Select>
               </Form.Item>
 
               <Form.Item name="date" label="查询日期">
@@ -180,16 +200,11 @@ const LogPage = () => {
 
           <div className="flex !mt-2.5">
             <Form.Item name="logType" label="日志类型" initialValue={0}>
-              <Select style={{ width: 200 }} filterOption={filterOption}>
-                <Option key={0} value={0}>
-                  全部
-                </Option>
-                {LOG_LIST.map((item: Record<string, any>) => (
-                  <Option key={item.key} value={item.key}>
-                    {item.name}
-                  </Option>
-                ))}
-              </Select>
+              <Select
+                style={{ width: 200 }}
+                filterOption={filterOption}
+                options={logOptions}
+              ></Select>
             </Form.Item>
           </div>
         </Form>

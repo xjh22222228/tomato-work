@@ -14,7 +14,6 @@ import { FORMAT_DATE, formatDateTime, isMobile } from '@/utils'
 const noMobile = !isMobile()
 
 const { RangePicker } = DatePicker
-const Option = Select.Option
 const STATUS_TYPE: Record<string, any> = {
   1: { color: '#f50', text: '待提醒' },
   2: { color: '#87d068', text: '已提醒' },
@@ -149,6 +148,12 @@ const ReminderPage: React.FC<Props> = function ({ userInfo }) {
     }
   }, [userInfo.email])
 
+  const options = [
+    { label: '全部', value: 0 },
+    { label: '待提醒', value: 1 },
+    { label: '已提醒', value: 2 },
+  ]
+
   return (
     <div className="reminder">
       <div className="query-panel">
@@ -158,11 +163,7 @@ const ReminderPage: React.FC<Props> = function ({ userInfo }) {
           onValuesChange={() => tableRef?.current?.getTableData()}
         >
           <Form.Item name="queryType" label="查询类型" initialValue={0}>
-            <Select>
-              <Option value={0}>全部</Option>
-              <Option value={1}>待提醒</Option>
-              <Option value={2}>已提醒</Option>
-            </Select>
+            <Select options={options}></Select>
           </Form.Item>
 
           <Form.Item name="date" label="日期">

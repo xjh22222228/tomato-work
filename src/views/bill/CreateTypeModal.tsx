@@ -10,8 +10,6 @@ type Props = {
   rowData: null | Record<string, any>
 }
 
-const { Option } = Select
-
 const CreateTypeModal: React.FC<Props> = function ({
   visible,
   rowData,
@@ -88,13 +86,7 @@ const CreateTypeModal: React.FC<Props> = function ({
             },
           ]}
         >
-          <Select>
-            {TYPES.map((item) => (
-              <Option value={item.value} key={item.value}>
-                {item.name}
-              </Option>
-            ))}
-          </Select>
+          <Select options={TYPES}></Select>
         </Form.Item>
       </Form>
     </Modal>

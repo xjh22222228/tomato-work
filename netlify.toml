@@ -4,3 +4,7 @@
   status = 200
 [build.environment]
   NODE_VERSION = "22"
+[[headers]]
+  for = "/manifest.webmanifest"
+  [headers.values]
+    Content-Type = "application/manifest+json"

@@ -10,6 +10,7 @@ import zhCN from 'antd/locale/zh_CN'
 import dayjs from 'dayjs'
 import zh from 'dayjs/locale/zh-cn'
 import store from '@/store'
+import './registerSW'
 
 // https://ant.design/docs/react/v5-for-19-cn antd@v6 移除
 import '@ant-design/v5-patch-for-react-19'

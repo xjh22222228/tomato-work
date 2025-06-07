@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import dayjs from 'dayjs'
-import { Modal, Form, Input, DatePicker } from 'antd'
+import { Modal, Form, Input, DatePicker, message } from 'antd'
 import { serviceCreateReminder, serviceUpdateReminder } from '@/services'
 import { isBefore, formatDateTime } from '@/utils'
 
@@ -25,9 +25,14 @@ const CreateReminder: React.FC<Props> = function ({
   async function handleSubmitForm() {
     try {
       const values = await form.validateFields()
+      if (!values.date && !values.cron) {
+        message.error('请选择日期或填写Cron表达式定时任务')
+        return
+      }
       const params = {
-        date: formatDateTime(values.date),
+        date: values.date ? formatDateTime(values.date) : null,
         content: values.content.trim(),
+        cron: values.cron,
         type: 1, // 未提醒
       }
 
@@ -50,8 +55,9 @@ const CreateReminder: React.FC<Props> = function ({
   useEffect(() => {
     if (visible && rowData) {
       form.setFieldsValue({
-        date: dayjs(rowData.createdAt),
+        date: rowData.createdAt ? dayjs(rowData.createdAt) : undefined,
         content: rowData.content,
+        cron: rowData.cron,
       })
     }
   }, [visible, rowData])
@@ -66,22 +72,17 @@ const CreateReminder: React.FC<Props> = function ({
       destroyOnClose
     >
       <Form form={form} preserve={false}>
-        <Form.Item
-          name="date"
-          label="提醒时间"
-          rules={[
-            {
-              required: true,
-              message: '请选择时间',
-            },
-          ]}
-        >
+        <Form.Item name="date" label="提醒时间">
           <DatePicker
             showTime
             allowClear={false}
             disabledDate={isBefore}
             className="!w-full"
           />
+        </Form.Item>
+
+        <Form.Item name="cron" label="cron表达式">
+          <Input maxLength={20} placeholder="Cron表达式" />
         </Form.Item>
 
         <Form.Item

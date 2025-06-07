@@ -13,7 +13,7 @@
 /dist
 
 ./config/**
-
+/dev-dist
 # misc
 .DS_Store
 .env.local

@@ -11,6 +11,8 @@
   </p>
 </p>
 
+本系统不提供测试账号密码，如果想预览请使用 `GitHub` 登录。
+
 ## Screenshot
 
 ![](media/screenshot.png)
@@ -29,14 +31,13 @@
 
 ## 开发
 
-- Node.js >= 22
+**Node.js >= 22**
 
 ```bash
 $ git clone --depth=1 https://github.com/xjh22222228/tomato-work.git
 
 $ pnpm i
 
-# user: test, password: 123456
 $ npm start # 启动本地环境
 $ npm run start:prod # 连接作者生产环境，可以用于客户端学习
 

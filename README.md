@@ -15,38 +15,32 @@
 
 ![](media/screenshot.png)
 
-## Todo list
+## 主要功能
 
 - [x] github 登录
-- [x] 提醒事项
+- [x] 提醒事项 - 支持日期和Cron定时，通过企业微信+邮箱推送
 - [x] 活动清单
 - [x] 今日待办
-- [x] 财务管理
+- [x] 日志管理
 - [x] 公司单位
+- [x] 账单管理
 - [x] 个人中心
 - [x] 我的备忘 - 支持 Markdown & WYSIWYG
-- [x] 站内消息
-- [x] 邮件推送 - (github 邮箱必须设为公开)
-- [x] 微信推送
-- [x] 日志管理
 
-## Build Setup
+## 开发
 
-- Node.js >= 18
+- Node.js >= 22
 
 ```bash
-# Clone
-git clone --depth=1 https://github.com/xjh22222228/tomato-work.git
+$ git clone --depth=1 https://github.com/xjh22222228/tomato-work.git
 
-# install dependencies
-npm i
+$ pnpm i
 
-# serve with hot reload at localhost:7000
 # user: test, password: 123456
-npm start
-npm run start:prod # Connect to production environment
+$ npm start # 启动本地环境
+$ npm run start:prod # 连接作者生产环境，可以用于客户端学习
 
-# build for production with minification
+# 打包
 npm run build
 ```
 

@@ -77,7 +77,7 @@ const CreateCompanyModal: React.FC<Props> = function ({
       onOk={handleSubmitForm}
       onCancel={onCancel}
       confirmLoading={submitting}
-      destroyOnClose
+      destroyOnHidden
     >
       <Form form={form} preserve={false} {...formLayoutItem}>
         <Form.Item

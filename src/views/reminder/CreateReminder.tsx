@@ -69,9 +69,9 @@ const CreateReminder: React.FC<Props> = function ({
       onOk={handleSubmitForm}
       onCancel={onCancel}
       confirmLoading={submitting}
-      destroyOnClose
+      destroyOnHidden
     >
-      <Form form={form} preserve={false}>
+      <Form layout="vertical" form={form} preserve={false}>
         <Form.Item name="date" label="提醒时间">
           <DatePicker
             showTime

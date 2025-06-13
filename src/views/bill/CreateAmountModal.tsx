@@ -190,7 +190,7 @@ const CreateBillModal: React.FC<Props> = function ({
       onOk={handleSubmit}
       onCancel={onCancel}
       confirmLoading={state.confirmLoading}
-      destroyOnClose
+      destroyOnHidden
     >
       <Form form={form} preserve={false} {...formLayout}>
         <Form.Item

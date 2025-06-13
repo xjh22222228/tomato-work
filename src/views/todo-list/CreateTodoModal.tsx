@@ -50,7 +50,7 @@ const CreateTodoModal: React.FC<Props> = function ({
       onOk={handleSubmitForm}
       onCancel={onCancel}
       confirmLoading={submitting}
-      destroyOnClose
+      destroyOnHidden
     >
       <Form form={form} preserve={false}>
         <Form.Item

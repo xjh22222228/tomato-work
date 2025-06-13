@@ -39,7 +39,7 @@ $ git clone --depth=1 https://github.com/xjh22222228/tomato-work.git
 $ pnpm i
 
 $ npm start # 启动本地环境
-$ npm run start:prod # 连接作者生产环境，可以用于客户端学习
+$ npm run start:prod # 连接作者生产环境，可以用于测试
 
 # 打包
 npm run build

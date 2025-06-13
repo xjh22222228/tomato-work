@@ -55,7 +55,7 @@ const DetailDrawer: React.FC<Props> = function ({ visible, onClose, detail }) {
       title={record.title}
       width={500}
       onClose={onClose}
-      destroyOnClose
+      destroyOnHidden
     >
       <p className="pl-5 mb-5">日期：{detail.__createdAt__}</p>
       <Collapse

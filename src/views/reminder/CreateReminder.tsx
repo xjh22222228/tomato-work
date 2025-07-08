@@ -55,7 +55,7 @@ const CreateReminder: React.FC<Props> = function ({
   useEffect(() => {
     if (visible && rowData) {
       form.setFieldsValue({
-        date: rowData.createdAt ? dayjs(rowData.createdAt) : undefined,
+        date: rowData.date ? dayjs(rowData.date) : undefined,
         content: rowData.content,
         cron: rowData.cron,
       })

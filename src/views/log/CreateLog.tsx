@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react'
 import './style.scss'
 import config from '@/config'
 import { LeftOutlined } from '@ant-design/icons'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router'
 import { LOG_LIST } from './constants'
 import { Form, Input, Button, Select } from 'antd'
 import {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import './style.scss'
 import NumberFlow from '@number-flow/react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { serviceGetPanelData } from '@/services'
 import {
   PropertySafetyFilled,

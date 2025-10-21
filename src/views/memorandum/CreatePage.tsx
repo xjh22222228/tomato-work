@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import './style.scss'
 import Editor from '@toast-ui/editor'
 import { Input, Button, message } from 'antd'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router'
 import { defaultTitle } from './constants'
 import {
   serviceCreateMemorandum,
@@ -37,7 +37,6 @@ const CreatePage: React.FC = () => {
     }
 
     setLoading(true)
-
     ;(id
       ? serviceUpdateMemorandum(id, params)
       : serviceCreateMemorandum(params)

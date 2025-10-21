@@ -1,5 +1,5 @@
 import React, { lazy } from 'react'
-import { useRoutes } from 'react-router-dom'
+import { useRoutes } from 'react-router'
 import PrivateRoute from '@/components/private-route'
 import Login from '@/views/login/index'
 import NoMatch from '@/views/exception/404'

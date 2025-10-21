@@ -1,7 +1,7 @@
 import React from 'react'
 import './style.scss'
 import { Result, Button } from 'antd'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { ExceptionStatusType } from 'antd/lib/result'
 
 interface Props {

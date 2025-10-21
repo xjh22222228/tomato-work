@@ -6,7 +6,7 @@ import './style.scss'
 import dayjs from 'dayjs'
 import NoData from '@/components/no-data/index'
 import { Card, Button, Popconfirm, Spin } from 'antd'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { serviceGetMemorandum, serviceDeleteMemorandum } from '@/services'
 import { defaultTitle } from './constants'
 

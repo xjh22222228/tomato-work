@@ -1,7 +1,7 @@
 import React from 'react'
 import CONFIG from '@/config'
 import { MainRoutes } from './routes'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router'
 
 export default function () {
   const [mounted, setMounted] = React.useState(false)

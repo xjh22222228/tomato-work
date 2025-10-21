@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react'
 import '@/assets/styles/markdown.css'
 import './style.scss'
-import { useParams, Link, useNavigate } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router'
 import { serviceGetMemorandumById } from '@/services'
 import { defaultTitle } from './constants'
 import { LeftOutlined, EditOutlined } from '@ant-design/icons'

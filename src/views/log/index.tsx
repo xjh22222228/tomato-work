@@ -11,7 +11,7 @@ import type { MenuProps } from 'antd'
 import { FORMAT_DATE, filterOption, isMobile } from '@/utils'
 import { DownOutlined } from '@ant-design/icons'
 import { LOG_LIST } from './constants'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router'
 import { getAllCompany } from '@/store/companySlice'
 import { useAppDispatch, useAppSelector } from '@/hooks'
 

@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect, useState, useMemo } from 'react'
 import './style.scss'
 import { Layout, Menu } from 'antd'
-import { useLocation, Outlet, useNavigate } from 'react-router-dom'
+import { useLocation, Outlet, useNavigate } from 'react-router'
 import { SETTING_SIDER_MENU_LIST } from '@/constants'
 import type { MenuProps } from 'antd'
 

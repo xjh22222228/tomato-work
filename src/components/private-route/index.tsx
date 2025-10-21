@@ -1,7 +1,7 @@
 import React from 'react'
 import CONFIG from '@/config'
 import qs from 'query-string'
-import { useLocation, Navigate } from 'react-router-dom'
+import { useLocation, Navigate } from 'react-router'
 import { useAppSelector } from '@/hooks'
 
 type Props = {

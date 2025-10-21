@@ -7,7 +7,7 @@ import Sidebar from '@/components/sidebar'
 import Header from '@/components/header'
 import { Layout } from 'antd'
 import { LOCAL_STORAGE } from '@/constants'
-import { Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router'
 import { isMobile } from '@/utils/index'
 
 const { Content } = Layout

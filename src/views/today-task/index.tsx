@@ -4,7 +4,7 @@
  */
 import React, { useEffect } from 'react'
 import './style.scss'
-import useKeepState from 'use-keep-state'
+import { useSetState } from 'ahooks'
 import NoData from '@/components/no-data/index'
 import TaskItem from './TaskItem'
 import CreateTaskModal from './CreateTaskModal'
@@ -18,14 +18,12 @@ interface TaskProp {
   color: string
 }
 
-const TASK_TYPE: {
-  [key: string]: TaskProp
-} = {
+const TASK_TYPE = {
   wait: { text: '待作业', color: 'orange' },
   process: { text: '作业中', color: '#108ee9' },
   finished: { text: '已完成', color: '#87d068' },
   unfinished: { text: '未完成', color: '#f50' },
-}
+} satisfies Record<string, TaskProp>
 
 interface State {
   data: {
@@ -49,7 +47,7 @@ const initialState: State = {
 
 const TodayTaskPage = () => {
   const [form] = Form.useForm()
-  const [state, setState] = useKeepState(initialState)
+  const [state, setState] = useSetState(initialState)
 
   function getTask() {
     const values = form.getFieldsValue()
@@ -57,7 +55,7 @@ const TodayTaskPage = () => {
     serviceGetTask({
       startDate: date,
       endDate: date,
-    }).then((res) => {
+    }).then((res: any) => {
       setState({ data: res })
     })
   }
@@ -124,16 +122,21 @@ const TodayTaskPage = () => {
         state.data.finished.length > 0 ||
         state.data.unfinished.length > 0 ? (
           <div className="grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {Object.keys(state.data).map((key: string) => (
-              <div key={key}>
-                <div className="text-center">
-                  <Tag color={TASK_TYPE[key].color}>{TASK_TYPE[key].text}</Tag>
+            {Object.keys(state.data).map((_key: any) => {
+              const key = _key as keyof typeof TASK_TYPE
+              return (
+                <div key={key}>
+                  <div className="text-center">
+                    <Tag color={TASK_TYPE[key].color}>
+                      {TASK_TYPE[key].text}
+                    </Tag>
+                  </div>
+                  {state.data[key].map((item: any) => (
+                    <TaskItem key={item.id} data={item} onOk={getTask} />
+                  ))}
                 </div>
-                {state.data[key].map((item: any) => (
-                  <TaskItem key={item.id} data={item} onOk={getTask} />
-                ))}
-              </div>
-            ))}
+              )
+            })}
           </div>
         ) : (
           <NoData

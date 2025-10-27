@@ -33,4 +33,11 @@ export class Reminder extends DateEntity {
     comment: '事项类型, 1=待提醒, 2=已提醒',
   })
   type: number
+
+  @Column({
+    type: 'boolean',
+    default: true,
+    comment: '是否开启提醒',
+  })
+  open: boolean
 }

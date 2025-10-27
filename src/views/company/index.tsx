@@ -2,7 +2,7 @@
  * 公司单位
  */
 import React, { useEffect, useRef } from 'react'
-import useKeepState from 'use-keep-state'
+import { useSetState } from 'ahooks'
 import Table from '@/components/table'
 import CreateCompanyModal from './CreateCompanyModal'
 import { serviceGetAllCompany, serviceDelCompany } from '@/services'
@@ -22,7 +22,7 @@ const initialState: State = {
 }
 
 const CompanyPage = () => {
-  const [state, setState] = useKeepState(initialState)
+  const [state, setState] = useSetState(initialState)
   const tableRef = useRef<any>(null)
   const tableColumns: any[] = [
     {

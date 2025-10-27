@@ -39,7 +39,6 @@ const httpInstance: IAxiosInstance & AxiosInstance = axios.create({
   baseURL: CONFIG.http.baseURL,
 })
 
-// 主要处理防止store未挂载访问
 httpInstance.interceptors.request.use(
   function (config) {
     NProgress.start()

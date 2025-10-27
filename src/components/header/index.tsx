@@ -95,7 +95,11 @@ const HomeHeader: React.FC<Props> = function ({ collapsed, setCollapsed }) {
 
   function handleFullscreen() {
     setIsFullscreen((isFullscreen) => {
-      isFullscreen ? exitFullscreen() : fullscreen()
+      if (isFullscreen) {
+        exitFullscreen()
+      } else {
+        fullscreen()
+      }
       return !isFullscreen
     })
   }

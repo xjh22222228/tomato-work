@@ -10,7 +10,7 @@ type Props = {
   visible: boolean
   onCancel: () => void
   onSuccess: (res?: any) => void
-  rowData?: Record<string, any>
+  rowData: Record<string, any> | null
 }
 
 const CreateReminder: React.FC<Props> = function ({
@@ -64,7 +64,7 @@ const CreateReminder: React.FC<Props> = function ({
 
   return (
     <Modal
-      title="新增"
+      title={rowData ? '编辑' : '新增'}
       open={visible}
       onOk={handleSubmitForm}
       onCancel={onCancel}

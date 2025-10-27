@@ -32,7 +32,7 @@ type Props = {
   visible: boolean
   onCancel: () => void
   onOk: (res?: any) => void
-  rowData?: Record<string, any>
+  rowData: Record<string, any> | null
   enterTypes: any[]
   outTypes: any[]
 }

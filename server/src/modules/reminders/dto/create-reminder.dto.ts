@@ -3,6 +3,7 @@ import {
   IsNumber,
   IsOptional,
   IsString,
+  IsBoolean,
   Min,
   Max,
   ValidateIf,
@@ -70,4 +71,8 @@ export class CreateReminderDto {
   @ValidateIf((o) => o.cron !== undefined && o.cron !== '')
   @IsValidCron()
   cron?: string
+
+  @IsOptional()
+  @IsBoolean()
+  open?: boolean
 }

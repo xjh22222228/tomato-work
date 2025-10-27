@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import './style.scss'
 import dayjs from 'dayjs'
-import useKeepState from 'use-keep-state'
+import { useSetState } from 'ahooks'
 import CreateTypeModal from './CreateTypeModal'
 import { Table, Button, Tag, Popconfirm } from 'antd'
 import { serviceGetBillType, serviceDeleteBillType } from '@/services'
@@ -17,7 +17,7 @@ const initialState = {
 }
 
 const Type = () => {
-  const [state, setState] = useKeepState(initialState)
+  const [state, setState] = useSetState(initialState)
   const tableColumns = [
     {
       title: '账务类型',

@@ -2,7 +2,7 @@
  * 日志管理
  */
 import React, { useEffect, useRef, useMemo } from 'react'
-import useKeepState from 'use-keep-state'
+import { useSetState } from 'ahooks'
 import Table from '@/components/table'
 import DetailDrawer from './DetailDrawer'
 import { serviceDeleteLog, serviceGetLogList } from '@/services/log'
@@ -33,7 +33,7 @@ const initState: State = {
 const LogPage = () => {
   const navigate = useNavigate()
   const [form] = Form.useForm()
-  const [state, setState] = useKeepState(initState)
+  const [state, setState] = useSetState(initState)
   const tableRef = useRef<any>(null)
   const dispatch = useAppDispatch()
   const companyAll = useAppSelector((state) => state.company.companyAll)

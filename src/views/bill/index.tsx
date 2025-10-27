@@ -4,7 +4,7 @@
 import React, { useEffect, useRef } from 'react'
 import './style.scss'
 import dayjs from 'dayjs'
-import useKeepState from 'use-keep-state'
+import { useSetState } from 'ahooks'
 import Table from '@/components/table'
 import CreateAmountModal from './CreateAmountModal'
 import NumberFlow from '@number-flow/react'
@@ -27,7 +27,6 @@ const noMobile = !isMobile()
 
 const { Search } = Input
 const { RangePicker } = DatePicker
-const { Option, OptGroup } = Select
 
 const enum FilterType {
   Today = 1,
@@ -52,7 +51,7 @@ const cycleOptions = [
 
 interface State {
   showCreateAmountModal: boolean
-  currentRow: null | { [key: string]: any }
+  currentRow: null | Record<string, any>
   amountTypes: any[]
   enterTypes: any[]
   outTypes: any[]
@@ -80,7 +79,7 @@ const initialState: State = {
 
 const BillPage: React.FC = function () {
   const [form] = Form.useForm()
-  const [state, setState] = useKeepState(initialState)
+  const [state, setState] = useSetState(initialState)
   const tableRef = useRef<any>(null)
   const createRef = useRef<any>(null)
   const current = tableRef.current

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import './style.scss'
 import bytes from 'bytes'
 import CONFIG from '@/config'
-import { Row, Col, Card, Progress, Empty } from 'antd'
+import { Card, Progress, Empty } from 'antd'
 import { totalPercentage, formatDateTime } from '@/utils'
 import { serviceGetInnerMessage } from '@/services'
 

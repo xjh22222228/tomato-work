@@ -2,7 +2,7 @@
  * 活动清单
  */
 import React, { useEffect, useRef } from 'react'
-import useKeepState from 'use-keep-state'
+import { useSetState } from 'ahooks'
 import Table from '@/components/table'
 import CreateTodoModal from './CreateTodoModal'
 import {
@@ -30,7 +30,7 @@ const initState: State = {
 
 const TodoListPage = () => {
   const [form] = Form.useForm()
-  const [state, setState] = useKeepState(initState)
+  const [state, setState] = useSetState(initState)
   const tableRef = useRef<any>(null)
   const tableColumns: any[] = [
     {
@@ -121,13 +121,13 @@ const TodoListPage = () => {
         break
       // 删除
       case 1:
-        serviceDeleteTodoList(row.id).then((res) => {
+        serviceDeleteTodoList(row.id).then(() => {
           tableRef.current.getTableData()
         })
         break
       // 状态
       case 2:
-        serviceUpdateTodoList(row.id, { status: 2 }).then((res) => {
+        serviceUpdateTodoList(row.id, { status: 2 }).then(() => {
           tableRef.current.getTableData()
         })
         break

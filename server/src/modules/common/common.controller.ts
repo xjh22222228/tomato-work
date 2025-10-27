@@ -57,7 +57,7 @@ export class CommonController {
           endDate: currentDate,
         }),
         this.todoListsService.findAll(user.uid, { status: 1 }), // 未完成的待办
-        this.remindersService.findAll(user.uid, { type: 1 }), // 类型1的提醒
+        this.remindersService.findAll(user.uid, { type: 1, open: true }), // 类型1的提醒
       ])
 
     return {

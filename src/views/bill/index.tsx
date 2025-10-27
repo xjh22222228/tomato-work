@@ -123,6 +123,11 @@ const BillPage: React.FC = function () {
       ),
     },
     {
+      title: '原金额',
+      width: 100,
+      render: (rowData: any) => rowData.originalAmount,
+    },
+    {
       title: '备注信息',
       render: (rowData: any) => (
         <p className="whitespace-pre-wrap">{rowData.remark}</p>

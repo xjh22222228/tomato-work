@@ -59,6 +59,7 @@ interface State {
     consumptionAmount: number
     incomeAmount: number
     availableAmount: number
+    discountAmount: number
   }
   selectedAmount: null | number
 }
@@ -73,6 +74,7 @@ const initialState: State = {
     consumptionAmount: 0,
     incomeAmount: 0,
     availableAmount: 0,
+    discountAmount: 0,
   },
   selectedAmount: null,
 }
@@ -199,6 +201,7 @@ const BillPage: React.FC = function () {
             incomeAmount: res.incomeAmount,
             consumptionAmount: res.consumptionAmount,
             availableAmount: res.availableAmount,
+            discountAmount: res.discountAmount,
           },
         })
         return res
@@ -463,6 +466,14 @@ const BillPage: React.FC = function () {
           {state.selectedAmount !== null && (
             <div className="item-amount">
               <NumberFlow prefix="已选择：￥" value={state.selectedAmount} />
+            </div>
+          )}
+          {state.price.discountAmount !== 0 && (
+            <div className="item-amount">
+              <NumberFlow
+                prefix="优惠：￥"
+                value={state.price.discountAmount}
+              />
             </div>
           )}
         </div>

@@ -24,6 +24,10 @@ export class CreateBillDto {
   price: number
 
   @IsOptional()
+  @IsNumber()
+  originalAmount: number
+
+  @IsOptional()
   @IsString()
   @MaxLength(250)
   remark?: string

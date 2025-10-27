@@ -9,6 +9,7 @@ import {
   Select,
   InputNumber,
   Upload,
+  message,
 } from 'antd'
 import type { UploadFile } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
@@ -17,10 +18,12 @@ import {
   serviceUpdateBill,
   serviceGetAmountById,
 } from '@/services'
-import { FORMAT_DATETIME, base64ToBlob } from '@/utils'
+import { FORMAT_DATETIME, base64ToBlob, isMobile } from '@/utils'
 import { cloneDeep } from 'lodash'
 
 const { TextArea } = Input
+
+const remarkRow = isMobile() ? 3 : 5
 
 const formLayout = {
   labelCol: { span: 4 },
@@ -62,11 +65,20 @@ const CreateBillModal: React.FC<Props> = function ({
   async function handleSubmit() {
     try {
       const values = await form.validateFields()
+      const originalAmount = Number(values.originalAmount)
+      const amount = Number(values.amount)
+      const isFalsy =
+        values.originalAmount === '' || values.originalAmount == null
+      if (!isFalsy && originalAmount < amount) {
+        message.error('原金额不能小于收支金额')
+        return
+      }
       const params = {
         date: values.date.format(FORMAT_DATETIME),
         remark: values.remark?.trim() ?? '',
         typeId: values.typeId,
-        price: Number(values.amount),
+        price: amount,
+        originalAmount: isFalsy ? null : originalAmount,
         imgs: '',
       }
 
@@ -115,6 +127,7 @@ const CreateBillModal: React.FC<Props> = function ({
             remark: res.remark,
             typeId: res.typeId,
             amount: res.price,
+            originalAmount: res.originalAmount,
           })
           const state: State = {
             fileList: [],
@@ -219,28 +232,47 @@ const CreateBillModal: React.FC<Props> = function ({
           <Select options={selectOptions}></Select>
         </Form.Item>
 
-        <Form.Item
-          label="收支金额"
-          name="amount"
-          rules={[
-            {
-              required: true,
-              message: '请输入金额',
-            },
-          ]}
-        >
-          <InputNumber
-            className="!w-full"
-            placeholder="请输入金额"
-            formatter={(value) => `￥ ${value}`}
-            max={9999999}
-            min={0}
-            precision={2}
-          />
-        </Form.Item>
+        <div className="flex">
+          <Form.Item
+            label="收支金额"
+            name="amount"
+            labelCol={{ span: 8, offset: 0 }}
+            wrapperCol={{ span: 16, offset: 0 }}
+            rules={[
+              {
+                required: true,
+                message: '请输入收支金额',
+              },
+            ]}
+          >
+            <InputNumber
+              className="!w-full"
+              placeholder="请输入金额"
+              formatter={(value) => `￥ ${value}`}
+              max={9999999}
+              min={0}
+              precision={2}
+            />
+          </Form.Item>
+          <Form.Item
+            label="原金额"
+            name="originalAmount"
+            labelCol={{ span: 8, offset: 0 }}
+            wrapperCol={{ span: 16, offset: 0 }}
+          >
+            <InputNumber
+              className="!w-full"
+              placeholder="请输入金额"
+              formatter={(value) => `￥ ${value}`}
+              max={9999999}
+              min={0}
+              precision={2}
+            />
+          </Form.Item>
+        </div>
 
         <Form.Item label="备注信息" name="remark">
-          <TextArea rows={5} maxLength={250} />
+          <TextArea rows={remarkRow} maxLength={250} />
         </Form.Item>
 
         <Form.Item label="附件" name="imgs">

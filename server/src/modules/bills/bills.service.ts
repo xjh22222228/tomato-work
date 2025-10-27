@@ -54,6 +54,7 @@ export class BillsService {
     consumptionAmount: number
     incomeAmount: number
     availableAmount: number
+    discountAmount: number
   }> {
     const {
       pageNo,
@@ -69,7 +70,6 @@ export class BillsService {
       .createQueryBuilder('bill')
       .leftJoinAndSelect('bill.billType', 'billType')
       .where('bill.uid = :uid', { uid })
-
     if (startDate && endDate) {
       queryBuilder.andWhere('bill.date BETWEEN :startDate AND :endDate', {
         startDate: dayjs(startDate).startOf('day').valueOf(),
@@ -100,6 +100,7 @@ export class BillsService {
     let consumptionAmount = new BigNumber(0)
     let incomeAmount = new BigNumber(0)
     let availableAmount = new BigNumber(0)
+    let discountAmount = new BigNumber(0)
 
     result.forEach((item) => {
       const price = new BigNumber(item.price)
@@ -107,6 +108,11 @@ export class BillsService {
         incomeAmount = incomeAmount.plus(price)
       } else {
         consumptionAmount = consumptionAmount.plus(price)
+      }
+      if (item.originalAmount != null) {
+        discountAmount = discountAmount.plus(
+          new BigNumber(item.originalAmount).minus(price),
+        )
       }
     })
 
@@ -125,6 +131,7 @@ export class BillsService {
       consumptionAmount: consumptionAmount.toNumber(),
       incomeAmount: incomeAmount.toNumber(),
       availableAmount: availableAmount.toNumber(),
+      discountAmount: discountAmount.toNumber(),
     }
   }
 

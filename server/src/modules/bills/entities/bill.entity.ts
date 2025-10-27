@@ -26,6 +26,16 @@ export class Bill extends DateEntity {
   })
   price: number
 
+  @Column({
+    type: 'decimal',
+    precision: 19,
+    scale: 2,
+    default: null,
+    transformer: numberTransformer(),
+    nullable: true,
+  })
+  originalAmount: number
+
   @Column({ type: 'bigint', transformer: numberTransformer() })
   date: number
 

@@ -85,7 +85,7 @@ export class LogsService {
 
   async findOne(getLogDto: GetLogDto, uid: number): Promise<Log> {
     const log = await this.logsRepository.findOne({
-      where: { ...getLogDto, uid },
+      where: { id: getLogDto.id, uid },
     })
 
     if (!log) {

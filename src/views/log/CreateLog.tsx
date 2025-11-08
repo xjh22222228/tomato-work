@@ -53,7 +53,7 @@ const CreateLogPage: React.FC = function () {
     try {
       const values = await form.validateFields()
       const params = {
-        logType: type,
+        logType: Number(type),
         ...detail,
         doneContent: values.doneContent,
         undoneContent: values.undoneContent,
@@ -131,16 +131,7 @@ const CreateLogPage: React.FC = function () {
           <Select options={memoizedCompanyAll}></Select>
         </Form.Item>
 
-        <Form.Item
-          name="doneContent"
-          label={typeRecord.doneTitle}
-          rules={[
-            {
-              required: true,
-              message: '请输入',
-            },
-          ]}
-        >
+        <Form.Item name="doneContent" label={typeRecord.doneTitle}>
           <TextArea rows={4} maxLength={1200} placeholder="请输入" showCount />
         </Form.Item>
 
@@ -148,16 +139,7 @@ const CreateLogPage: React.FC = function () {
           <TextArea rows={4} maxLength={1200} placeholder="请输入" showCount />
         </Form.Item>
 
-        <Form.Item
-          name="planContent"
-          label={typeRecord.planTitle}
-          rules={[
-            {
-              required: true,
-              message: '请输入',
-            },
-          ]}
-        >
+        <Form.Item name="planContent" label={typeRecord.planTitle}>
           <TextArea rows={4} maxLength={1200} placeholder="请输入" showCount />
         </Form.Item>
 

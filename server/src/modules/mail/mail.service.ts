@@ -93,7 +93,7 @@ ${data.markdown || ''}
    * @param data 邮件数据
    */
   async send(data: MailData) {
-    if (!data.to) {
+    if (!data.to || data.to === 'null') {
       return
     }
 

@@ -4,7 +4,7 @@ import config from '@/config'
 import { LeftOutlined } from '@ant-design/icons'
 import { useNavigate, useParams } from 'react-router'
 import { LOG_LIST } from './constants'
-import { Form, Input, Button, Select } from 'antd'
+import { Form, Input, Button, Select, DatePicker } from 'antd'
 import {
   serviceCreateLog,
   serviceUpdateLog,
@@ -13,6 +13,8 @@ import {
 import { LOCAL_STORAGE } from '@/constants'
 import { getAllCompany } from '@/store/companySlice'
 import { useAppDispatch, useAppSelector } from '@/hooks'
+import { formatDateTime } from '@/utils/date'
+import dayjs from 'dayjs'
 
 const { TextArea } = Input
 
@@ -55,6 +57,7 @@ const CreateLogPage: React.FC = function () {
       const params = {
         logType: Number(type),
         ...detail,
+        createdAt: formatDateTime(values.createdAt),
         doneContent: values.doneContent,
         undoneContent: values.undoneContent,
         planContent: values.planContent,
@@ -89,6 +92,7 @@ const CreateLogPage: React.FC = function () {
           undoneContent: res.undoneContent,
           planContent: res.planContent,
           summaryContent: res.summaryContent,
+          createdAt: dayjs(res.createdAt),
         })
       })
     }
@@ -129,6 +133,19 @@ const CreateLogPage: React.FC = function () {
           ]}
         >
           <Select options={memoizedCompanyAll}></Select>
+        </Form.Item>
+
+        <Form.Item
+          label="时间"
+          name="createdAt"
+          rules={[
+            {
+              required: true,
+              message: '请选择时间',
+            },
+          ]}
+        >
+          <DatePicker allowClear={false} className="!w-full" />
         </Form.Item>
 
         <Form.Item name="doneContent" label={typeRecord.doneTitle}>

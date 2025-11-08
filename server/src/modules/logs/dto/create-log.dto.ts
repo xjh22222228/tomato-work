@@ -5,12 +5,19 @@ import {
   Min,
   Max,
   IsOptional,
+  IsDate,
 } from 'class-validator'
+import { Type } from 'class-transformer'
 
 export class CreateLogDto {
   @IsNotEmpty()
   @IsString()
   companyId: string
+
+  @IsNotEmpty()
+  @IsDate()
+  @Type(() => Date)
+  createdAt: Date
 
   @IsNotEmpty()
   @IsNumber()

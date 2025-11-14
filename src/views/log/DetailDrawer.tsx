@@ -30,22 +30,22 @@ const DetailDrawer: React.FC<Props> = function ({ visible, onClose, detail }) {
     {
       key: '1',
       label: record.doneTitle,
-      children: <p>{detail.doneContent || '无'}</p>,
+      children: <pre>{detail.doneContent || '无'}</pre>,
     },
     {
       key: '2',
       label: record.undoneTitle,
-      children: <p>{detail.undoneContent || '无'}</p>,
+      children: <pre>{detail.undoneContent || '无'}</pre>,
     },
     {
       key: '3',
       label: record.planTitle,
-      children: <p>{detail.planContent || '无'}</p>,
+      children: <pre>{detail.planContent || '无'}</pre>,
     },
     {
       key: '5',
       label: record.summaryTitle,
-      children: <p>{detail.summaryContent || '无'}</p>,
+      children: <pre>{detail.summaryContent || '无'}</pre>,
     },
   ]
 

@@ -17,7 +17,7 @@ import { formatDateTime } from '@/utils/date'
 import dayjs from 'dayjs'
 
 const { TextArea } = Input
-
+const now = dayjs()
 const DEF_COMPANY_ID = localStorage.getItem(LOCAL_STORAGE.COMPANY_ID) || '-1'
 
 const CreateLogPage: React.FC = function () {
@@ -145,7 +145,11 @@ const CreateLogPage: React.FC = function () {
             },
           ]}
         >
-          <DatePicker allowClear={false} className="!w-full" />
+          <DatePicker
+            allowClear={false}
+            className="!w-full"
+            defaultValue={now}
+          />
         </Form.Item>
 
         <Form.Item name="doneContent" label={typeRecord.doneTitle}>

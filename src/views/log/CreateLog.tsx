@@ -138,6 +138,7 @@ const CreateLogPage: React.FC = function () {
         <Form.Item
           label="时间"
           name="createdAt"
+          initialValue={now}
           rules={[
             {
               required: true,
@@ -145,11 +146,7 @@ const CreateLogPage: React.FC = function () {
             },
           ]}
         >
-          <DatePicker
-            allowClear={false}
-            className="!w-full"
-            defaultValue={now}
-          />
+          <DatePicker allowClear={false} className="!w-full" />
         </Form.Item>
 
         <Form.Item name="doneContent" label={typeRecord.doneTitle}>

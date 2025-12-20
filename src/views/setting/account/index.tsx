@@ -51,7 +51,7 @@ const AccountPage: React.FC = function () {
 
   return (
     <div className="account-setting">
-      <Divider orientation="left" plain>
+      <Divider titlePlacement="left" plain>
         修改密码
       </Divider>
       <Form layout="vertical" form={form} style={{ width: 300 }}>
@@ -94,7 +94,7 @@ const AccountPage: React.FC = function () {
         </Form.Item>
       </Form>
 
-      <Divider orientation="left" plain>
+      <Divider titlePlacement="left" plain>
         企业微信机器人
       </Divider>
 

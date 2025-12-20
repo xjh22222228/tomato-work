@@ -26,7 +26,7 @@ const BasePage: React.FC = function () {
 
   return (
     <div className="setting-base">
-      <Divider orientation="left" plain>
+      <Divider titlePlacement="left" plain>
         个人中心
       </Divider>
       <Card

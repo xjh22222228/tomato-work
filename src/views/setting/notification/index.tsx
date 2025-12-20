@@ -37,7 +37,7 @@ const NotificationPage: React.FC = function () {
 
   return (
     <div className="notification">
-      <Divider orientation="left" plain>
+      <Divider titlePlacement="left" plain>
         消息通知
       </Divider>
       <div className="list">

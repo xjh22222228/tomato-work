@@ -53,7 +53,7 @@ const DetailDrawer: React.FC<Props> = function ({ visible, onClose, detail }) {
     <Drawer
       open={visible}
       title={record.title}
-      width={500}
+      size={500}
       onClose={onClose}
       destroyOnHidden
     >

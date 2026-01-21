@@ -29,7 +29,7 @@
     "@tailwindcss/vite": "^4.1.18",
     "@toast-ui/editor": "^3.2.2",
     "ahooks": "^3.9.6",
-    "antd": "^6.1.1",
+    "antd": "^6.2.1",
     "axios": "^1.13.2",
     "blueimp-md5": "^2.19.0",
     "bytes": "^3.1.2",
@@ -42,11 +42,11 @@
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^19.2.3",
     "react-redux": "^9.2.0",
-    "react-router": "^7.11.0",
+    "react-router": "^7.12.0",
     "recharts": "^3.6.0",
     "redux": "^5.0.1",
     "redux-thunk": "^3.1.0",
-    "sass": "^1.97.1",
+    "sass": "^1.97.2",
     "tailwindcss": "^4.1.18",
     "vite-plugin-pwa": "^1.2.0",
     "workbox-window": "^7.4.0"
@@ -54,19 +54,19 @@
   "devDependencies": {
     "@types/blueimp-md5": "^2.18.2",
     "@types/bytes": "^3.1.5",
-    "@types/lodash": "^4.17.21",
-    "@types/node": "^25.0.3",
+    "@types/lodash": "^4.17.23",
+    "@types/node": "^25.0.9",
     "@types/nprogress": "^0.2.3",
-    "@types/react": "^19.2.7",
+    "@types/react": "^19.2.9",
     "@types/react-beautiful-dnd": "^13.1.8",
     "@types/react-dom": "^19.2.3",
     "@types/react-redux": "^7.1.34",
     "@vitejs/plugin-react-refresh": "^1.3.6",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
-    "oxlint": "^1.34.0",
-    "prettier": "^3.7.4",
+    "oxlint": "^1.41.0",
+    "prettier": "^3.8.0",
     "typescript": "^5.9.3",
-    "vite": "^7.3.0"
+    "vite": "^7.3.1"
   }
 }

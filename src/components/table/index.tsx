@@ -90,10 +90,10 @@ const TableFC: FC<Props> = ({
       }
 
       const payload: Record<string, any> = {
-        pageNo: params.pagination.pageNo - 1,
+        pageNo: params.pagination.current - 1,
         pageSize: params.pagination.pageSize,
       }
-      if (params?.sorter?.order) {
+      if (params.sorter?.order) {
         payload.sort = `${params.sorter.field}-${sortMap[params.sorter.order]}`
       }
       // 调用父组件函数获取数据
@@ -156,19 +156,6 @@ const TableFC: FC<Props> = ({
   }))
 
   useEffect(() => {
-    // 设置表格的高度
-    // setTimeout(() => {
-    //   const tableEl = document.querySelector('.ant-table-wrapper')
-    //   if (tableEl) {
-    //     setState((state) => ({
-    //       ...state,
-    //       tableHeight: tableEl.clientHeight - 120,
-    //     }))
-    //   }
-    // }, 100)
-  }, [])
-
-  useEffect(() => {
     if (Array.isArray(columns)) {
       setState((state) => ({
         ...state,
@@ -179,7 +166,7 @@ const TableFC: FC<Props> = ({
             render: (_: any, $: any, i: number) => i + 1,
             align: 'center',
           },
-        ].concat(columns as []),
+        ].concat(columns as [])
       }))
     }
   }, [columns])

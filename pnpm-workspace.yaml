@@ -1,3 +1,6 @@
 allowBuilds:
   '@parcel/watcher': set this to true or false
   esbuild: set this to true or false
+minimumReleaseAgeExclude:
+  - lint-staged@17.5.1
+  - vite@8.3.0
